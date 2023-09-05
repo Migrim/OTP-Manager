@@ -1,0 +1,142 @@
+{% extends 'bootstrap/base.html' %}
+
+{% block title %} Login {% endblock %}
+
+{% block content %}
+<style>
+body {
+    background: url('{{ url_for("static", filename="Background.jpg") }}') center/cover no-repeat;
+    color: #ffffff; 
+    font-family: 'Arial', sans-serif; 
+    position: relative;
+    height: 100vh;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    transition: opacity 0.6s ease-in-out;
+}
+
+body::before {
+    content: "Site Blocked";
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+a {
+    color: #0d6efd;
+}
+
+a:hover {
+    color: #0056b3;
+}
+
+.center-content {
+    display: flex;
+    flex-direction: column; 
+    align-items: center; 
+}
+
+.form-container {
+    max-width: 350px; 
+    width: 100%;
+    padding: 20px; 
+    margin-bottom: 20px;
+    border-radius: 20px; 
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); 
+    background: linear-gradient(to bottom, #252525 0%, #2c2c2c 25%, #333333 50%, #3a3a3a 100%);
+    opacity: 0;
+    transition: opacity 0.6s ease-out;
+}
+
+.instruction-text {
+    font-size: 14px; 
+    text-align: center; 
+    font-style: italic;
+    width: 80%;
+    line-height: 1.4; 
+}
+
+.form-title {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.form-control {
+    border-radius: 5px;
+    background: #3a3a3a;
+    color: #ffffff;
+}
+
+.form-control:focus {
+    border-color: #555;
+    box-shadow: none;
+}
+
+.form-submit {
+    margin-top: 20px;
+    background-color: #CD5C5C; 
+    border: none;
+    transition: background-color 0.3s ease;
+}
+
+.form-submit:hover {
+    background-color: #B94A4A;
+}
+
+.loader {
+    border: 5px solid #f3f3f3; 
+    border-top: 5px solid #555; 
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    animation: spin 1s linear infinite;
+    display: none;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+</style>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        var formContainer = document.querySelector(".form-container");
+        formContainer.style.opacity = "1";
+    
+        document.body.style.opacity = "1";
+    });
+    
+    function redirectToProfile() {
+        document.body.style.opacity = "0";
+        setTimeout(function() {
+            window.location.href = "{{ url_for('profile') }}";
+        }, 600);
+    }
+    </script>
+
+<div class="center-content">
+    <div class="form-container">
+        <h1 class="form-title">Login</h1>
+        <form method="post">
+            <div class="form-group">
+                <label for="username" class="text-white">Username:</label>
+                <input type="text" name="username" class="form-control" required>
+            </div>
+            <div class="form-group">
+                <label for="password" class="text-white">Password:</label>
+                <input type="password" name="password" class="form-control" required>
+            </div>
+            <input type="submit" value="Login" class="btn btn-primary btn-block form-submit">
+        </form>
+        <div class="loader"></div>
+        <div class="error-message" style="display: none;">Benutzername oder Passwort ist falsch!</div>
+    </div>
+    <p class="instruction-text">Wir bitten Sie, sich mit den Zugangsdaten anzumelden, die Ihnen von Ihrem zuständigen Systemadministrator zugeteilt wurden, um Zugang zur Liste der OTPs zu erhalten.</p>
+</div>
+{% endblock %}

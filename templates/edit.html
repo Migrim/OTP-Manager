@@ -1,0 +1,68 @@
+{% extends 'bootstrap/base.html' %}
+
+{% block title %} Edit OTP Secret {% endblock %}
+
+{% block navbar %}
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="#">Edit OTP Secret</a>
+        <a href="{{ url_for('home') }}" class="navbar-brand">Back to OTP List</a>
+    </nav>
+{% endblock %}
+
+{% block content %}
+
+<style>
+    .center-content {
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+        min-height: 100vh; /* Höhe */
+        padding-top: 50px; /* Padding */
+    }
+
+    .form-container {
+        max-width: 400px;
+        width: 100%;
+        padding: 30px;
+        border-radius: 10px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        background: linear-gradient(to bottom, #ffffff, #f8f9fa);
+    }
+
+    .form-title {
+        text-align: center;
+        margin-bottom: 30px;
+    }
+
+    .form-control {
+        border-radius: 5px;
+    }
+
+    .form-submit {
+        margin-top: 20px;
+    }
+</style>
+
+<div class="center-content">
+    <div class="form-container">
+        <h1 class="form-title">Edit OTP</h1>
+        <form method="POST">
+                    {{ form.hidden_tag() }}
+                    <div class="form-group">
+                        {{ form.name.label }} {{ form.name(class="form-control", value=form.name.data) }}
+                    </div>
+                    <div class="form-group">
+                        {{ form.secret.label }} {{ form.secret(class="form-control", value=form.secret.data) }}
+                    </div>
+                    <div class="form-group">
+                        {{ form.otp_type.label(class="form-check-label") }}
+                        {{ form.otp_type(class="form-control") }}
+                    </div>
+                    <div class="form-group">
+                        {{ form.refresh_time.label }} {{ form.refresh_time(class="form-control", value=form.refresh_time.data) }}
+                    </div>
+                    {{ form.submit(class="btn btn-primary") }}
+                </form>
+            </div>
+        </div>
+        {% endblock %}

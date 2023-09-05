@@ -1,0 +1,126 @@
+{% extends 'bootstrap/base.html' %}
+
+{% block title %} Add OTP Secret {% endblock %}
+
+{% block styles %}
+    {{ super() }}
+    <style>
+        /* Dark Mode Styles */
+        body {
+            background-color: #222;
+            color: #fff;
+        }
+
+        .navbar {
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.1);
+        }
+        
+        .navbar-dark .navbar-brand {
+            color: #f1f1f1;
+            font-size: 1.5rem;
+            margin-right: 20px;
+            transition: color 0.3s;
+        }
+        
+        .navbar-dark .navbar-brand:hover {
+            color: #CD5C5C;
+        }
+
+        .center-content {
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            min-height: 100vh;
+            padding-top: 50px;
+        }
+
+        .form-container {
+            max-width: 400px;
+            width: 100%;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.4);
+            background: #333;
+        }
+
+        .form-title {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #fff;
+        }
+
+        .form-control {
+            border-radius: 5px;
+            background-color: #444;
+            color: #fff;
+        }
+
+        .form-control::-webkit-select-placeholder {
+            color: #aaa;
+        }
+
+        .form-submit {
+            margin-top: 20px;
+        }
+
+        .text-danger {
+            color: #ff6b6b;
+        }
+    </style>
+{% endblock %}
+
+{% block navbar %}
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand" href="#">Secret Hinzufügen</a>
+    <div class="navbar-nav mr-auto">
+        <a class="navbar-brand" href="{{ url_for('home') }}">Home</a>
+    </div>
+    <div class="navbar-nav mr-auto">
+        <a class="navbar-brand" href="{{ url_for('admin.admin_settings') }}">Settings</a>
+    </div>
+    <div id="logoutContainer">
+        <div id="logoutBtn">
+            <a class="navbar-brand" href="{{ url_for('logout') }}">Logout</a>
+        </div>
+    </div>            
+</nav>
+{% endblock %}
+
+{% block content %}
+<div class="center-content">
+    <div class="form-container">
+        <h1 class="form-title">Add OTP Secret</h1>
+        <form method="POST">
+            {{ form.hidden_tag() }}
+            <div class="form-group">
+                {{ form.name.label }} {{ form.name(class="form-control") }}
+                {% for error in form.name.errors %}
+                    <span class="text-danger">{{ error }}</span>
+                {% endfor %}
+            </div>
+            <div class="form-group">
+                {{ form.secret.label }} {{ form.secret(class="form-control") }}
+            </div>
+            <div class="form-group">
+                {{ form.otp_type.label(class="form-check-label") }}
+                {{ form.otp_type(class="form-control") }}
+            </div>
+            <div class="form-group">
+                {{ form.company.label }}
+                <select class="form-control" name="{{ form.company.name }}">
+                    {% for value, label in form.company.choices %}
+                        <option value="{{ value }}">{{ label }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="form-group">
+                {{ form.refresh_time.label }} {{ form.refresh_time(class="form-control") }}
+                {% for error in form.refresh_time.errors %}
+                    <span class="text-danger">{{ error }}</span>
+                {% endfor %}
+            </div>
+            {{ form.submit(class="btn btn-primary btn-block form-submit") }}
+        </form>
+    </div>
+</div>
+{% endblock %}

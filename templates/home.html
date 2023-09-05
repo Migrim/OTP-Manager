@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html>
+<head>
+    {% extends 'bootstrap/base.html' %}
+    {% block title %} OTP List {% endblock %}
+    {% block styles %}
+        {{ super() }}
+        <style>
+            body {
+                background-color: #222;
+                color: #fff;
+                font-family: Arial, sans-serif;
+            }
+            
+            .search-bar {
+                display: flex;
+                justify-content: center;
+                margin: 20px 0;
+            }
+            
+            .search-bar input[type="text"] {
+                padding: 10px;
+                font-size: 17px;
+                border: 1px solid #757575;
+                width: 50%;
+                background: rgba(255, 255, 255, 0.1);
+                color: #f1f1f1;
+                border-radius: 4px;
+                transition: background 0.3s, border 0.3s;
+            }
+            
+            .search-bar input[type="text"]:focus {
+                background: rgba(255, 255, 255, 0.2);
+                border-color: #f1f1f1;
+            }
+            
+            .navbar {
+                box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.1);
+            }
+            
+            .navbar-dark .navbar-brand {
+                color: #f1f1f1;
+                font-size: 1.5rem;
+                margin-right: 20px;
+                transition: color 0.3s;
+            }
+            
+            .navbar-dark .navbar-brand:hover {
+                color: #CD5C5C;
+            }
+            
+            #logoutContainer {
+                position: relative;
+            }
+            
+            #logoutBtn {
+                position: absolute;
+                right: 0;
+                cursor: pointer;
+            }
+            
+            #logoutBtn a {
+                display: inline-block;
+                padding: 8px 16px;
+                background-color: #CD5C5C;
+                color: #fff;
+                text-decoration: none;
+                border-radius: 5px;
+                transition: background-color 0.3s;
+            }
+
+            #logoutBtn a {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+            
+            #logoutBtn a:hover {
+                background-color: #B94A4A;
+            }
+            
+            .alert {
+                background-color: #314558;
+                color: #fff;
+                padding: 10px;
+                margin: 10px 0;
+                border: none; /* Remove the border */
+            }
+            
+            .otp-code {
+                color: #ffffff;
+                font-size: 1.5rem;
+            }
+            
+            .progress-bar {
+                background-color: #6CB7E0;
+                height: 20px;
+            }
+            
+            .btn-primary {
+                background-color: #6CB7E0;
+                color: #fff;
+                border: none;
+                border-radius: 5px;
+                transition: background-color 0.3s;
+            }
+            
+            .btn-primary:hover {
+                background-color: #5A9CCD;
+            }
+            
+            .btn-danger {
+                background-color: #CD5C5C;
+                color: #fff;
+                border: none;
+                border-radius: 5px;
+                transition: background-color 0.3s;
+            }
+            
+            .btn-danger:hover {
+                background-color: #B94A4A;
+            }
+            
+            .btn-light {
+                background-color: #f8f9fa;
+                color: #292b2c;
+                border: none;
+                border-radius: 5px;
+                transition: background-color 0.3s;
+            }
+            
+            .btn-light:hover {
+                background-color: #e9ecef;
+            }
+        </style>
+    {% endblock %}
+</head>
+<body>
+    {% block navbar %}
+            <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+                <a class="navbar-brand" href="#">OTP List</a>
+                <div class="navbar-nav mr-auto">
+                    <a class="navbar-brand" href="{{ url_for('add') }}">Add</a>
+                </div>
+                <div class="navbar-nav mr-auto">
+                    <a class="navbar-brand" href="{{ url_for('admin.admin_settings') }}">Settings</a>
+                </div>
+                <div id="logoutContainer">
+                    <div id="logoutBtn">
+                        <a class="navbar-brand" href="{{ url_for('logout') }}">Logout</a>
+                    </div>
+                </div>            
+            </nav>
+            {% endblock %}
+        
+        {% block content %}
+            <div class="container">
+                <h1 class="text-center text-white">One Time Passwords</h1>
+
+                <form method="get" action="/search_otp" class="search-bar">
+                    <input type="text" id="searchInput" name="name" placeholder="Search for OTPs" />
+                </form>
+                
+                <div class="row">
+                    {% for otp in otp_codes %}
+                    <div class="col-md-4">
+                        <div class="alert alert-success mt-3">
+                            Firma: {{ otp.company }} <br> <!-- This line was added -->
+                            Name: {{ otp.name }} <br>
+                            <p>Secret: <span class="spoiler">{{otp.secret}}</span></p>
+                            OTP type: {{ otp.otp_type }} <br>
+                            OTP code: <span class="otp-code" id="otp_code_{{ otp.name }}" onclick="copyToClipboard(this)">{{ otp.otp_code }}</span>
+                            <div class="progress mt-2">
+                                <div class="progress-bar" role="progressbar" style="width: 100%;" id="progressBar{{ otp.name }}" data-refresh-time="{{ otp.refresh_time }}">30s</div>
+                            </div>
+                            <div class="btn-group" role="group">
+                                <form action="{{ url_for('delete', name=otp.name) }}" method="post" style="display: inline-block;">
+                                    <button style="margin-right:5px" class="btn btn-danger" onclick="confirmDelete(event)">Delete</button>
+                                </form>
+                                <form action="{{ url_for('edit', name=otp.name) }}" method="get" style="display: inline-block;">
+                                    <button style="margin-right:5px" class="btn btn-primary">Edit</button>
+                                    <button type="button" style="margin-right: 5px" class="btn btn-light" onclick="copyToClipboard(document.querySelector('#otp_code_{{ loop.index0 }}'))">Copy</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+                
+                <div class="modal fade" id="deleteConfirmationModal" tabindex="-1" role="dialog" aria-labelledby="deleteConfirmationModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="deleteConfirmationModalLabel">I need your Confirmation!</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                This will be gone for a long time... Confirm deletion?
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                                <button id="deleteConfirmationButton" type="button" class="btn btn-danger">Delete</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <script>
+                    let countdownIntervals = [];
+
+                function updateOtpCodes(otpCodes) {
+                    otpCodes.forEach(otp => {
+                        let otpCodeElement = document.getElementById(`otp_code_${otp.name}`);
+                        if (otpCodeElement) {
+                            otpCodeElement.textContent = otp.otp_code;
+                            let progressBar = document.getElementById(`progressBar${otp.name}`);
+                            if (progressBar) {
+                                progressBar.style.width = '100%';
+                            let duration = parseInt(progressBar.getAttribute('data-refresh-time'));
+                            startCountdown(progressBar, duration);
+                            }
+                        }
+                    });
+                }
+
+                function manuallyRefreshOtps() {
+                    fetch('/refresh_codes_v2')
+                        .then(response => response.json())
+                        .then(data => updateOtpCodes(data.otp_codes))
+                        .catch(error => console.error('Fetch error:', error));
+                }
+
+                function startAutoRefresh() {
+                    manuallyRefreshOtps();
+
+                    let currentTime = new Date();
+                    let millisTillNextInterval = 30000 - (currentTime.getSeconds() * 1000 + currentTime.getMilliseconds()) % 30000;
+
+                    setTimeout(function() {
+
+                        manuallyRefreshOtps();
+                        setInterval(manuallyRefreshOtps, 30000);
+                    }, millisTillNextInterval);
+                }
+
+                function startCountdown(element, duration) {
+                    clearInterval(countdownIntervals[element.id]);
+                    if (countdownIntervals[element.id]) {
+                        clearInterval(countdownIntervals[element.id]);
+                    }
+                    countdownIntervals[element.id] = setInterval(function() {
+                        let current_time = new Date().getSeconds();
+                        let remaining = duration - (current_time % duration);
+                        element.textContent = remaining + "s";
+                        element.style.width = (remaining / duration * 100) + "%";
+
+                        if (remaining <= 0) {
+                            clearInterval(countdownIntervals[element.id]);
+                            manuallyRefreshOtps();
+                        }
+                    }, 1000);
+                }
+
+                window.onload = function() {
+                    let spoilerElements = document.getElementsByClassName('spoiler');
+                    for (let i = 0; i < spoilerElements.length; i++) {
+                        let originalText = spoilerElements[i].innerText;
+                        spoilerElements[i].setAttribute('data-original', originalText);
+                        spoilerElements[i].innerText = '●'.repeat(originalText.length);
+                        spoilerElements[i].onmouseover = function() {
+                            this.innerText = this.getAttribute('data-original');
+                        }
+                        spoilerElements[i].onmouseout = function() {
+                            this.innerText = '●'.repeat(this.getAttribute('data-original').length);
+                        }
+                    }
+
+                    let progressBars = document.getElementsByClassName('progress-bar');
+                    for (let i = 0; i < progressBars.length; i++) {
+                        let duration = parseInt(progressBars[i].getAttribute('data-refresh-time')); 
+                        startCountdown(progressBars[i], duration);
+                    }
+
+                    startAutoRefresh();
+                };
+
+                document.getElementById('searchInput').addEventListener('input', function() {
+                        var filter = this.value.toUpperCase();
+                        var otpDivs = document.getElementsByClassName('col-md-4');
+                        for (var i = 0; i < otpDivs.length; i++) {
+                            var div = otpDivs[i];
+                            var name = div.querySelector('.alert').textContent;
+                            if (name.toUpperCase().indexOf(filter) > -1) {
+                                div.style.display = '';
+                            } else {
+                                div.style.display = 'none';
+                            }
+                        }
+                    });
+                </script>
+        {% endblock %}
+    </body>
+</html>

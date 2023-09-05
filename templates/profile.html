@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile</title>
+    <style>
+        body {
+            background-color: #222;
+            color: #fff;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            opacity: 0;
+            transition: opacity 0.6s ease-in;
+        }
+
+        .profile-container {
+            text-align: center;
+            border-radius: 20px;
+            background: #333;
+            padding: 20px;
+            width: 300px;
+        }
+
+        h1 {
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="profile-container">
+        <h1>Willkommen {{ username }}!</h1>
+        <p id="loading-text">Getting things ready</p>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            // Fade in page
+            document.body.style.opacity = "1";
+    
+            let loadingText = document.getElementById("loading-text");
+            let counter = 0;
+            let loadingInterval = setInterval(() => {
+                if (counter < 3) {
+                    loadingText.innerHTML += '.';
+                    counter++;
+                } else {
+                    loadingText.innerHTML = "Getting things ready";
+                    counter = 0;
+                }
+            }, 500);
+    
+            setTimeout(function() {
+                // Stop the loading interval
+                clearInterval(loadingInterval);
+                
+                // Fade out page
+                document.body.style.opacity = "0";
+    
+                // Redirect after fade out is complete
+                setTimeout(function() {
+                    window.location.href = "{{ url_for('home') }}";
+                }, 600); // 600ms to match the CSS transition duration
+            }, 4500);
+        });
+    </script>
+</body>
+</html>
