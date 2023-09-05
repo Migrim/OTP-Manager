@@ -1,68 +1,81 @@
 {% extends 'bootstrap/base.html' %}
 
-{% block title %} Real-time Logs {% endblock %}
+{% block title %}Real-time Logs{% endblock %}
 
 {% block navbar %}
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <a class="navbar-brand" href="#">Real-time Logs</a>
-        <a href="{{ url_for('home') }}" class="navbar-brand">Back to OTP List</a>
-    </nav>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand" href="#">Real-time Logs</a>
+    <a href="{{ url_for('home') }}" class="navbar-brand">Back to OTP List</a>
+</nav>
 {% endblock %}
 
 {% block content %}
-
 <style>
     body {
         font-family: 'Arial', sans-serif;
-        background-color: #f4f5f7;
+        background-color: #222222;
+        color: #FFF;
+        margin: 0;
+        padding: 0;
     }
 
-    .center-content {
-        display: flex;
-        justify-content: center;
-        align-items: flex-start; /* Changed to position at the top */
-        min-height: 100vh;
-        padding-top: 50px;
+    .navbar {
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.1);
+    }
+    
+    .navbar-dark .navbar-brand {
+        color: #f1f1f1;
+        font-size: 1.5rem;
+        margin-right: 20px;
+        transition: color 0.3s;
+    }
+    
+    .navbar-dark .navbar-brand:hover {
+        color: #CD5C5C;
     }
 
-    .logs-container {
-        max-width: 1200px;
-        width: 95%;
-        padding: 40px;
-        border-radius: 15px;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-        background: #ffffff;
+    .logs-section {
+        padding: 30px;
     }
 
-    .logs-content {
-        overflow-y: scroll;
-        max-height: 600px;
-        border-top: 1px solid #e5e5e5;
-        padding-top: 20px;
+    .logs-box {
+        background-color: #ffffff;
+        border: 1px solid #dee2e6;
+        border-radius: 0.25rem;
+        max-height: 70vh;
+        overflow-y: auto;
     }
 
-    .logs-title {
-        text-align: center;
-        margin-bottom: 20px;
-        font-size: 24px;
-        color: #333;
-        font-weight: 600;
+    .logs-box pre {
+        margin: 0;
+        font-size: 0.875em;
+        color: #343a40;
+        padding: 15px;
+        white-space: pre-wrap;
     }
 
-    #logs {
-        color: #666;
-        font-size: 14px;
-        line-height: 1.5;
+    .scroll-to-end-button {
+        display: inline-block;
+        background-color: #CD5C5C;
+        color: #ffffff;
+        padding: 10px 20px;
+        margin-top: 20px;
+        cursor: pointer;
+        border-radius: 5px;
     }
+
+    .scroll-to-end-button:hover {
+        background-color: #cd5c5c9f;
+    }
+
 </style>
 
-<div class="center-content">
-    <div class="logs-container">
-        <h1 class="logs-title">Real-time Logs</h1>
-        <div class="logs-content">
-            <pre id="logs"></pre>
-        </div>
+<div class="logs-section">
+    <h1>Real-time Logs</h1>
+    <div class="logs-box">
+        <pre id="logs"></pre>
     </div>
+    <div class="scroll-to-end-button" id="scroll-to-end">Scroll to End</div>
 </div>
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -74,11 +87,15 @@
         });
     }
 
-    // Fetch logs every 5 seconds
+    function scrollToBottom() {
+        var logsBox = document.querySelector(".logs-box");
+        logsBox.scrollTop = logsBox.scrollHeight;
+    }
+
     setInterval(updateLogs, 5000);
-
-    // Fetch logs initially
     updateLogs();
-</script>
 
+    var scrollToButton = document.getElementById("scroll-to-end");
+    scrollToButton.addEventListener("click", scrollToBottom);
+</script>
 {% endblock %}

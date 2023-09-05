@@ -1,127 +1,191 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Admin Settings</title>
+{% extends 'bootstrap/base.html' %}
+
+{% block title %}
+Admin Settings
+{% endblock %}
+
+{% block styles %}
+    {{ super() }}
     <style>
         body {
             background-color: #222;
             color: #fff;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
-            margin: 0;
         }
-        .container {
-            width: 100%;
+        .navbar {
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.1);
+        }
+        .navbar-dark .navbar-brand {
+            color: #f1f1f1;
+            font-size: 1.5rem;
+            margin-right: 20px;
+            transition: color 0.3s;
+        }
+        .navbar-dark .navbar-brand:hover {
+            color: #CD5C5C;
+        }
+        .center-content {
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            flex-wrap: wrap;
+            min-height: 100vh;
+            padding-top: 50px;
+        }
+        .form-container {
             max-width: 400px;
-            padding: 20px;
-            margin: 10px 0;
-            border: 1px solid #333;
-            border-radius: 8px;
-            background: linear-gradient(to bottom, #2c3e50, #314558);
-            color: #f0f0f0;
+            width: 100%;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.4);
+            background: #333;
+            margin-bottom: 30px; 
+            margin-left: 20px; 
+            margin-right: 20px; 
         }
         .form-title {
             text-align: center;
-            margin-bottom: 20px;
-        }
-        .form-group {
-            margin-bottom: 15px; 
-            display: flex;
-            flex-direction: column;
-            align-items: center; 
-        }
-        .form-label {
-            text-align: center;
-            margin-bottom: 5px;
+            margin-bottom: 30px;
+            color: #fff;
         }
         .form-control {
             border-radius: 5px;
-            padding: 5px;
-            display: block;
-            width: 100%;
+            background-color: #444;
+            color: #fff;
         }
         .form-submit {
             margin-top: 20px;
-            display: flex;
-            justify-content: center;
         }
-        ul {
-            padding-left: 20px;
+        .list-group-item {
+            background-color: #444;
+            color: #fff;
         }
-        ul li {
-            margin-bottom: 5px; 
+        .btn-danger {
+        margin-left: 10px;
         }
-        ul li a {
-            color: #e74c3c;
-            text-decoration: none;
+        .btn-warning {
+            margin-left: 10px;
         }
-
         .toast {
             position: fixed;
-            bottom: 30px;
-            right: 30px;
-            padding: 10px;
-            background-color: green;
-            color: white;
-            border-radius: 5px;
-            z-index: 9999;
+            top: 0;
+            right: 0;
+            z-index: 1100;
         }
     </style>
-</head>
-<body>
+{% endblock %}
 
-<div class="container">
-    <h1 class="form-title">User Management</h1>
-    <form method="post">
-        {{ user_form.hidden_tag() }}
-        <div class="form-group">
-            <label class="form-label">{{ user_form.username.label }}</label>
-            {{ user_form.username() }}
-        </div>
-        <div class="form-group">
-            <label class="form-label">{{ user_form.password.label }}</label>
-            {{ user_form.password() }}
-        </div>
-        <div class="form-submit">
-            {{ user_form.submit() }}
-        </div>
-    </form>
+{% block navbar %}
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand" href="#">Admin Settings</a>
+    <a href="{{ url_for('home') }}" class="navbar-brand">Back to OTP List</a>
+</nav>
+{% endblock %}
+
+{% block content %}
+<div class="center-content">
+    <div class="form-container">
+        <h1 class="form-title">User Management</h1>
+        <form method="post">
+            {{ user_form.hidden_tag() }}
+            <div class="form-group">
+                <label class="form-label">{{ user_form.username.label }}</label>
+                {{ user_form.username(class="form-control") }}
+            </div>
+            <div class="form-group">
+                <label class="form-label">{{ user_form.password.label }}</label>
+                {{ user_form.password(class="form-control") }}
+            </div>
+            <div class="form-submit">
+                {{ user_form.submit(class="btn btn-primary btn-block form-submit") }}
+            </div>
+        </form>
+        <h2 class="form-title">Existing Users</h2>
+        <ul class="list-group">
+            {% for user in users %}
+                <li class="list-group-item">
+                    {{ user[1] }}
+                    <a href="{{ url_for('admin.delete_user', user_id=user[0]) }}" class="btn btn-danger">Delete</a>
+                    <button class="btn btn-warning reset-password-btn" data-user-id="{{ user[0] }}">Reset</button>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+
+    <div class="form-container">
+        <h1 class="form-title">Company Management</h1>
+        <form method="post">
+            {{ company_form.hidden_tag() }}
+            <div class="form-group">
+                <label class="form-label">{{ company_form.name.label }}</label>
+                {{ company_form.name(class="form-control") }}
+            </div>
+            <div class="form-submit">
+                {{ company_form.submit_company(class="btn btn-primary btn-block form-submit") }}
+            </div>
+        </form>
+        <h2 class="form-title">Existing Companies</h2>
+        <ul class="list-group">
+            {% for company in companies %}
+                <li class="list-group-item">{{ company.name }} <a href="{{ url_for('admin.delete_company', company_id=company.id) }}">Delete</a></li>
+            {% endfor %}
+        </ul>
+    </div>
 </div>
 
-<div class="container">
-    <h2 class="form-title">Existing Users</h2>
-    <ul>
-        {% for user in users %}
-            <li>{{ user[1] }} <a href="{{ url_for('admin.delete_user', user_id=user[0]) }}">Delete</a></li>
-        {% endfor %}
-    </ul>
+<div class="modal fade" id="resetPasswordModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Reset Password</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Are you sure you want to reset the password for this user?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-primary confirm-reset-password">Confirm</button>
+            </div>
+        </div>
+    </div>
 </div>
 
-<div class="container">
-    <h1 class="form-title">Company Management</h1>
-    <form method="post">
-        {{ company_form.hidden_tag() }}
-        <div class="form-group">
-            <label class="form-label">{{ company_form.name.label }}</label>
-            {{ company_form.name() }}
-        </div>
-        <div class="form-submit">
-            {{ company_form.submit_company() }}
-        </div>
-    </form>
+<div class="toast" id="userToast" role="alert" aria-live="assertive" aria-atomic="true" data-bs-delay="2000">
+    <div class="toast-header">
+      <strong class="me-auto">Notification</strong>
+      <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+    </div>
+    <div class="toast-body">
+      Password has been reset successfully.
+    </div>
 </div>
+{% endblock %}
 
-<div class="container">
-    <h2 class="form-title">Existing Companies</h2>
-    <ul>
-        {% for company in companies %}
-            <li>{{ company.name }} <a href="{{ url_for('admin.delete_company', company_id=company.id) }}">Delete</a></li>
-        {% endfor %}
-    </ul>
-</div>
-</body>
-</html>
+{% block scripts %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        let resetButtons = document.querySelectorAll('.reset-password-btn');
+        let modal = new bootstrap.Modal(document.getElementById('resetPasswordModal'));
+        let confirmButton = document.querySelector('.confirm-reset-password');
+
+        let userToastElement = document.getElementById('userToast');
+        let userToast = new bootstrap.Toast(userToastElement, {
+            autohide: true,
+            delay: 2000
+        });
+
+        resetButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                let userId = this.getAttribute('data-user-id');
+                confirmButton.setAttribute('data-user-id', userId);
+                modal.show();
+            });
+        });
+
+        confirmButton.addEventListener('click', function() {
+            userToast.show();
+            modal.hide();
+        });
+    });
+</script>
+{% endblock %}

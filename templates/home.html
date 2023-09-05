@@ -84,7 +84,7 @@
                 color: #fff;
                 padding: 10px;
                 margin: 10px 0;
-                border: none; /* Remove the border */
+                border: none;
             }
             
             .otp-code {
@@ -143,6 +143,9 @@
                     <a class="navbar-brand" href="{{ url_for('add') }}">Add</a>
                 </div>
                 <div class="navbar-nav mr-auto">
+                    <a class="navbar-brand" href="{{ url_for('view_logs') }}">Logs</a>
+                </div>
+                <div class="navbar-nav mr-auto">
                     <a class="navbar-brand" href="{{ url_for('admin.admin_settings') }}">Settings</a>
                 </div>
                 <div id="logoutContainer">
@@ -165,7 +168,7 @@
                     {% for otp in otp_codes %}
                     <div class="col-md-4">
                         <div class="alert alert-success mt-3">
-                            Firma: {{ otp.company }} <br> <!-- This line was added -->
+                            Firma: {{ otp.company }} <br>
                             Name: {{ otp.name }} <br>
                             <p>Secret: <span class="spoiler">{{otp.secret}}</span></p>
                             OTP type: {{ otp.otp_type }} <br>
@@ -253,10 +256,16 @@
                     countdownIntervals[element.id] = setInterval(function() {
                         let current_time = new Date().getSeconds();
                         let remaining = duration - (current_time % duration);
-                        element.textContent = remaining + "s";
+                        
+                        if (remaining === 1) {
+                            element.textContent = "fetching...";
+                        } else {
+                            element.textContent = remaining + "s";
+                        }
+
                         element.style.width = (remaining / duration * 100) + "%";
 
-                        if (remaining <= 0) {
+                        if (remaining <= 1) {
                             clearInterval(countdownIntervals[element.id]);
                             manuallyRefreshOtps();
                         }

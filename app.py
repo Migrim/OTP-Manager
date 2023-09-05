@@ -19,8 +19,7 @@ from flask_login import LoginManager, UserMixin, current_user, login_user
 import sqlite3
 import logging
 
-
-logging.basicConfig(filename='MV.log', level=logging.INFO, format='%(asctime)s %(message)s')
+logging.basicConfig(filename='MV.log', level=logging.INFO, format='%(asctime)s [%(levelname)s] %(message)s')
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'your-secret-key'
@@ -33,6 +32,19 @@ app.register_blueprint(admin_bp, url_prefix='/admin')
 
 login_manager = LoginManager()
 login_manager.init_app(app)
+
+app.logger.handlers = []
+app.logger.propagate = False
+
+werkzeug_logger = logging.getLogger('werkzeug')
+werkzeug_logger.disabled = True
+
+handler = logging.FileHandler('MV.log')
+handler.setLevel(logging.INFO)
+app.logger.addHandler(handler)
+
+formatter = logging.Formatter('%(asctime)s %(message)s')
+handler.setFormatter(formatter)
 
 @login_manager.user_loader
 def load_user(user_id):
@@ -108,7 +120,7 @@ class OTPForm(FlaskForm):
     secret = StringField('Secret', validators=[InputRequired()])
     otp_type = SelectField('OTP Type', validators=[InputRequired()], choices=[('totp', 'TOTP'), ('hotp', 'HOTP')])
     refresh_time = IntegerField('Refresh Time', validators=[InputRequired(), NumberRange(min=1, message="Nur Zahlen sind erlaubt.")], default=30)
-    company = SelectField('Company', validators=[InputRequired()], choices=[])  # Choices will be populated dynamically
+    company = SelectField('Company', validators=[InputRequired()], choices=[])
     submit = SubmitField('Submit')
 
 class UserForm(FlaskForm):
@@ -158,7 +170,9 @@ def register():
 @app.route('/logout')
 def logout():
     session.pop('user_id', None)
+    logging.info(f"A User was Logged out!.")
     return redirect(url_for('login'))
+    
 
 @app.route('/refresh_codes_v2')
 def refresh_codes_v2():
@@ -192,6 +206,7 @@ def change_password():
     
     if not user_id or not new_password:
         flash('Benutzer-ID oder Passwort fehlt!')
+        logging.error(f"The Operation %Change Password% failed for user_id {user_id}!")
         return redirect(url_for('home'))
 
     hashed_password = generate_password_hash(new_password, method='sha256')
@@ -201,6 +216,7 @@ def change_password():
             cursor = db.cursor()
             cursor.execute("UPDATE users SET password = ? WHERE id = ?", (hashed_password, user_id))
             db.commit()
+        logging.info(f"Password for user_id {user_id} has been sucessfully changed.")
         flash('Passwort erfolgreich geändert!')
     except sqlite3.Error as e:
         flash('Es gab ein Problem beim Ändern des Passworts!')
@@ -233,6 +249,7 @@ def login():
     if user and check_password_hash(user[2], password):
         session['user_id'] = user[0]
         flash('Successfully logged in!')
+        logging.info(f"User: {username} Logged in!")
 
         user_obj = UserMixin()
         user_obj.id = user[0]
@@ -242,6 +259,8 @@ def login():
         return redirect(url_for('profile')) 
     else:
         flash('Invalid credentials!')
+        logging.error(f"Login Failed. Invalid credentials!")
+
 
     return render_template('login.html')
 
@@ -311,7 +330,7 @@ def search_form():
 
 @app.errorhandler(404)
 def page_not_found(e):
-    logging.debug("test")
+    logging.debug("User got the Error 404")
     return render_template('404.html'), 404
 
 @app.route('/search', methods=['GET'])
@@ -326,13 +345,20 @@ def edit(name):
     for i, otp in enumerate(otp_secrets):
         if otp['name'] == name:
             form = OTPForm()
-            if form.validate_on_submit():
-                otp_secrets[i]['name'] = form.name.data
-                otp_secrets[i]['secret'] = form.secret.data
-                otp_secrets[i]['otp_type'] = form.otp_type.data
-                otp_secrets[i]['refresh_time'] = form.refresh_time.data
-                save_to_db(otp_secrets)
-                return redirect(url_for('home'))
+            if request.method == 'POST':
+                if form.validate():
+                    logging.info(f"Form is valid. Updating OTP with name: {name}")
+                    otp_secrets[i]['name'] = form.name.data
+                    otp_secrets[i]['secret'] = form.secret.data
+                    otp_secrets[i]['otp_type'] = form.otp_type.data
+                    otp_secrets[i]['refresh_time'] = form.refresh_time.data
+
+                    save_to_db(otp_secrets)
+                    logging.info(f"OTP with name {name} successfully updated.")
+                    return redirect(url_for('home'))
+                else:
+                    logging.warning(f"Form validation failed for OTP with name: {name}")
+                    logging.error(form.errors)
             else:
                 form.name.data = otp['name']
                 form.secret.data = otp['secret']
@@ -340,6 +366,7 @@ def edit(name):
                 form.refresh_time.data = otp['refresh_time']
                 return render_template('edit.html', form=form, name=name)
     flash('Secret Not Found')
+    logging.error(f"OTP with name {name} not found.")
     return redirect(url_for('home'))
 
 @app.route('/delete/<name>', methods=['POST'])
@@ -355,7 +382,6 @@ def delete(name):
 def delete_user(user_id):
     current_user = get_current_user()
 
-    # Check if current user is an admin
     if current_user and current_user[1] == "admin":
         with sqlite3.connect("otp.db") as db:
             cursor = db.cursor()
