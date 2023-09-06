@@ -12,12 +12,32 @@
 {% block content %}
 
 <style>
+    body {
+        background-color: #222;
+        color: #fff;
+    }
+
+    .navbar {
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.1);
+    }
+
+    .navbar-dark .navbar-brand {
+        color: #f1f1f1;
+        font-size: 1.5rem;
+        margin-right: 20px;
+        transition: color 0.3s;
+    }
+
+    .navbar-dark .navbar-brand:hover {
+        color: #CD5C5C;
+    }
+
     .center-content {
         display: flex;
         justify-content: center;
         align-items: flex-start;
-        min-height: 100vh; /* Höhe */
-        padding-top: 50px; /* Padding */
+        min-height: 100vh;
+        padding-top: 50px;
     }
 
     .form-container {
@@ -25,21 +45,32 @@
         width: 100%;
         padding: 30px;
         border-radius: 10px;
-        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-        background: linear-gradient(to bottom, #ffffff, #f8f9fa);
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.4);
+        background: #333;
     }
 
     .form-title {
         text-align: center;
         margin-bottom: 30px;
+        color: #fff;
     }
 
     .form-control {
         border-radius: 5px;
+        background-color: #444;
+        color: #fff;
+    }
+
+    .form-control::-webkit-select-placeholder {
+        color: #aaa;
     }
 
     .form-submit {
         margin-top: 20px;
+    }
+
+    .text-danger {
+        color: #ff6b6b;
     }
 </style>
 
@@ -60,6 +91,14 @@
                     </div>
                     <div class="form-group">
                         {{ form.refresh_time.label }} {{ form.refresh_time(class="form-control", value=form.refresh_time.data) }}
+                    </div>
+                    <div class="form-group">
+                        {{ form.company.label }}
+                        <select class="form-control" name="{{ form.company.name }}">
+                            {% for value, label in form.company.choices %}
+                                <option value="{{ value }}">{{ label }}</option>
+                            {% endfor %}
+                        </select>
                     </div>
                     {{ form.submit(class="btn btn-primary") }}
                 </form>

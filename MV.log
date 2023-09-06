@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 2023-09-05 21:17:38,453 [WARNING] Form validation failed for OTP with name: Nobody Belived
 2023-09-05 21:17:38,453 [WARNING] {'company': ['This field is required.']}
 2023-09-05 21:17:38,453 [WARNING] OTP with name Nobody Belived not found.
@@ -28,3 +29,16 @@
 2023-09-05 22:31:54,312 [INFO] User: admin Logged in!
 2023-09-05 22:38:19,199 [ERROR] Login Failed. Invalid credentials!
 2023-09-05 22:38:21,217 [INFO] User: admin Logged in!
+=======
+2023-09-06 10:49:40,995 [INFO] <flask_login.mixins.UserMixin object at 0x0000021017D535E0> was Logged out!.
+2023-09-06 10:49:43,396 [INFO] User: admin Logged in!
+2023-09-06 10:49:43,465 [INFO] <flask_login.mixins.UserMixin object at 0x0000021019524760> is authenticated
+2023-09-06 10:50:35,965 [INFO] <flask_login.mixins.UserMixin object at 0x00000210194873A0> was Logged out!.
+2023-09-06 10:50:45,873 [INFO] User: memmo Logged in!
+2023-09-06 10:50:45,917 [INFO] <flask_login.mixins.UserMixin object at 0x0000021017D53E20> is authenticated
+2023-09-06 10:51:13,258 [ERROR] <flask_login.mixins.UserMixin object at 0x0000021019484220> was redirected or opened an invalid rout!.
+2023-09-06 11:02:56,258 [INFO] <flask_login.mixins.UserMixin object at 0x0000021017D52C80> was Logged out!.
+2023-09-06 11:03:01,880 [INFO] User: memmo Logged in!
+2023-09-06 11:03:01,918 [INFO] <flask_login.mixins.UserMixin object at 0x0000021019590520> is authenticated
+2023-09-06 11:05:08,393 [INFO] <flask_login.mixins.UserMixin object at 0x000002C1DB7531F0> was Logged out!.
+>>>>>>> fb2ad45f833c5faf0164a9c58fe63fc64b932ef2
