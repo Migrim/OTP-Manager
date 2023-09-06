@@ -170,11 +170,19 @@ def register():
 @app.route('/logout')
 def logout():
     session.pop('user_id', None)
-    logging.info(f"A User was Logged out!.")
+    logging.info(f"{current_user} was Logged out!.")
     return redirect(url_for('login'))
-    
+
+def login_required(f):
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        if 'user_id' not in session:
+            return redirect(url_for('login'))
+        return f(*args, **kwargs)
+    return decorated_function
 
 @app.route('/refresh_codes_v2')
+@login_required
 def refresh_codes_v2():
     otp_secrets = load_from_db()
     otp_codes = []
@@ -190,14 +198,6 @@ def refresh_codes_v2():
         })
 
     return jsonify({"otp_codes": otp_codes})
-
-def login_required(f):
-    @wraps(f)
-    def decorated_function(*args, **kwargs):
-        if 'user_id' not in session:
-            return redirect(url_for('login'))
-        return f(*args, **kwargs)
-    return decorated_function
 
 @app.route('/change-password', methods=['POST'])
 def change_password():
@@ -229,9 +229,11 @@ def profile():
     print("Profile function executed.")
     if current_user.is_authenticated:
         print("User is authenticated.")
+        logging.info(f"{current_user} is authenticated")
         return make_response(render_template('profile.html', username=current_user.username))
     else:
         print("User is not authenticated.")  
+        logging.error(f"{current_user} could not be authenticated!")
         return make_response(redirect(url_for('login')))
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -259,8 +261,6 @@ def login():
         return redirect(url_for('profile')) 
     else:
         flash('Invalid credentials!')
-        logging.error(f"Login Failed. Invalid credentials!")
-
 
     return render_template('login.html')
 
@@ -330,7 +330,7 @@ def search_form():
 
 @app.errorhandler(404)
 def page_not_found(e):
-    logging.debug("User got the Error 404")
+    logging.error(f"{current_user} was redirected or opened an invalid rout!.")
     return render_template('404.html'), 404
 
 @app.route('/search', methods=['GET'])
@@ -352,6 +352,7 @@ def edit(name):
                     otp_secrets[i]['secret'] = form.secret.data
                     otp_secrets[i]['otp_type'] = form.otp_type.data
                     otp_secrets[i]['refresh_time'] = form.refresh_time.data
+                    otp_secrets[i]['company'] = form.company.data
 
                     save_to_db(otp_secrets)
                     logging.info(f"OTP with name {name} successfully updated.")
@@ -364,6 +365,8 @@ def edit(name):
                 form.secret.data = otp['secret']
                 form.otp_type.data = otp['otp_type']
                 form.refresh_time.data = otp['refresh_time']
+                form.company.data = otp['company']
+
                 return render_template('edit.html', form=form, name=name)
     flash('Secret Not Found')
     logging.error(f"OTP with name {name} not found.")
@@ -388,9 +391,11 @@ def delete_user(user_id):
             cursor.execute("DELETE FROM users WHERE id = ?", (user_id,))
             db.commit()
         flash('User deleted successfully.')
+        logging.info(f"{current_user} sucessfully deleted a User!")
         return redirect(url_for('admin_settings'))
     else:
         flash('Only admin can delete users.')
+        logging.warning(f"{current_user} tryed to delete a User without the Admin priviledge!")
         return redirect(url_for('home'))
 
 @app.route('/add', methods=['GET', 'POST'])
@@ -408,6 +413,7 @@ def add():
 
         if otp_type not in ['totp', 'hotp']:
             flash('Invalid OTP type. Choose either TOTP or HOTP.')
+            logging.error(f"An invalid OTP-Type was submittet in the /add form!")
             return redirect(url_for('add'))
 
         new_otp_secret = {
