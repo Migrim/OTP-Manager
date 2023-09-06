@@ -99,9 +99,27 @@ def save_to_db(otp_secrets):
         INSERT INTO otp_secrets (name, secret, otp_type, refresh_time)
         VALUES (?, ?, ?, ?)
         """, (otp_secret['name'], otp_secret['secret'], otp_secret['otp_type'], otp_secret['refresh_time']))
-    
+
     conn.commit()
     conn.close()
+
+import sqlite3
+
+def save_companies_to_db(companies):
+    conn = sqlite3.connect("otp.db")
+    cursor = conn.cursor()
+
+    cursor.execute("DELETE FROM companies")
+
+    for company in companies:
+        cursor.execute("""
+        INSERT INTO companies (name)
+        VALUES (?)
+        """, (company['name'],))
+
+    conn.commit()
+    conn.close()
+
 
 def load_from_db():
     with sqlite3.connect("otp.db") as db:
@@ -287,12 +305,14 @@ def home():
         logging.info('Form validated.')
         otp_secrets.append({
             'name': form.name.data,
+            'company': form.company.data if form.company.data else 'N/A',
             'secret': form.secret.data,
             'otp_type': form.otp_type.data,
             'refresh_time': form.refresh_time.data
         })
         save_to_db(otp_secrets)
         form.name.data = ''
+        form.company.data = ''  
         form.secret.data = ''
         form.otp_type.data = ''
         form.refresh_time.data = ''
@@ -304,6 +324,7 @@ def home():
         if otp_code is None:
             flash('Invalid OTP secret')
             continue
+        otp_code['company'] = otp.get('company', 'N/A')  
         otp_codes.append(otp_code)
 
     return render_template('home.html', form=form, otp_codes=otp_codes)
@@ -345,6 +366,11 @@ def edit(name):
     for i, otp in enumerate(otp_secrets):
         if otp['name'] == name:
             form = OTPForm()
+            form.company.choices = [(company['id'], company['name']) for company in load_companies_from_db()]
+
+            if 'company' in otp: 
+                form.company.choices = otp['company']
+
             if request.method == 'POST':
                 if form.validate():
                     logging.info(f"Form is valid. Updating OTP with name: {name}")
@@ -352,11 +378,12 @@ def edit(name):
                     otp_secrets[i]['secret'] = form.secret.data
                     otp_secrets[i]['otp_type'] = form.otp_type.data
                     otp_secrets[i]['refresh_time'] = form.refresh_time.data
-                    otp_secrets[i]['company'] = form.company.data
+                    otp_secrets[i]['company'] = form.company.data 
 
                     save_to_db(otp_secrets)
                     logging.info(f"OTP with name {name} successfully updated.")
                     return redirect(url_for('home'))
+
                 else:
                     logging.warning(f"Form validation failed for OTP with name: {name}")
                     logging.error(form.errors)
@@ -365,12 +392,13 @@ def edit(name):
                 form.secret.data = otp['secret']
                 form.otp_type.data = otp['otp_type']
                 form.refresh_time.data = otp['refresh_time']
-                form.company.data = otp['company']
+                form.company.data = otp.get('company', "none")
 
                 return render_template('edit.html', form=form, name=name)
+
     flash('Secret Not Found')
     logging.error(f"OTP with name {name} not found.")
-    return redirect(url_for('home'))
+    return redirect(url_for('home'))  
 
 @app.route('/delete/<name>', methods=['POST'])
 @login_required
@@ -402,7 +430,9 @@ def delete_user(user_id):
 @login_required
 def add():
     form = OTPForm()
-    form.company.choices = [(company['id'], company['name']) for company in load_companies_from_db()]
+    
+    companies_from_db = load_companies_from_db()
+    form.company.choices = [(company['id'], company['name']) for company in companies_from_db]
 
     if form.validate_on_submit():
         name = form.name.data
@@ -413,7 +443,7 @@ def add():
 
         if otp_type not in ['totp', 'hotp']:
             flash('Invalid OTP type. Choose either TOTP or HOTP.')
-            logging.error(f"An invalid OTP-Type was submittet in the /add form!")
+            logging.error(f"An invalid OTP-Type was submitted in the /add form!")
             return redirect(url_for('add'))
 
         new_otp_secret = {
@@ -425,10 +455,11 @@ def add():
         }
 
         existing_otp_secrets = load_from_db()
-
         existing_otp_secrets.append(new_otp_secret)
-
         save_to_db(existing_otp_secrets)
+
+        save_companies_to_db(companies_from_db)
+        
         return redirect(url_for('home'))
 
     return render_template('add.html', form=form)

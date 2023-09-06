@@ -42,3 +42,15 @@
 2023-09-06 11:03:01,918 [INFO] <flask_login.mixins.UserMixin object at 0x0000021019590520> is authenticated
 2023-09-06 11:05:08,393 [INFO] <flask_login.mixins.UserMixin object at 0x000002C1DB7531F0> was Logged out!.
 >>>>>>> fb2ad45f833c5faf0164a9c58fe63fc64b932ef2
+2023-09-06 18:50:32,776 [INFO] User: admin Logged in!
+2023-09-06 18:50:32,787 [INFO] <flask_login.mixins.UserMixin object at 0x00000223CDBEE590> is authenticated
+2023-09-06 18:57:10,483 [ERROR] OTP with name Nobody Belived not found.
+2023-09-06 18:57:11,862 [ERROR] OTP with name Nobody Belived not found.
+2023-09-06 18:58:24,382 [ERROR] OTP with name Nobody Belived not found.
+2023-09-06 18:59:02,369 [ERROR] OTP with name Nobody Belived not found.
+2023-09-06 18:59:04,934 [ERROR] OTP with name Nobody Belived not found.
+2023-09-06 19:02:34,328 [WARNING] Form validation failed for OTP with name: Nobody Belived
+2023-09-06 19:02:34,328 [ERROR] {'company': ['This field is required.']}
+2023-09-06 19:02:34,328 [ERROR] OTP with name Nobody Belived not found.
+2023-09-06 19:05:46,987 [INFO] Form is valid. Updating OTP with name: Nobody Belived
+2023-09-06 19:05:46,992 [INFO] OTP with name Nobody Belived successfully updated.

@@ -65,6 +65,11 @@
         .text-danger {
             color: #ff6b6b;
         }
+        .form-control:read-only {
+            background-color: #beb8b8;
+            color: #111111;
+            opacity: 1;
+        }
     </style>
 {% endblock %}
 
@@ -113,7 +118,8 @@
                 </select>
             </div>
             <div class="form-group">
-                {{ form.refresh_time.label }} {{ form.refresh_time(class="form-control") }}
+                {{ form.refresh_time.label }}
+                {{ form.refresh_time(class="form-control", value="30", readonly="readonly") }}
                 {% for error in form.refresh_time.errors %}
                     <span class="text-danger">{{ error }}</span>
                 {% endfor %}
