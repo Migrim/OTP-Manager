@@ -39,7 +39,7 @@
     }
 
     .logs-box {
-        background-color: #ffffff;
+        background-color: #252526;
         border: 1px solid #dee2e6;
         border-radius: 0.25rem;
         max-height: 70vh;
@@ -49,20 +49,23 @@
     .logs-box div {
         margin: 0;
         font-size: 0.875em;
-        color: #343a40;
+        color: #fff;
         padding: 15px;
         white-space: pre-wrap;
     }
 
     .scroll-to-end-button {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
         display: inline-block;
         background-color: #CD5C5C;
         color: #ffffff;
         padding: 10px 20px;
-        margin-top: 20px;
         cursor: pointer;
         border-radius: 5px;
-        float: right;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+        z-index: 1000;
     }
 
     .scroll-to-end-button:hover {
@@ -84,7 +87,10 @@
 <script>
     function updateLogs() {
         $.get("/get_logs?lines=100", function(data) {
-            var formattedLogs = data.logs.replace(/\[error\]/g, '<span style="color: red;">[error]</span>');
+            var formattedLogs = data.logs
+                .replace(/(error)/ig, '<span style="color: #CD5C5C;">$1</span>')
+                .replace(/(info)/ig, '<span style="color: #25AFF3;">$1</span>')
+                .replace(/(warning)/ig, '<span style="color: #B1B93C;">$1</span>');
             $("#logs").html(formattedLogs);
         });
     }

@@ -2,89 +2,10 @@
 
 {% block title %} Add OTP Secret {% endblock %}
 
-{% block styles %}
+    {% block styles %}
     {{ super() }}
-    <style>
-        body {
-            background-color: #222;
-            color: #fff;
-        }
-
-        .navbar {
-            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.1);
-        }
-        
-        .navbar-dark .navbar-brand {
-            color: #f1f1f1;
-            font-size: 1.5rem;
-            margin-right: 20px;
-            transition: color 0.3s;
-        }
-        
-        .navbar-dark .navbar-brand:hover {
-            color: #CD5C5C;
-        }
-
-        .center-content {
-            display: flex;
-            justify-content: center;
-            align-items: flex-start;
-            min-height: 100vh;
-            padding-top: 50px;
-        }
-
-        .form-container {
-            max-width: 400px;
-            width: 100%;
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.4);
-            background: #333;
-        }
-
-        .form-title {
-            text-align: center;
-            margin-bottom: 30px;
-            color: #fff;
-        }
-
-        .form-control {
-            border-radius: 5px;
-            background-color: #444;
-            color: #fff;
-        }
-
-        .form-control::-webkit-select-placeholder {
-            color: #aaa;
-        }
-
-        .form-submit {
-            margin-top: 20px;
-        }
-
-        .text-danger {
-            color: #ff6b6b;
-        }
-        .form-control:read-only {
-            background-color: #444444;
-            color: #F5F5F5;
-            opacity: 1;
-        }
-        .form-control:focus {
-            border-color: #CD5C5C; 
-            box-shadow: 0 0 0 0.2rem rgba(255, 0, 0, 0.25);
-        }
-
-        select.form-control {
-            background-color: #555; 
-            color: #fff; 
-        }
-
-        select.form-control option {
-            background-color: #444; 
-            color: #fff; 
-        }
-    </style>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/add.css') }}">
 {% endblock %}
 
 {% block navbar %}
@@ -142,4 +63,31 @@
         </form>
     </div>
 </div>
+
+<div aria-live="polite" aria-atomic="true" class="d-flex justify-content-center align-items-center" style="position: fixed; top: 1em; right: 1em; z-index: 1050;">
+    <div class="toast" role="alert" aria-live="assertive" aria-atomic="true" style="display: none;">
+        <div class="toast-header">
+            <strong class="mr-auto">Form Validation Error</strong>
+            <small>just now</small>
+            <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="toast-body">
+            There was an error in your submission. Please check the form fields for details.
+        </div>
+    </div>
+</div>
+{% endblock %} 
+
+{% block scripts %}
+{{ super() }}
+<script>
+    $(document).ready(function() {
+        if ($('.text-danger').length > 0) {
+            $('.toast').toast({ delay: 5000 });
+            $('.toast').toast('show');
+        }
+    });
+</script>
 {% endblock %}

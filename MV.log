@@ -86,3 +86,35 @@
 2023-09-07 11:28:50,310 [INFO] admin is authenticated
 2023-09-07 11:37:15,510 [ERROR] admin was redirected or opened an invalid rout!.
 >>>>>>> 7d12f147d49e37e63b6aecc3817c7e7b6cfbba14
+2023-09-07 15:27:52,457 [INFO] User: admin Logged in!
+2023-09-07 15:27:52,468 [INFO] admin is authenticated
+2023-09-07 15:44:12,740 [ERROR] admin was redirected or opened an invalid rout!.
+2023-09-07 15:46:35,251 [ERROR] admin was redirected or opened an invalid rout!.
+2023-09-07 15:48:47,702 [ERROR] admin was redirected or opened an invalid rout!.
+2023-09-07 15:58:22,810 [ERROR] admin was redirected or opened an invalid rout!.
+2023-09-07 16:00:35,914 [ERROR] admin was redirected or opened an invalid rout!.
+2023-09-07 16:01:04,372 [ERROR] admin was redirected or opened an invalid rout!.
+2023-09-07 16:01:49,990 [ERROR] admin was redirected or opened an invalid rout!.
+2023-09-07 16:02:20,834 [ERROR] admin was redirected or opened an invalid rout!.
+2023-09-07 16:03:27,075 [ERROR] admin was redirected or opened an invalid rout!.
+2023-09-07 16:04:47,543 [ERROR] admin was redirected or opened an invalid rout!.
+2023-09-07 16:05:16,645 [ERROR] admin was redirected or opened an invalid rout!.
+2023-09-07 16:06:28,623 [ERROR] admin was redirected or opened an invalid rout!.
+2023-09-07 16:08:47,925 [ERROR] admin was redirected or opened an invalid rout!.
+2023-09-07 16:08:47,932 [ERROR] admin was redirected or opened an invalid rout!.
+2023-09-07 16:09:10,865 [ERROR] admin was redirected or opened an invalid rout!.
+2023-09-07 16:09:10,872 [ERROR] admin was redirected or opened an invalid rout!.
+2023-09-07 16:09:32,769 [ERROR] admin was redirected or opened an invalid rout!.
+2023-09-07 16:09:33,305 [ERROR] admin was redirected or opened an invalid rout!.
+2023-09-07 16:10:50,891 [ERROR] admin was redirected or opened an invalid rout!.
+2023-09-07 16:10:50,898 [ERROR] admin was redirected or opened an invalid rout!.
+2023-09-07 16:11:23,107 [ERROR] admin was redirected or opened an invalid rout!.
+2023-09-07 16:24:40,104 [INFO] admin was Logged out!.
+2023-09-07 16:24:41,340 [INFO] User: admin Logged in!
+2023-09-07 16:24:41,352 [INFO] admin is authenticated
+2023-09-07 16:25:00,479 [WARNING] User 'admin' attempted to add an OTP with a too short secret.
+2023-09-07 16:25:06,437 [WARNING] User 'admin' attempted to add an OTP with a too short secret.
+2023-09-07 16:25:11,238 [INFO] admin was Logged out!.
+2023-09-07 16:25:12,470 [INFO] User: admin Logged in!
+2023-09-07 16:25:12,486 [INFO] admin is authenticated
+2023-09-07 16:33:15,548 [WARNING] User 'admin' attempted to add an OTP with a too short secret.
