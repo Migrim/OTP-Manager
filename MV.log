@@ -54,3 +54,5 @@
 2023-09-06 19:02:34,328 [ERROR] OTP with name Nobody Belived not found.
 2023-09-06 19:05:46,987 [INFO] Form is valid. Updating OTP with name: Nobody Belived
 2023-09-06 19:05:46,992 [INFO] OTP with name Nobody Belived successfully updated.
+2023-09-06 19:42:09,679 [INFO] Form is valid. Updating OTP with name: test3
+2023-09-06 19:42:09,684 [INFO] OTP with name test3 successfully updated.
