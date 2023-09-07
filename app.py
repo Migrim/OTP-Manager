@@ -16,6 +16,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from functools import wraps
 from datetime import datetime, timedelta
 from flask_login import LoginManager, UserMixin, current_user, login_user
+from search import search_blueprint
 import sqlite3
 import logging
 
@@ -29,6 +30,7 @@ Bootstrap(app)
 
 from admin_routes import admin_bp
 app.register_blueprint(admin_bp, url_prefix='/admin')
+app.register_blueprint(search_blueprint)
 
 login_manager = LoginManager()
 login_manager.init_app(app)
