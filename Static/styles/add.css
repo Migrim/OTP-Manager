@@ -1,0 +1,79 @@
+body {
+    background-color: #222;
+    color: #fff;
+}
+
+.navbar {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.1);
+}
+
+.navbar-dark .navbar-brand {
+    color: #f1f1f1;
+    font-size: 1.5rem;
+    margin-right: 20px;
+    transition: color 0.3s;
+}
+
+.navbar-dark .navbar-brand:hover {
+    color: #CD5C5C;
+}
+
+.center-content {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    min-height: 100vh;
+    padding-top: 50px;
+}
+
+.form-container {
+    max-width: 400px;
+    width: 100%;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.4);
+    background: #333;
+}
+
+.form-title {
+    text-align: center;
+    margin-bottom: 30px;
+    color: #fff;
+}
+
+.form-control {
+    border-radius: 5px;
+    background-color: #444;
+    color: #fff;
+}
+
+.form-control::-webkit-select-placeholder {
+    color: #aaa;
+}
+
+.form-submit {
+    margin-top: 20px;
+}
+
+.text-danger {
+    color: #ff6b6b;
+}
+.form-control:read-only {
+    background-color: #444444;
+    color: #F5F5F5;
+    opacity: 1;
+}
+.form-control:focus {
+    border-color: #CD5C5C; 
+    box-shadow: 0 0 0 0.2rem rgba(255, 0, 0, 0.25);
+}
+
+select.form-control {
+    background-color: #555; 
+    color: #fff; 
+}
+
+select.form-control option {
+    background-color: #444; 
+    color: #fff; 
+}
