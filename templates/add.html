@@ -66,9 +66,23 @@
             color: #ff6b6b;
         }
         .form-control:read-only {
-            background-color: #beb8b8;
-            color: #111111;
+            background-color: #444444;
+            color: #F5F5F5;
             opacity: 1;
+        }
+        .form-control:focus {
+            border-color: #CD5C5C; 
+            box-shadow: 0 0 0 0.2rem rgba(255, 0, 0, 0.25);
+        }
+
+        select.form-control {
+            background-color: #555; 
+            color: #fff; 
+        }
+
+        select.form-control option {
+            background-color: #444; 
+            color: #fff; 
         }
     </style>
 {% endblock %}
