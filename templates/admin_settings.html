@@ -128,60 +128,10 @@
     </div>
 </div>
 
-<div class="modal fade" id="resetPasswordModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Reset Password</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                Are you sure you want to reset the password for this user?
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                <button type="button" class="btn btn-primary confirm-reset-password">Confirm</button>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="toast" id="userToast" role="alert" aria-live="assertive" aria-atomic="true" data-bs-delay="2000">
-    <div class="toast-header">
-      <strong class="me-auto">Notification</strong>
-      <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
-    </div>
-    <div class="toast-body">
-      Password has been reset successfully.
-    </div>
-</div>
 {% endblock %}
 
 {% block scripts %}
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        let resetButtons = document.querySelectorAll('.reset-password-btn');
-        let modal = new bootstrap.Modal(document.getElementById('resetPasswordModal'));
-        let confirmButton = document.querySelector('.confirm-reset-password');
 
-        let userToastElement = document.getElementById('userToast');
-        let userToast = new bootstrap.Toast(userToastElement, {
-            autohide: true,
-            delay: 2000
-        });
-
-        resetButtons.forEach(button => {
-            button.addEventListener('click', function() {
-                let userId = this.getAttribute('data-user-id');
-                confirmButton.setAttribute('data-user-id', userId);
-                modal.show();
-            });
-        });
-
-        confirmButton.addEventListener('click', function() {
-            userToast.show();
-            modal.hide();
-        });
-    });
 </script>
 {% endblock %}

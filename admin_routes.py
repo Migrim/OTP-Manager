@@ -41,7 +41,6 @@ def load_companies_from_db():
         logging.error(f"Error fetching all companies: {e}")
         return []
 
-
 @admin_bp.route('/admin_settings', methods=['GET', 'POST'])
 @login_required
 def admin_settings():

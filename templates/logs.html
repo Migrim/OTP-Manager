@@ -46,7 +46,7 @@
         overflow-y: auto;
     }
 
-    .logs-box pre {
+    .logs-box div {
         margin: 0;
         font-size: 0.875em;
         color: #343a40;
@@ -62,6 +62,7 @@
         margin-top: 20px;
         cursor: pointer;
         border-radius: 5px;
+        float: right;
     }
 
     .scroll-to-end-button:hover {
@@ -73,7 +74,7 @@
 <div class="logs-section">
     <h1>Real-time Logs</h1>
     <div class="logs-box">
-        <pre id="logs"></pre>
+        <div id="logs"></div>
     </div>
     <div class="scroll-to-end-button" id="scroll-to-end">Scroll to End</div>
 </div>
@@ -83,7 +84,8 @@
 <script>
     function updateLogs() {
         $.get("/get_logs?lines=100", function(data) {
-            $("#logs").text(data.logs);
+            var formattedLogs = data.logs.replace(/\[error\]/g, '<span style="color: red;">[error]</span>');
+            $("#logs").html(formattedLogs);
         });
     }
 

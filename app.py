@@ -188,7 +188,7 @@ def register():
 @app.route('/logout')
 def logout():
     session.pop('user_id', None)
-    logging.info(f"{current_user} was Logged out!.")
+    logging.info(f"{current_user.username} was Logged out!.")
     return redirect(url_for('login'))
 
 def login_required(f):
@@ -242,18 +242,6 @@ def change_password():
     
     return redirect(url_for('home'))
 
-@app.route('/profile')
-def profile():
-    print("Profile function executed.")
-    if current_user.is_authenticated:
-        print("User is authenticated.")
-        logging.info(f"{current_user} is authenticated")
-        return make_response(render_template('profile.html', username=current_user.username))
-    else:
-        print("User is not authenticated.")  
-        logging.error(f"{current_user} could not be authenticated!")
-        return make_response(redirect(url_for('login')))
-
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     user = None
@@ -281,6 +269,18 @@ def login():
         flash('Invalid credentials!')
 
     return render_template('login.html')
+
+@app.route('/profile')
+def profile():
+    print("Profile function executed.")
+    if current_user.is_authenticated:
+        print("User is authenticated.")
+        logging.info(f"{current_user.username} is authenticated")
+        return make_response(render_template('profile.html', username=current_user.username))
+    else:
+        print("User is not authenticated.")  
+        logging.error(f"{current_user} could not be authenticated!")
+        return make_response(redirect(url_for('login')))
 
 @app.route('/get_otp_v2/<name>', methods=['GET'])
 def get_otp_v2(name):
@@ -347,11 +347,11 @@ def view_logs():
 
 @app.route('/search_form', methods=['GET'])
 def search_form():
-    return render_template('search_form.html')
+    return render_template('search.html')
 
 @app.errorhandler(404)
 def page_not_found(e):
-    logging.error(f"{current_user} was redirected or opened an invalid rout!.")
+    logging.error(f"{current_user.username} was redirected or opened an invalid rout!.")
     return render_template('404.html'), 404
 
 @app.route('/search', methods=['GET'])

@@ -1,4 +1,5 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 2023-09-05 21:17:38,453 [WARNING] Form validation failed for OTP with name: Nobody Belived
 2023-09-05 21:17:38,453 [WARNING] {'company': ['This field is required.']}
 2023-09-05 21:17:38,453 [WARNING] OTP with name Nobody Belived not found.
@@ -56,3 +57,32 @@
 2023-09-06 19:05:46,992 [INFO] OTP with name Nobody Belived successfully updated.
 2023-09-06 19:42:09,679 [INFO] Form is valid. Updating OTP with name: test3
 2023-09-06 19:42:09,684 [INFO] OTP with name test3 successfully updated.
+=======
+2023-09-07 09:12:09,952 [INFO] admin was Logged out!.
+2023-09-07 09:12:37,271 [INFO] User: admin Logged in!
+2023-09-07 09:12:37,286 [INFO] admin is authenticated
+2023-09-07 09:13:06,544 [ERROR] <flask_login.mixins.UserMixin object at 0x000002590FE1B190> was redirected or opened an invalid rout!.
+2023-09-07 09:13:55,118 [ERROR] admin was redirected or opened an invalid rout!.
+2023-09-07 09:14:23,595 [INFO] admin was Logged out!.
+2023-09-07 09:14:47,293 [INFO] User: memmo Logged in!
+2023-09-07 09:14:47,316 [INFO] memmo is authenticated
+2023-09-07 09:15:28,773 [ERROR] memmo was redirected or opened an invalid rout!.
+2023-09-07 09:15:58,354 [INFO] memmo was Logged out!.
+2023-09-07 09:15:59,471 [INFO] User: admin Logged in!
+2023-09-07 09:15:59,492 [INFO] admin is authenticated
+2023-09-07 09:59:49,225 [INFO] admin was Logged out!.
+2023-09-07 09:59:51,881 [INFO] User: admin Logged in!
+2023-09-07 09:59:51,928 [INFO] admin is authenticated
+2023-09-07 10:13:12,873 [ERROR] admin was redirected or opened an invalid rout!.
+2023-09-07 10:13:53,487 [ERROR] admin was redirected or opened an invalid rout!.
+2023-09-07 10:14:15,032 [ERROR] admin was redirected or opened an invalid rout!.
+2023-09-07 10:16:16,130 [ERROR] admin was redirected or opened an invalid rout!.
+2023-09-07 10:16:34,239 [ERROR] admin was redirected or opened an invalid rout!.
+2023-09-07 10:16:39,320 [ERROR] admin was redirected or opened an invalid rout!.
+2023-09-07 10:16:40,110 [ERROR] admin was redirected or opened an invalid rout!.
+2023-09-07 11:24:56,182 [ERROR] admin was redirected or opened an invalid rout!.
+2023-09-07 11:28:46,558 [INFO] admin was Logged out!.
+2023-09-07 11:28:50,285 [INFO] User: admin Logged in!
+2023-09-07 11:28:50,310 [INFO] admin is authenticated
+2023-09-07 11:37:15,510 [ERROR] admin was redirected or opened an invalid rout!.
+>>>>>>> 7d12f147d49e37e63b6aecc3817c7e7b6cfbba14
