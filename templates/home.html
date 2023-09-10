@@ -12,27 +12,41 @@
 </head>
 <body>
     {% block navbar %}
-            <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-                <a class="navbar-brand" href="#">OTP List</a>
-                <div class="navbar-nav mr-auto">
-                    <a class="navbar-brand" href="{{ url_for('add') }}">Add</a>
-                </div>
-                <div class="navbar-nav mr-auto">
-                    <a class="navbar-brand" href="{{ url_for('view_logs') }}">Logs</a>
-                </div>
-                <div class="navbar-nav mr-auto">
-                    <a class="navbar-brand" href="{{ url_for('admin.admin_settings') }}">Settings</a>
-                </div>
-                <div id="logoutContainer">
-                    <div id="logoutBtn">
-                        <a class="navbar-brand" href="{{ url_for('logout') }}">
-                            <i class="material-icons-outlined">logout</i>
-                            Logout
-                        </a>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="#">OTP List</a>
+        <div class="navbar-nav mr-auto">
+            <a class="navbar-brand" href="{{ url_for('add') }}">Add</a>
+        </div>
+        <div class="navbar-nav mr-auto">
+            <a class="navbar-brand" href="{{ url_for('view_logs') }}">Logs</a>
+        </div>
+        <div class="navbar-nav mr-auto">
+            <a class="navbar-brand" href="{{ url_for('admin.admin_settings') }}">Settings</a>
+        </div>
+        
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                <div class="navbar-nav ml-auto">
+                    <div class="alert alert-warning alert-dismissible fade show mb-0" role="alert">
+                        {{ messages[0] }}
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
                     </div>
-                </div>         
-            </nav>
-            {% endblock %}
+                </div>
+            {% endif %}
+        {% endwith %}
+        
+        <div id="logoutContainer">
+            <div id="logoutBtn">
+                <a class="navbar-brand" href="{{ url_for('logout') }}">
+                    <i class="material-icons-outlined">logout</i>
+                    Logout
+                </a>
+            </div>
+        </div>
+    </nav>
+    {% endblock %}
         
         {% block content %}
             <div class="container">

@@ -122,3 +122,31 @@
 2023-09-07 17:05:00,059 [ERROR] admin was redirected or opened an invalid rout!.
 2023-09-07 17:05:15,308 [ERROR] admin was redirected or opened an invalid rout!.
 2023-09-07 17:05:26,945 [ERROR] admin was redirected or opened an invalid rout!.
+2023-09-08 08:07:57,923 [ERROR] admin was redirected or opened an invalid rout!.
+2023-09-10 23:25:37,555 [WARNING] User 'admin' attempted to add an OTP with a too short secret.
+2023-09-10 23:30:15,345 [WARNING] User 'admin' attempted to add an OTP with a too short secret.
+2023-09-10 23:32:07,022 [WARNING] User 'admin' attempted to add an OTP with a too short secret.
+2023-09-10 23:34:37,966 [WARNING] User 'admin' attempted to add an OTP with a too short secret.
+2023-09-10 23:34:50,498 [WARNING] User 'admin' attempted to add an OTP with a too short secret.
+2023-09-10 23:36:56,897 [WARNING] User 'admin' attempted to add an OTP with a too short secret.
+2023-09-10 23:38:50,233 [WARNING] User 'admin' attempted to add an OTP with a too short secret.
+2023-09-10 23:39:13,228 [WARNING] User 'admin' attempted to add an OTP with a too short secret.
+2023-09-10 23:39:32,989 [INFO] User 'admin' successfully added a new OTP secret named 'JBSWY3DPEHPK3PXP'.
+2023-09-10 23:39:40,607 [WARNING] User 'admin' attempted to add an OTP with a duplicate name.
+2023-09-10 23:40:00,710 [WARNING] User 'admin' attempted to add an OTP with a duplicate name.
+2023-09-10 23:40:15,390 [WARNING] User 'admin' attempted to add an OTP with a duplicate name.
+2023-09-10 23:40:27,916 [INFO] User 'admin' successfully added a new OTP secret named 'söla,d'.
+2023-09-10 23:50:59,074 [WARNING] User 'admin' attempted to add an OTP with a too short secret.
+2023-09-10 23:51:07,104 [WARNING] User 'admin' attempted to add an OTP with a too short secret.
+2023-09-10 23:51:23,414 [WARNING] User 'admin' attempted to add an OTP with a too short secret.
+2023-09-10 23:57:17,339 [WARNING] User 'admin' attempted to add an OTP with a too short secret.
+2023-09-10 23:57:36,256 [WARNING] User 'admin' attempted to add an OTP with non-existing company ID.
+2023-09-11 00:04:33,890 [INFO] User 'admin' successfully added a new OTP secret named 'test2'.
+2023-09-11 00:08:25,745 [INFO] User 'admin' successfully added a new OTP secret named 'loool'.
+2023-09-11 00:13:48,719 [INFO] User 'admin' successfully added a new OTP secret named 'anoherone'.
+2023-09-11 00:18:01,049 [INFO] User 'admin' successfully added a new OTP secret named 'GG'.
+2023-09-11 00:32:00,179 [INFO] User 'admin' successfully added a new OTP secret named 'uhuh'.
+2023-09-11 00:37:59,304 [INFO] User 'admin' successfully added a new OTP secret named 'huhu'.
+2023-09-11 00:38:59,396 [INFO] User 'admin' successfully added a new OTP secret named 'Haberz'.
+2023-09-11 00:41:36,219 [INFO] User 'admin' successfully added a new OTP secret named 'gz'.
+2023-09-11 00:42:25,203 [INFO] User 'admin' successfully added a new OTP secret named 'test'.
