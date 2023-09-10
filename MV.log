@@ -1,3 +1,63 @@
+<<<<<<< HEAD
+<<<<<<< HEAD
+2023-09-05 21:17:38,453 [WARNING] Form validation failed for OTP with name: Nobody Belived
+2023-09-05 21:17:38,453 [WARNING] {'company': ['This field is required.']}
+2023-09-05 21:17:38,453 [WARNING] OTP with name Nobody Belived not found.
+2023-09-05 21:17:45,306 [WARNING] Form validation failed for OTP with name: in us!
+2023-09-05 21:17:45,306 [WARNING] {'company': ['This field is required.']}
+2023-09-05 21:17:45,306 [WARNING] OTP with name in us! not found.
+2023-09-05 21:22:37,297 [INFO] User: admin Logged in!.
+2023-09-05 21:23:37,797 [INFO] User: admin Logged in!
+2023-09-05 21:24:31,007 [ERROR] Login Failed. Invalid credentials!
+2023-09-05 21:24:31,923 [ERROR] Login Failed. Invalid credentials!
+2023-09-05 21:24:32,261 [INFO] User: admin Logged in!
+2023-09-05 21:24:39,543 [ERROR] Login Failed. Invalid credentials!
+2023-09-05 21:24:41,934 [ERROR] Login Failed. Invalid credentials!
+2023-09-05 21:24:43,019 [ERROR] Login Failed. Invalid credentials!
+2023-09-05 21:24:45,249 [INFO] User: admin Logged in!
+2023-09-05 21:26:21,710 [INFO] A User was Logged out!.
+2023-09-05 21:26:21,728 [ERROR] Login Failed. Invalid credentials!
+2023-09-05 21:26:22,829 [INFO] User: admin Logged in!
+2023-09-05 21:28:16,545 [ERROR] Login Failed. Invalid credentials!
+2023-09-05 21:28:30,847 [INFO] The Secret [{'name': 'DJ Khaled', 'secret': 'JBSWY3DPEHPK3PXP', 'otp_type': 'totp', 'refresh_time': 30}, {'name': 'Nobody Belived', 'secret': 'G5Q4LMUWCA4XEYEN', 'otp_type': 'totp', 'refresh_time': 30}, {'name': 'in us!', 'secret': 'K3Q3PVGXFLQM2KVN', 'otp_type': 'totp', 'refresh_time': 30}, {'name': 'Memmo', 'secret': 'JBSWY3DPEHPK3PXP', 'otp_type': 'totp', 'refresh_time': 30}] has been deleted!
+2023-09-05 22:05:17,532 [INFO] A User was Logged out!.
+2023-09-05 22:05:17,550 [ERROR] Login Failed. Invalid credentials!
+2023-09-05 22:05:20,240 [ERROR] Login Failed. Invalid credentials!
+2023-09-05 22:05:23,705 [INFO] User: admin Logged in!
+2023-09-05 22:31:50,352 [ERROR] Login Failed. Invalid credentials!
+2023-09-05 22:31:53,001 [INFO] A User was Logged out!.
+2023-09-05 22:31:53,017 [ERROR] Login Failed. Invalid credentials!
+2023-09-05 22:31:54,312 [INFO] User: admin Logged in!
+2023-09-05 22:38:19,199 [ERROR] Login Failed. Invalid credentials!
+2023-09-05 22:38:21,217 [INFO] User: admin Logged in!
+=======
+2023-09-06 10:49:40,995 [INFO] <flask_login.mixins.UserMixin object at 0x0000021017D535E0> was Logged out!.
+2023-09-06 10:49:43,396 [INFO] User: admin Logged in!
+2023-09-06 10:49:43,465 [INFO] <flask_login.mixins.UserMixin object at 0x0000021019524760> is authenticated
+2023-09-06 10:50:35,965 [INFO] <flask_login.mixins.UserMixin object at 0x00000210194873A0> was Logged out!.
+2023-09-06 10:50:45,873 [INFO] User: memmo Logged in!
+2023-09-06 10:50:45,917 [INFO] <flask_login.mixins.UserMixin object at 0x0000021017D53E20> is authenticated
+2023-09-06 10:51:13,258 [ERROR] <flask_login.mixins.UserMixin object at 0x0000021019484220> was redirected or opened an invalid rout!.
+2023-09-06 11:02:56,258 [INFO] <flask_login.mixins.UserMixin object at 0x0000021017D52C80> was Logged out!.
+2023-09-06 11:03:01,880 [INFO] User: memmo Logged in!
+2023-09-06 11:03:01,918 [INFO] <flask_login.mixins.UserMixin object at 0x0000021019590520> is authenticated
+2023-09-06 11:05:08,393 [INFO] <flask_login.mixins.UserMixin object at 0x000002C1DB7531F0> was Logged out!.
+>>>>>>> fb2ad45f833c5faf0164a9c58fe63fc64b932ef2
+2023-09-06 18:50:32,776 [INFO] User: admin Logged in!
+2023-09-06 18:50:32,787 [INFO] <flask_login.mixins.UserMixin object at 0x00000223CDBEE590> is authenticated
+2023-09-06 18:57:10,483 [ERROR] OTP with name Nobody Belived not found.
+2023-09-06 18:57:11,862 [ERROR] OTP with name Nobody Belived not found.
+2023-09-06 18:58:24,382 [ERROR] OTP with name Nobody Belived not found.
+2023-09-06 18:59:02,369 [ERROR] OTP with name Nobody Belived not found.
+2023-09-06 18:59:04,934 [ERROR] OTP with name Nobody Belived not found.
+2023-09-06 19:02:34,328 [WARNING] Form validation failed for OTP with name: Nobody Belived
+2023-09-06 19:02:34,328 [ERROR] {'company': ['This field is required.']}
+2023-09-06 19:02:34,328 [ERROR] OTP with name Nobody Belived not found.
+2023-09-06 19:05:46,987 [INFO] Form is valid. Updating OTP with name: Nobody Belived
+2023-09-06 19:05:46,992 [INFO] OTP with name Nobody Belived successfully updated.
+2023-09-06 19:42:09,679 [INFO] Form is valid. Updating OTP with name: test3
+2023-09-06 19:42:09,684 [INFO] OTP with name test3 successfully updated.
+=======
 2023-09-07 09:12:09,952 [INFO] admin was Logged out!.
 2023-09-07 09:12:37,271 [INFO] User: admin Logged in!
 2023-09-07 09:12:37,286 [INFO] admin is authenticated
@@ -25,3 +85,40 @@
 2023-09-07 11:28:50,285 [INFO] User: admin Logged in!
 2023-09-07 11:28:50,310 [INFO] admin is authenticated
 2023-09-07 11:37:15,510 [ERROR] admin was redirected or opened an invalid rout!.
+>>>>>>> 7d12f147d49e37e63b6aecc3817c7e7b6cfbba14
+2023-09-07 15:27:52,457 [INFO] User: admin Logged in!
+2023-09-07 15:27:52,468 [INFO] admin is authenticated
+2023-09-07 15:44:12,740 [ERROR] admin was redirected or opened an invalid rout!.
+2023-09-07 15:46:35,251 [ERROR] admin was redirected or opened an invalid rout!.
+2023-09-07 15:48:47,702 [ERROR] admin was redirected or opened an invalid rout!.
+2023-09-07 15:58:22,810 [ERROR] admin was redirected or opened an invalid rout!.
+2023-09-07 16:00:35,914 [ERROR] admin was redirected or opened an invalid rout!.
+2023-09-07 16:01:04,372 [ERROR] admin was redirected or opened an invalid rout!.
+2023-09-07 16:01:49,990 [ERROR] admin was redirected or opened an invalid rout!.
+2023-09-07 16:02:20,834 [ERROR] admin was redirected or opened an invalid rout!.
+2023-09-07 16:03:27,075 [ERROR] admin was redirected or opened an invalid rout!.
+2023-09-07 16:04:47,543 [ERROR] admin was redirected or opened an invalid rout!.
+2023-09-07 16:05:16,645 [ERROR] admin was redirected or opened an invalid rout!.
+2023-09-07 16:06:28,623 [ERROR] admin was redirected or opened an invalid rout!.
+2023-09-07 16:08:47,925 [ERROR] admin was redirected or opened an invalid rout!.
+2023-09-07 16:08:47,932 [ERROR] admin was redirected or opened an invalid rout!.
+2023-09-07 16:09:10,865 [ERROR] admin was redirected or opened an invalid rout!.
+2023-09-07 16:09:10,872 [ERROR] admin was redirected or opened an invalid rout!.
+2023-09-07 16:09:32,769 [ERROR] admin was redirected or opened an invalid rout!.
+2023-09-07 16:09:33,305 [ERROR] admin was redirected or opened an invalid rout!.
+2023-09-07 16:10:50,891 [ERROR] admin was redirected or opened an invalid rout!.
+2023-09-07 16:10:50,898 [ERROR] admin was redirected or opened an invalid rout!.
+2023-09-07 16:11:23,107 [ERROR] admin was redirected or opened an invalid rout!.
+2023-09-07 16:24:40,104 [INFO] admin was Logged out!.
+2023-09-07 16:24:41,340 [INFO] User: admin Logged in!
+2023-09-07 16:24:41,352 [INFO] admin is authenticated
+2023-09-07 16:25:00,479 [WARNING] User 'admin' attempted to add an OTP with a too short secret.
+2023-09-07 16:25:06,437 [WARNING] User 'admin' attempted to add an OTP with a too short secret.
+2023-09-07 16:25:11,238 [INFO] admin was Logged out!.
+2023-09-07 16:25:12,470 [INFO] User: admin Logged in!
+2023-09-07 16:25:12,486 [INFO] admin is authenticated
+2023-09-07 16:33:15,548 [WARNING] User 'admin' attempted to add an OTP with a too short secret.
+2023-09-07 17:04:55,048 [ERROR] admin was redirected or opened an invalid rout!.
+2023-09-07 17:05:00,059 [ERROR] admin was redirected or opened an invalid rout!.
+2023-09-07 17:05:15,308 [ERROR] admin was redirected or opened an invalid rout!.
+2023-09-07 17:05:26,945 [ERROR] admin was redirected or opened an invalid rout!.

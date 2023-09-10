@@ -16,6 +16,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from functools import wraps
 from datetime import datetime, timedelta
 from flask_login import LoginManager, UserMixin, current_user, login_user
+from search import search_blueprint
 import sqlite3
 import logging
 
@@ -29,6 +30,7 @@ Bootstrap(app)
 
 from admin_routes import admin_bp
 app.register_blueprint(admin_bp, url_prefix='/admin')
+app.register_blueprint(search_blueprint)
 
 login_manager = LoginManager()
 login_manager.init_app(app)
@@ -435,15 +437,31 @@ def add():
     form.company.choices = [(company['id'], company['name']) for company in companies_from_db]
 
     if form.validate_on_submit():
-        name = form.name.data
-        secret = form.secret.data
-        otp_type = form.otp_type.data.lower()
+        name = form.name.data.strip()
+        secret = form.secret.data.strip()
+        otp_type = form.otp_type.data.lower().strip()
         refresh_time = form.refresh_time.data
         company_id = form.company.data
 
+        if not name or not secret:
+            flash('Name and secret fields cannot be empty.')
+            logging.warning(f"User '{current_user.username}' attempted to add an OTP with empty name or secret.")
+            return redirect(url_for('add'))
+
         if otp_type not in ['totp', 'hotp']:
             flash('Invalid OTP type. Choose either TOTP or HOTP.')
-            logging.error(f"An invalid OTP-Type was submitted in the /add form!")
+            logging.error(f"User '{current_user.username}' submitted an invalid OTP-Type in the /add form.")
+            return redirect(url_for('add'))
+        
+        if len(secret) < 16:
+            flash('Secret is too short. It should be at least 16 characters.')
+            logging.warning(f"User '{current_user.username}' attempted to add an OTP with a too short secret.")
+            return redirect(url_for('add'))
+
+        existing_otp_secrets = load_from_db()
+        if any(secret['name'] == name for secret in existing_otp_secrets):
+            flash('A secret with this name already exists. Please choose a different name.')
+            logging.warning(f"User '{current_user.username}' attempted to add an OTP with a duplicate name.")
             return redirect(url_for('add'))
 
         new_otp_secret = {
@@ -453,13 +471,13 @@ def add():
             'refresh_time': refresh_time,
             'company_id': company_id
         }
-
-        existing_otp_secrets = load_from_db()
+        
         existing_otp_secrets.append(new_otp_secret)
         save_to_db(existing_otp_secrets)
 
         save_companies_to_db(companies_from_db)
         
+        logging.info(f"User '{current_user.username}' successfully added a new OTP secret named '{name}'.")
         return redirect(url_for('home'))
 
     return render_template('add.html', form=form)

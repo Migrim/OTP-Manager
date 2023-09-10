@@ -1,15 +1,17 @@
 from flask import Flask, request, render_template, json
 import base64
 from pyotp import totp, hotp
+from flask import Blueprint, redirect, url_for
+import sqlite3
 
+search_blueprint = Blueprint('search_blueprint', __name__)
 app = Flask(__name__)
 
-def load_from_json(filename='otp_secrets.json'):
-    try:
-        with open(filename, 'r') as f:
-            return json.load(f)
-    except FileNotFoundError:
-        return []
+def load_from_db():
+    with sqlite3.connect("otp.db") as db:
+        cursor = db.cursor()
+        cursor.execute("SELECT name, secret, otp_type, refresh_time FROM otp_secrets")
+        return [{'name': row[0], 'secret': row[1], 'otp_type': row[2], 'refresh_time': row[3]} for row in cursor.fetchall()]
 
 def is_base32(secret):
     try:
@@ -18,10 +20,10 @@ def is_base32(secret):
     except:
         return False
 
-@app.route('/search_otp', methods=['GET'])
+@search_blueprint.route('/search_otp', methods=['GET'])
 def search_otp():
     name = request.args.get('name').lower() 
-    otp_secrets = load_from_json()
+    otp_secrets = load_from_db()
     
     matched_secrets = []
     
@@ -42,7 +44,7 @@ def search_otp():
         return render_template('otp.html', otp_secrets=matched_secrets)
     else:
 
-        return redirect(url_for('home.html'))
+        return redirect(url_for('home'))
 
 
 if __name__ == '__main__':
