@@ -107,9 +107,9 @@ def delete_user(user_id):
 @admin_bp.route('/add_company', methods=['POST'])
 @login_required
 def add_company():
-    if current_user.username != "admin":
+    if current_user.get_id() != "admin":
         flash("Only the admin can add companies.")
-        return redirect(url_for('settings'))
+        return redirect(url_for('admin.admin_settings'))
 
     new_company_name = request.form.get('company_name')
 
@@ -119,14 +119,14 @@ def add_company():
         db.commit()
 
     flash('New company added!')
-    return redirect(url_for('settings'))
+    return redirect(url_for('admin.admin_settings'))
 
 @admin_bp.route('/rename_company/<int:company_id>', methods=['GET', 'POST'])
 @login_required
 def rename_company(company_id):
-    if get_current_user()[1] != "admin":
+    if current_user.get_id() != "admin":
         flash("Only the admin can rename companies.")
-        return redirect(url_for('settings'))
+        return redirect(url_for('admin.admin_settings'))
 
     if request.method == 'POST':
         new_name = request.form.get('new_name')
@@ -137,16 +137,16 @@ def rename_company(company_id):
             db.commit()
 
         flash('Company name updated!')
-        return redirect(url_for('settings'))
+        return redirect(url_for('admin.admin_settings'))
 
     return render_template('rename_company.html', company_id=company_id)
 
 @admin_bp.route('/delete_company/<int:company_id>', methods=['GET'])
 @login_required
 def delete_company(company_id):
-    if get_current_user()[1] != "admin":
+    if current_user.get_id() != "admin":
         flash("Only the admin can delete companies.")
-        return redirect(url_for('settings'))
+        return redirect(url_for('admin.admin_settings'))
 
     with sqlite3.connect("otp.db") as db:
         cursor = db.cursor()
@@ -154,4 +154,4 @@ def delete_company(company_id):
         db.commit()
 
     flash('Company deleted!')
-    return redirect(url_for('settings'))
+    return redirect(url_for('admin.admin_settings'))

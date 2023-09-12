@@ -98,9 +98,9 @@ def save_to_db(otp_secrets):
 
     for otp_secret in otp_secrets:
         cursor.execute("""
-        INSERT INTO otp_secrets (name, secret, otp_type, refresh_time)
-        VALUES (?, ?, ?, ?)
-        """, (otp_secret['name'], otp_secret['secret'], otp_secret['otp_type'], otp_secret['refresh_time']))
+            INSERT INTO otp_secrets (name, secret, otp_type, refresh_time, company_id)
+            VALUES (?, ?, ?, ?, ?)
+        """, (otp_secret['name'], otp_secret['secret'], otp_secret['otp_type'], otp_secret['refresh_time'], otp_secret['company'])) 
 
     conn.commit()
     conn.close()
@@ -137,13 +137,13 @@ def load_companies_from_db():
     with sqlite3.connect("otp.db") as db:
         cursor = db.cursor()
         cursor.execute("SELECT id, name FROM companies")
-        return [{'id': row[0], 'name': row[1]} for row in cursor.fetchall()]
+        return [{'id': int(row[0]), 'name': row[1]} for row in cursor.fetchall()]
 
 def load_secrets_with_companies():
     with sqlite3.connect("otp.db") as db:
         cursor = db.cursor()
         cursor.execute("""
-            SELECT os.name, os.secret, os.otp_type, os.refresh_time, c.name AS company_name
+            SELECT os.name, os.secret, os.otp_type, os.refresh_time, c.name AS company_id
             FROM otp_secrets os
             LEFT JOIN companies c ON os.company_id = c.id
         """)
@@ -154,7 +154,7 @@ class OTPForm(FlaskForm):
     secret = StringField('Secret', validators=[InputRequired()])
     otp_type = SelectField('OTP Type', validators=[InputRequired()], choices=[('totp', 'TOTP'), ('hotp', 'HOTP')])
     refresh_time = IntegerField('Refresh Time', validators=[InputRequired(), NumberRange(min=1, message="Nur Zahlen sind erlaubt.")], default=30)
-    company = SelectField('Company', validators=[InputRequired()], choices=[], coerce=int) 
+    company = SelectField('Company', validators=[InputRequired()], choices=[], coerce=int)
     submit = SubmitField('Submit')
 
 class UserForm(FlaskForm):
@@ -322,24 +322,29 @@ def home():
 
     if form.validate_on_submit():
         logging.info('Form validated.')
-        
-        company_name = next((company['name'] for company in companies_from_db if company['id'] == int(form.company.data)), 'N/A')
+
+        company_id = form.company.data 
+        company_name = next((company['name'] for company in companies_from_db if company['id'] == int(company_id)), 'N/A')
 
         otp_secrets.append({
             'name': form.name.data,
-            'company': company_name,
+            'company': f"{company_name} ({company_id})", 
             'secret': form.secret.data,
             'otp_type': form.otp_type.data,
-            'refresh_time': form.refresh_time.data
+            'refresh_time': form.refresh_time.data,
+            'company_id': company_id, 
         })
         save_to_db(otp_secrets)
         form.name.data = ''
-        form.company.data = ''  
+        form.company.data = ''
         form.secret.data = ''
         form.otp_type.data = ''
         form.refresh_time.data = ''
         logging.info(f'OTP secret added: {otp_secrets[-1]}')
         return redirect(url_for('home'))
+
+    company_id = form.company.data
+    print("Company ID:", company_id) 
 
     for otp in otp_secrets_with_companies:
         otp_code = generate_otp_code(otp)
@@ -348,7 +353,8 @@ def home():
             continue
         otp_codes.append(otp_code)
 
-    return render_template('home.html', form=form, otp_codes=otp_codes)
+    return render_template('home.html', form=form, otp_codes=otp_secrets_with_companies)
+
 
 @app.route('/get_logs', methods=['GET'])
 @login_required
@@ -432,20 +438,21 @@ def delete(name):
 @app.route('/delete_user/<int:user_id>', methods=['GET'])
 @login_required
 def delete_user(user_id):
-    current_user = get_current_user()
+    if current_user.get_id() != "admin":
+        flash("Only the admin can delete users.")
+        return redirect(url_for('admin.admin_settings'))
 
-    if current_user and current_user[1] == "admin":
+    try:
         with sqlite3.connect("otp.db") as db:
             cursor = db.cursor()
             cursor.execute("DELETE FROM users WHERE id = ?", (user_id,))
             db.commit()
-        flash('User deleted successfully.')
-        logging.info(f"{current_user} sucessfully deleted a User!")
-        return redirect(url_for('admin_settings'))
-    else:
-        flash('Only admin can delete users.')
-        logging.warning(f"{current_user} tryed to delete a User without the Admin priviledge!")
-        return redirect(url_for('home'))
+        flash("User successfully deleted.")
+    except sqlite3.Error as e:
+        flash("Failed to delete user.")
+        logging.error(f"Error deleting user: {e}")
+
+    return redirect(url_for('admin.admin_settings'))
 
 @app.route('/add', methods=['GET', 'POST'])
 @login_required
@@ -476,11 +483,6 @@ def add():
             logging.warning(f"User '{current_user.username}' attempted to add an OTP with a too short secret.")
             return redirect(url_for('add'))
         
-        if not name.isalnum() or len(name) < 2:
-            flash('Name must be at least 2 characters long and contain only alphanumeric characters.')
-            logging.warning(f"User '{current_user.username}' attempted to add an OTP with an invalid name.")
-            return redirect(url_for('add'))
-        
         if not secret.isalnum():
             flash('Secret must contain only alphanumeric characters.')
             logging.warning(f"User '{current_user.username}' attempted to add an OTP with a secret containing special characters.")
@@ -491,17 +493,9 @@ def add():
             logging.warning(f"User '{current_user.username}' attempted to add an OTP with invalid refresh time.")
             return redirect(url_for('add'))
 
-        company_id = int(form.company.data)
-
         if not any(company['id'] == company_id for company in companies_from_db):
             flash('Invalid company ID.')
             logging.warning(f"User '{current_user.username}' attempted to add an OTP with non-existing company ID.")
-            return redirect(url_for('add'))
-
-        existing_otp_secrets = load_from_db()
-        if any(secret['name'] == name for secret in existing_otp_secrets):
-            flash('A secret with this name already exists. Please choose a different name.')
-            logging.warning(f"User '{current_user.username}' attempted to add an OTP with a duplicate name.")
             return redirect(url_for('add'))
         
         suspicious_patterns = ["--", ";--", ";", "/*", "*/", "@@", "@", "char", "nchar", "varchar", "nvarchar", "alter", "begin", "cast", "create", "cursor", "declare", "delete", "drop", "end", "exec", "execute", "fetch", "insert", "kill", "open", "select", "sys", "sysobjects", "syscolumns", "table", "update"]
@@ -511,21 +505,35 @@ def add():
                 logging.warning(f"User '{current_user.username}' attempted to add an OTP with suspicious patterns in input fields.")
                 return redirect(url_for('add'))
 
+        valid_company_ids = [company['id'] for company in companies_from_db]
+        if company_id not in valid_company_ids:
+            flash('Invalid company ID.')
+            logging.warning(f"User '{current_user.username}' attempted to add an OTP with an invalid company ID.")
+            return redirect(url_for('add'))
+
+        selected_company_name = next((company['name'] for company in companies_from_db if company['id'] == company_id), 'N/A')
+
+        existing_otp_secrets = load_from_db()
+        if any(secret['name'] == name for secret in existing_otp_secrets):
+            flash('A secret with this name already exists. Please choose a different name.')
+            logging.warning(f"User '{current_user.username}' attempted to add an OTP with a duplicate name.")
+            return redirect(url_for('add'))
+
         new_otp_secret = {
             'name': name,
             'secret': secret,
             'otp_type': otp_type,
             'refresh_time': refresh_time,
-            'company_id': company_id  # Assign the company ID here
+            'company_id': company_id,
+            'company': selected_company_name 
         }
 
-        existing_otp_secrets = load_from_db()
         existing_otp_secrets.append(new_otp_secret)
         save_to_db(existing_otp_secrets)
 
         save_companies_to_db(companies_from_db)
 
-        logging.info(f"User '{current_user.username}' successfully added a new OTP secret named '{name}'.")
+        flash(f"New OTP secret '{name}' added successfully.")
         return redirect(url_for('home'))
 
     return render_template('add.html', form=form)

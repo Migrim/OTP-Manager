@@ -150,7 +150,29 @@
 2023-09-11 00:38:59,396 [INFO] User 'admin' successfully added a new OTP secret named 'Haberz'.
 2023-09-11 00:41:36,219 [INFO] User 'admin' successfully added a new OTP secret named 'gz'.
 2023-09-11 00:42:25,203 [INFO] User 'admin' successfully added a new OTP secret named 'test'.
+<<<<<<< HEAD
 2023-09-11 08:00:53,446 [INFO] User: admin Logged in!
 2023-09-11 08:00:53,465 [INFO] admin is authenticated
 2023-09-11 08:01:15,273 [WARNING] User 'admin' attempted to add an OTP with a too short secret.
 2023-09-11 08:02:00,029 [WARNING] User 'admin' attempted to add an OTP with a duplicate name.
+=======
+2023-09-11 18:06:07,168 [WARNING] User 'admin' attempted to add an OTP with a too short secret.
+2023-09-11 18:07:46,232 [WARNING] User 'admin' attempted to add an OTP with an invalid name.
+2023-09-11 18:07:58,446 [WARNING] User 'admin' attempted to add an OTP with a secret containing special characters.
+2023-09-11 18:08:20,887 [WARNING] User 'admin' attempted to add an OTP with an invalid name.
+2023-09-11 18:08:27,112 [INFO] User 'admin' successfully added a new OTP secret named 'afidhvbuaw'.
+2023-09-11 18:14:13,988 [INFO] User 'admin' successfully added a new OTP secret named 'Banger'.
+2023-09-11 18:47:33,303 [INFO] admin was Logged out!.
+2023-09-11 18:47:34,465 [INFO] User: admin Logged in!
+2023-09-11 18:47:34,480 [INFO] admin is authenticated
+2023-09-11 18:52:19,552 [ERROR] admin was redirected or opened an invalid rout!.
+2023-09-11 19:00:12,036 [ERROR] admin was redirected or opened an invalid rout!.
+2023-09-11 19:10:30,155 [ERROR] admin was redirected or opened an invalid rout!.
+2023-09-11 19:15:02,773 [ERROR] admin was redirected or opened an invalid rout!.
+2023-09-11 19:24:29,277 [ERROR] admin was redirected or opened an invalid rout!.
+2023-09-11 19:33:31,426 [ERROR] admin was redirected or opened an invalid rout!.
+2023-09-11 19:35:49,233 [ERROR] admin was redirected or opened an invalid rout!.
+2023-09-11 20:07:00,720 [INFO] admin was Logged out!.
+2023-09-11 20:07:12,388 [INFO] User: admin Logged in!
+2023-09-11 20:07:12,403 [INFO] admin is authenticated
+>>>>>>> c2a895e9aa0103f66b79f4c02c571010cb4aa652
