@@ -169,3 +169,10 @@
 2023-09-11 20:07:00,720 [INFO] admin was Logged out!.
 2023-09-11 20:07:12,388 [INFO] User: admin Logged in!
 2023-09-11 20:07:12,403 [INFO] admin is authenticated
+2023-09-11 20:10:24,553 [INFO] admin was Logged out!.
+2023-09-11 20:10:31,306 [INFO] User: memmo Logged in!
+2023-09-11 20:10:31,315 [INFO] memmo is authenticated
+2023-09-11 20:10:43,920 [INFO] memmo was Logged out!.
+2023-09-11 20:10:46,246 [INFO] User: admin Logged in!
+2023-09-11 20:10:46,259 [INFO] admin is authenticated
+2023-09-11 20:11:08,802 [WARNING] User 'admin' attempted to add an OTP with a too short secret.
