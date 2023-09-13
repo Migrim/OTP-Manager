@@ -150,6 +150,12 @@
 2023-09-11 00:38:59,396 [INFO] User 'admin' successfully added a new OTP secret named 'Haberz'.
 2023-09-11 00:41:36,219 [INFO] User 'admin' successfully added a new OTP secret named 'gz'.
 2023-09-11 00:42:25,203 [INFO] User 'admin' successfully added a new OTP secret named 'test'.
+<<<<<<< HEAD
+2023-09-11 08:00:53,446 [INFO] User: admin Logged in!
+2023-09-11 08:00:53,465 [INFO] admin is authenticated
+2023-09-11 08:01:15,273 [WARNING] User 'admin' attempted to add an OTP with a too short secret.
+2023-09-11 08:02:00,029 [WARNING] User 'admin' attempted to add an OTP with a duplicate name.
+=======
 2023-09-11 18:06:07,168 [WARNING] User 'admin' attempted to add an OTP with a too short secret.
 2023-09-11 18:07:46,232 [WARNING] User 'admin' attempted to add an OTP with an invalid name.
 2023-09-11 18:07:58,446 [WARNING] User 'admin' attempted to add an OTP with a secret containing special characters.
@@ -169,6 +175,7 @@
 2023-09-11 20:07:00,720 [INFO] admin was Logged out!.
 2023-09-11 20:07:12,388 [INFO] User: admin Logged in!
 2023-09-11 20:07:12,403 [INFO] admin is authenticated
+<<<<<<< HEAD
 2023-09-11 20:10:24,553 [INFO] admin was Logged out!.
 2023-09-11 20:10:31,306 [INFO] User: memmo Logged in!
 2023-09-11 20:10:31,315 [INFO] memmo is authenticated
@@ -176,3 +183,6 @@
 2023-09-11 20:10:46,246 [INFO] User: admin Logged in!
 2023-09-11 20:10:46,259 [INFO] admin is authenticated
 2023-09-11 20:11:08,802 [WARNING] User 'admin' attempted to add an OTP with a too short secret.
+=======
+>>>>>>> c2a895e9aa0103f66b79f4c02c571010cb4aa652
+>>>>>>> 16bdaf7633b9d5fd2271a61102b1cc5ed47bcbfd
