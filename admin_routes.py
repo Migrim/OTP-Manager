@@ -35,10 +35,9 @@ def load_companies_from_db():
             cursor = db.cursor()
             cursor.execute("SELECT * FROM companies")
             companies = cursor.fetchall()
-            companies = [{"id": company[0], "name": company[1]} for company in companies]
+            companies = [{"company_id": company[0], "name": company[1]} for company in companies] 
         return companies
     except sqlite3.Error as e:
-        logging.error(f"Error fetching all companies: {e}")
         return []
 
 @admin_bp.route('/admin_settings', methods=['GET', 'POST'])
@@ -141,17 +140,20 @@ def rename_company(company_id):
 
     return render_template('rename_company.html', company_id=company_id)
 
-@admin_bp.route('/delete_company/<int:company_id>', methods=['GET'])
+@admin_bp.route('/delete_company/<int:company_id>', methods=['POST'])
 @login_required
 def delete_company(company_id):
-    if current_user.get_id() != "admin":
+    if current_user.username != "admin": 
         flash("Only the admin can delete companies.")
         return redirect(url_for('admin.admin_settings'))
 
-    with sqlite3.connect("otp.db") as db:
-        cursor = db.cursor()
-        cursor.execute("DELETE FROM companies WHERE id = ?", (company_id,))
-        db.commit()
+    try:
+        with sqlite3.connect("otp.db") as db:
+            cursor = db.cursor()
+            cursor.execute("DELETE FROM companies WHERE company_id = ?", (company_id,))
+            db.commit()
+        flash('Company deleted!')
+    except sqlite3.Error as e:
+        flash('Failed to delete company.')
 
-    flash('Company deleted!')
     return redirect(url_for('admin.admin_settings'))

@@ -122,7 +122,12 @@
         <h2 class="form-title">Existing Companies</h2>
         <ul class="list-group">
             {% for company in companies %}
-                <li class="list-group-item">{{ company.name }} <form style="display:inline;" action="{{ url_for('admin.delete_company', company_id=company.id) }}" method="POST"><button type="submit" class="btn btn-danger">Delete</button></form></li>
+                <li class="list-group-item">{{ company.name }} 
+                    <form style="display:inline;" action="{{ url_for('admin.delete_company', company_id=company.company_id) }}" method="POST">
+                        {{ company_form.hidden_tag() }}
+                        <button type="submit" class="btn btn-danger">Delete</button>
+                    </form>
+                </li>
             {% endfor %}
         </ul>
     </div>

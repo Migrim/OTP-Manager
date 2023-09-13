@@ -98,9 +98,9 @@ def save_to_db(otp_secrets):
 
     for otp_secret in otp_secrets:
         cursor.execute("""
-        INSERT INTO otp_secrets (name, secret, otp_type, refresh_time)
-        VALUES (?, ?, ?, ?)
-        """, (otp_secret['name'], otp_secret['secret'], otp_secret['otp_type'], otp_secret['refresh_time']))
+        INSERT INTO otp_secrets (name, secret, otp_type, refresh_time, company_id)
+        VALUES (?, ?, ?, ?, ?)
+        """, (otp_secret['name'], otp_secret['secret'], otp_secret['otp_type'], otp_secret['refresh_time'], otp_secret['company_id']))
 
     conn.commit()
     conn.close()
@@ -126,14 +126,34 @@ def save_companies_to_db(companies):
 def load_from_db():
     with sqlite3.connect("otp.db") as db:
         cursor = db.cursor()
-        cursor.execute("SELECT name, secret, otp_type, refresh_time FROM otp_secrets")
-        return [{'name': row[0], 'secret': row[1], 'otp_type': row[2], 'refresh_time': row[3]} for row in cursor.fetchall()]
+        cursor.execute("""
+            SELECT 
+                otp_secrets.name, 
+                otp_secrets.secret, 
+                otp_secrets.otp_type, 
+                otp_secrets.refresh_time, 
+                otp_secrets.company_id, 
+                companies.name AS company_name
+            FROM otp_secrets
+            LEFT JOIN companies ON otp_secrets.company_id = companies.company_id
+        """)
+        return [
+            {
+                'name': row[0], 
+                'secret': row[1], 
+                'otp_type': row[2], 
+                'refresh_time': row[3], 
+                'company_id': row[4], 
+                'company': row[5] if row[5] else 'Unbekannt'
+            } 
+            for row in cursor.fetchall()
+        ]
 
 def load_companies_from_db():
     with sqlite3.connect("otp.db") as db:
         cursor = db.cursor()
-        cursor.execute("SELECT id, name FROM companies")
-        return [{'id': row[0], 'name': row[1]} for row in cursor.fetchall()]
+        cursor.execute("SELECT company_id, name FROM companies")
+        return [{'company_id': row[0], 'name': row[1]} for row in cursor.fetchall()]
 
 class OTPForm(FlaskForm):
     name = StringField('Name', validators=[InputRequired(), Length(max=25, message="Der Name darf nicht länger als 25 Zeichen sein.")])
@@ -326,7 +346,7 @@ def home():
         if otp_code is None:
             flash('Invalid OTP secret')
             continue
-        otp_code['company'] = otp.get('company', 'N/A')  
+        otp_code['company'] = otp.get('company', 'Unbekannt')  
         otp_codes.append(otp_code)
 
     return render_template('home.html', form=form, otp_codes=otp_codes)
@@ -434,7 +454,7 @@ def delete_user(user_id):
 def add():
     form = OTPForm()
     companies_from_db = load_companies_from_db()
-    form.company.choices = [(company['id'], company['name']) for company in companies_from_db]
+    form.company.choices = [(company['company_id'], company['name']) for company in companies_from_db]
 
     if form.validate_on_submit():
         name = form.name.data.strip()
@@ -487,7 +507,7 @@ def add():
     #       return redirect(url_for('add'))
     # validating the Company id stored in the Companie Table
 
-        selected_company_name = next((company['name'] for company in companies_from_db if company['id'] == company_id), 'N/A')
+        selected_company_name = next((company['name'] for company in companies_from_db if company['company_id'] == company_id), 'N/A')
 
         existing_otp_secrets = load_from_db()
         if any(secret['name'] == name for secret in existing_otp_secrets):
