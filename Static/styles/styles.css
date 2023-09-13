@@ -48,11 +48,13 @@ body {
 #logoutBtn {
     position: absolute;
     right: 0;
+    top: 0.5px;
     cursor: pointer;
 }
 
 #logoutBtn a {
-    display: inline-block;
+    display: flex;
+    align-items: center;
     padding: 8px 16px;
     background-color: #CD5C5C;
     color: #fff;
