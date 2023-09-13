@@ -7,7 +7,32 @@ body {
 .search-bar {
     display: flex;
     justify-content: center;
-    margin: 20px 0;
+    align-items: center;
+}
+
+.custom-dropdown {
+    padding: 10px;
+    font-size: 17px;
+    border: 1px solid #757575;
+    width: 50%;
+    background: rgba(255, 255, 255, 0.1);
+    color: #f1f1f1;
+    border-radius: 4px;
+    transition: background 0.3s, border 0.3s;
+}
+
+.custom-dropdown:focus {
+    background: rgba(255, 255, 255, 0.2);
+    border-color: #f1f1f1;
+}
+
+.custom-dropdown::-ms-expand {
+    display: none;
+}
+
+.custom-dropdown option {
+    background-color: #314558;
+    color: #fff;
 }
 
 .search-bar input[type="text"] {

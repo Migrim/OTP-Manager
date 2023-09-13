@@ -10,8 +10,28 @@ app = Flask(__name__)
 def load_from_db():
     with sqlite3.connect("otp.db") as db:
         cursor = db.cursor()
-        cursor.execute("SELECT name, secret, otp_type, refresh_time FROM otp_secrets")
-        return [{'name': row[0], 'secret': row[1], 'otp_type': row[2], 'refresh_time': row[3]} for row in cursor.fetchall()]
+        cursor.execute("""
+            SELECT 
+                otp_secrets.name, 
+                otp_secrets.secret, 
+                otp_secrets.otp_type, 
+                otp_secrets.refresh_time, 
+                otp_secrets.company_id, 
+                companies.name AS company_name
+            FROM otp_secrets
+            LEFT JOIN companies ON otp_secrets.company_id = companies.company_id
+        """)
+        return [
+            {
+                'name': row[0], 
+                'secret': row[1], 
+                'otp_type': row[2], 
+                'refresh_time': row[3], 
+                'company_id': row[4], 
+                'company': row[5] if row[5] else 'Unbekannt'
+            } 
+            for row in cursor.fetchall()
+        ]
 
 def is_base32(secret):
     try:
@@ -45,7 +65,6 @@ def search_otp():
     else:
 
         return redirect(url_for('home'))
-
 
 if __name__ == '__main__':
     app.run(debug=True)

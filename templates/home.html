@@ -54,6 +54,12 @@
 
                 <form method="get" action="/search_otp" class="search-bar">
                     <input type="text" id="searchInput" name="name" placeholder="Search for OTPs" />
+                    <select name="company" id="companyDropdown" class="dropdown-menu" onchange="this.form.submit()">
+                        <option value="">All Companies</option>
+                        {% for company in companies %}
+                            <option value="{{ company.name }}" {% if request.args.get('company') == company.name %}selected{% endif %}>{{ company.name }}</option>
+                        {% endfor %}
+                    </select>
                 </form>
                 
                 <div class="row">
@@ -86,7 +92,6 @@
                         </div>
                     </div>
                     {% endfor %}
-                    
                 </div>
                 
                 <div class="modal fade" id="deleteConfirmationModal" tabindex="-1" role="dialog" aria-labelledby="deleteConfirmationModalLabel" aria-hidden="true">

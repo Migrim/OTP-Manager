@@ -4,7 +4,8 @@
     {% extends 'bootstrap/base.html' %}
     {% block title %} OTP Search Result {% endblock %}
 </head>
-<body>
+<body class="dark-mode">
+
 {% block navbar %}
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <a class="navbar-brand" href="#">Search Results</a>
@@ -52,18 +53,20 @@
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-12 text-center">
-                <h1>Search Result for {{ otp.name }}</h1>
-                <ul class="list-group mt-3">
-                    <li class="list-group-item">Name: {{ otp.name }}</li>
-                    <li class="list-group-item">Secret: <span class="spoiler">{{ otp.secret }}</span></li>
-                    <li class="list-group-item">OTP type: {{ otp.otp_type }}</li>
-                    <li class="list-group-item">OTP code: <span class="otp-code" id="otp_code_0">{{ otp_code }}</span></li>
-                </ul>
-                <div class="progress mt-2">
-                    <div class="progress-bar" role="progressbar" style="width: 100%; font-size: 10px;" id="progressBar0"
-                        data-refresh-time="{{ otp.refresh_time }}">30s</div>
-                </div>
-            </div>
+                <h1>Search Result for {{ request.args.get('name') }}</h1>
+    {% for otp_secret in otp_secrets %}
+        <ul class="list-group mt-3">
+            <li class="list-group-item">Name: {{ otp_secret.name }}</li>
+            <li class="list-group-item">Secret: <span class="spoiler">{{ otp_secret.secret }}</span></li>
+            <li class="list-group-item">OTP type: {{ otp_secret.otp_type }}</li>
+            <li class="list-group-item">OTP code: <span class="otp-code" id="otp_code_{{ loop.index0 }}">{{ otp_secret.otp_code }}</span></li>
+            <li class="list-group-item">Refresh time: {{ otp_secret.refresh_time }} seconds</li>
+        </ul>
+        <div class="progress mt-2">
+            <div class="progress-bar" role="progressbar" style="width: 100%; font-size: 10px;" id="progressBar{{ loop.index0 }}"
+                data-refresh-time="{{ otp_secret.refresh_time }}">30s</div>
+        </div>
+    {% endfor %}
         </div>
         <div class="row justify-content-center mt-3">
             <div class="col-md-12 text-center">

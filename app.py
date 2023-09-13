@@ -122,7 +122,6 @@ def save_companies_to_db(companies):
     conn.commit()
     conn.close()
 
-
 def load_from_db():
     with sqlite3.connect("otp.db") as db:
         cursor = db.cursor()
@@ -340,6 +339,12 @@ def home():
         form.refresh_time.data = ''
         logging.info(f'OTP secret added: {otp_secrets[-1]}')
         return redirect(url_for('home'))
+        
+    companies = load_companies_from_db()
+
+    selected_company = request.args.get('company')
+    if selected_company:
+        otp_secrets = [otp for otp in otp_secrets if otp['company'] == selected_company]
 
     for otp in otp_secrets:
         otp_code = generate_otp_code(otp)
@@ -349,7 +354,9 @@ def home():
         otp_code['company'] = otp.get('company', 'Unbekannt')  
         otp_codes.append(otp_code)
 
-    return render_template('home.html', form=form, otp_codes=otp_codes)
+    search_name = request.args.get('name')
+
+    return render_template('home.html', form=form, otp_codes=otp_codes, companies=companies, search_name=search_name)
 
 @app.route('/get_logs', methods=['GET'])
 @login_required
@@ -378,8 +385,10 @@ def page_not_found(e):
 
 @app.route('/search', methods=['GET'])
 @login_required
-def search():
-    return render_template('search.html')
+def search_otp():
+    print(matched_secrets)
+    return render_template('otp.html', otp_secrets=matched_secrets)
+
 
 @app.route('/edit/<name>', methods=['GET', 'POST'])
 @login_required
