@@ -11,13 +11,15 @@ body {
 }
 
 .custom-dropdown {
+    margin-left: 20px;
     padding: 10px;
     font-size: 17px;
     border: 1px solid #757575;
-    width: 50%;
+    width: 15.5%; 
     background: rgba(255, 255, 255, 0.1);
     color: #f1f1f1;
-    border-radius: 4px;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
     transition: background 0.3s, border 0.3s;
 }
 
@@ -72,15 +74,16 @@ body {
 
 #logoutBtn {
     position: absolute;
-    right: 0;
-    top: 0.5px;
+    right: -1px; 
+    top: 0.1px;
     cursor: pointer;
 }
 
 #logoutBtn a {
     display: flex;
     align-items: center;
-    padding: 8px 16px;
+    padding: 4px 12px;
+    font-size: 1.4rem; 
     background-color: #CD5C5C;
     color: #fff;
     text-decoration: none;
@@ -88,14 +91,13 @@ body {
     transition: background-color 0.3s;
 }
 
-#logoutBtn a {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
 #logoutBtn a:hover {
     background-color: #B94A4A;
+}
+
+#logoutBtn a i.material-icons-outlined {
+    font-size: 18px; 
+    margin-left: 8px; 
 }
 
 .alert {
@@ -239,7 +241,6 @@ body {
     position: fixed;
     bottom: 0;
     right: 0;
-    background-color: rgba(0, 0, 0, 0.5); 
     color: white; 
     padding: 10px;
     font-size: 12px;

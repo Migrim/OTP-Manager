@@ -808,3 +808,6 @@
 2023-09-15 19:16:56,973 [ERROR] admin was redirected or opened an invalid rout!.
 2023-09-15 19:16:59,326 [WARNING] User 'admin' attempted to add an OTP with a too short secret.
 2023-09-15 19:17:07,919 [WARNING] User 'admin' attempted to add an OTP with a too short secret.
+2023-09-15 19:48:46,950 [INFO] admin was Logged out!.
+2023-09-15 19:48:47,970 [INFO] User: admin Logged in!
+2023-09-15 19:48:47,980 [INFO] admin is authenticated

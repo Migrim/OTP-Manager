@@ -40,16 +40,31 @@ def is_base32(secret):
     except:
         return False
 
+def load_companies_from_db():
+    with sqlite3.connect("otp.db") as db:
+        cursor = db.cursor()
+        cursor.execute("SELECT company_id, name FROM companies")
+        return [{'company_id': row[0], 'name': row[1]} for row in cursor.fetchall()]
+
+def get_companies_list():
+    otp_secrets = load_from_db()
+    companies = {otp['company'] for otp in otp_secrets if 'company' in otp}
+    return companies
+
 @search_blueprint.route('/search_otp', methods=['GET'])
 def search_otp():
-    name = request.args.get('name').lower() 
+    name = request.args.get('name', '').lower()
+    company = request.args.get('company')
     otp_secrets = load_from_db()
     
+    if company and company.lower() != "all companies":
+        otp_secrets = [otp for otp in otp_secrets if otp.get('company').lower() == company.lower()]
+
     matched_secrets = []
-    
+
     for otp_secret in otp_secrets:
-        stored_name = otp_secret.get('name', 'Unnamed').lower() 
-        if name in stored_name:  
+        stored_name = otp_secret.get('name', 'Unnamed').lower()
+        if name in stored_name:
             if otp_secret['otp_type'] == 'totp':
                 if not is_base32(otp_secret['secret']):
                     return 'Invalid base32 secret', 400
@@ -61,9 +76,8 @@ def search_otp():
             matched_secrets.append(otp_secret)
 
     if matched_secrets:
-        return render_template('otp.html', otp_secrets=matched_secrets)
+        return render_template('home.html', otp_codes=matched_secrets, companies=load_companies_from_db())  # Change otp.html to home.html and pass the list of companies here
     else:
-
         return redirect(url_for('home'))
 
 if __name__ == '__main__':

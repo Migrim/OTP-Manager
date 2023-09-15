@@ -43,7 +43,7 @@
                     Logout
                     <i class="material-icons-outlined">logout</i>
                 </a>
-            </div>
+            </div>                      
         </div>        
     </nav>
     {% endblock %}
@@ -52,10 +52,10 @@
             <div class="container">
                 <h1 class="text-center text-white">One Time Passwords</h1>
 
-                <form method="get" action="/search_otp" class="search-bar">
+                <form method="get" action="{{ url_for('search_blueprint.search_otp') }}" class="search-bar">
                     <input type="text" id="searchInput" name="name" placeholder="Search for OTPs" />
-                    <select name="company" id="companyDropdown" class="dropdown-menu" onchange="this.form.submit()">
-                        <option value="">All Companies</option>
+                    <select name="company" id="companyDropdown" class="form-select custom-dropdown" onchange="this.form.submit()">
+                        <option value="All Companies" {% if request.args.get('company') == "All Companies" %}selected{% endif %}>All Companies</option>
                         {% for company in companies %}
                             <option value="{{ company.name }}" {% if request.args.get('company') == company.name %}selected{% endif %}>{{ company.name }}</option>
                         {% endfor %}
