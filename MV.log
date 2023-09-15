@@ -756,3 +756,7 @@
 2023-09-13 19:43:49,448 [ERROR] admin was redirected or opened an invalid rout!.
 2023-09-13 19:43:50,972 [ERROR] admin was redirected or opened an invalid rout!.
 2023-09-13 19:43:53,716 [ERROR] admin was redirected or opened an invalid rout!.
+2023-09-13 19:57:52,947 [INFO] admin was Logged out!.
+2023-09-13 19:57:53,087 [ERROR] admin was redirected or opened an invalid rout!.
+2023-09-13 19:57:56,918 [INFO] User: admin Logged in!
+2023-09-13 19:57:56,931 [INFO] admin is authenticated
