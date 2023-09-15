@@ -769,3 +769,42 @@
 2023-09-14 09:52:36,808 [INFO] User: admin Logged in!
 2023-09-14 09:52:36,826 [INFO] admin is authenticated
 >>>>>>> 7a13a34a0653326df07910540dd267ec435a1500
+2023-09-15 18:43:10,580 [ERROR] admin was redirected or opened an invalid rout!.
+2023-09-15 18:43:14,388 [INFO] User: admin Logged in!
+2023-09-15 18:43:14,400 [INFO] admin is authenticated
+2023-09-15 18:43:26,432 [ERROR] admin was redirected or opened an invalid rout!.
+2023-09-15 18:43:27,947 [ERROR] admin was redirected or opened an invalid rout!.
+2023-09-15 18:49:12,913 [WARNING] User 'admin' attempted to add an OTP with a too short secret.
+2023-09-15 18:57:15,674 [WARNING] User 'admin' attempted to add an OTP with a too short secret.
+2023-09-15 18:57:37,480 [WARNING] User 'admin' attempted to add an OTP with a too short secret.
+2023-09-15 18:59:48,509 [WARNING] User 'admin' attempted to add an OTP with a too short secret.
+2023-09-15 19:00:25,376 [WARNING] User 'admin' attempted to add an OTP with a too short secret.
+2023-09-15 19:00:36,086 [WARNING] User 'admin' attempted to add an OTP with a too short secret.
+2023-09-15 19:00:56,330 [WARNING] User 'admin' attempted to add an OTP with a too short secret.
+2023-09-15 19:02:22,163 [WARNING] User 'admin' attempted to add an OTP with a too short secret.
+2023-09-15 19:03:30,603 [WARNING] User 'admin' attempted to add an OTP with a too short secret.
+2023-09-15 19:04:06,506 [WARNING] User 'admin' attempted to add an OTP with a too short secret.
+2023-09-15 19:04:13,610 [WARNING] User 'admin' attempted to add an OTP with a too short secret.
+2023-09-15 19:06:04,283 [WARNING] User 'admin' attempted to add an OTP with a too short secret.
+2023-09-15 19:08:11,418 [WARNING] User 'admin' attempted to add an OTP with a too short secret.
+2023-09-15 19:09:05,792 [WARNING] User 'admin' attempted to add an OTP with a too short secret.
+2023-09-15 19:10:22,778 [WARNING] User 'admin' attempted to add an OTP with a too short secret.
+2023-09-15 19:10:28,253 [WARNING] User 'admin' attempted to add an OTP with a too short secret.
+2023-09-15 19:11:11,748 [WARNING] User 'admin' attempted to add an OTP with a too short secret.
+2023-09-15 19:14:08,588 [WARNING] User 'admin' attempted to add an OTP with a too short secret.
+2023-09-15 19:14:22,874 [WARNING] User 'admin' attempted to add an OTP with a too short secret.
+2023-09-15 19:15:24,105 [WARNING] User 'admin' attempted to add an OTP with a too short secret.
+2023-09-15 19:15:35,856 [WARNING] User 'admin' attempted to add an OTP with a too short secret.
+2023-09-15 19:15:40,211 [ERROR] admin was redirected or opened an invalid rout!.
+2023-09-15 19:15:42,870 [WARNING] User 'admin' attempted to add an OTP with a too short secret.
+2023-09-15 19:15:53,401 [ERROR] admin was redirected or opened an invalid rout!.
+2023-09-15 19:15:57,046 [WARNING] User 'admin' attempted to add an OTP with a too short secret.
+2023-09-15 19:16:05,633 [WARNING] User 'admin' attempted to add an OTP with a too short secret.
+2023-09-15 19:16:18,300 [WARNING] User 'admin' attempted to add an OTP with a too short secret.
+2023-09-15 19:16:34,890 [ERROR] admin was redirected or opened an invalid rout!.
+2023-09-15 19:16:37,403 [WARNING] User 'admin' attempted to add an OTP with a too short secret.
+2023-09-15 19:16:44,883 [ERROR] admin was redirected or opened an invalid rout!.
+2023-09-15 19:16:49,532 [WARNING] User 'admin' attempted to add an OTP with a too short secret.
+2023-09-15 19:16:56,973 [ERROR] admin was redirected or opened an invalid rout!.
+2023-09-15 19:16:59,326 [WARNING] User 'admin' attempted to add an OTP with a too short secret.
+2023-09-15 19:17:07,919 [WARNING] User 'admin' attempted to add an OTP with a too short secret.

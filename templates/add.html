@@ -30,7 +30,7 @@
 
     {% with messages = get_flashed_messages() %}
         {% if messages %}
-            <div class="alert alert-danger flash-message" style="position: absolute; top: 0; max-width: 500px; width: 100%; left: 50%; transform: translateX(-50%); border-radius: 15px; padding: 10px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);">
+            <div class="alert alert-danger flash-message" style="position: absolute; top: 70px; max-width: 500px; width: 100%; left: 50%; transform: translateX(-50%); border-radius: 15px; padding: 10px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);">
                 {{ messages[0] }}
             </div>
         {% endif %}

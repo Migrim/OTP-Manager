@@ -118,24 +118,30 @@
                 </div>                
                 
                 <div id="toast" class="toast">Copied to clipboard</div>
+                <div class="copyright">© Sebastian Junginger 2023</div>
 
                 <script>
                     let countdownIntervals = [];
 
-                function updateOtpCodes(otpCodes) {
-                    otpCodes.forEach(otp => {
-                        let otpCodeElement = document.getElementById(`otp_code_${otp.name}`);
-                        if (otpCodeElement) {
-                            otpCodeElement.textContent = otp.otp_code;
-                            let progressBar = document.getElementById(`progressBar${otp.name}`);
-                            if (progressBar) {
-                                progressBar.style.width = '100%';
-                            let duration = parseInt(progressBar.getAttribute('data-refresh-time'));
-                            startCountdown(progressBar, duration);
+                    function updateOtpCodes(otpCodes) {
+                        otpCodes.forEach(otp => {
+                            let otpCodeElement = document.getElementById(`otp_code_${otp.name}`);
+                            if (otpCodeElement) {
+                                otpCodeElement.textContent = otp.otp_code;
+                                otpCodeElement.classList.add('flash');
+                                setTimeout(() => {
+                                    otpCodeElement.classList.remove('flash');
+                                }, 3000);
+                                
+                                let progressBar = document.getElementById(`progressBar${otp.name}`);
+                                if (progressBar) {
+                                    progressBar.style.width = '100%';
+                                    let duration = parseInt(progressBar.getAttribute('data-refresh-time'));
+                                    startCountdown(progressBar, duration);
+                                }
                             }
-                        }
-                    });
-                }
+                        });
+                    }
 
                 function manuallyRefreshOtps() {
                     fetch('/refresh_codes_v2')
@@ -151,7 +157,6 @@
                     let millisTillNextInterval = 30000 - (currentTime.getSeconds() * 1000 + currentTime.getMilliseconds()) % 30000;
 
                     setTimeout(function() {
-
                         manuallyRefreshOtps();
                         setInterval(manuallyRefreshOtps, 30000);
                     }, millisTillNextInterval);

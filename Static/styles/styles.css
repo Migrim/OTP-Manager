@@ -225,3 +225,23 @@ body {
 .modal-header, .modal-body, .modal-footer {
     text-align: center;
 }
+
+@keyframes flash {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+  }
+  
+  .flash {
+    animation: flash 1.5s 2;
+  }
+
+  .copyright {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    background-color: rgba(0, 0, 0, 0.5); 
+    color: white; 
+    padding: 10px;
+    font-size: 12px;
+    opacity: 0.5;
+}

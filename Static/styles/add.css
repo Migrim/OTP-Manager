@@ -77,3 +77,10 @@ select.form-control option {
     background-color: #444; 
     color: #fff; 
 }
+
+.error-messages {
+    margin-top: 20px;
+    max-height: 50px;
+    overflow-y: auto;
+    width: 100%
+}
