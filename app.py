@@ -238,30 +238,27 @@ def refresh_codes_v2():
 
     return jsonify({"otp_codes": otp_codes})
 
-@app.route('/change-password', methods=['POST'])
-def change_password():
-    user_id = request.form.get('user_id')
-    new_password = request.form.get('new_password')
-    
-    if not user_id or not new_password:
-        flash('Benutzer-ID oder Passwort fehlt!')
-        logging.error(f"The Operation %Change Password% failed for user_id {user_id}!")
+@app.route('/reset/<int:user_id>', methods=['GET', 'POST'])
+def reset_password(user_id):
+    if request.method == 'POST':
+        new_password = request.form.get('new_password')
+        if not new_password:
+            flash('Passwort fehlt!')
+            return render_template('reset_password.html', user_id=user_id)
+        
+        hashed_password = generate_password_hash(new_password, method='sha256')
+        
+        try:
+            with sqlite3.connect("otp.db") as db:
+                cursor = db.cursor()
+                cursor.execute("UPDATE users SET password = ? WHERE id = ?", (hashed_password, user_id))
+                db.commit()
+            flash('Passwort erfolgreich geändert!')
+        except sqlite3.Error as e:
+            flash('Es gab ein Problem beim Ändern des Passworts!')
+        
         return redirect(url_for('home'))
-
-    hashed_password = generate_password_hash(new_password, method='sha256')
-    
-    try:
-        with sqlite3.connect("otp.db") as db:
-            cursor = db.cursor()
-            cursor.execute("UPDATE users SET password = ? WHERE id = ?", (hashed_password, user_id))
-            db.commit()
-        logging.info(f"Password for user_id {user_id} has been sucessfully changed.")
-        flash('Passwort erfolgreich geändert!')
-    except sqlite3.Error as e:
-        flash('Es gab ein Problem beim Ändern des Passworts!')
-        logging.error(f"Error updating password for user_id {user_id}: {e}")
-    
-    return redirect(url_for('home'))
+    return render_template('reset_password.html', user_id=user_id)
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():

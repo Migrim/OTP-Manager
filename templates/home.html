@@ -128,10 +128,6 @@
                             let otpCodeElement = document.getElementById(`otp_code_${otp.name}`);
                             if (otpCodeElement) {
                                 otpCodeElement.textContent = otp.otp_code;
-                                otpCodeElement.classList.add('flash');
-                                setTimeout(() => {
-                                    otpCodeElement.classList.remove('flash');
-                                }, 3000);
                                 
                                 let progressBar = document.getElementById(`progressBar${otp.name}`);
                                 if (progressBar) {
@@ -173,6 +169,16 @@
                         
                         if (remaining === 1) {
                             element.textContent = "fetching...";
+
+                            let otpName = element.id.replace('progressBar', '');
+                            let otpCodeElement = document.getElementById(`otp_code_${otpName}`);
+                            if (otpCodeElement) {
+                                otpCodeElement.classList.add('flash'); 
+                                setTimeout(() => {
+                                    otpCodeElement.classList.remove('flash');
+                                }, 3000);
+                            }
+
                         } else {
                             element.textContent = remaining + "s";
                         }

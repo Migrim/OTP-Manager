@@ -54,12 +54,15 @@
         .list-group-item {
             background-color: #444;
             color: #fff;
+            display: flex;
+            justify-content: space-between; /* Align buttons to the right */
+            align-items: center; /* Center vertically */
         }
         .btn-danger {
-        margin-left: 10px;
+            /* margin-left: auto;  Remove this line to align "Delete" and "Reset" buttons */
         }
         .btn-warning {
-            margin-left: 10px;
+            margin-left: 10px; /* Add margin between "Delete" and "Reset" buttons */
         }
         .toast {
             position: fixed;
@@ -92,7 +95,7 @@
                 {{ user_form.password(class="form-control") }}
             </div>
             <div class="form-submit">
-                {{ user_form.submit(class="btn btn-primary btn-block form-submit") }}
+                {{ user_form.submit(class="btn btn-primary btn-block form-submit", value="Add User") }} <!-- Changed button text -->
             </div>
         </form>
         <h2 class="form-title">Existing Users</h2>
@@ -100,8 +103,12 @@
             {% for user in users %}
                 <li class="list-group-item">
                     {{ user[1] }}
-                    <form style="display:inline;" action="{{ url_for('admin.delete_user', user_id=user[0]) }}" method="POST"><button type="submit" class="btn btn-danger">Delete</button></form>
-                    <button class="btn btn-warning reset-password-btn" data-user-id="{{ user[0] }}">Reset</button>
+                    <div> <!-- Create a separate container for buttons -->
+                        <form style="display:inline;" action="{{ url_for('admin.delete_user', user_id=user[0]) }}" method="POST">
+                            <button type="submit" class="btn btn-danger">Delete</button>
+                        </form>
+                        <a href="{{ url_for('reset_password', user_id=user[0]) }}" class="btn btn-warning">Reset</a>
+                    </div>
                 </li>
             {% endfor %}
         </ul>
@@ -116,7 +123,7 @@
                 {{ company_form.name(class="form-control") }}
             </div>
             <div class="form-submit">
-                {{ company_form.submit_company(class="btn btn-primary btn-block form-submit") }}
+                {{ company_form.submit_company(class="btn btn-primary btn-block form-submit", value="Add Company") }} <!-- Changed button text -->
             </div>
         </form>
         <h2 class="form-title">Existing Companies</h2>
