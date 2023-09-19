@@ -91,6 +91,8 @@ def init_db():
         """)
         db.commit()
 
+import sqlite3
+
 def save_to_db(otp_secrets):
     conn = sqlite3.connect('otp.db')
     cursor = conn.cursor()
@@ -105,8 +107,6 @@ def save_to_db(otp_secrets):
 
     conn.commit()
     conn.close()
-
-import sqlite3
 
 def save_companies_to_db(companies):
     conn = sqlite3.connect("otp.db")
@@ -387,19 +387,17 @@ def search_otp():
     print(matched_secrets)
     return render_template('otp.html', otp_secrets=matched_secrets)
 
-
 @app.route('/edit/<name>', methods=['GET', 'POST'])
 @login_required
 def edit(name):
     otp_secrets = load_from_db()
+    
+    form = OTPForm()
+    form.company.choices = [(company['company_id'], company['name']) for company in load_companies_from_db()]
+    
     for i, otp in enumerate(otp_secrets):
         if otp['name'] == name:
-            form = OTPForm()
-            form.company.choices = [(company['id'], company['name']) for company in load_companies_from_db()]
-
-            if 'company' in otp: 
-                form.company.choices = otp['company']
-
+            
             if request.method == 'POST':
                 if form.validate():
                     logging.info(f"Form is valid. Updating OTP with name: {name}")
@@ -407,12 +405,11 @@ def edit(name):
                     otp_secrets[i]['secret'] = form.secret.data
                     otp_secrets[i]['otp_type'] = form.otp_type.data
                     otp_secrets[i]['refresh_time'] = form.refresh_time.data
-                    otp_secrets[i]['company'] = form.company.data 
+                    otp_secrets[i]['company'] = form.company.data  
 
                     save_to_db(otp_secrets)
                     logging.info(f"OTP with name {name} successfully updated.")
                     return redirect(url_for('home'))
-
                 else:
                     logging.warning(f"Form validation failed for OTP with name: {name}")
                     logging.error(form.errors)
@@ -421,13 +418,27 @@ def edit(name):
                 form.secret.data = otp['secret']
                 form.otp_type.data = otp['otp_type']
                 form.refresh_time.data = otp['refresh_time']
-                form.company.data = otp.get('company', "none")
-
+                form.company.data = otp.get('company', "none")  
+                
                 return render_template('edit.html', form=form, name=name)
-
+    
     flash('Secret Not Found')
     logging.error(f"OTP with name {name} not found.")
-    return redirect(url_for('home'))  
+    return redirect(url_for('home'))
+
+
+@app.route('/delete_secret/<name>', methods=['POST'])
+@login_required
+def delete_secret(name):
+    try:
+        with sqlite3.connect('otp.db') as conn:
+            cursor = conn.cursor()
+            cursor.execute("DELETE FROM otp_secrets WHERE name = ?", (name,))
+            conn.commit()
+        flash(f'Successfully deleted secret with name: {name}', 'success')
+    except sqlite3.Error as e:
+        flash(f'Could not delete secret: {e}', 'danger')
+    return redirect(url_for('home'))
 
 @app.route('/delete/<name>', methods=['POST'])
 @login_required

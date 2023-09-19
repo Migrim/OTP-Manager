@@ -75,7 +75,7 @@
                                 <div class="progress-bar" role="progressbar" style="width: 100%;" id="progressBar{{ otp.name }}" data-refresh-time="{{ otp.refresh_time }}">30s</div>
                             </div>
                             <div class="btn-group" role="group">
-                                <form action="{{ url_for('delete', name=otp.name) }}" method="post" style="display: inline-block;">
+                                <form action="{{ url_for('delete_secret', name=otp.name) }}" method="post" style="display: inline-block;">
                                     <button type="button" style="margin-right:5px" class="btn btn-danger" data-toggle="modal" data-target="#deleteConfirmationModal">
                                         <i class="material-icons-outlined icon-small">delete</i>
                                     </button>
@@ -249,15 +249,18 @@
                         }, 5000);
                     }
 
+                    let formToSubmit;
+
                     document.addEventListener('DOMContentLoaded', (event) => {
                         document.querySelectorAll('.btn-danger').forEach((button) => {
                             button.addEventListener('click', () => {
-                                const form = button.closest('form');
-                                document.getElementById('deleteConfirmationButton').onclick = () => {
-                                    form.querySelector('[type="submit"]').click();
-                                };
+                                formToSubmit = button.closest('form');
                             });
                         });
+                        
+                        document.getElementById('deleteConfirmationButton').onclick = () => {
+                            formToSubmit.submit();
+                        };
                     });
                 </script>
         {% endblock %}
