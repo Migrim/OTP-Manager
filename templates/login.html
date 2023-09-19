@@ -5,17 +5,20 @@
 {% block content %}
 <style>
 body {
-    background: url('{{ url_for("static", filename="Background.jpg") }}') center/cover no-repeat;
+    background: #202020; 
     color: #ffffff; 
-    font-family: 'Arial', sans-serif; 
+    font-family: 'Roboto', sans-serif;
     position: relative;
     height: 100vh;
     margin: 0;
     display: flex;
     justify-content: center;
     align-items: center;
-    opacity: 0;
-    transition: opacity 0.6s ease-in-out;
+}
+
+body.loaded {
+    background: url('{{ url_for("static", filename="Background.jpg") }}') center/cover no-repeat;
+    transition: background 1s ease-in-out;
 }
 
 body::before {
@@ -48,7 +51,7 @@ a:hover {
     margin-bottom: 20px;
     border-radius: 20px; 
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); 
-    background: linear-gradient(to bottom, #252525 0%, #2c2c2c 25%, #333333 50%, #3a3a3a 100%);
+    background: #333333; /* Remove the gradient */
     opacity: 0;
     transition: opacity 0.6s ease-out;
 }
@@ -98,6 +101,22 @@ a:hover {
     display: none;
 }
 
+.flash-messages {
+    position: absolute;
+    top: 10px; /* Adjust the top position as needed */
+    left: 50%; /* Center horizontally */
+    transform: translateX(-50%); /* Center horizontally */
+    background: none; /* Transparent background */
+    padding: 10px 20px; /* Adjust padding as needed */
+    text-align: center;
+    font-size: 14px; /* Adjust font size as needed */
+    border-radius: 10px; /* Rounded edges */
+    color: #fff; /* Text color */
+    text-shadow: 0 0 5px rgba(0, 0, 0, 0.5); /* Text shadow for visibility */
+    display: none;
+    z-index: 1;
+}
+
 @keyframes spin {
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
@@ -105,20 +124,33 @@ a:hover {
 </style>
 
 <script>
+    // Preload the background image
+    var image = new Image();
+    image.src = '{{ url_for("static", filename="Background.jpg") }}';
+    image.onload = function() {
+        document.body.classList.add('loaded');
+    };
+
     document.addEventListener("DOMContentLoaded", function() {
         var formContainer = document.querySelector(".form-container");
         formContainer.style.opacity = "1";
+
+        function redirectToProfile() {
+            formContainer.style.opacity = "0";
+            setTimeout(function() {
+                window.location.href = "{{ url_for('profile') }}";
+            }, 600);
+        }
     
-        document.body.style.opacity = "1";
+        var flashMessage = document.querySelector(".flash-messages");
+        if (flashMessage) {
+            flashMessage.style.display = "block";
+            setTimeout(function() {
+                flashMessage.style.display = "none";
+            }, 5000); 
+        }
     });
-    
-    function redirectToProfile() {
-        document.body.style.opacity = "0";
-        setTimeout(function() {
-            window.location.href = "{{ url_for('profile') }}";
-        }, 600);
-    }
-    </script>
+</script>
 
 <div class="center-content">
     <div class="form-container">
@@ -132,6 +164,19 @@ a:hover {
                 <label for="password" class="text-white">Password:</label>
                 <input type="password" name="password" class="form-control" required>
             </div>
+
+            {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                    <div class="flash-messages">
+                        {% for message in messages %}
+                            <div class="alert alert-danger" role="alert">
+                                {{ message }}
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            {% endwith %}
+
             <input type="submit" value="Login" class="btn btn-primary btn-block form-submit">
         </form>
         <div class="loader"></div>

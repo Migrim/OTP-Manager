@@ -251,11 +251,12 @@
 
                     document.addEventListener('DOMContentLoaded', (event) => {
                         document.querySelectorAll('.btn-danger').forEach((button) => {
-                        button.addEventListener('click', () => {
-                            document.getElementById('deleteConfirmationButton').onclick = () => {
-                            button.closest('form').submit();
-                            };
-                        });
+                            button.addEventListener('click', () => {
+                                const form = button.closest('form');
+                                document.getElementById('deleteConfirmationButton').onclick = () => {
+                                    form.querySelector('[type="submit"]').click();
+                                };
+                            });
                         });
                     });
                 </script>

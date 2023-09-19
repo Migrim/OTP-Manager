@@ -19,6 +19,7 @@ from flask_login import LoginManager, UserMixin, current_user, login_user
 from search import search_blueprint
 import sqlite3
 import logging
+import re
 
 logging.basicConfig(filename='MV.log', level=logging.INFO, format='%(asctime)s [%(levelname)s] %(message)s')
 
@@ -272,20 +273,20 @@ def login():
             cursor.execute("SELECT * FROM users WHERE username = ?", (username,))
             user = cursor.fetchone()
 
-    if user and check_password_hash(user[2], password):
-        session['user_id'] = user[0]
-        flash('Successfully logged in!')
-        logging.info(f"User: {username} Logged in!")
+        if user and check_password_hash(user[2], password):
+            session['user_id'] = user[0]
+            flash('Successfully logged in!')
+            logging.info(f"User: {username} Logged in!")
 
-        user_obj = UserMixin()
-        user_obj.id = user[0]
-        user_obj.username = user[1]
-        login_user(user_obj)
+            user_obj = UserMixin()
+            user_obj.id = user[0]
+            user_obj.username = user[1]
+            login_user(user_obj)
 
-        return redirect(url_for('profile')) 
-    else:
-        flash('Invalid credentials!')
-
+            return redirect(url_for('profile')) 
+        else:
+            flash('Invalid credentials!')
+            
     return render_template('login.html')
 
 @app.route('/profile')
@@ -494,24 +495,16 @@ def add():
             logging.warning(f"User '{current_user.username}' attempted to add an OTP with invalid refresh time.")
             return redirect(url_for('add'))
 
-    #    if not any(company['id'] == company_id for company in companies_from_db):
-    #        flash('Invalid company ID.')
-    #        logging.warning(f"User '{current_user.username}' attempted to add an OTP with non-existing company ID.")
-    #        return redirect(url_for('add'))
-        
-        suspicious_patterns = ["--", ";--", ";", "/*", "*/", "@@", "@", "char", "nchar", "varchar", "nvarchar", "alter", "begin", "cast", "create", "cursor", "declare", "delete", "drop", "end", "exec", "execute", "fetch", "insert", "kill", "open", "select", "sys", "sysobjects", "syscolumns", "table", "update"]
-        for pattern in suspicious_patterns:
-            if pattern in name.lower() or pattern in secret.lower():
-                flash('Suspicious patterns detected in input fields.')
-                logging.warning(f"User '{current_user.username}' attempted to add an OTP with suspicious patterns in input fields.")
-                return redirect(url_for('add'))
+        if not re.fullmatch('[A-Z2-7=]{16,}', secret, re.IGNORECASE):
+            flash('Secret must be a valid base32 string with a minimum length of 16 characters.')
+            logging.warning(f"User '{current_user.username}' attempted to add an OTP with an invalid secret.")
+            return redirect(url_for('add'))
 
-    #    valid_company_ids = [company['id'] for company in companies_from_db]
-    #    if company_id not in valid_company_ids:
-    #        flash('Invalid company ID.')
-    #        logging.warning(f"User '{current_user.username}' attempted to add an OTP with an invalid company ID.")
-    #       return redirect(url_for('add'))
-    # validating the Company id stored in the Companie Table
+        suspicious_pattern = re.compile(r'(--|;|--|;|/\*|\*/|@@|@|char|nchar|varchar|nvarchar|alter|begin|cast|create|cursor|declare|delete|drop|end|exec|execute|fetch|insert|kill|open|select|sys|sysobjects|syscolumns|table|update)', re.IGNORECASE)
+        if suspicious_pattern.search(name) or suspicious_pattern.search(secret):
+            flash('Suspicious patterns detected in input fields.')
+            logging.warning(f"User '{current_user.username}' attempted to add an OTP with suspicious patterns in input fields.")
+            return redirect(url_for('add'))
 
         selected_company_name = next((company['name'] for company in companies_from_db if company['company_id'] == company_id), 'N/A')
 
@@ -541,4 +534,4 @@ def add():
     return render_template('add.html', form=form)
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=True, port=5001, host='0.0.0.0')
