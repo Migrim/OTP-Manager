@@ -57,7 +57,6 @@
 2023-09-06 19:05:46,992 [INFO] OTP with name Nobody Belived successfully updated.
 2023-09-06 19:42:09,679 [INFO] Form is valid. Updating OTP with name: test3
 2023-09-06 19:42:09,684 [INFO] OTP with name test3 successfully updated.
-=======
 2023-09-07 09:12:09,952 [INFO] admin was Logged out!.
 2023-09-07 09:12:37,271 [INFO] User: admin Logged in!
 2023-09-07 09:12:37,286 [INFO] admin is authenticated
@@ -85,7 +84,6 @@
 2023-09-07 11:28:50,285 [INFO] User: admin Logged in!
 2023-09-07 11:28:50,310 [INFO] admin is authenticated
 2023-09-07 11:37:15,510 [ERROR] admin was redirected or opened an invalid rout!.
->>>>>>> 7d12f147d49e37e63b6aecc3817c7e7b6cfbba14
 2023-09-07 15:27:52,457 [INFO] User: admin Logged in!
 2023-09-07 15:27:52,468 [INFO] admin is authenticated
 2023-09-07 15:44:12,740 [ERROR] admin was redirected or opened an invalid rout!.
@@ -135,7 +133,7 @@
 2023-09-10 23:39:40,607 [WARNING] User 'admin' attempted to add an OTP with a duplicate name.
 2023-09-10 23:40:00,710 [WARNING] User 'admin' attempted to add an OTP with a duplicate name.
 2023-09-10 23:40:15,390 [WARNING] User 'admin' attempted to add an OTP with a duplicate name.
-2023-09-10 23:40:27,916 [INFO] User 'admin' successfully added a new OTP secret named 'söla,d'.
+2023-09-10 23:40:27,916 [INFO] User 'admin' successfully added a new OTP secret named 'sï¿½la,d'.
 2023-09-10 23:50:59,074 [WARNING] User 'admin' attempted to add an OTP with a too short secret.
 2023-09-10 23:51:07,104 [WARNING] User 'admin' attempted to add an OTP with a too short secret.
 2023-09-10 23:51:23,414 [WARNING] User 'admin' attempted to add an OTP with a too short secret.
@@ -876,5 +874,6 @@
 2023-09-19 20:58:21,684 [INFO] admin is authenticated
 2023-09-19 21:01:57,062 [INFO] Form is valid. Updating OTP with name: Rainer
 2023-09-19 21:01:57,070 [INFO] OTP with name Rainer successfully updated.
-2023-09-19 21:02:06,486 [INFO] Form is valid. Updating OTP with name: Winklä
-2023-09-19 21:02:06,493 [INFO] OTP with name Winklä successfully updated.
+2023-09-19 21:02:06,486 [INFO] Form is valid. Updating OTP with name: Winklï¿½
+2023-09-19 21:02:06,493 [INFO] OTP with name Winklï¿½ successfully updated.
+Test--
