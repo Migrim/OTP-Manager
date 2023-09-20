@@ -6,6 +6,7 @@
         body {
             background-color: #222;
             color: #fff;
+            font-family: 'Roboto', sans-serif;
         }
         .navbar {
             box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.1);
@@ -24,23 +25,29 @@
             justify-content: center;
             align-items: flex-start;
             flex-wrap: wrap;
-            min-height: 100vh;
-            padding-top: 50px;
+            min-height: 20vh; 
+            padding-top: 10px;
         }
+
         .form-container {
-            max-width: 400px;
-            width: 100%;
+            width: calc(40% - 40px); 
             padding: 30px;
             border-radius: 10px;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.4);
             background: #333;
-            margin-bottom: 30px; 
-            margin-left: 20px; 
-            margin-right: 20px; 
+            margin: 20px;
         }
+
         .form-title {
             text-align: center;
-            margin-bottom: 30px;
+            margin-bottom: 20px;
+            color: #fff;
+            font-size: 24px;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        .form-label {
             color: #fff;
         }
         .form-control {
@@ -51,24 +58,90 @@
         .form-submit {
             margin-top: 20px;
         }
+
         .list-group-item {
             background-color: #444;
             color: #fff;
             display: flex;
-            justify-content: space-between; /* Align buttons to the right */
-            align-items: center; /* Center vertically */
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+            padding: 10px;
+            border-radius: 5px;
         }
         .btn-danger {
-            /* margin-left: auto;  Remove this line to align "Delete" and "Reset" buttons */
+            margin-left: auto;
         }
         .btn-warning {
-            margin-left: 10px; /* Add margin between "Delete" and "Reset" buttons */
+            margin-left: 10px;
         }
+
+        .company-list-container {
+            max-height: 375px;
+            overflow-y: auto;
+            scrollbar-width: thin;
+            scrollbar-color: #888 #333;
+            padding-right: 16px; 
+        }
+
+        .company-list-container::-webkit-scrollbar {
+            width: 8px;
+        }
+        .company-list-container::-webkit-scrollbar-track {
+            background: #333;
+        }
+        .company-list-container::-webkit-scrollbar-thumb {
+            background-color: #888;
+        }
+
+        .scrollable-container {
+            max-height: 292px;
+            overflow-y: auto;
+            scrollbar-width: thin;
+            scrollbar-color: #888 #333;
+            padding-right: 16px;
+        }
+
+        .scrollable-container::-webkit-scrollbar {
+            width: 8px;
+        }
+        .scrollable-container::-webkit-scrollbar-track {
+            background: #333;
+        }
+        .scrollable-container::-webkit-scrollbar-thumb {
+            background-color: #888;
+        }
+
         .toast {
             position: fixed;
             top: 0;
             right: 0;
             z-index: 1100;
+        }
+        .animated-fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
+        }
+
+        .form-container {
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        .form-control:focus {
+            border-color: #CD5C5C; 
+            box-shadow: 0 0 0 0.2rem rgba(255, 0, 0, 0.25);
+        }
+
+        @keyframes fadeIn {
+            0% {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
     </style>
 {% endblock %}
@@ -83,6 +156,7 @@
 {% block content %}
 <div class="center-content">
     <div class="form-container">
+        <!-- User Management -->
         <h1 class="form-title">User Management</h1>
         <form method="post">
             {{ user_form.hidden_tag() }}
@@ -95,23 +169,25 @@
                 {{ user_form.password(class="form-control") }}
             </div>
             <div class="form-submit">
-                {{ user_form.submit(class="btn btn-primary btn-block form-submit", value="Add User") }} <!-- Changed button text -->
+                {{ user_form.submit(class="btn btn-primary btn-block form-submit", value="Add User") }}
             </div>
         </form>
         <h2 class="form-title">Existing Users</h2>
-        <ul class="list-group">
-            {% for user in users %}
-                <li class="list-group-item">
-                    {{ user[1] }}
-                    <div> <!-- Create a separate container for buttons -->
-                        <form style="display:inline;" action="{{ url_for('admin.delete_user', user_id=user[0]) }}" method="POST">
-                            <button type="submit" class="btn btn-danger">Delete</button>
-                        </form>
-                        <a href="{{ url_for('reset_password', user_id=user[0]) }}" class="btn btn-warning">Reset</a>
-                    </div>
-                </li>
-            {% endfor %}
-        </ul>
+        <div class="scrollable-container">
+            <ul class="list-group">
+                {% for user in users %}
+                    <li class="list-group-item">
+                        {{ user[1] }}
+                        <div>
+                            <form style="display:inline;" action="{{ url_for('admin.delete_user', user_id=user[0]) }}" method="POST">
+                                <button type="submit" class="btn btn-danger">Delete</button>
+                            </form>
+                            <a href="{{ url_for('reset_password', user_id=user[0]) }}" class="btn btn-warning">Reset</a>
+                        </div>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
     </div>
 
     <div class="form-container">
@@ -123,27 +199,28 @@
                 {{ company_form.name(class="form-control") }}
             </div>
             <div class="form-submit">
-                {{ company_form.submit_company(class="btn btn-primary btn-block form-submit", value="Add Company") }} <!-- Changed button text -->
+                {{ company_form.submit_company(class="btn btn-primary btn-block form-submit", value="Add Company") }}
             </div>
         </form>
         <h2 class="form-title">Existing Companies</h2>
-        <ul class="list-group">
-            {% for company in companies %}
-                <li class="list-group-item">{{ company.name }} 
-                    <form style="display:inline;" action="{{ url_for('admin.delete_company', company_id=company.company_id) }}" method="POST">
-                        {{ company_form.hidden_tag() }}
-                        <button type="submit" class="btn btn-danger">Delete</button>
-                    </form>
-                </li>
-            {% endfor %}
-        </ul>
+        <div class="company-list-container">
+            <ul class="list-group">
+                {% for company in companies %}
+                    <li class="list-group-item">{{ company.name }}
+                        <form style="display:inline;" action="{{ url_for('admin.delete_company', company_id=company.company_id) }}" method="POST">
+                            {{ company_form.hidden_tag() }}
+                            <button type="submit" class="btn btn-danger">Delete</button>
+                        </form>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
     </div>
 </div>
-
 {% endblock %}
 
 {% block scripts %}
 <script>
-
+    // Add any custom scripts here if needed.
 </script>
 {% endblock %}

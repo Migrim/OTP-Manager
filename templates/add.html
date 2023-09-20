@@ -41,13 +41,15 @@
         <form method="POST">
             {{ form.hidden_tag() }}
             <div class="form-group">
-                {{ form.name.label }} {{ form.name(class="form-control") }}
+                {{ form.name.label }} 
+                {{ form.name(class="form-control", title="Enter a unique name for the OTP secret", autofocus=true) }}
                 {% for error in form.name.errors %}
                     <span class="text-danger">{{ error }}</span>
                 {% endfor %}
             </div>
             <div class="form-group">
-                {{ form.secret.label }} {{ form.secret(class="form-control") }}
+                {{ form.secret.label }} 
+                {{ form.secret(class="form-control", title="Enter a secure secret, at least 16 characters") }}
             </div>
             <div class="form-group">
                 {{ form.otp_type.label(class="form-check-label") }}

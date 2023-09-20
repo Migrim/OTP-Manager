@@ -76,7 +76,7 @@
                             </div>
                             <div class="btn-group" role="group">
                                 <form action="{{ url_for('delete_secret', name=otp.name) }}" method="post" style="display: inline-block;">
-                                    <button type="button" style="margin-right:5px" class="btn btn-danger" data-toggle="modal" data-target="#deleteConfirmationModal">
+                                    <button type="submit" style="margin-right:5px" class="btn btn-danger">
                                         <i class="material-icons-outlined icon-small">delete</i>
                                     </button>
                                 </form>
@@ -122,6 +122,7 @@
 
                 <script>
                     let countdownIntervals = [];
+                    let isNewSecretAdded = false;
 
                     function updateOtpCodes(otpCodes) {
                         otpCodes.forEach(otp => {
@@ -167,9 +168,10 @@
                         let current_time = new Date().getSeconds();
                         let remaining = duration - (current_time % duration);
                         
-                        if (remaining === 1) {
+                        if (remaining === 2) {
                             element.textContent = "fetching...";
-
+                        } 
+                        else if (remaining === 1) {
                             let otpName = element.id.replace('progressBar', '');
                             let otpCodeElement = document.getElementById(`otp_code_${otpName}`);
                             if (otpCodeElement) {
@@ -178,8 +180,8 @@
                                     otpCodeElement.classList.remove('flash');
                                 }, 3000);
                             }
-
-                        } else {
+                        }
+                        else {
                             element.textContent = remaining + "s";
                         }
 
@@ -211,6 +213,11 @@
                         let duration = parseInt(progressBars[i].getAttribute('data-refresh-time')); 
                         startCountdown(progressBars[i], duration);
                     }
+
+                    let otpContainers = document.querySelectorAll('.alert.alert-success');
+                    otpContainers.forEach(function(container) {
+                        container.classList.add('fade-in');
+                    });
 
                     startAutoRefresh();
                 };
@@ -266,6 +273,3 @@
         {% endblock %}
     </body>
 </html>
-
-
-// BEN

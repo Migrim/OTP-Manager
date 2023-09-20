@@ -285,7 +285,7 @@ def login():
 
             return redirect(url_for('profile')) 
         else:
-            flash('Invalid credentials!')
+            flash('Die Zugangsdaten konnten nicht validiert werden!')
             
     return render_template('login.html')
 
@@ -426,7 +426,6 @@ def edit(name):
     logging.error(f"OTP with name {name} not found.")
     return redirect(url_for('home'))
 
-
 @app.route('/delete_secret/<name>', methods=['POST'])
 @login_required
 def delete_secret(name):
@@ -476,7 +475,7 @@ def add():
 
     if form.validate_on_submit():
         name = form.name.data.strip()
-        secret = form.secret.data.strip()
+        secret = form.secret.data.strip().upper()
         otp_type = form.otp_type.data.lower().strip()
         refresh_time = form.refresh_time.data
         company_id = form.company.data
@@ -506,8 +505,9 @@ def add():
             logging.warning(f"User '{current_user.username}' attempted to add an OTP with invalid refresh time.")
             return redirect(url_for('add'))
 
-        if not re.fullmatch('[A-Z2-7=]{16,}', secret, re.IGNORECASE):
-            flash('Secret must be a valid base32 string with a minimum length of 16 characters.')
+        valid_base32 = re.fullmatch('[A-Z2-7=]{16,}', secret, re.IGNORECASE)
+        if not valid_base32 or len(secret) % 8 != 0:
+            flash('Secret must be a valid base32 string with a length that is a multiple of 8 characters.')
             logging.warning(f"User '{current_user.username}' attempted to add an OTP with an invalid secret.")
             return redirect(url_for('add'))
 
@@ -546,5 +546,3 @@ def add():
 
 if __name__ == '__main__':
     app.run(debug=True, port=5001, host='0.0.0.0')
-
-    #ben

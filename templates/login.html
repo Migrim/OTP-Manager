@@ -22,7 +22,7 @@ body.loaded {
 }
 
 body::before {
-    content: "Site Blocked";
+    content: "Authentisierung!";
     position: absolute;
     top: 20px;
     left: 20px;
@@ -51,7 +51,7 @@ a:hover {
     margin-bottom: 20px;
     border-radius: 20px; 
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); 
-    background: #333333; /* Remove the gradient */
+    background: #333333;
     opacity: 0;
     transition: opacity 0.6s ease-out;
 }
@@ -103,16 +103,16 @@ a:hover {
 
 .flash-messages {
     position: absolute;
-    top: 10px; /* Adjust the top position as needed */
-    left: 50%; /* Center horizontally */
-    transform: translateX(-50%); /* Center horizontally */
-    background: none; /* Transparent background */
-    padding: 10px 20px; /* Adjust padding as needed */
+    top: 10px; 
+    left: 50%; 
+    transform: translateX(-50%); 
+    background: none; 
+    padding: 10px 20px; 
     text-align: center;
-    font-size: 14px; /* Adjust font size as needed */
-    border-radius: 10px; /* Rounded edges */
-    color: #fff; /* Text color */
-    text-shadow: 0 0 5px rgba(0, 0, 0, 0.5); /* Text shadow for visibility */
+    font-size: 14px;
+    border-radius: 10px; 
+    color: #fff; 
+    text-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
     display: none;
     z-index: 1;
 }
@@ -124,7 +124,6 @@ a:hover {
 </style>
 
 <script>
-    // Preload the background image
     var image = new Image();
     image.src = '{{ url_for("static", filename="Background.jpg") }}';
     image.onload = function() {
@@ -186,4 +185,3 @@ a:hover {
 </div>
 {% endblock %}
 
-// BEN

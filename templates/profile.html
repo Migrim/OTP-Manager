@@ -49,7 +49,6 @@
     </div>
 
     <script>
-        // Preload the background image
         var image = new Image();
         image.src = '{{ url_for("static", filename="Background.jpg") }}';
         image.onload = function() {
@@ -70,10 +69,8 @@
             }, 500);
 
             setTimeout(function() {
-                // Stop the loading interval
                 clearInterval(loadingInterval);
 
-                // Fade out page
                 document.body.style.opacity = "0";
 
                 setTimeout(function() {
@@ -84,5 +81,3 @@
     </script>
 </body>
 </html>
-
-// BEN
