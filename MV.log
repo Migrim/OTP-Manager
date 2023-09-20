@@ -809,6 +809,16 @@
 2023-09-15 19:48:46,950 [INFO] admin was Logged out!.
 2023-09-15 19:48:47,970 [INFO] User: admin Logged in!
 2023-09-15 19:48:47,980 [INFO] admin is authenticated
+<<<<<<< HEAD
+2023-09-15 19:51:47,366 [INFO] admin was Logged out!.
+2023-09-15 19:51:48,806 [INFO] User: admin Logged in!
+2023-09-15 19:51:48,819 [INFO] admin is authenticated
+2023-09-15 20:04:05,812 [ERROR] admin was redirected or opened an invalid rout!.
+2023-09-15 20:04:21,682 [ERROR] admin was redirected or opened an invalid rout!.
+2023-09-15 20:04:27,923 [ERROR] admin was redirected or opened an invalid rout!.
+2023-09-15 20:04:37,047 [ERROR] admin was redirected or opened an invalid rout!.
+2023-09-15 20:06:06,426 [ERROR] admin was redirected or opened an invalid rout!.
+=======
 2023-09-17 22:12:59,874 [INFO] admin was Logged out!.
 2023-09-17 22:13:12,075 [INFO] User: admin Logged in!
 2023-09-17 22:13:12,107 [INFO] admin is authenticated
@@ -824,6 +834,7 @@
 2023-09-17 23:04:48,813 [INFO] admin was Logged out!.
 2023-09-17 23:04:51,250 [INFO] User: admin Logged in!
 2023-09-17 23:04:51,278 [INFO] admin is authenticated
+<<<<<<< HEAD
 2023-09-19 19:45:38,559 [INFO] User: admin Logged in!
 2023-09-19 19:45:38,605 [INFO] admin is authenticated
 2023-09-19 19:49:58,419 [INFO] admin was Logged out!.
@@ -877,3 +888,6 @@
 2023-09-19 21:02:06,486 [INFO] Form is valid. Updating OTP with name: Winkl�
 2023-09-19 21:02:06,493 [INFO] OTP with name Winkl� successfully updated.
 Test--
+=======
+>>>>>>> 511f8c640ec9e0bd0ac5d92bdab9955c021a67d3
+>>>>>>> 9d3d6ac9cbe839ad8e11ab7d4bee229e20e5a376
