@@ -23,6 +23,7 @@ import logging
 import re
 
 logging.basicConfig(filename='MV.log', level=logging.INFO, format='%(asctime)s [%(levelname)s] %(message)s')
+my_logger = logging.getLogger('MV_logger')
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'your-secret-key'
@@ -277,7 +278,7 @@ def login():
         if user and check_password_hash(user[2], password):
             session['user_id'] = user[0]
             flash('Successfully logged in!')
-            logging.info(f"User: {username} Logged in!")
+            my_logger.info(f"User: {username} Logged in!")
 
             user_obj = UserMixin()
             user_obj.id = user[0]
@@ -287,7 +288,8 @@ def login():
             return redirect(url_for('profile')) 
         else:
             flash('Die Zugangsdaten konnten nicht validiert werden!')
-            
+            my_logger.warning(f"Failed login attempt for user: {username}")
+    
     return render_template('login.html')
 
 @app.route('/profile')
@@ -555,4 +557,5 @@ def add():
     return render_template('add.html', form=form)
 
 if __name__ == '__main__':
+    logging.info("Server started.")
     app.run(debug=True, port=5001, host='0.0.0.0')

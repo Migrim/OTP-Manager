@@ -155,8 +155,9 @@
 
 {% block content %}
 <div class="center-content">
+
+    {% if is_admin %}
     <div class="form-container">
-        <!-- User Management -->
         <h1 class="form-title">User Management</h1>
         <form method="post">
             {{ user_form.hidden_tag() }}
@@ -189,6 +190,7 @@
             </ul>
         </div>
     </div>
+    {% endif %}
 
     <div class="form-container">
         <h1 class="form-title">Company Management</h1>

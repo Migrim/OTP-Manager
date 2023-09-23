@@ -3,3 +3,4 @@ _pycache_/
 mv.log
 templates/otp.html
 MV.log
+mv_admin.log

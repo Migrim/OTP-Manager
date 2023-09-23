@@ -6,6 +6,19 @@ from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SubmitField
 from wtforms.validators import DataRequired
 import sqlite3
+import logging
+from logging.handlers import RotatingFileHandler
+
+logger = logging.getLogger('mv_admin_logger')
+logger.setLevel(logging.DEBUG)
+
+log_file = 'mv_admin.log'
+file_handler = RotatingFileHandler(log_file, maxBytes=1024 * 1024, backupCount=10)
+file_handler.setLevel(logging.DEBUG)
+
+formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+file_handler.setFormatter(formatter)
+logger.addHandler(file_handler)
 
 admin_bp = Blueprint('admin', __name__)
 
@@ -43,9 +56,6 @@ def load_companies_from_db():
 @admin_bp.route('/admin_settings', methods=['GET', 'POST'])
 @login_required
 def admin_settings():
-    if current_user.username != "admin":
-        flash("Only the admin can access the settings page.")
-        return redirect(url_for('home'))
     
     user_form = UserForm()
     company_form = CompanyForm()
@@ -82,7 +92,8 @@ def admin_settings():
 
     users = get_all_users()
     companies = load_companies_from_db()
-    return render_template('admin_settings.html', user_form=user_form, company_form=company_form, users=users, companies=companies)
+    is_admin = (current_user.username == "admin") 
+    return render_template('admin_settings.html', user_form=user_form, company_form=company_form, users=users, companies=companies, is_admin=is_admin)
 
 @admin_bp.route('/delete_user/<int:user_id>', methods=['GET'])
 @login_required
@@ -110,14 +121,19 @@ def add_company():
         flash("Only the admin can add companies.")
         return redirect(url_for('admin.admin_settings'))
 
-    new_company_name = request.form.get('company_name')
+    new_company_name = request.form.get('name') 
 
-    with sqlite3.connect("otp.db") as db:
-        cursor = db.cursor()
-        cursor.execute("INSERT INTO companies (name) VALUES (?)", (new_company_name,))
-        db.commit()
+    try:
+        with sqlite3.connect("otp.db") as db:
+            cursor = db.cursor()
+            cursor.execute("INSERT INTO companies (name) VALUES (?)", (new_company_name,))
+            db.commit()
+        flash(f'New company "{new_company_name}" added by user "{current_user.username}".')
+        logger.info(f"Company '{new_company_name}' created by '{current_user.username}'.")
+    except sqlite3.Error as e:
+        flash('Failed to add new company.')
+        logger.error(f"Error inserting new company: {e}")
 
-    flash('New company added!')
     return redirect(url_for('admin.admin_settings'))
 
 @admin_bp.route('/rename_company/<int:company_id>', methods=['GET', 'POST'])
