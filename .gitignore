@@ -2,3 +2,4 @@ flask_session/
 _pycache_/
 mv.log
 templates/otp.html
+MV.log

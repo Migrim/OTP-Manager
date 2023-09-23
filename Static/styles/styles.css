@@ -70,8 +70,25 @@ body {
     color: #CD5C5C;
 }
 
+.ref-btn {
+    margin-right: 130px;
+    padding: 10px;
+    font-size: 17px;
+    background-color: #6CB7E0;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+.ref-btn:hover {
+    background-color: #5A9CCD;
+}
+
 #logoutContainer {
-    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end; 
 }
 
 #logoutBtn {

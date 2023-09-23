@@ -53,12 +53,13 @@ def get_companies_list():
 
 @search_blueprint.route('/search_otp', methods=['GET'])
 def search_otp():
+    page = request.args.get('page', type=int, default=1)
     name = request.args.get('name', '').lower()
-    company = request.args.get('company')
+    selected_company = request.args.get('company', 'all companies') 
     otp_secrets = load_from_db()
     
-    if company and company.lower() != "all companies":
-        otp_secrets = [otp for otp in otp_secrets if otp.get('company').lower() == company.lower()]
+    if selected_company.lower() != "all companies":
+        otp_secrets = [otp for otp in otp_secrets if otp.get('company', '').lower() == selected_company.lower()]
 
     matched_secrets = []
 
@@ -76,7 +77,7 @@ def search_otp():
             matched_secrets.append(otp_secret)
 
     if matched_secrets:
-        return render_template('home.html', otp_codes=matched_secrets, companies=load_companies_from_db())  # Change otp.html to home.html and pass the list of companies here
+        return redirect(url_for('home', page=1, name=name, company=selected_company))
     else:
         return redirect(url_for('home'))
 

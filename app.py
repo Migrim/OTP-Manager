@@ -17,6 +17,7 @@ from functools import wraps
 from datetime import datetime, timedelta
 from flask_login import LoginManager, UserMixin, current_user, login_user
 from search import search_blueprint
+from math import ceil
 import sqlite3
 import logging
 import re
@@ -319,6 +320,9 @@ def home():
     form = OTPForm()
     otp_secrets = load_from_db()
     otp_codes = []
+    items_per_page = 9
+
+    page = request.args.get('page', type=int, default=1)
 
     if form.validate_on_submit():
         logging.info('Form validated.')
@@ -331,16 +335,16 @@ def home():
         })
         save_to_db(otp_secrets)
         form.name.data = ''
-        form.company.data = ''  
+        form.company.data = ''
         form.secret.data = ''
         form.otp_type.data = ''
         form.refresh_time.data = ''
         logging.info(f'OTP secret added: {otp_secrets[-1]}')
         return redirect(url_for('home'))
-        
-    companies = load_companies_from_db()
 
+    companies = load_companies_from_db()
     selected_company = request.args.get('company')
+
     if selected_company:
         otp_secrets = [otp for otp in otp_secrets if otp['company'] == selected_company]
 
@@ -349,12 +353,18 @@ def home():
         if otp_code is None:
             flash('Invalid OTP secret')
             continue
-        otp_code['company'] = otp.get('company', 'Unbekannt')  
+        otp_code['company'] = otp.get('company', 'Unbekannt')
         otp_codes.append(otp_code)
+
+    total_pages = ceil(len(otp_codes) / items_per_page)
+    start_index = (page - 1) * items_per_page
+    end_index = start_index + items_per_page
+
+    displayed_otp_codes = otp_codes[start_index:end_index]
 
     search_name = request.args.get('name')
 
-    return render_template('home.html', form=form, otp_codes=otp_codes, companies=companies, search_name=search_name)
+    return render_template('home.html', form=form, otp_codes=displayed_otp_codes, companies=companies, search_name=search_name, page=page, total_pages=total_pages)
 
 @app.route('/get_logs', methods=['GET'])
 @login_required

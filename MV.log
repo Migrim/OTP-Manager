@@ -925,3 +925,10 @@ Test--
 2023-09-20 23:43:27,934 [ERROR] admin was redirected or opened an invalid rout!.
 2023-09-20 23:46:19,372 [ERROR] admin was redirected or opened an invalid rout!.
 2023-09-20 23:49:32,659 [ERROR] admin was redirected or opened an invalid rout!.
+2023-09-23 16:46:57,381 [ERROR] admin was redirected or opened an invalid rout!.
+2023-09-23 16:49:58,045 [INFO] User: admin Logged in!
+2023-09-23 16:49:58,073 [INFO] admin is authenticated
+2023-09-23 17:02:40,377 [INFO] admin was Logged out!.
+2023-09-23 17:02:44,129 [INFO] User: admin Logged in!
+2023-09-23 17:02:44,145 [INFO] admin is authenticated
+2023-09-23 17:15:36,388 [ERROR] admin was redirected or opened an invalid rout!.
