@@ -4,150 +4,207 @@
 
 {% block content %}
 <style>
-body {
-    background: #202020; 
-    color: #ffffff; 
-    font-family: 'Roboto', sans-serif;
-    position: relative;
-    height: 100vh;
-    margin: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
+    body {
+        background: #202020; 
+        color: #ffffff; 
+        font-family: 'Roboto', sans-serif;
+        position: relative;
+        height: 100vh;
+        margin: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        overflow: hidden; /* Hinzugefügt, um den Hintergrund auszublenden */
+    }
+    
+    /* Hinzugefügte Animation für den Text oben links */
+    @keyframes slideIn {
+        from {
+            top: -50px;
+            opacity: 0;
+        }
+        to {
+            top: 20px;
+            opacity: 1;
+        }
+    }
+    
+    body.loaded {
+        background: url('{{ url_for("static", filename="Background.jpg") }}') center/cover no-repeat;
+        transition: background 1s ease-in-out;
+    }
+    
+    body::before {
+        content: "Willkommen zur Authentifizierung!";
+        position: absolute;
+        top: 20px;
+        left: 20px;
+        font-size: 16px;
+        font-weight: bold;
+        animation: slideIn 1s ease forwards; /* Hinzugefügte Animation */
+    }
+    
+    a {
+        color: #0d6efd;
+    }
+    
+    a:hover {
+        color: #0056b3;
+    }
+    
+    .center-content {
+        display: flex;
+        flex-direction: column; 
+        align-items: center; 
+    }
+    
+    .form-container {
+        max-width: 350px; 
+        width: 100%;
+        padding: 20px; 
+        margin-bottom: 20px;
+        border-radius: 20px; 
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); 
+        background: #333333;
+        opacity: 0;
+        transition: opacity 0.6s ease-out;
+    }
+    
+    .instruction-text {
+        font-size: 14px; 
+        text-align: center; 
+        font-style: italic;
+        width: 80%;
+        line-height: 1.4; 
+    }
+    
+    .form-title {
+        text-align: center;
+        margin-bottom: 30px;
+    }
+    
+    .form-control {
+        border-radius: 5px;
+        background: #3a3a3a;
+        color: #ffffff;
+    }
+    
+    .form-control:focus {
+        border-color: #555;
+        box-shadow: none;
+    }
+    
+    .form-submit {
+        margin-top: 20px;
+        background-color: #CD5C5C; 
+        border: none;
+        transition: background-color 0.3s ease;
+    }
+    
+    .form-submit:hover {
+        background-color: #B94A4A;
+    }
+    
+    .loader {
+        border: 5px solid #f3f3f3; 
+        border-top: 5px solid #555; 
+        border-radius: 50%;
+        width: 30px;
+        height: 30px;
+        animation: spin 1s linear infinite;
+        display: none;
+    }
+    
+    .flash-messages {
+        position: absolute;
+        top: 10px; 
+        left: 50%; 
+        transform: translateX(-50%); 
+        background: none; 
+        padding: 10px 20px; 
+        text-align: center;
+        font-size: 14px;
+        border-radius: 10px; 
+        color: #fff; 
+        text-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+        display: none;
+        z-index: 1;
+    }
+    
+    .idle-animation {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.7);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        opacity: 0;
+        transition: opacity 0.5s ease-in-out;
+        pointer-events: none;
+        z-index: 2;
+    }
 
-body.loaded {
-    background: url('{{ url_for("static", filename="Background.jpg") }}') center/cover no-repeat;
-    transition: background 1s ease-in-out;
-}
+    .idle-animation.active {
+        opacity: 1;
+        pointer-events: auto;
+    }
 
-body::before {
-    content: "Authentisierung!";
-    position: absolute;
-    top: 20px;
-    left: 20px;
-    font-size: 16px;
-    font-weight: bold;
-}
+    .idle-animation-text {
+        color: #ffffff;
+        font-size: 24px;
+        text-align: center;
+    }
 
-a {
-    color: #0d6efd;
-}
-
-a:hover {
-    color: #0056b3;
-}
-
-.center-content {
-    display: flex;
-    flex-direction: column; 
-    align-items: center; 
-}
-
-.form-container {
-    max-width: 350px; 
-    width: 100%;
-    padding: 20px; 
-    margin-bottom: 20px;
-    border-radius: 20px; 
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); 
-    background: #333333;
-    opacity: 0;
-    transition: opacity 0.6s ease-out;
-}
-
-.instruction-text {
-    font-size: 14px; 
-    text-align: center; 
-    font-style: italic;
-    width: 80%;
-    line-height: 1.4; 
-}
-
-.form-title {
-    text-align: center;
-    margin-bottom: 30px;
-}
-
-.form-control {
-    border-radius: 5px;
-    background: #3a3a3a;
-    color: #ffffff;
-}
-
-.form-control:focus {
-    border-color: #555;
-    box-shadow: none;
-}
-
-.form-submit {
-    margin-top: 20px;
-    background-color: #CD5C5C; 
-    border: none;
-    transition: background-color 0.3s ease;
-}
-
-.form-submit:hover {
-    background-color: #B94A4A;
-}
-
-.loader {
-    border: 5px solid #f3f3f3; 
-    border-top: 5px solid #555; 
-    border-radius: 50%;
-    width: 30px;
-    height: 30px;
-    animation: spin 1s linear infinite;
-    display: none;
-}
-
-.flash-messages {
-    position: absolute;
-    top: 10px; 
-    left: 50%; 
-    transform: translateX(-50%); 
-    background: none; 
-    padding: 10px 20px; 
-    text-align: center;
-    font-size: 14px;
-    border-radius: 10px; 
-    color: #fff; 
-    text-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
-    display: none;
-    z-index: 1;
-}
-
-@keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-}
-</style>
+    @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+    }
+    </style>
 
 <script>
-    var image = new Image();
-    image.src = '{{ url_for("static", filename="Background.jpg") }}';
-    image.onload = function() {
-        document.body.classList.add('loaded');
-    };
+    var idleTimeout;
 
-    document.addEventListener("DOMContentLoaded", function() {
+    function showIdleAnimation() {
+        var idleAnimation = document.querySelector(".idle-animation");
+        idleAnimation.classList.add("active");
+    }
+
+    document.addEventListener("DOMContentLoaded", function () {
+        var image = new Image();
+        image.src = '{{ url_for("static", filename="Background.jpg") }}';
+        image.onload = function () {
+            document.body.classList.add('loaded');
+        };
+
         var formContainer = document.querySelector(".form-container");
         formContainer.style.opacity = "1";
 
         function redirectToProfile() {
             formContainer.style.opacity = "0";
-            setTimeout(function() {
+            setTimeout(function () {
                 window.location.href = "{{ url_for('profile') }}";
             }, 600);
         }
-    
+
         var flashMessage = document.querySelector(".flash-messages");
         if (flashMessage) {
             flashMessage.style.display = "block";
-            setTimeout(function() {
+            setTimeout(function () {
                 flashMessage.style.display = "none";
-            }, 5000); 
+            }, 5000);
         }
+
+        idleTimeout = setTimeout(showIdleAnimation, 300000); 
+    });
+
+    document.addEventListener("mousemove", function () {
+        clearTimeout(idleTimeout);
+        var idleAnimation = document.querySelector(".idle-animation");
+        idleAnimation.classList.remove("active");
+        idleTimeout = setTimeout(showIdleAnimation, 300000); 
     });
 </script>
 
@@ -156,11 +213,11 @@ a:hover {
         <h1 class="form-title">Login</h1>
         <form method="post">
             <div class="form-group">
-                <label for="username" class="text-white">Username:</label>
+                <label for="username" class="text-white" data-bs-toggle="tooltip" data-bs-placement="top" title="Geben Sie Ihren Benutzernamen ein.">Username:</label>
                 <input type="text" name="username" class="form-control" required>
             </div>
             <div class="form-group">
-                <label for="password" class="text-white">Password:</label>
+                <label for="password" class="text-white" data-bs-toggle="tooltip" data-bs-placement="top" title="Geben Sie Ihr Passwort ein.">Password:</label>
                 <input type="password" name="password" class="form-control" required>
             </div>
 
@@ -181,7 +238,12 @@ a:hover {
         <div class="loader"></div>
         <div class="error-message" style="display: none;">Benutzername oder Passwort ist falsch!</div>
     </div>
-    <p class="instruction-text">Wir bitten Sie, sich mit den Zugangsdaten anzumelden, die Ihnen von Ihrem zuständigen Systemadministrator zugeteilt wurden, um Zugang zur Liste der OTPs zu erhalten.</p>
+    <p class="instruction-text">Bitte melden Sie sich mit den Ihnen zugewiesenen Zugangsdaten an, die von Ihrem verantwortlichen Systemadministrator bereitgestellt wurden, um Zugriff auf die Liste der OTPs zu erhalten.</p>
+</div>
+
+<div class="idle-animation">
+    <img src="{{ url_for('static', filename='idle.gif') }}" alt="Idle Animation GIF" style="max-width: 50%; max-height: 40%; position: absolute; top: 30px;">
+    <div class="idle-animation-text">Sie waren inaktiv. Klicken Sie, um fortzufahren.</div>
 </div>
 {% endblock %}
 
