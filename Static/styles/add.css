@@ -33,6 +33,7 @@ body {
     border-radius: 10px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.4);
     background: #333;
+    animation: floatIn 1s ease-out;
 }
 
 .form-title {
@@ -122,3 +123,14 @@ select.form-control option {
     font-size: 18px; 
     margin-left: 8px; 
 }
+
+@keyframes floatIn {
+    from {
+      opacity: 0;
+      transform: translateY(50px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
