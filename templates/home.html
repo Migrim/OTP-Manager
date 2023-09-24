@@ -6,6 +6,7 @@
         {% block styles %}
         {{ super() }}
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
+        <link rel="stylesheet" href="navbar.css">
         <link rel="stylesheet" href="{{ url_for('static', filename='styles/styles.css') }}">
     {% endblock %}
 
@@ -13,7 +14,9 @@
 <body>
     {% block navbar %}
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <a class="navbar-brand" href="#">OTP List</a>
+        <div class="navbar-nav mr-auto">
+            <a class="navbar-brand" href="{{ url_for('home') }}">Home</a> 
+        </div>
         <div class="navbar-nav mr-auto">
             <a class="navbar-brand" href="{{ url_for('add') }}">Add</a>
         </div>
@@ -83,15 +86,15 @@
                     <div class="btn-group" role="group">
                         <form action="{{ url_for('delete_secret', name=otp.name) }}" method="post" style="display: inline-block;">
                             <button type="submit" style="margin-right:5px" class="btn btn-danger">
-                                <i class="material-icons-outlined icon-small">delete</i>
+                                <i class="icon-center material-icons-outlined icon-small">delete</i>
                             </button>
                         </form>
                         <form action="{{ url_for('edit', name=otp.name) }}" method="get" style="display: inline-block;">
                             <button style="margin-right:5px" class="btn btn-primary">
-                                <i class="material-icons-outlined icon-small">edit</i>
+                                <i class="icon-center material-icons-outlined icon-small">edit</i>
                             </button>
                             <button type="button" style="margin-right: 5px" class="btn btn-light" onclick="copyToClipboard(document.querySelector('#otp_code_{{ otp.name }}'))">
-                                <i class="material-icons-outlined icon-small">content_copy</i>
+                                <i class="icon-center material-icons-outlined icon-small">content_copy</i>
                             </button>
                         </form>
                     </div>
@@ -108,7 +111,7 @@
                             </a>
                         </li>
                         {% for i in range(1, total_pages + 1) %}
-                            <li class="page-item {% if i == page %}active{% endif %}">
+                            <li class="page-item {% if i == page %}active custom-active{% endif %}">
                                 <a class="page-link" href="{{ url_for('home', page=i) }}">{{ i }}</a>
                             </li>
                         {% endfor %}

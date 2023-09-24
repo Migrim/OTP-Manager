@@ -84,3 +84,41 @@ select.form-control option {
     overflow-y: auto;
     width: 100%
 }
+
+#logoutContainer {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end; 
+}
+
+#logoutBtn {
+    position: absolute;
+    right: -1px; 
+    top: 0.1px;
+    cursor: pointer;
+}
+
+#logoutBtn a {
+    margin-top: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center; 
+    padding: 4px 12px;
+    font-size: 1.4rem; 
+    background-color: #CD5C5C;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+    width: 100px; 
+    height: 40px; 
+}
+
+#logoutBtn a:hover {
+    background-color: #B94A4A;
+}
+
+#logoutBtn a i.material-icons-outlined {
+    font-size: 18px; 
+    margin-left: 8px; 
+}

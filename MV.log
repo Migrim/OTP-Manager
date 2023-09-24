@@ -6,3 +6,203 @@
 2023-09-23 18:38:25,517 [WARNING] Failed login attempt for user: admin
 2023-09-23 18:38:30,735 [INFO] User: admin Logged in!
 2023-09-23 18:38:30,751 [INFO] admin is authenticated
+2023-09-23 18:44:58,812 [INFO] admin was Logged out!.
+2023-09-23 19:02:42,653 [INFO] User: admin Logged in!
+2023-09-23 19:02:42,669 [INFO] admin is authenticated
+2023-09-23 19:02:51,149 [INFO] admin was Logged out!.
+2023-09-23 19:14:39,381 [INFO] admin was Logged out!.
+2023-09-23 19:33:47,812 [INFO] User: admin Logged in!
+2023-09-23 19:33:47,832 [INFO] admin is authenticated
+2023-09-23 19:38:15,791 [ERROR] admin was redirected or opened an invalid rout!.
+2023-09-24 13:41:55,509 [ERROR] admin was redirected or opened an invalid rout!.
+2023-09-24 13:52:53,554 [ERROR] admin was redirected or opened an invalid rout!.
+2023-09-24 13:55:38,166 [ERROR] admin was redirected or opened an invalid rout!.
+2023-09-24 14:19:04,621 [INFO] admin was Logged out!.
+2023-09-24 14:19:08,963 [INFO] User: admin Logged in!
+2023-09-24 14:19:08,981 [INFO] admin is authenticated
+2023-09-24 14:33:18,026 [ERROR] admin was redirected or opened an invalid rout!.
+2023-09-24 14:58:39,579 [INFO] admin was Logged out!.
+2023-09-24 14:58:43,773 [INFO] User: admin Logged in!
+2023-09-24 14:58:43,787 [INFO] admin is authenticated
+2023-09-24 15:49:23,650 [INFO] User: admin Logged in!
+2023-09-24 15:49:23,715 [INFO] admin is authenticated
+2023-09-24 15:50:14,236 [INFO] admin was Logged out!.
+2023-09-24 21:56:19,244 [ERROR] admin was redirected or opened an invalid rout!.
+2023-09-24 22:04:11,693 [ERROR] admin was redirected or opened an invalid rout!.
+2023-09-24 22:04:51,187 [INFO] Server started.
+2023-09-24 22:04:52,342 [INFO] Server started.
+2023-09-24 22:04:53,987 [ERROR] admin was redirected or opened an invalid rout!.
+2023-09-24 22:05:02,154 [ERROR] admin was redirected or opened an invalid rout!.
+2023-09-24 22:05:06,156 [ERROR] admin was redirected or opened an invalid rout!.
+2023-09-24 22:05:10,580 [ERROR] admin was redirected or opened an invalid rout!.
+2023-09-24 22:05:51,395 [ERROR] admin was redirected or opened an invalid rout!.
+2023-09-24 22:12:42,991 [ERROR] admin was redirected or opened an invalid rout!.
+2023-09-24 22:12:43,485 [ERROR] admin was redirected or opened an invalid rout!.
+2023-09-24 22:12:43,882 [ERROR] admin was redirected or opened an invalid rout!.
+2023-09-24 22:12:44,769 [ERROR] admin was redirected or opened an invalid rout!.
+2023-09-24 22:12:45,949 [ERROR] admin was redirected or opened an invalid rout!.
+2023-09-24 22:13:13,561 [INFO] Server started.
+2023-09-24 22:13:14,718 [INFO] Server started.
+2023-09-24 22:13:18,506 [ERROR] admin was redirected or opened an invalid rout!.
+2023-09-24 22:13:20,047 [ERROR] admin was redirected or opened an invalid rout!.
+2023-09-24 22:13:21,753 [ERROR] admin was redirected or opened an invalid rout!.
+2023-09-24 22:13:22,434 [ERROR] admin was redirected or opened an invalid rout!.
+2023-09-24 22:13:23,385 [ERROR] admin was redirected or opened an invalid rout!.
+2023-09-24 22:13:23,883 [ERROR] admin was redirected or opened an invalid rout!.
+2023-09-24 22:13:29,079 [ERROR] admin was redirected or opened an invalid rout!.
+2023-09-24 22:13:29,681 [ERROR] admin was redirected or opened an invalid rout!.
+2023-09-24 22:13:30,282 [ERROR] admin was redirected or opened an invalid rout!.
+2023-09-24 22:13:30,601 [ERROR] admin was redirected or opened an invalid rout!.
+2023-09-24 22:13:30,975 [ERROR] admin was redirected or opened an invalid rout!.
+2023-09-24 22:13:31,583 [ERROR] admin was redirected or opened an invalid rout!.
+2023-09-24 22:13:33,310 [ERROR] admin was redirected or opened an invalid rout!.
+2023-09-24 22:14:19,766 [ERROR] admin was redirected or opened an invalid rout!.
+2023-09-24 22:14:23,922 [ERROR] admin was redirected or opened an invalid rout!.
+2023-09-24 22:14:25,406 [ERROR] admin was redirected or opened an invalid rout!.
+2023-09-24 22:14:28,174 [ERROR] admin was redirected or opened an invalid rout!.
+2023-09-24 22:14:29,275 [ERROR] admin was redirected or opened an invalid rout!.
+2023-09-24 22:14:30,100 [ERROR] admin was redirected or opened an invalid rout!.
+2023-09-24 22:15:10,575 [ERROR] admin was redirected or opened an invalid rout!.
+2023-09-24 22:15:11,414 [ERROR] admin was redirected or opened an invalid rout!.
+2023-09-24 22:15:11,686 [ERROR] admin was redirected or opened an invalid rout!.
+2023-09-24 22:16:10,875 [ERROR] admin was redirected or opened an invalid rout!.
+2023-09-24 22:16:21,940 [ERROR] admin was redirected or opened an invalid rout!.
+2023-09-24 22:16:23,888 [ERROR] admin was redirected or opened an invalid rout!.
+2023-09-24 22:16:25,437 [ERROR] admin was redirected or opened an invalid rout!.
+2023-09-24 22:16:26,344 [ERROR] admin was redirected or opened an invalid rout!.
+2023-09-24 22:16:27,760 [ERROR] admin was redirected or opened an invalid rout!.
+2023-09-24 22:16:29,348 [ERROR] admin was redirected or opened an invalid rout!.
+2023-09-24 22:16:29,367 [ERROR] admin was redirected or opened an invalid rout!.
+2023-09-24 22:16:30,273 [ERROR] admin was redirected or opened an invalid rout!.
+2023-09-24 22:16:31,068 [ERROR] admin was redirected or opened an invalid rout!.
+2023-09-24 22:16:31,821 [ERROR] admin was redirected or opened an invalid rout!.
+2023-09-24 22:20:59,428 [INFO] Server started.
+2023-09-24 22:21:00,564 [INFO] Server started.
+2023-09-24 22:21:01,944 [ERROR] admin was redirected or opened an invalid rout!.
+2023-09-24 22:21:01,993 [ERROR] admin was redirected or opened an invalid rout!.
+2023-09-24 22:21:02,946 [ERROR] admin was redirected or opened an invalid rout!.
+2023-09-24 22:21:03,753 [ERROR] admin was redirected or opened an invalid rout!.
+2023-09-24 22:21:06,652 [ERROR] admin was redirected or opened an invalid rout!.
+2023-09-24 22:21:33,360 [ERROR] admin was redirected or opened an invalid rout!.
+2023-09-24 22:21:33,880 [ERROR] admin was redirected or opened an invalid rout!.
+2023-09-24 22:21:34,400 [ERROR] admin was redirected or opened an invalid rout!.
+2023-09-24 22:21:35,010 [ERROR] admin was redirected or opened an invalid rout!.
+2023-09-24 22:21:35,608 [ERROR] admin was redirected or opened an invalid rout!.
+2023-09-24 22:21:35,906 [ERROR] admin was redirected or opened an invalid rout!.
+2023-09-24 22:22:38,028 [ERROR] admin was redirected or opened an invalid rout!.
+2023-09-24 22:22:38,311 [ERROR] admin was redirected or opened an invalid rout!.
+2023-09-24 22:22:39,621 [ERROR] admin was redirected or opened an invalid rout!.
+2023-09-24 22:22:39,862 [ERROR] admin was redirected or opened an invalid rout!.
+2023-09-24 22:22:42,928 [ERROR] admin was redirected or opened an invalid rout!.
+2023-09-24 22:22:44,533 [ERROR] admin was redirected or opened an invalid rout!.
+2023-09-24 22:22:44,585 [ERROR] admin was redirected or opened an invalid rout!.
+2023-09-24 22:23:23,825 [INFO] User: admin Logged in!
+2023-09-24 22:23:23,835 [INFO] admin is authenticated
+2023-09-24 22:23:24,143 [ERROR] admin was redirected or opened an invalid rout!.
+2023-09-24 22:23:29,137 [ERROR] admin was redirected or opened an invalid rout!.
+2023-09-24 22:23:35,047 [ERROR] admin was redirected or opened an invalid rout!.
+2023-09-24 22:23:36,295 [ERROR] admin was redirected or opened an invalid rout!.
+2023-09-24 22:23:36,763 [ERROR] admin was redirected or opened an invalid rout!.
+2023-09-24 22:23:37,385 [ERROR] admin was redirected or opened an invalid rout!.
+2023-09-24 22:23:37,865 [ERROR] admin was redirected or opened an invalid rout!.
+2023-09-24 22:23:39,183 [ERROR] admin was redirected or opened an invalid rout!.
+2023-09-24 22:23:40,157 [ERROR] admin was redirected or opened an invalid rout!.
+2023-09-24 22:23:40,778 [ERROR] admin was redirected or opened an invalid rout!.
+2023-09-24 22:23:41,863 [ERROR] admin was redirected or opened an invalid rout!.
+2023-09-24 22:26:30,733 [ERROR] admin was redirected or opened an invalid rout!.
+2023-09-24 22:26:30,754 [ERROR] admin was redirected or opened an invalid rout!.
+2023-09-24 22:26:32,888 [ERROR] admin was redirected or opened an invalid rout!.
+2023-09-24 22:28:11,217 [ERROR] admin was redirected or opened an invalid rout!.
+2023-09-24 22:28:12,617 [ERROR] admin was redirected or opened an invalid rout!.
+2023-09-24 22:28:13,013 [ERROR] admin was redirected or opened an invalid rout!.
+2023-09-24 22:28:13,359 [ERROR] admin was redirected or opened an invalid rout!.
+2023-09-24 22:28:15,581 [ERROR] admin was redirected or opened an invalid rout!.
+2023-09-24 22:29:00,366 [ERROR] admin was redirected or opened an invalid rout!.
+2023-09-24 22:29:04,465 [ERROR] admin was redirected or opened an invalid rout!.
+2023-09-24 22:29:06,227 [ERROR] admin was redirected or opened an invalid rout!.
+2023-09-24 22:32:30,838 [ERROR] admin was redirected or opened an invalid rout!.
+2023-09-24 22:32:30,908 [ERROR] admin was redirected or opened an invalid rout!.
+2023-09-24 22:32:31,876 [ERROR] admin was redirected or opened an invalid rout!.
+2023-09-24 22:32:32,582 [ERROR] admin was redirected or opened an invalid rout!.
+2023-09-24 22:32:33,627 [ERROR] admin was redirected or opened an invalid rout!.
+2023-09-24 22:32:33,975 [ERROR] admin was redirected or opened an invalid rout!.
+2023-09-24 22:33:37,958 [ERROR] admin was redirected or opened an invalid rout!.
+2023-09-24 22:33:37,980 [ERROR] admin was redirected or opened an invalid rout!.
+2023-09-24 22:33:38,649 [ERROR] admin was redirected or opened an invalid rout!.
+2023-09-24 22:33:39,148 [ERROR] admin was redirected or opened an invalid rout!.
+2023-09-24 22:33:39,792 [ERROR] admin was redirected or opened an invalid rout!.
+2023-09-24 22:35:39,460 [ERROR] admin was redirected or opened an invalid rout!.
+2023-09-24 22:35:39,486 [ERROR] admin was redirected or opened an invalid rout!.
+2023-09-24 22:35:40,347 [ERROR] admin was redirected or opened an invalid rout!.
+2023-09-24 22:35:43,744 [ERROR] admin was redirected or opened an invalid rout!.
+2023-09-24 22:35:45,251 [ERROR] admin was redirected or opened an invalid rout!.
+2023-09-24 22:35:46,974 [ERROR] admin was redirected or opened an invalid rout!.
+2023-09-24 22:37:15,488 [ERROR] admin was redirected or opened an invalid rout!.
+2023-09-24 22:37:15,735 [ERROR] admin was redirected or opened an invalid rout!.
+2023-09-24 22:37:17,077 [ERROR] admin was redirected or opened an invalid rout!.
+2023-09-24 22:37:17,654 [ERROR] admin was redirected or opened an invalid rout!.
+2023-09-24 22:38:15,700 [ERROR] admin was redirected or opened an invalid rout!.
+2023-09-24 22:38:16,560 [ERROR] admin was redirected or opened an invalid rout!.
+2023-09-24 22:38:17,065 [ERROR] admin was redirected or opened an invalid rout!.
+2023-09-24 22:38:31,177 [ERROR] admin was redirected or opened an invalid rout!.
+2023-09-24 22:38:32,918 [ERROR] admin was redirected or opened an invalid rout!.
+2023-09-24 22:38:35,242 [ERROR] admin was redirected or opened an invalid rout!.
+2023-09-24 22:40:04,614 [ERROR] admin was redirected or opened an invalid rout!.
+2023-09-24 22:40:43,847 [ERROR] admin was redirected or opened an invalid rout!.
+2023-09-24 22:40:44,097 [ERROR] admin was redirected or opened an invalid rout!.
+2023-09-24 22:40:47,463 [ERROR] admin was redirected or opened an invalid rout!.
+2023-09-24 22:40:49,094 [ERROR] admin was redirected or opened an invalid rout!.
+2023-09-24 22:40:50,950 [ERROR] admin was redirected or opened an invalid rout!.
+2023-09-24 22:40:51,822 [ERROR] admin was redirected or opened an invalid rout!.
+2023-09-24 22:40:52,655 [ERROR] admin was redirected or opened an invalid rout!.
+2023-09-24 22:40:53,443 [ERROR] admin was redirected or opened an invalid rout!.
+2023-09-24 22:40:56,145 [ERROR] admin was redirected or opened an invalid rout!.
+2023-09-24 22:42:56,802 [ERROR] admin was redirected or opened an invalid rout!.
+2023-09-24 22:43:00,994 [ERROR] admin was redirected or opened an invalid rout!.
+2023-09-24 22:43:02,957 [ERROR] admin was redirected or opened an invalid rout!.
+2023-09-24 22:43:03,807 [ERROR] admin was redirected or opened an invalid rout!.
+2023-09-24 22:44:30,418 [ERROR] admin was redirected or opened an invalid rout!.
+2023-09-24 22:44:32,295 [ERROR] admin was redirected or opened an invalid rout!.
+2023-09-24 22:45:37,335 [ERROR] admin was redirected or opened an invalid rout!.
+2023-09-24 22:45:50,675 [ERROR] admin was redirected or opened an invalid rout!.
+2023-09-24 22:46:45,955 [ERROR] admin was redirected or opened an invalid rout!.
+2023-09-24 22:46:46,172 [ERROR] admin was redirected or opened an invalid rout!.
+2023-09-24 22:46:46,996 [ERROR] admin was redirected or opened an invalid rout!.
+2023-09-24 22:48:39,320 [ERROR] admin was redirected or opened an invalid rout!.
+2023-09-24 22:48:39,574 [ERROR] admin was redirected or opened an invalid rout!.
+2023-09-24 22:48:40,831 [ERROR] admin was redirected or opened an invalid rout!.
+2023-09-24 22:48:41,063 [ERROR] admin was redirected or opened an invalid rout!.
+2023-09-24 22:48:45,642 [ERROR] admin was redirected or opened an invalid rout!.
+2023-09-24 22:48:46,599 [ERROR] admin was redirected or opened an invalid rout!.
+2023-09-24 22:48:47,482 [ERROR] admin was redirected or opened an invalid rout!.
+2023-09-24 22:48:48,508 [ERROR] admin was redirected or opened an invalid rout!.
+2023-09-24 22:50:01,018 [ERROR] admin was redirected or opened an invalid rout!.
+2023-09-24 22:50:01,645 [ERROR] admin was redirected or opened an invalid rout!.
+2023-09-24 22:50:20,053 [ERROR] admin was redirected or opened an invalid rout!.
+2023-09-24 22:52:20,754 [ERROR] admin was redirected or opened an invalid rout!.
+2023-09-24 22:52:21,419 [ERROR] admin was redirected or opened an invalid rout!.
+2023-09-24 22:52:21,949 [ERROR] admin was redirected or opened an invalid rout!.
+2023-09-24 22:54:05,857 [ERROR] admin was redirected or opened an invalid rout!.
+2023-09-24 22:54:06,088 [ERROR] admin was redirected or opened an invalid rout!.
+2023-09-24 22:54:08,139 [ERROR] admin was redirected or opened an invalid rout!.
+2023-09-24 22:54:08,715 [ERROR] admin was redirected or opened an invalid rout!.
+2023-09-24 22:54:27,400 [ERROR] admin was redirected or opened an invalid rout!.
+2023-09-24 22:55:33,175 [ERROR] admin was redirected or opened an invalid rout!.
+2023-09-24 22:55:33,995 [ERROR] admin was redirected or opened an invalid rout!.
+2023-09-24 22:56:48,022 [ERROR] admin was redirected or opened an invalid rout!.
+2023-09-24 22:56:48,261 [ERROR] admin was redirected or opened an invalid rout!.
+2023-09-24 22:56:49,545 [ERROR] admin was redirected or opened an invalid rout!.
+2023-09-24 22:56:50,165 [ERROR] admin was redirected or opened an invalid rout!.
+2023-09-24 22:56:59,807 [ERROR] admin was redirected or opened an invalid rout!.
+2023-09-24 22:57:00,478 [ERROR] admin was redirected or opened an invalid rout!.
+2023-09-24 22:58:06,995 [ERROR] admin was redirected or opened an invalid rout!.
+2023-09-24 22:58:07,239 [ERROR] admin was redirected or opened an invalid rout!.
+2023-09-24 22:58:18,451 [ERROR] admin was redirected or opened an invalid rout!.
+2023-09-24 22:59:24,873 [ERROR] admin was redirected or opened an invalid rout!.
+2023-09-24 22:59:25,115 [ERROR] admin was redirected or opened an invalid rout!.
+2023-09-24 22:59:31,213 [ERROR] admin was redirected or opened an invalid rout!.
+2023-09-24 22:59:39,689 [ERROR] admin was redirected or opened an invalid rout!.
+2023-09-24 22:59:40,482 [ERROR] admin was redirected or opened an invalid rout!.
+2023-09-24 22:59:41,372 [ERROR] admin was redirected or opened an invalid rout!.
+2023-09-24 22:59:43,578 [ERROR] admin was redirected or opened an invalid rout!.
+2023-09-24 22:59:44,618 [ERROR] admin was redirected or opened an invalid rout!.

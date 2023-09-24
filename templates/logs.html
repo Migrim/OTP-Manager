@@ -1,11 +1,48 @@
 {% extends 'bootstrap/base.html' %}
 
-{% block title %}Real-time Logs{% endblock %}
+{% block title %} Live Logs {% endblock %}
+
+    {% block styles %}
+    {{ super() }}
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
+{% endblock %}
 
 {% block navbar %}
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <a class="navbar-brand" href="#">Real-time Logs</a>
-    <a href="{{ url_for('home') }}" class="navbar-brand">Back to OTP List</a>
+    <div class="navbar-nav mr-auto">
+        <a class="navbar-brand" href="{{ url_for('home') }}">Home</a> 
+    </div>
+    <div class="navbar-nav mr-auto">
+        <a class="navbar-brand" href="{{ url_for('add') }}">Add</a>
+    </div>
+    <div class="navbar-nav mr-auto">
+        <a class="navbar-brand" href="{{ url_for('view_logs') }}">Logs</a>
+    </div>
+    <div class="navbar-nav mr-auto">
+        <a class="navbar-brand" href="{{ url_for('admin.admin_settings') }}">Settings</a>
+    </div>
+    
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <div class="navbar-nav ml-auto">
+                <div class="alert alert-warning alert-dismissible fade show mb-0" role="alert">
+                    {{ messages[0] }}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            </div>
+        {% endif %}
+    {% endwith %}
+    
+    <div id="logoutContainer">
+        <div id="logoutBtn">
+            <a class="navbar-brand" href="{{ url_for('logout') }}">
+                Logout
+                <i class="material-icons-outlined">logout</i>
+            </a>
+        </div>                    
+    </div>            
 </nav>
 {% endblock %}
 
@@ -72,6 +109,43 @@
         background-color: #cd5c5c9f;
     }
 
+        #logoutContainer {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end; 
+    }
+
+    #logoutBtn {
+        position: absolute;
+        right: -1px; 
+        top: 0.1px;
+        cursor: pointer;
+    }
+
+    #logoutBtn a {
+        margin-top: 5px;
+        display: flex;
+        align-items: center;
+        justify-content: center; 
+        padding: 4px 12px;
+        font-size: 1.4rem; 
+        background-color: #CD5C5C;
+        color: #fff;
+        text-decoration: none;
+        border-radius: 5px;
+        transition: background-color 0.3s;
+        width: 100px; 
+        height: 40px; 
+    }
+
+    #logoutBtn a:hover {
+        background-color: #B94A4A;
+    }
+
+    #logoutBtn a i.material-icons-outlined {
+        font-size: 18px; 
+        margin-left: 8px; 
+    }
 </style>
 
 <div class="logs-section">
