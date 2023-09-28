@@ -73,7 +73,8 @@
 
     .logs-section {
         padding: 30px;
-        animation: floatUpFromBottom 1s ease-out;
+        opacity: 0;
+        transition: opacity 0.5s ease-in-out;
     }
 
     .logs-box {
@@ -172,12 +173,8 @@
 
 <script>
     function updateLogs() {
-        $.get("/get_logs?lines=100", function(data) {
-            var formattedLogs = data.logs
-                .replace(/(error)/ig, '<span style="color: #CD5C5C;">$1</span>')
-                .replace(/(info)/ig, '<span style="color: #74ADDD;">$1</span>')
-                .replace(/(warning)/ig, '<span style="color: #E5BD74;">$1</span>');
-            $("#logs").html(formattedLogs);
+        $(document).ready(function(){
+            $('.logs-section').css('opacity', '1');
         });
     }
 
