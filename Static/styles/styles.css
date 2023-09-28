@@ -76,7 +76,7 @@ body {
     margin-right: 130px;
     padding: 0; 
     font-size: 17px;
-    background-color: #6CB7E0;
+    background-color: #89839C;
     color: #fff;
     border: none;
     border-radius: 5px;
@@ -90,7 +90,7 @@ body {
 
 
 .ref-btn:hover {
-    background-color: #5A9CCD;
+    background-color: #B8B5C4;
 }
 
 #logoutContainer {
@@ -123,7 +123,7 @@ body {
 }
 
 #logoutBtn a:hover {
-    background-color: #B94A4A;
+    background-color: #E68A89;
 }
 
 #logoutBtn a i.material-icons-outlined {
@@ -174,7 +174,7 @@ body {
 }
 
 .btn-danger:hover {
-    background-color: #B94A4A; 
+    background-color: #dc8d8d; 
 }
 
 .btn-light {

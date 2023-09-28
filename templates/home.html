@@ -146,30 +146,33 @@
                 <div class="copyright">© Sebastian Junginger 2023</div>
 
                 <script>
-                    let countdownIntervals = [];
-                    let isNewSecretAdded = false;
+                    const countdownIntervals = new Map();
 
-                    function updateOtpCodes(otpCodes) {
-                        otpCodes.forEach(otp => {
-                            let otpCodeElement = document.getElementById(`otp_code_${otp.name}`);
-                            if (otpCodeElement) {
-                                otpCodeElement.textContent = otp.otp_code;
-                                
-                                let progressBar = document.getElementById(`progressBar${otp.name}`);
-                                if (progressBar) {
-                                    progressBar.style.width = '100%';
-                                    let duration = parseInt(progressBar.getAttribute('data-refresh-time'));
-                                    startCountdown(progressBar, duration);
-                                }
-                            }
-                        });
+                async function updateOtpCodes(otpCodes) {
+                    otpCodes.forEach(otp => {
+                        let otpCodeElement = document.getElementById(`otp_code_${otp.name}`);
+                        let progressBar = document.getElementById(`progressBar${otp.name}`);
+
+                        if (otpCodeElement) {
+                            otpCodeElement.textContent = otp.otp_code;
+                        }
+
+                        if (progressBar) {
+                            progressBar.style.width = '100%';
+                            let duration = parseInt(progressBar.getAttribute('data-refresh-time'));
+                            startCountdown(progressBar, duration);
+                        }
+                    });
+                }
+
+                async function manuallyRefreshOtps() {
+                    try {
+                        const response = await fetch('/refresh_codes_v2');
+                        const data = await response.json();
+                        updateOtpCodes(data.otp_codes);
+                    } catch (error) {
+                        console.error('Fetch error:', error);
                     }
-
-                function manuallyRefreshOtps() {
-                    fetch('/refresh_codes_v2')
-                        .then(response => response.json())
-                        .then(data => updateOtpCodes(data.otp_codes))
-                        .catch(error => console.error('Fetch error:', error));
                 }
 
                 function startAutoRefresh() {
@@ -178,45 +181,53 @@
                     let currentTime = new Date();
                     let millisTillNextInterval = 30000 - (currentTime.getSeconds() * 1000 + currentTime.getMilliseconds()) % 30000;
 
-                    setTimeout(function() {
+                    setTimeout(() => {
                         manuallyRefreshOtps();
                         setInterval(manuallyRefreshOtps, 30000);
                     }, millisTillNextInterval);
                 }
 
                 function startCountdown(element, duration) {
-                    clearInterval(countdownIntervals[element.id]);
-                    if (countdownIntervals[element.id]) {
-                        clearInterval(countdownIntervals[element.id]);
+                    if (countdownIntervals.has(element.id)) {
+                        clearInterval(countdownIntervals.get(element.id));
                     }
-                    countdownIntervals[element.id] = setInterval(function() {
+
+                    const intervalId = setInterval(() => {
                         let current_time = new Date().getSeconds();
                         let remaining = duration - (current_time % duration);
-                        
+
                         if (remaining === 2) {
                             element.textContent = "fetching...";
-                        } 
-                        else if (remaining === 1) {
+                        } else if (remaining === 1) {
                             let otpName = element.id.replace('progressBar', '');
                             let otpCodeElement = document.getElementById(`otp_code_${otpName}`);
                             if (otpCodeElement) {
-                                otpCodeElement.classList.add('flash'); 
-                                setTimeout(() => {
-                                    otpCodeElement.classList.remove('flash');
-                                }, 3000);
+                                otpCodeElement.classList.add('flash');
+                                setTimeout(() => otpCodeElement.classList.remove('flash'), 3000);
                             }
-                        }
-                        else {
+                        } else {
                             element.textContent = remaining + "s";
                         }
 
-                        element.style.width = (remaining / duration * 100) + "%";
+                        element.style.width = `${(remaining / duration * 100)}%`;
 
                         if (remaining <= 1) {
-                            clearInterval(countdownIntervals[element.id]);
+                            clearInterval(countdownIntervals.get(element.id));
                             manuallyRefreshOtps();
                         }
                     }, 1000);
+
+                    countdownIntervals.set(element.id, intervalId);
+                }
+
+                // Debounce function
+                function debounce(func, wait) {
+                    let timeout;
+                    return function() {
+                        const context = this, args = arguments;
+                        clearTimeout(timeout);
+                        timeout = setTimeout(() => func.apply(context, args), wait);
+                    };
                 }
 
                 window.onload = function() {

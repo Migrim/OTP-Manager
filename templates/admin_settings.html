@@ -182,6 +182,16 @@
             font-size: 18px; 
             margin-left: 8px; 
         }
+
+        .btn-danger i.material-icons-outlined {
+            font-size: 20px;
+            vertical-align: middle;
+        }
+
+        .btn-warning i.material-icons-outlined {
+            font-size: 20px;
+            vertical-align: middle;
+        }
     </style>
 {% endblock %}
 
@@ -252,9 +262,13 @@
                         {{ user[1] }}
                         <div>
                             <form style="display:inline;" action="{{ url_for('admin.delete_user', user_id=user[0]) }}" method="POST">
-                                <button type="submit" class="btn btn-danger">Delete</button>
+                                <button type="submit" class="btn btn-danger">
+                                    <i class="material-icons-outlined">delete_outline</i>
+                                </button>                               
                             </form>
-                            <a href="{{ url_for('reset_password', user_id=user[0]) }}" class="btn btn-warning">Reset</a>
+                            <a href="{{ url_for('reset_password', user_id=user[0]) }}" class="btn btn-warning">
+                                <i class="material-icons-outlined">lock_reset</i>
+                            </a>                              
                         </div>
                     </li>
                 {% endfor %}
@@ -282,7 +296,9 @@
                     <li class="list-group-item">{{ company.name }}
                         <form style="display:inline;" action="{{ url_for('admin.delete_company', company_id=company.company_id) }}" method="POST">
                             {{ company_form.hidden_tag() }}
-                            <button type="submit" class="btn btn-danger">Delete</button>
+                            <button type="submit" class="btn btn-danger">
+                                <i class="material-icons-outlined">delete_outline</i>
+                            </button>
                         </form>
                     </li>
                 {% endfor %}
