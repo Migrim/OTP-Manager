@@ -84,10 +84,11 @@
                         <div class="progress-bar" role="progressbar" style="width: 100%;" id="progressBar{{ otp.name }}" data-refresh-time="{{ otp.refresh_time }}">30s</div>
                     </div>
                     <div class="btn-group" role="group">
-                        <form action="{{ url_for('delete_secret', name=otp.name) }}" method="post" style="display: inline-block;">
-                            <button type="submit" style="margin-right:5px" class="btn btn-danger">
+                        <form id="deleteForm_{{ otp.name }}" action="{{ url_for('delete_secret', name=otp.name) }}" method="post" style="display: inline-block;">
+                            <button type="button" style="margin-right:5px" class="btn btn-danger delete-btn" data-toggle="modal" data-target="#deleteConfirmationModal" data-otp-name="{{ otp.name }}">
                                 <i class="icon-center material-icons-outlined icon-small">delete</i>
                             </button>
+                            <input type="hidden" name="otpName" value="{{ otp.name }}" />
                         </form>
                         <form action="{{ url_for('edit', name=otp.name) }}" method="get" style="display: inline-block;">
                             <button style="margin-right:5px" class="btn btn-primary">
@@ -127,16 +128,11 @@
                     <div class="modal-dialog modal-dialog-centered" role="document">
                         <div class="modal-content">
                             <div class="modal-header">
+                                <i class="material-icons-outlined">report</i>
                                 <h5 class="modal-title" id="deleteConfirmationModalLabel">Confirm Deletion</h5>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
                             </div>
                             <div class="modal-body text-center">
                                 <p class="my-4 text-danger">Are you sure you want to delete this item? This action cannot be undone.</p>
-                                <div class="text-center">
-                                    <i class="material-icons-outlined" style="font-size: 60px; color: #FF0000; margin-bottom: 20px;">warning</i>
-                                </div>
                             </div>
                             <div class="modal-footer justify-content-center">
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
@@ -288,9 +284,10 @@
                     let formToSubmit;
 
                     document.addEventListener('DOMContentLoaded', (event) => {
-                        document.querySelectorAll('.btn-danger').forEach((button) => {
-                            button.addEventListener('click', () => {
-                                formToSubmit = button.closest('form');
+                        document.querySelectorAll('.delete-btn').forEach((button) => {
+                            button.addEventListener('click', function() {
+                                let otpName = this.getAttribute('data-otp-name');
+                                formToSubmit = document.getElementById(`deleteForm_${otpName}`);
                             });
                         });
                         
