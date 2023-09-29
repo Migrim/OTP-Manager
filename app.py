@@ -18,6 +18,7 @@ from datetime import datetime, timedelta
 from flask_login import LoginManager, UserMixin, current_user, login_user
 from search import search_blueprint
 from math import ceil
+import subprocess 
 import sqlite3
 import logging
 import re
@@ -26,6 +27,7 @@ logging.basicConfig(filename='MV.log', level=logging.INFO, format='%(asctime)s [
 my_logger = logging.getLogger('MV_logger')
 
 app = Flask(__name__)
+start_time = datetime.now()
 app.config['SECRET_KEY'] = 'your-secret-key'
 app.config['SESSION_TYPE'] = 'filesystem'
 Session(app)
@@ -89,6 +91,14 @@ def init_db():
             CREATE TABLE IF NOT EXISTS companies (
                 id INTEGER PRIMARY KEY,
                 name TEXT NOT NULL UNIQUE
+            )
+        """)
+        cursor.execute("""
+            CREATE TABLE IF NOT EXISTS statistics (
+                id INTEGER PRIMARY KEY,
+                logins_today INTEGER NOT NULL,
+                times_refreshed INTEGER NOT NULL,
+                date TEXT NOT NULL
             )
         """)
         db.commit()
@@ -184,6 +194,30 @@ def get_all_users():
         users = cursor.fetchall()
     return users
 
+def update_statistics(logins=0, refreshed=0):
+    today = datetime.now().strftime('%Y-%m-%d')
+    with sqlite3.connect("otp.db") as db:
+        cursor = db.cursor()
+        cursor.execute("SELECT * FROM statistics WHERE date = ?", (today,))
+        stats = cursor.fetchone()
+        
+        if stats:
+            cursor.execute("UPDATE statistics SET logins_today = logins_today + ?, times_refreshed = times_refreshed + ? WHERE date = ?", (logins, refreshed, today))
+        else:
+            cursor.execute("INSERT INTO statistics (logins_today, times_refreshed, date) VALUES (?, ?, ?)", (logins, refreshed, today))
+        
+        db.commit()
+
+def get_statistics():
+    today = datetime.now().strftime('%Y-%m-%d')
+    with sqlite3.connect("otp.db") as db:
+        cursor = db.cursor()
+        cursor.execute("SELECT * FROM statistics WHERE date = ?", (today,))
+        stats = cursor.fetchone()
+        if stats:
+            return {'logins_today': stats[1], 'times_refreshed': stats[2]}
+        else:
+            return {'logins_today': 0, 'times_refreshed': 0}
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
@@ -226,6 +260,7 @@ def login_required(f):
 @app.route('/refresh_codes_v2')
 @login_required
 def refresh_codes_v2():
+    update_statistics(refreshed=1)
     otp_secrets = load_from_db()
     otp_codes = []
 
@@ -276,6 +311,7 @@ def login():
             user = cursor.fetchone()
 
         if user and check_password_hash(user[2], password):
+            update_statistics(logins=1)
             session['user_id'] = user[0]
             flash('Successfully logged in!')
             my_logger.info(f"User: {username} Logged in!")
@@ -303,6 +339,61 @@ def profile():
         print("User is not authenticated.")  
         logging.error(f"{current_user} could not be authenticated!")
         return make_response(redirect(url_for('login')))
+
+@app.route('/about')
+def about():
+    stats = get_statistics()
+    stored_otps = len(load_from_db())
+    logins_today = stats['logins_today']
+    times_refreshed = stats['times_refreshed']
+    
+    uptime = get_uptime()
+    ping_time, speed = get_ping_time("google.com")
+    
+    return render_template('about.html', stored_otps=stored_otps, logins_today=logins_today, times_refreshed=times_refreshed, uptime=uptime, ping_time=ping_time, speed=speed)
+
+def get_uptime():
+    current_time = datetime.now()
+    uptime = current_time - start_time
+
+    days = uptime.days
+    hours, remainder = divmod(uptime.seconds, 3600)
+    minutes, seconds = divmod(remainder, 60)
+
+    return f"{days} Days {hours}h:{minutes}m:{seconds}s"
+
+def get_ping_time(host):
+    try:
+        response = subprocess.check_output(
+            ["ping", "-c", "1", host],
+            stderr=subprocess.STDOUT,
+            universal_newlines=True
+        )
+
+        time = response.split("time=")[1].split(" ")[0]
+        speed = response.split("bytes from")[1].split(": icmp_seq=")[0]
+        
+        return f"{time} ms", speed
+    except Exception as e:
+        return "failed", "Unknown"
+
+@app.route('/get_stats', methods=['GET'])
+def get_stats_json():
+    stats = get_statistics()
+    stored_otps = len(load_from_db())
+    logins_today = stats['logins_today']
+    times_refreshed = stats['times_refreshed']
+    uptime = get_uptime()
+    ping_time, speed = get_ping_time("google.com")
+
+    return jsonify({
+        'stored_otps': stored_otps,
+        'logins_today': logins_today,
+        'times_refreshed': times_refreshed,
+        'uptime': uptime,
+        'ping_time': ping_time,
+        'speed': speed
+    })
 
 @app.route('/get_otp_v2/<name>', methods=['GET'])
 def get_otp_v2(name):

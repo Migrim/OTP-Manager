@@ -1,0 +1,124 @@
+{% extends 'bootstrap/base.html' %}
+
+{% block title %} About OTP Manager {% endblock %}
+
+{% block styles %}
+    {{ super() }}
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/styles.css') }}">
+    <style>
+        .center-content {
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            min-height: 100vh;
+            padding-top: 50px;
+        }
+        .form-container {
+            max-width: 400px;
+            width: 100%;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.4);
+            background: #333;
+            margin-bottom: 20px;
+        }
+        .footer {
+            text-align: center;
+            font-size: 12px;
+            margin-top: 50px;
+        }
+    </style>
+{% endblock %}
+
+{% block navbar %}
+
+{% block navbar %}
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="navbar-nav mr-auto">
+        <a class="navbar-brand" href="{{ url_for('home') }}">Home</a> 
+    </div>
+    <div class="navbar-nav mr-auto">
+        <a class="navbar-brand" href="{{ url_for('add') }}">Add</a>
+    </div>
+    <div class="navbar-nav mr-auto">
+        <a class="navbar-brand" href="{{ url_for('view_logs') }}">Logs</a>
+    </div>
+    <div class="navbar-nav mr-auto">
+        <a class="navbar-brand" href="{{ url_for('admin.admin_settings') }}">Settings</a>
+    </div>
+    
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <div class="navbar-nav ml-auto">
+                <div class="alert alert-warning alert-dismissible fade show mb-0" role="alert">
+                    {{ messages[0] }}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            </div>
+        {% endif %}
+    {% endwith %}
+    
+    <div id="logoutContainer">
+        <div id="logoutBtn">
+            <a class="navbar-brand" href="{{ url_for('logout') }}">
+                Logout
+                <i class="material-icons-outlined">logout</i>
+            </a>
+        </div>                    
+    </div>            
+</nav>
+{% endblock %}
+
+{% block content %}
+    <div class="center-content">
+        <h1>OTP-Manager</h1>
+        
+        <h2>Stats:</h2>
+        <ul class="stats">
+            <li id="stored_otps"></li>
+            <li id="logins_today"></li>
+            <li id="times_refreshed"></li>
+            <li id="uptime"></li>
+            <li id="ping_time"></li>
+            <li id="speed"></li>
+        </ul>
+        
+        <h2>Settings:</h2>
+        <ul class="settings">
+            <li>placeholder</li>
+            <li>placeholder</li>
+            <li>placeholder</li>
+        </ul>
+
+        <p>OTP Manager is licensed under the Creative Commons License by Sebastina Junginger © 2023.</p>
+        
+        <p>Source code is available on GitHub:</p>
+        <a href="https://github.com/Migrim/OTP-Manager">https://github.com/Migrim/OTP-Manager</a>
+    </div>
+
+    <div class="footer">
+        <p>&copy; 2023 OTP Manager. All rights reserved.</p>
+    </div>
+
+    <script>
+        function updateStats() {
+            fetch('/get_stats')
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('stored_otps').textContent = 'Stored OTPs: ' + data.stored_otps;
+                document.getElementById('logins_today').textContent = 'Logins Today: ' + data.logins_today;
+                document.getElementById('times_refreshed').textContent = 'Times Refreshed: ' + data.times_refreshed;
+                document.getElementById('uptime').textContent = 'Server Uptime: ' + data.uptime;
+                document.getElementById('ping_time').textContent = 'Server Ping: ' + data.ping_time;
+                document.getElementById('speed').textContent = 'Network Speed: ' + data.speed;
+            });
+        }
+
+        updateStats();
+        
+        setInterval(updateStats, 1000);
+    </script>
+{% endblock %}
