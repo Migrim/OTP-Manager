@@ -5,33 +5,8 @@
 {% block styles %}
     {{ super() }}
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
-    <link rel="stylesheet" href="{{ url_for('static', filename='styles/styles.css') }}">
-    <style>
-        .center-content {
-            display: flex;
-            justify-content: center;
-            align-items: flex-start;
-            min-height: 100vh;
-            padding-top: 50px;
-        }
-        .form-container {
-            max-width: 400px;
-            width: 100%;
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.4);
-            background: #333;
-            margin-bottom: 20px;
-        }
-        .footer {
-            text-align: center;
-            font-size: 12px;
-            margin-top: 50px;
-        }
-    </style>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/about.css') }}">
 {% endblock %}
-
-{% block navbar %}
 
 {% block navbar %}
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -73,36 +48,46 @@
 {% endblock %}
 
 {% block content %}
-    <div class="center-content">
-        <h1>OTP-Manager</h1>
-        
-        <h2>Stats:</h2>
-        <ul class="stats">
-            <li id="stored_otps"></li>
-            <li id="logins_today"></li>
-            <li id="times_refreshed"></li>
-            <li id="uptime"></li>
-            <li id="ping_time"></li>
-            <li id="speed"></li>
-        </ul>
-        
-        <h2>Settings:</h2>
-        <ul class="settings">
-            <li>placeholder</li>
-            <li>placeholder</li>
-            <li>placeholder</li>
-        </ul>
-
-        <p>OTP Manager is licensed under the Creative Commons License by Sebastina Junginger © 2023.</p>
-        
-        <p>Source code is available on GitHub:</p>
-        <a href="https://github.com/Migrim/OTP-Manager">https://github.com/Migrim/OTP-Manager</a>
+    <div class="container mt-5 about-container">
+        <h1 class="text-center">OTP-Manager</h1>
+        <div class="row">
+            <div class="col-md-6">
+                <section class="stats-container">
+                    <h2>Stats:</h2>
+                    <ul class="stats">
+                        <li id="stored_otps"></li>
+                        <li id="logins_today"></li>
+                        <li id="times_refreshed"></li>
+                        <li id="uptime"></li>
+                        <li id="last_user_login_time"></li>
+                        <li id="current_server_time"></li>
+                    </ul>
+                </section>
+            </div>
+            <div class="col-md-6">
+                <section class="settings-container">
+                    <h2>Settings:</h2>
+                    <ul class="settings">
+                        <li>placeholder</li>
+                        <li>placeholder</li>
+                        <li>placeholder</li>
+                    </ul>
+                </section>
+                <section class="license-container text-center">
+                    <p>OTP Manager is licensed under the Creative Commons License by Sebastina Junginger © 2023.</p>
+                    <p>Source code is available on GitHub:</p>
+                    <a href="https://github.com/Migrim/OTP-Manager">https://github.com/Migrim/OTP-Manager</a>
+                </section>
+            </div>
+        </div>
+        <footer class="footer text-center">
+            <p>&copy; 2023 OTP Manager. All rights reserved.</p>
+        </footer>
     </div>
+{% endblock %}
 
-    <div class="footer">
-        <p>&copy; 2023 OTP Manager. All rights reserved.</p>
-    </div>
-
+{% block scripts %}
+{{ super() }}
     <script>
         function updateStats() {
             fetch('/get_stats')
@@ -112,8 +97,8 @@
                 document.getElementById('logins_today').textContent = 'Logins Today: ' + data.logins_today;
                 document.getElementById('times_refreshed').textContent = 'Times Refreshed: ' + data.times_refreshed;
                 document.getElementById('uptime').textContent = 'Server Uptime: ' + data.uptime;
-                document.getElementById('ping_time').textContent = 'Server Ping: ' + data.ping_time;
-                document.getElementById('speed').textContent = 'Network Speed: ' + data.speed;
+                document.getElementById('last_user_login_time').textContent = 'Last User Login Time: ' + data.last_user_login_time;
+                document.getElementById('current_server_time').textContent = 'Current Server Time: ' + data.current_server_time;
             });
         }
 
