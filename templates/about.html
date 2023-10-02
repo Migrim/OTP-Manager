@@ -22,7 +22,9 @@
     <div class="navbar-nav mr-auto">
         <a class="navbar-brand" href="{{ url_for('admin.admin_settings') }}">Settings</a>
     </div>
-    
+    <div class="navbar-nav mr-auto">
+        <a class="navbar-brand" href="{{ url_for('about') }}">About</a>
+    </div>   
     {% with messages = get_flashed_messages() %}
         {% if messages %}
             <div class="navbar-nav ml-auto">
@@ -74,7 +76,7 @@
                     </ul>
                 </section>
                 <section class="license-container text-center">
-                    <p>OTP Manager is licensed under the Creative Commons License by Sebastina Junginger © 2023.</p>
+                    <p>OTP Manager is licensed under the Creative Commons License by Sebastian Junginger © 2023.</p>
                     <p>Source code is available on GitHub:</p>
                     <a href="https://github.com/Migrim/OTP-Manager">https://github.com/Migrim/OTP-Manager</a>
                 </section>
