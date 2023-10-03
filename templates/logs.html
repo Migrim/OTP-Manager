@@ -5,6 +5,7 @@
     {% block styles %}
     {{ super() }}
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
 {% endblock %}
 
 {% block navbar %}
@@ -51,7 +52,7 @@
 {% block content %}
 <style>
     body {
-        font-family: 'Arial', sans-serif;
+        font-family: 'Roboto', sans-serif;
         background-color: #222222;
         color: #FFF;
         margin: 0;
@@ -161,12 +162,24 @@
             transform: translateY(0);
         }
     }
+
+    .error-log {
+        color: #FF5555;
+    }
+    .info-log {
+        color: #55AAFF;
+    }
+    .warning-log {
+        color: #FFAA00;
+    }
 </style>
 
 <div class="logs-section">
     <h1>Real-time Logs</h1>
     <div class="logs-box">
-        <div id="logs"></div>
+        <div id="logs">
+            {{ logs|safe }}
+        </div>
     </div>
     <div class="scroll-to-end-button" id="scroll-to-end">Scroll to End</div>
 </div>
@@ -177,6 +190,13 @@
     function updateLogs() {
         $(document).ready(function(){
             $('.logs-section').css('opacity', '1');
+            
+            var logs = $('#logs').html();
+            var updatedLogs = logs
+                                .replace(/\[ERROR\]/g, '<span class="error-log">[ERROR]</span>')
+                                .replace(/\[INFO\]/g, '<span class="info-log">[INFO]</span>')
+                                .replace(/\[WARNING\]/g, '<span class="warning-log">[WARNING]</span>');
+            $('#logs').html(updatedLogs);
         });
     }
 

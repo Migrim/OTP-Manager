@@ -46,7 +46,12 @@
     <div class="profile-container">
         <h1>Willkommen {{ username }}!</h1>
         <p id="loading-text">Getting things ready</p>
-    </div>
+        {% if last_login_time %}
+        <p>Server Login Time: {{ last_login_time }}</p>
+        {% else %}
+        <p>No saved Login Time!</p>
+        {% endif %}
+    </div>    
 
     <script>
         var image = new Image();

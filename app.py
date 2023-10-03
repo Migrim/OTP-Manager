@@ -329,8 +329,11 @@ def login():
             my_logger.info(f"User: {username} Logged in!")
 
             last_login_time = datetime.now().strftime('%d/%m/%Y %H:%M:%S')
-            cursor.execute("UPDATE users SET last_login_time = ? WHERE id = ?", (last_login_time, user[0]))
-            db.commit()
+
+            with sqlite3.connect("otp.db") as db:
+                cursor = db.cursor()
+                cursor.execute("UPDATE users SET last_login_time = ? WHERE id = ?", (last_login_time, user[0]))
+                db.commit()
 
             user_obj = UserMixin()
             user_obj.id = user[0]
@@ -346,11 +349,12 @@ def login():
 
 @app.route('/profile')
 def profile():
+    last_login_time = get_last_login_time_from_db()
     print("Profile function executed.")
     if current_user.is_authenticated:
         print("User is authenticated.")
         logging.info(f"{current_user.username} is authenticated")
-        return make_response(render_template('profile.html', username=current_user.username))
+        return make_response(render_template('profile.html', username=current_user.username, last_login_time=last_login_time))
     else:
         print("User is not authenticated.")  
         logging.error(f"{current_user} could not be authenticated!")
@@ -504,9 +508,11 @@ def get_logs():
     
     return jsonify({"logs": output})
 
-@app.route('/view_logs', methods=['GET'])
+@app.route('/view_logs')
 def view_logs():
-    return render_template('logs.html')
+    with open("mv.log", "r") as f:
+        logs = f.read()
+    return render_template('logs.html', logs=logs)
 
 @app.route('/search_form', methods=['GET'])
 def search_form():
@@ -514,7 +520,7 @@ def search_form():
 
 @app.errorhandler(404)
 def page_not_found(e):
-    logging.error(f"{current_user.username} was redirected or opened an invalid rout!.")
+#    logging.error(f"{current_user.username} was redirected or opened an invalid rout!.")
     return render_template('404.html'), 404
 
 @app.route('/search', methods=['GET'])
