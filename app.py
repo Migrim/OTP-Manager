@@ -84,7 +84,8 @@ def init_db():
             CREATE TABLE IF NOT EXISTS users (
                 id INTEGER PRIMARY KEY,
                 username TEXT NOT NULL UNIQUE,
-                password TEXT NOT NULL
+                password TEXT NOT NULL,
+                last_login_time TEXT
             )
         """)
         cursor.execute("""
@@ -298,6 +299,17 @@ def reset_password(user_id):
         return redirect(url_for('home'))
     return render_template('reset_password.html', user_id=user_id)
 
+def get_last_login_time_from_db():
+    user_id = session.get('user_id')
+    if user_id:
+        with sqlite3.connect("otp.db") as db:
+            cursor = db.cursor()
+            cursor.execute("SELECT last_login_time FROM users WHERE id = ?", (user_id,))
+            last_login_time = cursor.fetchone()
+            if last_login_time:
+                return last_login_time[0]
+    return None
+
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     user = None
@@ -315,6 +327,10 @@ def login():
             session['user_id'] = user[0]
             flash('Successfully logged in!')
             my_logger.info(f"User: {username} Logged in!")
+
+            last_login_time = datetime.now().strftime('%d/%m/%Y %H:%M:%S')
+            cursor.execute("UPDATE users SET last_login_time = ? WHERE id = ?", (last_login_time, user[0]))
+            db.commit()
 
             user_obj = UserMixin()
             user_obj.id = user[0]
@@ -346,11 +362,25 @@ def about():
     stored_otps = len(load_from_db())
     logins_today = stats['logins_today']
     times_refreshed = stats['times_refreshed']
+    uptime = get_uptime()
+    current_server_time = datetime.now()
+    last_user_login_time = "Ihre Logik hier"
+    current_server_time = datetime.now().strftime('%d/%m/%Y %H:%M:%S')
     
     uptime = get_uptime()
     ping_time, speed = get_ping_time("google.com")
     
-    return render_template('about.html', stored_otps=stored_otps, logins_today=logins_today, times_refreshed=times_refreshed, uptime=uptime, ping_time=ping_time, speed=speed)
+    return render_template(
+        'about.html',
+        stored_otps=stored_otps,
+        logins_today=logins_today,
+        times_refreshed=times_refreshed,
+        uptime=uptime,
+        ping_time=ping_time,
+        speed=speed,
+        last_user_login_time=last_user_login_time,  
+        current_server_time=current_server_time 
+    )
 
 def get_uptime():
     current_time = datetime.now()
@@ -384,15 +414,18 @@ def get_stats_json():
     logins_today = stats['logins_today']
     times_refreshed = stats['times_refreshed']
     uptime = get_uptime()
-    ping_time, speed = get_ping_time("google.com")
+    
+    server_time = datetime.now().strftime('%d/%m/%Y %H:%M:%S')
+    
+    last_login_time = get_last_login_time_from_db()
 
     return jsonify({
         'stored_otps': stored_otps,
         'logins_today': logins_today,
         'times_refreshed': times_refreshed,
         'uptime': uptime,
-        'ping_time': ping_time,
-        'speed': speed
+        'current_server_time': server_time,
+        'last_user_login_time': last_login_time 
     })
 
 @app.route('/get_otp_v2/<name>', methods=['GET'])

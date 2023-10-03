@@ -107,5 +107,38 @@
         updateStats();
         
         setInterval(updateStats, 1000);
+
+        function toggleSessionTimeoutInput() {
+            const isEnabled = document.getElementById('enableSessionTimeout').checked;
+            const label = document.getElementById('sessionTimeoutDurationLabel');
+            const input = document.getElementById('sessionTimeoutDuration');
+
+            if (isEnabled) {
+                label.style.display = "inline";
+                input.style.display = "inline";
+            } else {
+                label.style.display = "none";
+                input.style.display = "none";
+            }
+        }
+
+        function updateSessionTimeout() {
+            const timeout = document.getElementById('sessionTimeoutDuration').value;
+
+            fetch('/update_session_timeout', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ timeout: timeout }),
+            }).then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    console.log("Session timeout updated.");
+                } else {
+                    console.log("Failed to update session timeout.");
+                }
+            });
+        }
     </script>
 {% endblock %}
