@@ -22,6 +22,7 @@ import subprocess
 import sqlite3
 import logging
 import re
+import uuid
 
 logging.basicConfig(filename='MV.log', level=logging.INFO, format='%(asctime)s [%(levelname)s] %(message)s')
 my_logger = logging.getLogger('MV_logger')
@@ -85,7 +86,8 @@ def init_db():
                 id INTEGER PRIMARY KEY,
                 username TEXT NOT NULL UNIQUE,
                 password TEXT NOT NULL,
-                last_login_time TEXT
+                last_login_time TEXT,
+                session_token TEXT
             )
         """)
         cursor.execute("""
@@ -220,6 +222,12 @@ def get_statistics():
         else:
             return {'logins_today': 0, 'times_refreshed': 0}
 
+def get_older_statistics(limit=5):
+    with sqlite3.connect("otp.db") as db:
+        cursor = db.cursor()
+        cursor.execute("SELECT * FROM statistics ORDER BY date DESC LIMIT ?", (limit,))
+        return cursor.fetchall()
+
 @app.route('/register', methods=['GET', 'POST'])
 def register():
     current_user = get_current_user()
@@ -246,15 +254,35 @@ def register():
 
 @app.route('/logout')
 def logout():
-    session.pop('user_id', None)
-    logging.info(f"{current_user.username} was Logged out!.")
+    user_id = session.pop('user_id', None)
+    session.pop('session_token', None)
+
+    with sqlite3.connect("otp.db") as db:
+        cursor = db.cursor()
+        cursor.execute("UPDATE users SET session_token = NULL WHERE id = ?", (user_id,))
+        db.commit()
+
     return redirect(url_for('login'))
 
 def login_required(f):
     @wraps(f)
     def decorated_function(*args, **kwargs):
-        if 'user_id' not in session:
+        user_id = session.get('user_id')
+        session_token = session.get('session_token')
+
+        if not user_id or not session_token:
             return redirect(url_for('login'))
+        
+        with sqlite3.connect("otp.db") as db:
+            cursor = db.cursor()
+            cursor.execute("SELECT session_token FROM users WHERE id = ?", (user_id,))
+            db_session_token = cursor.fetchone()
+
+        if not db_session_token or session_token != db_session_token[0]:
+            session.pop('user_id', None)
+            session.pop('session_token', None)
+            return redirect(url_for('login'))
+
         return f(*args, **kwargs)
     return decorated_function
 
@@ -324,7 +352,9 @@ def login():
 
         if user and check_password_hash(user[2], password):
             update_statistics(logins=1)
+            session_token = str(uuid.uuid4())
             session['user_id'] = user[0]
+            session['session_token'] = session_token
             flash('Successfully logged in!')
             my_logger.info(f"User: {username} Logged in!")
 
@@ -340,7 +370,12 @@ def login():
             user_obj.username = user[1]
             login_user(user_obj)
 
-            return redirect(url_for('profile')) 
+            with sqlite3.connect("otp.db") as db:
+                cursor = db.cursor()
+                cursor.execute("UPDATE users SET session_token = ? WHERE id = ?", (session_token, user[0]))
+                db.commit()
+
+            return redirect(url_for('profile'))
         else:
             flash('Die Zugangsdaten konnten nicht validiert werden!')
             my_logger.warning(f"Failed login attempt for user: {username}")
@@ -370,7 +405,8 @@ def about():
     current_server_time = datetime.now()
     last_user_login_time = "Ihre Logik hier"
     current_server_time = datetime.now().strftime('%d/%m/%Y %H:%M:%S')
-    
+
+    older_stats = get_older_statistics()
     uptime = get_uptime()
     ping_time, speed = get_ping_time("google.com")
     
@@ -383,7 +419,8 @@ def about():
         ping_time=ping_time,
         speed=speed,
         last_user_login_time=last_user_login_time,  
-        current_server_time=current_server_time 
+        current_server_time=current_server_time,
+        older_stats=older_stats
     )
 
 def get_uptime():

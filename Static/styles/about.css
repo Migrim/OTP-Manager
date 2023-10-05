@@ -112,3 +112,17 @@ body {
         opacity: 1;
     }
 }
+
+.center-text {
+    text-align: center;
+}
+
+.older-stat-item {
+    margin-bottom: 0.1em;
+    padding: 0.5em;
+}
+
+.older-stats {
+    max-height: 14em; 
+    overflow-y: auto; 
+}

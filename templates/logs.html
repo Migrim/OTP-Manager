@@ -172,6 +172,9 @@
     .warning-log {
         color: #FFAA00;
     }
+    .washed-purple-log {
+        color: #b19cd9; 
+    }
 </style>
 
 <div class="logs-section">
@@ -190,13 +193,16 @@
     function updateLogs() {
         $(document).ready(function(){
             $('.logs-section').css('opacity', '1');
-            
             var logs = $('#logs').html();
             var updatedLogs = logs
                                 .replace(/\[ERROR\]/g, '<span class="error-log">[ERROR]</span>')
                                 .replace(/\[INFO\]/g, '<span class="info-log">[INFO]</span>')
-                                .replace(/\[WARNING\]/g, '<span class="warning-log">[WARNING]</span>');
+                                .replace(/\[WARNING\]/g, '<span class="warning-log">[WARNING]</span>')
+                                .replace(/was Logged out\!./g, '<span class="washed-purple-log">was Logged out!.</span>')
+                                .replace(/Logged in!/g, '<span class="washed-purple-log">Logged in!</span>')
+                                .replace(/is authenticated/g, '<span class="washed-purple-log">is authenticated</span>');
             $('#logs').html(updatedLogs);
+            scrollToBottom();
         });
     }
 
@@ -205,10 +211,11 @@
         logsBox.scrollTop = logsBox.scrollHeight;
     }
 
-    setInterval(updateLogs, 5000);
+    setInterval(updateLogs, 1000);
     updateLogs();
 
     var scrollToButton = document.getElementById("scroll-to-end");
     scrollToButton.addEventListener("click", scrollToBottom);
 </script>
+
 {% endblock %}

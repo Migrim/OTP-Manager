@@ -1,37 +1,25 @@
-2023-10-03 23:24:44,831 [INFO] Server started.
-2023-10-03 23:24:45,999 [INFO] Server started.
-2023-10-03 23:26:17,712 [INFO] admin is authenticated
-2023-10-03 23:28:14,732 [INFO] Server started.
-2023-10-03 23:28:16,035 [INFO] Server started.
-2023-10-03 23:28:17,356 [INFO] Server started.
-2023-10-03 23:29:20,207 [INFO] admin is authenticated
-2023-10-03 23:29:28,175 [INFO] admin was Logged out!.
-2023-10-03 23:29:31,535 [INFO] User: admin Logged in!
-2023-10-03 23:29:31,558 [INFO] admin is authenticated
-2023-10-03 23:29:37,718 [INFO] admin was Logged out!.
-2023-10-03 23:29:40,533 [INFO] User: admin Logged in!
-2023-10-03 23:29:40,555 [INFO] admin is authenticated
-2023-10-03 23:31:05,035 [INFO] Server started.
-2023-10-03 23:31:06,368 [INFO] Server started.
-2023-10-03 23:31:19,389 [INFO] Server started.
-2023-10-03 23:31:20,539 [INFO] Server started.
-2023-10-03 23:31:21,694 [INFO] admin was Logged out!.
-2023-10-03 23:31:26,169 [INFO] User: admin Logged in!
-2023-10-03 23:31:26,189 [INFO] admin is authenticated
-2023-10-03 23:31:32,069 [INFO] admin was Logged out!.
-2023-10-03 23:31:35,749 [INFO] User: admin Logged in!
-2023-10-03 23:31:35,770 [INFO] admin is authenticated
-2023-10-03 23:32:54,074 [INFO] Server started.
-2023-10-03 23:32:54,417 [INFO] Server started.
-2023-10-03 23:32:55,794 [INFO] Server started.
-2023-10-03 23:33:09,155 [INFO] Server started.
-2023-10-03 23:33:10,501 [INFO] Server started.
-2023-10-03 23:33:13,833 [INFO] admin was Logged out!.
-2023-10-03 23:33:16,936 [INFO] User: admin Logged in!
-2023-10-03 23:33:16,961 [INFO] admin is authenticated
-2023-10-03 23:33:24,499 [INFO] admin was Logged out!.
-2023-10-03 23:33:28,560 [INFO] User: admin Logged in!
-2023-10-03 23:33:28,579 [INFO] admin is authenticated
-2023-10-03 23:34:16,731 [INFO] admin was Logged out!.
-2023-10-03 23:34:20,394 [INFO] User: admin Logged in!
-2023-10-03 23:34:20,412 [INFO] admin is authenticated
+2023-10-05 22:35:32,953 [INFO] admin was Logged out!.
+05,10,2023 -- 22:35:36 [WARNING] Failed login attempt for user: Memmo
+2023-10-05 22:35:36,804 [WARNING] Failed login attempt for user: Memmo
+05,10,2023 -- 22:35:41 [INFO] User: admin Logged in!
+2023-10-05 22:35:41,160 [INFO] User: admin Logged in!
+2023-10-05 22:35:41,180 [INFO] admin is authenticated
+2023-10-05 22:36:02,393 [INFO] Server started.
+2023-10-05 22:37:58,592 [INFO] Server started.
+2023-10-05 22:38:00,710 [INFO] Server started.
+2023-10-05 22:38:03,331 [INFO] Server started.
+2023-10-05 22:38:04,445 [INFO] Server started.
+2023-10-05 22:38:23,802 [INFO] admin was Logged out!.
+2023-10-05 22:38:30,953 [WARNING] Failed login attempt for user: servus
+2023-10-05 22:38:43,160 [WARNING] Failed login attempt for user: wef
+2023-10-05 22:43:30,418 [INFO] Server started.
+2023-10-05 22:43:31,751 [INFO] Server started.
+2023-10-05 22:45:08,293 [INFO] Server started.
+2023-10-05 22:45:35,654 [INFO] Server started.
+2023-10-05 22:46:19,309 [INFO] Server started.
+2023-10-05 22:46:20,471 [INFO] Server started.
+2023-10-05 22:48:11,010 [INFO] Server started.
+2023-10-05 22:48:16,920 [INFO] Server started.
+2023-10-05 22:48:18,075 [INFO] Server started.
+2023-10-05 22:48:25,362 [INFO] User: admin Logged in!
+2023-10-05 22:48:25,390 [INFO] admin is authenticated
