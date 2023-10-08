@@ -112,7 +112,8 @@
         <div class="company-list-container">
             <ul class="list-group">
                 {% for company in companies %}
-                    <li class="list-group-item">{{ company.name }}
+                <li class="list-group-item">
+                    <span class="company-name">{{ company.name }}</span>
                         <form style="display:inline;" action="{{ url_for('admin.delete_company', company_id=company.company_id) }}" method="POST">
                             {{ company_form.hidden_tag() }}
                             <button type="submit" class="btn btn-danger">

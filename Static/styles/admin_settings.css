@@ -90,7 +90,7 @@ body {
 }
 
 .scrollable-container {
-    max-height: 292px;
+    max-height: 375px;
     overflow-y: auto;
     scrollbar-width: thin;
     scrollbar-color: #888 #333;
@@ -113,14 +113,9 @@ body {
     right: 0;
     z-index: 1100;
 }
-.animated-fade-in {
-    opacity: 0;
-    transform: translateY(20px);
-    transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
-}
 
 .form-container {
-    animation: fadeIn 1s ease-in-out;
+    animation: fadeIn 0.5s ease-in-out;
 }
 
 .form-control:focus {
@@ -128,14 +123,17 @@ body {
     box-shadow: 0 0 0 0.2rem rgba(255, 0, 0, 0.25);
 }
 
+.animated-fade-in {
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out;
+}
+
 @keyframes fadeIn {
     0% {
         opacity: 0;
-        transform: translateY(20px);
     }
     100% {
         opacity: 1;
-        transform: translateY(0);
     }
 }
 
@@ -186,3 +184,5 @@ body {
     font-size: 20px;
     vertical-align: middle;
 }
+
+

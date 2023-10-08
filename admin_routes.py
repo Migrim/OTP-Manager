@@ -157,6 +157,19 @@ def rename_company(company_id):
 
     return render_template('rename_company.html', company_id=company_id)
 
+@admin_bp.route('/add_search_terms/<int:company_id>', methods=['GET'])
+@login_required
+def add_search_terms(company_id):
+    if current_user.username != "admin":
+        flash("Only the admin can add search terms.")
+        return redirect(url_for('admin.admin_settings'))
+
+    # Your logic here for adding search terms.
+    # For demonstration, redirecting to the same admin settings page.
+
+    return redirect(url_for('admin.admin_settings'))
+
+
 @admin_bp.route('/delete_company/<int:company_id>', methods=['POST'])
 @login_required
 def delete_company(company_id):
