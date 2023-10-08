@@ -29,6 +29,7 @@ class UserForm(FlaskForm):
 
 class CompanyForm(FlaskForm):
     name = StringField('Company Name', validators=[DataRequired()])
+    kundennummer = StringField('Kundennummer', validators=[DataRequired()])  # Add this line
     submit_company = SubmitField('Add Company')
 
 def get_all_users():
@@ -79,12 +80,13 @@ def admin_settings():
 
     if company_form.validate_on_submit() and company_form.submit_company.data:
         company_name = company_form.name.data
+        kundennummer = company_form.kundennummer.data
         try:
             with sqlite3.connect("otp.db") as db:
                 cursor = db.cursor()
-                cursor.execute("INSERT INTO companies (name) VALUES (?)", (company_name,))
+                cursor.execute("INSERT INTO companies (name, kundennummer) VALUES (?, ?)", (company_name, kundennummer))
                 db.commit()
-            flash(f"New company {company_name} added.")
+            flash(f"New company {company_name} with Kundennummer {kundennummer} added.")
         except sqlite3.Error as e:
             flash('Failed to add new company.')
             logging.error(f"Error inserting new company: {e}")
@@ -121,19 +123,18 @@ def add_company():
         flash("Only the admin can add companies.")
         return redirect(url_for('admin.admin_settings'))
 
-    new_company_name = request.form.get('name') 
-
+    new_company_name = request.form.get('name')
+    new_kundennummer = request.form.get('kundennummer')
     try:
         with sqlite3.connect("otp.db") as db:
             cursor = db.cursor()
-            cursor.execute("INSERT INTO companies (name) VALUES (?)", (new_company_name,))
+            cursor.execute("INSERT INTO companies (name, kundennummer) VALUES (?, ?)", (new_company_name, new_kundennummer))  # Modified Line
             db.commit()
-        flash(f'New company "{new_company_name}" added by user "{current_user.username}".')
-        logger.info(f"Company '{new_company_name}' created by '{current_user.username}'.")
+        flash(f'New company "{new_company_name}" with Kundennummer "{new_kundennummer}" added.')
+        logger.info(f"Company '{new_company_name}' with Kundennummer '{new_kundennummer}' created by '{current_user.username}'.")  # Modified Line
     except sqlite3.Error as e:
         flash('Failed to add new company.')
         logger.error(f"Error inserting new company: {e}")
-
     return redirect(url_for('admin.admin_settings'))
 
 @admin_bp.route('/rename_company/<int:company_id>', methods=['GET', 'POST'])

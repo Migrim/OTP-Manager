@@ -93,7 +93,8 @@ def init_db():
         cursor.execute("""
             CREATE TABLE IF NOT EXISTS companies (
                 id INTEGER PRIMARY KEY,
-                name TEXT NOT NULL UNIQUE
+                name TEXT NOT NULL UNIQUE,
+                kundennummer TEXT
             )
         """)
         cursor.execute("""
@@ -184,8 +185,9 @@ class UserForm(FlaskForm):
     submit = SubmitField('Add User')
 
 class CompanyForm(FlaskForm):
-    name = StringField('Company Name', validators=[InputRequired(), Length(min=4, max=25)])
-    submit = SubmitField('Add Company')
+    name = StringField('Company Name', validators=[DataRequired()])
+    kundennummer = StringField('Kundennummer', validators=[DataRequired()])
+    submit_company = SubmitField('Add Company')
 
 def get_current_user():
     return current_user
@@ -485,7 +487,7 @@ def get_otp_v2(name):
 @login_required
 def home():
     form = OTPForm()
-    otp_secrets = load_from_db()
+    otp_secrets = session.get('filtered_secrets', load_from_db())
     otp_codes = []
     items_per_page = 9
 

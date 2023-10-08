@@ -3,10 +3,10 @@ import base64
 from pyotp import totp, hotp
 from flask import Blueprint, redirect, url_for
 import sqlite3
+from flask import session
 
 search_blueprint = Blueprint('search_blueprint', __name__)
 app = Flask(__name__)
-
 def load_from_db():
     with sqlite3.connect("otp.db") as db:
         cursor = db.cursor()
@@ -17,7 +17,8 @@ def load_from_db():
                 otp_secrets.otp_type, 
                 otp_secrets.refresh_time, 
                 otp_secrets.company_id, 
-                companies.name AS company_name
+                companies.name AS company_name,
+                companies.kundennummer AS company_kundennummer
             FROM otp_secrets
             LEFT JOIN companies ON otp_secrets.company_id = companies.company_id
         """)
@@ -28,7 +29,8 @@ def load_from_db():
                 'otp_type': row[2], 
                 'refresh_time': row[3], 
                 'company_id': row[4], 
-                'company': row[5] if row[5] else 'Unbekannt'
+                'company': row[5] if row[5] else 'Unbekannt',
+                'company_kundennummer': row[6]
             } 
             for row in cursor.fetchall()
         ]
@@ -54,18 +56,23 @@ def get_companies_list():
 @search_blueprint.route('/search_otp', methods=['GET'])
 def search_otp():
     page = request.args.get('page', type=int, default=1)
-    name = request.args.get('name', '').lower()
-    selected_company = request.args.get('company', 'all companies') 
+    query = request.args.get('name', '').lower()
+    selected_company = request.args.get('company', 'all companies')
+    
     otp_secrets = load_from_db()
     
-    if selected_company.lower() != "all companies":
-        otp_secrets = [otp for otp in otp_secrets if otp.get('company', '').lower() == selected_company.lower()]
+    if selected_company.lower() == "all companies":
+        if 'filtered_secrets' in session:
+            del session['filtered_secrets']
+        return redirect(url_for('home', page=1))
 
     matched_secrets = []
 
     for otp_secret in otp_secrets:
         stored_name = otp_secret.get('name', 'Unnamed').lower()
-        if name in stored_name:
+        stored_kundennummer = str(otp_secret.get('company_kundennummer', '')).lower()
+
+        if query in stored_name or query in stored_kundennummer:
             if otp_secret['otp_type'] == 'totp':
                 if not is_base32(otp_secret['secret']):
                     return 'Invalid base32 secret', 400
@@ -77,8 +84,11 @@ def search_otp():
             matched_secrets.append(otp_secret)
 
     if matched_secrets:
-        return redirect(url_for('home', page=1, name=name, company=selected_company))
+        session['filtered_secrets'] = matched_secrets
+        return redirect(url_for('home', page=1, name=query, company=selected_company))
     else:
+        if 'filtered_secrets' in session:
+            del session['filtered_secrets']
         return redirect(url_for('home'))
 
 if __name__ == '__main__':

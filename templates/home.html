@@ -178,6 +178,16 @@
                     }
                 }
 
+                document.addEventListener('visibilitychange', function() {
+                    if (document.visibilityState === 'visible') {
+                        manuallyRefreshOtps();
+                        startAutoRefresh();
+                    } else {
+                        clearInterval(countdownIntervals.values().next().value);
+                        countdownIntervals.clear();
+                    }
+                });
+
                 function startAutoRefresh() {
                     manuallyRefreshOtps();
 
@@ -186,7 +196,8 @@
 
                     setTimeout(() => {
                         manuallyRefreshOtps();
-                        setInterval(manuallyRefreshOtps, 30000);
+                        const intervalId = setInterval(manuallyRefreshOtps, 30000);
+                        countdownIntervals.set('autoRefreshInterval', intervalId);
                     }, millisTillNextInterval);
                 }
 
