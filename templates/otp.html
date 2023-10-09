@@ -1,10 +1,335 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>OTP Secrets</title>
-</head>
-<body>
+{% extends 'bootstrap/base.html' %}
+{% block title %} OTP List {% endblock %}
+    {% block styles %}
+    {{ super() }}
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
+{% endblock %}
+
+{% block navbar %}
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="navbar-nav mr-auto">
+        <a class="navbar-brand" href="{{ url_for('home') }}">Home</a> 
+    </div>
+    <div class="navbar-nav mr-auto">
+        <a class="navbar-brand" href="{{ url_for('add') }}">Add</a>
+    </div>
+    <div class="navbar-nav mr-auto">
+        <a class="navbar-brand" href="{{ url_for('view_logs') }}">Logs</a>
+    </div>
+    <div class="navbar-nav mr-auto">
+        <a class="navbar-brand" href="{{ url_for('admin.admin_settings') }}">Settings</a>
+    </div>
+    <div class="navbar-nav mr-auto">
+        <a class="navbar-brand" href="{{ url_for('about') }}">About</a>
+    </div>        
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <div class="navbar-nav ml-auto">
+                <div class="alert alert-warning alert-dismissible fade show mb-0" role="alert">
+                    {{ messages[0] }}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            </div>
+        {% endif %}
+    {% endwith %}
+    
+    <div id="logoutContainer">
+        <div id="logoutBtn">
+            <a class="navbar-brand" href="{{ url_for('logout') }}">
+                Logout
+                <i class="material-icons-outlined">logout</i>
+            </a>
+        </div>                     
+    </div>            
+</nav>
+{% endblock %}
+
+{% block content %}
+
+<style>
+    body {
+        background-color: #222;
+        color: #fff;
+    }
+
+    .navbar {
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.1);
+    }
+
+    .navbar-dark .navbar-brand {
+        color: #f1f1f1;
+        font-size: 1.5rem;
+        margin-right: 20px;
+        transition: color 0.3s;
+    }
+
+    .navbar-dark .navbar-brand:hover {
+        color: #CD5C5C;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+    }
+
+    th, td {
+        border: 1px solid #444;
+        padding: 8px;
+        text-align: left;
+    }
+
+    th {
+        background-color: #333;
+        color: #fff;
+    }
+
+    tr:nth-child(even) {
+        background-color: #444;
+    }
+
+    tr:nth-child(odd) {
+        background-color: #555;
+    }
+
+    h1 {
+        text-align: center;
+        margin-top: 20px;
+        color: #fff;
+    }
+
+    #logoutContainer {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end; 
+    }
+
+    #logoutBtn {
+        position: absolute;
+        right: -1px; 
+        top: 0.1px;
+        cursor: pointer;
+    }
+
+    #logoutBtn a {
+        margin-top: 5px;
+        display: flex;
+        align-items: center;
+        justify-content: center; 
+        padding: 4px 12px;
+        font-size: 1.4rem; 
+        background-color: #CD5C5C;
+        color: #fff;
+        text-decoration: none;
+        border-radius: 5px;
+        transition: background-color 0.3s;
+        width: 100px; 
+        height: 40px; 
+    }
+
+    #logoutBtn a:hover {
+        background-color: #E68A89;
+    }
+
+    #logoutBtn a i.material-icons-outlined {
+        font-size: 18px; 
+        margin-left: 8px; 
+    }
+
+    .countdown-timer {
+        text-align: center;
+        margin-top: 20px;
+        font-size: 1.2rem;
+        color: #CD5C5C;
+    }
+</style>
+
+<script>
+    function updateCountdown() {
+        const countdownElement = document.getElementById("countdown");
+        const currentDateTime = new Date();
+        const secondsUntilNextInterval = 30 - (currentDateTime.getSeconds() % 30);
+
+        countdownElement.textContent = `OTP Expires in ${secondsUntilNextInterval} seconds`;
+
+        setTimeout(updateCountdown, 1000);
+    }
+
+    async function updateOtpCodes(otpCodes) {
+        otpCodes.forEach(otp => {
+            let otpCodeElement = document.getElementById(`otp_code_${otp.name}`);
+            let progressBar = document.getElementById(`progressBar${otp.name}`);
+
+            if (otpCodeElement) {
+                otpCodeElement.textContent = otp.otp_code;
+            }
+
+            if (progressBar) {
+                progressBar.style.width = '100%';
+                let duration = parseInt(progressBar.getAttribute('data-refresh-time'));
+                startCountdown(progressBar, duration);
+            }
+        });
+    }
+
+    async function manuallyRefreshOtps() {
+        try {
+            const response = await fetch('/refresh_codes_v2');
+            const data = await response.json();
+            updateOtpCodes(data.otp_codes);
+        } catch (error) {
+            console.error('Fetch error:', error);
+        }
+    }
+
+    function startAutoRefresh() {
+        manuallyRefreshOtps();
+
+        let currentTime = new Date();
+        let millisTillNextInterval = 30000 - (currentTime.getSeconds() * 1000 + currentTime.getMilliseconds()) % 30000;
+
+        setTimeout(() => {
+            manuallyRefreshOtps();
+            const intervalId = setInterval(manuallyRefreshOtps, 30000);
+            countdownIntervals.set('autoRefreshInterval', intervalId);
+        }, millisTillNextInterval);
+    }
+
+    function startCountdown(element, duration) {
+        if (countdownIntervals.has(element.id)) {
+            clearInterval(countdownIntervals.get(element.id));
+        }
+
+        const intervalId = setInterval(() => {
+            let current_time = new Date().getSeconds();
+            let remaining = duration - (current_time % duration);
+
+            if (remaining === 2) {
+                element.textContent = "fetching...";
+            } else if (remaining === 1) {
+                let otpName = element.id.replace('progressBar', '');
+                let otpCodeElement = document.getElementById(`otp_code_${otpName}`);
+                if (otpCodeElement) {
+                    otpCodeElement.classList.add('flash');
+                    setTimeout(() => otpCodeElement.classList.remove('flash'), 3000);
+                }
+            } else {
+                element.textContent = remaining + "s";
+            }
+
+            element.style.width = `${(remaining / duration * 100)}%`;
+
+            if (remaining <= 1) {
+                clearInterval(countdownIntervals.get(element.id));
+                manuallyRefreshOtps();
+            }
+        }, 1000);
+
+        countdownIntervals.set(element.id, intervalId);
+    }
+
+    function debounce(func, wait) {
+        let timeout;
+        return function() {
+            const context = this, args = arguments;
+            clearTimeout(timeout);
+            timeout = setTimeout(() => func.apply(context, args), wait);
+        };
+    }
+
+    window.onload = function() {
+        let spoilerElements = document.getElementsByClassName('spoiler');
+        for (let i = 0; i < spoilerElements.length; i++) {
+            let originalText = spoilerElements[i].innerText;
+            spoilerElements[i].setAttribute('data-original', originalText);
+            spoilerElements[i].innerText = '●'.repeat(originalText.length);
+            spoilerElements[i].onmouseover = function() {
+                this.innerText = this.getAttribute('data-original');
+            }
+            spoilerElements[i].onmouseout = function() {
+                this.innerText = '●'.repeat(this.getAttribute('data-original').length);
+            }
+        }
+
+        let progressBars = document.getElementsByClassName('progress-bar');
+        for (let i = 0; i < progressBars.length; i++) {
+            let duration = parseInt(progressBars[i].getAttribute('data-refresh-time')); 
+            startCountdown(progressBars[i], duration);
+        }
+
+        let otpContainers = document.querySelectorAll('.alert.alert-success');
+        otpContainers.forEach(function(container) {
+            container.classList.add('fade-in');
+        });
+
+        startAutoRefresh();
+        updateCountdown();
+    };
+
+    document.getElementById('searchInput').addEventListener('input', function() {
+        var filter = this.value.toUpperCase();
+        var otpDivs = document.getElementsByClassName('col-md-4');
+        for (var i = 0; i < otpDivs.length; i++) {
+            var div = otpDivs[i];
+            var name = div.querySelector('.alert').textContent;
+            if (name.toUpperCase().indexOf(filter) > -1) {
+                div.style.display = 'block'; 
+            } else {
+                div.style.display = 'none'; 
+            }
+        }
+    });
+
+    document.getElementById('searchInput').addEventListener('keydown', function(event) {
+        if (event.key === 'Enter') {
+            event.preventDefault();
+
+            let query = encodeURIComponent(this.value);
+            window.location.href = `/search_otp?name=${query}`;
+        }
+    });
+
+    function copyToClipboard(element) {
+        let text = element.textContent;
+        let input = document.createElement('input');
+        input.setAttribute('value', text);
+        document.body.appendChild(input);
+        input.select();
+        document.execCommand('copy');
+        document.body.removeChild(input);
+        
+        showToast();
+    }
+
+    function showToast() {
+        let toast = document.getElementById('toast');
+        toast.style.display = 'block';
+        setTimeout(() => {
+            toast.style.display = 'none';
+        }, 5000);
+    }
+
+    let formToSubmit;
+
+    document.addEventListener('DOMContentLoaded', (event) => {
+        document.querySelectorAll('.delete-btn').forEach((button) => {
+            button.addEventListener('click', function() {
+                let otpName = this.getAttribute('data-otp-name');
+                formToSubmit = document.getElementById(`deleteForm_${otpName}`);
+            });
+        });
+        
+        document.getElementById('deleteConfirmationButton').onclick = () => {
+            formToSubmit.submit();
+        };
+    });
+</script>
+
+<div class="container">
     <h1>OTP Secrets</h1>
+    <div class="countdown-timer" id="countdown">Calculating OTP Expiry...</div>
     <table>
         <thead>
             <tr>
@@ -22,12 +347,12 @@
                     <td>{{ secret.name }}</td>
                     <td>{{ secret.secret }}</td>
                     <td>{{ secret.otp_type }}</td>
-                    <td>{{ secret.otp_code }}</td>
+                    <td id="otp_code_{{ secret.name }}"></td>
                     <td>{{ secret.company }}</td>
                     <td>{{ secret.company_kundennummer }}</td>
                 </tr>
             {% endfor %}
         </tbody>
     </table>
-</body>
-</html>
+</div>
+{% endblock %}

@@ -270,19 +270,17 @@
                             var div = otpDivs[i];
                             var name = div.querySelector('.alert').textContent;
                             if (name.toUpperCase().indexOf(filter) > -1) {
-                                div.style.display = 'block';  // Show the matching element
+                                div.style.display = 'block'; 
                             } else {
-                                div.style.display = 'none';  // Hide non-matching element
+                                div.style.display = 'none'; 
                             }
                         }
                     });
 
                     document.getElementById('searchInput').addEventListener('keydown', function(event) {
                         if (event.key === 'Enter') {
-                            // Prevent default behavior
                             event.preventDefault();
 
-                            // Redirect to the '/search_otp' route
                             let query = encodeURIComponent(this.value);
                             window.location.href = `/search_otp?name=${query}`;
                         }
