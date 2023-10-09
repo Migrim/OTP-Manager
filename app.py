@@ -31,6 +31,7 @@ app = Flask(__name__)
 start_time = datetime.now()
 app.config['SECRET_KEY'] = 'your-secret-key'
 app.config['SESSION_TYPE'] = 'filesystem'
+app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(days=7)
 Session(app)
 Bootstrap(app)
 
@@ -346,6 +347,7 @@ def login():
     if request.method == 'POST':
         username = request.form.get('username')
         password = request.form.get('password')
+        keep_logged_in = 'keep_logged_in' in request.form
 
         with sqlite3.connect("otp.db") as db:
             cursor = db.cursor()
@@ -357,6 +359,12 @@ def login():
             session_token = str(uuid.uuid4())
             session['user_id'] = user[0]
             session['session_token'] = session_token
+
+            if keep_logged_in:
+                session.permanent = True 
+            else:
+                session.permanent = False
+
             flash('Successfully logged in!')
             my_logger.info(f"User: {username} Logged in!")
 
@@ -381,7 +389,7 @@ def login():
         else:
             flash('Die Zugangsdaten konnten nicht validiert werden!')
             my_logger.warning(f"Failed login attempt for user: {username}")
-    
+
     return render_template('login.html')
 
 @app.route('/profile')
