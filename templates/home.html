@@ -64,6 +64,7 @@
         <h1 class="text-center text-white">One Time Passwords</h1>
     
         <form method="get" action="{{ url_for('search_blueprint.search_otp') }}" class="search-bar">
+            <input type="hidden" name="page" value="{{ page|default(1) }}" />
             <input type="text" id="searchInput" name="name" placeholder="Search for OTPs" />
             <select name="company" id="companyDropdown" class="form-select custom-dropdown" onchange="this.form.submit()">
                 <option value="All Companies" {% if request.args.get('company') == "All Companies" %}selected{% endif %}>All Companies</option>
@@ -115,7 +116,7 @@
                         </li>
                         {% for i in range(1, total_pages + 1) %}
                             <li class="page-item {% if i == page %}active custom-active{% endif %}">
-                                <a class="page-link" href="{{ url_for('home', page=i) }}">{{ i }}</a>
+                                <a class="page-link" href="{{ url_for('home', page=i, name=request.args.get('name'), company=request.args.get('company')) }}">{{ i }}</a>
                             </li>
                         {% endfor %}
                         <li class="page-item {% if page >= total_pages %}disabled{% endif %}">
@@ -177,16 +178,6 @@
                         console.error('Fetch error:', error);
                     }
                 }
-
-                document.addEventListener('visibilitychange', function() {
-                    if (document.visibilityState === 'visible') {
-                        manuallyRefreshOtps();
-                        startAutoRefresh();
-                    } else {
-                        clearInterval(countdownIntervals.values().next().value);
-                        countdownIntervals.clear();
-                    }
-                });
 
                 function startAutoRefresh() {
                     manuallyRefreshOtps();
@@ -272,17 +263,28 @@
                     startAutoRefresh();
                 };
 
-                document.getElementById('searchInput').addEventListener('input', function() {
+                    document.getElementById('searchInput').addEventListener('input', function() {
                         var filter = this.value.toUpperCase();
                         var otpDivs = document.getElementsByClassName('col-md-4');
                         for (var i = 0; i < otpDivs.length; i++) {
                             var div = otpDivs[i];
                             var name = div.querySelector('.alert').textContent;
                             if (name.toUpperCase().indexOf(filter) > -1) {
-                                div.style.display = '';
+                                div.style.display = 'block';  // Show the matching element
                             } else {
-                                div.style.display = 'none';
+                                div.style.display = 'none';  // Hide non-matching element
                             }
+                        }
+                    });
+
+                    document.getElementById('searchInput').addEventListener('keydown', function(event) {
+                        if (event.key === 'Enter') {
+                            // Prevent default behavior
+                            event.preventDefault();
+
+                            // Redirect to the '/search_otp' route
+                            let query = encodeURIComponent(this.value);
+                            window.location.href = `/search_otp?name=${query}`;
                         }
                     });
 

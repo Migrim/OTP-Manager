@@ -4,6 +4,7 @@ from pyotp import totp, hotp
 from flask import Blueprint, redirect, url_for
 import sqlite3
 from flask import session
+from math import ceil
 
 search_blueprint = Blueprint('search_blueprint', __name__)
 app = Flask(__name__)
@@ -55,16 +56,10 @@ def get_companies_list():
 
 @search_blueprint.route('/search_otp', methods=['GET'])
 def search_otp():
-    page = request.args.get('page', type=int, default=1)
     query = request.args.get('name', '').lower()
     selected_company = request.args.get('company', 'all companies')
-    
+
     otp_secrets = load_from_db()
-    
-    if selected_company.lower() == "all companies":
-        if 'filtered_secrets' in session:
-            del session['filtered_secrets']
-        return redirect(url_for('home', page=1))
 
     matched_secrets = []
 
@@ -84,12 +79,9 @@ def search_otp():
             matched_secrets.append(otp_secret)
 
     if matched_secrets:
-        session['filtered_secrets'] = matched_secrets
-        return redirect(url_for('home', page=1, name=query, company=selected_company))
+        return render_template('otp.html', matched_secrets=matched_secrets)
     else:
-        if 'filtered_secrets' in session:
-            del session['filtered_secrets']
-        return redirect(url_for('home'))
+        return 'No matches found', 404
 
 if __name__ == '__main__':
     app.run(debug=True)

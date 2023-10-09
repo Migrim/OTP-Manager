@@ -1,124 +1,33 @@
 <!DOCTYPE html>
 <html>
 <head>
-    {% extends 'bootstrap/base.html' %}
-    {% block title %} OTP Search Result {% endblock %}
+    <title>OTP Secrets</title>
 </head>
-<body class="dark-mode">
-
-{% block navbar %}
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <a class="navbar-brand" href="#">Search Results</a>
-    <div class="navbar-nav mr-auto">
-        <a class="navbar-brand" href="{{ url_for('add') }}">Add a Secret</a>
-        <a href="{{ url_for('home') }}" class="navbar-brand">Back to OTP List</a>
-    </div>
-</nav>
-{% endblock %}
-
-{% block content %}
-<style>
-    .otp-container {
-        display: flex;
-        justify-content: center;
-        align-items: flex-start; 
-        min-height: 100vh;
-        background: linear-gradient(to bottom, #ffffff, #f8f9fa);
-    }
-
-    .otp-container .container {
-        max-width: 400px;
-        width: 100%;
-        padding: 30px;
-        border-radius: 10px;
-        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-        background-color: #ffffff;
-    }
-
-    .otp-container .form-title {
-        text-align: center;
-        margin-bottom: 30px;
-    }
-
-    .otp-container .list-group-item {
-        border-radius: 5px;
-    }
-
-    .otp-container .form-submit {
-        margin-top: 20px;
-    }
-</style>
-
-<div class="otp-container" id="otp-container">
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-md-12 text-center">
-                <h1>Search Result for {{ request.args.get('name') }}</h1>
-    {% for otp_secret in otp_secrets %}
-        <ul class="list-group mt-3">
-            <li class="list-group-item">Name: {{ otp_secret.name }}</li>
-            <li class="list-group-item">Secret: <span class="spoiler">{{ otp_secret.secret }}</span></li>
-            <li class="list-group-item">OTP type: {{ otp_secret.otp_type }}</li>
-            <li class="list-group-item">OTP code: <span class="otp-code" id="otp_code_{{ loop.index0 }}">{{ otp_secret.otp_code }}</span></li>
-            <li class="list-group-item">Refresh time: {{ otp_secret.refresh_time }} seconds</li>
-        </ul>
-        <div class="progress mt-2">
-            <div class="progress-bar" role="progressbar" style="width: 100%; font-size: 10px;" id="progressBar{{ loop.index0 }}"
-                data-refresh-time="{{ otp_secret.refresh_time }}">30s</div>
-        </div>
-    {% endfor %}
-        </div>
-        <div class="row justify-content-center mt-3">
-            <div class="col-md-12 text-center">
-                <a href="{{ url_for('add') }}" class="btn btn-primary form-submit">Add OTP Secret</a>
-            </div>
-        </div>
-    </div>
-</div>
-
-<script>
-    function startCountdown(element, duration) {
-        let countdown = setInterval(function () {
-            let current_time = new Date().getSeconds();
-            let remaining = duration - (current_time % duration);
-            element.textContent = remaining + "s";
-            element.style.width = (remaining / duration * 100) + "%";
-        }, 1000);
-    }
-
-    window.onload = function () {
-        let spoilerElements = document.getElementsByClassName('spoiler');
-        for (let i = 0; i < spoilerElements.length; i++) {
-            let originalText = spoilerElements[i].innerText;
-            spoilerElements[i].setAttribute('data-original', originalText);
-            spoilerElements[i].innerText = '●'.repeat(originalText.length);
-            spoilerElements[i].onmouseover = function () {
-                this.innerText = this.getAttribute('data-original');
-            }
-            spoilerElements[i].onmouseout = function () {
-                this.innerText = '●'.repeat(this.getAttribute('data-original').length);
-            }
-        }
-
-        let progressBars = document.getElementsByClassName('progress-bar');
-        for (let i = 0; i < progressBars.length; i++) {
-            let duration = parseInt(progressBars[i].getAttribute('data-refresh-time'));
-            progressBars[i].style.width = "100%";
-            startCountdown(progressBars[i], duration);
-        }
-
-        let minRefreshTime = Math.min(...Array.from(progressBars).map(bar => parseInt(bar.getAttribute('data-refresh-time'))));
-        setInterval(function () {
-            fetch('/refresh_codes')
-                .then(response => response.json())
-                .then(data => {
-                    for (let i = 0; i < data.otp_codes.length; i++) {
-                        document.querySelector(`#otp_code_${i}`).textContent = data.otp_codes[i].otp_code;
-                    }
-                });
-        }, minRefreshTime * 50);
-    };
-</script>
-{% endblock %}
+<body>
+    <h1>OTP Secrets</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Secret</th>
+                <th>Type</th>
+                <th>OTP Code</th>
+                <th>Company</th>
+                <th>Kundennummer</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for secret in matched_secrets %}
+                <tr>
+                    <td>{{ secret.name }}</td>
+                    <td>{{ secret.secret }}</td>
+                    <td>{{ secret.otp_type }}</td>
+                    <td>{{ secret.otp_code }}</td>
+                    <td>{{ secret.company }}</td>
+                    <td>{{ secret.company_kundennummer }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
 </body>
 </html>

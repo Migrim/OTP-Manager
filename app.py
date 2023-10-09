@@ -565,6 +565,11 @@ def page_not_found(e):
 @app.route('/search', methods=['GET'])
 @login_required
 def search_otp():
+    query = request.args.get('name', '')
+    all_secrets = fetch_all_secrets()
+    
+    matched_secrets = [secret for secret in all_secrets if query.lower() in secret['name'].lower()]
+    
     print(matched_secrets)
     return render_template('otp.html', otp_secrets=matched_secrets)
 
