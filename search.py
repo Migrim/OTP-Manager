@@ -57,7 +57,7 @@ def get_companies_list():
 @search_blueprint.route('/search_otp', methods=['GET'])
 def search_otp():
     query = request.args.get('name', '').lower()
-    selected_company = request.args.get('company', 'all companies')
+    selected_company = request.args.get('company', 'All Companies')
 
     otp_secrets = load_from_db()
 
@@ -66,17 +66,19 @@ def search_otp():
     for otp_secret in otp_secrets:
         stored_name = otp_secret.get('name', 'Unnamed').lower()
         stored_kundennummer = str(otp_secret.get('company_kundennummer', '')).lower()
+        stored_company = otp_secret.get('company', 'Unbekannt')
 
-        if query in stored_name or query in stored_kundennummer:
-            if otp_secret['otp_type'] == 'totp':
-                if not is_base32(otp_secret['secret']):
-                    return 'Invalid base32 secret', 400
-                otp_maker = totp.TOTP(otp_secret['secret'])
-                otp_secret['otp_code'] = otp_maker.now()
-            elif otp_secret['otp_type'] == 'hotp':
-                hotp_maker = hotp.HOTP(otp_secret['secret'])
-                otp_secret['otp_code'] = hotp_maker.at(0)
-            matched_secrets.append(otp_secret)
+        if (selected_company == 'All Companies' or selected_company == stored_company):
+            if query in stored_name or query in stored_kundennummer:
+                if otp_secret['otp_type'] == 'totp':
+                    if not is_base32(otp_secret['secret']):
+                        return 'Invalid base32 secret', 400
+                    otp_maker = totp.TOTP(otp_secret['secret'])
+                    otp_secret['otp_code'] = otp_maker.now()
+                elif otp_secret['otp_type'] == 'hotp':
+                    hotp_maker = hotp.HOTP(otp_secret['secret'])
+                    otp_secret['otp_code'] = hotp_maker.at(0)
+                matched_secrets.append(otp_secret)
 
     if matched_secrets:
         return render_template('otp.html', matched_secrets=matched_secrets)

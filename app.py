@@ -169,8 +169,8 @@ def load_from_db():
 def load_companies_from_db():
     with sqlite3.connect("otp.db") as db:
         cursor = db.cursor()
-        cursor.execute("SELECT company_id, name FROM companies")
-        return [{'company_id': row[0], 'name': row[1]} for row in cursor.fetchall()]
+        cursor.execute("SELECT company_id, name, kundennummer FROM companies ORDER BY company_id")
+        return [{'company_id': row[0], 'name': row[1], 'kundennummer': row[2]} for row in cursor.fetchall()]
 
 class OTPForm(FlaskForm):
     name = StringField('Name', validators=[InputRequired(), Length(max=25, message="Der Name darf nicht länger als 25 Zeichen sein.")])

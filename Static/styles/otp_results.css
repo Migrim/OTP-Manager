@@ -1,0 +1,118 @@
+body {
+    background-color: #222;
+    color: #fff;
+}
+
+.navbar {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.1);
+}
+
+.navbar-dark .navbar-brand {
+    color: #f1f1f1;
+    font-size: 1.5rem;
+    margin-right: 20px;
+    transition: color 0.3s;
+}
+
+.navbar-dark .navbar-brand:hover {
+    color: #CD5C5C;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+th, td {
+    border: 1px solid #444;
+    padding: 8px;
+    text-align: left;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: box-shadow 0.3s;
+}
+
+th:hover, td:hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+th {
+    background-color: #333;
+    color: #fff;
+}
+
+tr:nth-child(even) {
+    background-color: #444;
+}
+
+tr:nth-child(odd) {
+    background-color: #555;
+}
+
+h1 {
+    text-align: center;
+    margin-top: 20px;
+    color: #fff;
+}
+
+#logoutContainer {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end; 
+}
+
+#logoutBtn {
+    position: absolute;
+    right: -1px; 
+    top: 0.1px;
+    cursor: pointer;
+}
+
+#logoutBtn a {
+    margin-top: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center; 
+    padding: 4px 12px;
+    font-size: 1.4rem; 
+    background-color: #CD5C5C;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+    width: 100px; 
+    height: 40px; 
+}
+
+#logoutBtn a:hover {
+    background-color: #E68A89;
+}
+
+#logoutBtn a i.material-icons-outlined {
+    font-size: 18px; 
+    margin-left: 8px; 
+}
+
+.countdown-timer {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 1.2rem;
+    color: #CD5C5C;
+}
+
+.table-wrapper {
+    max-height: 500px;
+    overflow-y: auto;
+}
+
+.btn-back-home {
+    display: block;
+    margin: 20px auto;
+    background-color: #CD5C5C;
+    color: white;
+    transition: background-color 0.3s;
+}
+
+.btn-back-home:hover {
+    background-color: #E68A89;
+}

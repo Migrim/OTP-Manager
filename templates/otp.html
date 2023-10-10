@@ -3,6 +3,7 @@
     {% block styles %}
     {{ super() }}
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/otp_results.css') }}">
 {% endblock %}
 
 {% block navbar %}
@@ -47,105 +48,6 @@
 {% endblock %}
 
 {% block content %}
-
-<style>
-    body {
-        background-color: #222;
-        color: #fff;
-    }
-
-    .navbar {
-        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.1);
-    }
-
-    .navbar-dark .navbar-brand {
-        color: #f1f1f1;
-        font-size: 1.5rem;
-        margin-right: 20px;
-        transition: color 0.3s;
-    }
-
-    .navbar-dark .navbar-brand:hover {
-        color: #CD5C5C;
-    }
-
-    table {
-        width: 100%;
-        border-collapse: collapse;
-        margin-top: 20px;
-    }
-
-    th, td {
-        border: 1px solid #444;
-        padding: 8px;
-        text-align: left;
-    }
-
-    th {
-        background-color: #333;
-        color: #fff;
-    }
-
-    tr:nth-child(even) {
-        background-color: #444;
-    }
-
-    tr:nth-child(odd) {
-        background-color: #555;
-    }
-
-    h1 {
-        text-align: center;
-        margin-top: 20px;
-        color: #fff;
-    }
-
-    #logoutContainer {
-        display: flex;
-        align-items: center;
-        justify-content: flex-end; 
-    }
-
-    #logoutBtn {
-        position: absolute;
-        right: -1px; 
-        top: 0.1px;
-        cursor: pointer;
-    }
-
-    #logoutBtn a {
-        margin-top: 5px;
-        display: flex;
-        align-items: center;
-        justify-content: center; 
-        padding: 4px 12px;
-        font-size: 1.4rem; 
-        background-color: #CD5C5C;
-        color: #fff;
-        text-decoration: none;
-        border-radius: 5px;
-        transition: background-color 0.3s;
-        width: 100px; 
-        height: 40px; 
-    }
-
-    #logoutBtn a:hover {
-        background-color: #E68A89;
-    }
-
-    #logoutBtn a i.material-icons-outlined {
-        font-size: 18px; 
-        margin-left: 8px; 
-    }
-
-    .countdown-timer {
-        text-align: center;
-        margin-top: 20px;
-        font-size: 1.2rem;
-        color: #CD5C5C;
-    }
-</style>
-
 <script>
     function updateCountdown() {
         const countdownElement = document.getElementById("countdown");
@@ -330,6 +232,12 @@
 <div class="container">
     <h1>OTP Secrets</h1>
     <div class="countdown-timer" id="countdown">Calculating OTP Expiry...</div>
+
+    <div class="back-to-home">
+        <a href="{{ url_for('home') }}">Back to Home</a>
+    </div>
+
+    <div class="table-wrapper">
     <table>
         <thead>
             <tr>

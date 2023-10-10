@@ -71,7 +71,7 @@
                 {% for company in companies %}
                     <option value="{{ company.name }}" {% if request.args.get('company') == company.name %}selected{% endif %}>{{ company.name }}</option>
                 {% endfor %}
-            </select>
+            </select>            
         </form>
         
         <div class="row">
