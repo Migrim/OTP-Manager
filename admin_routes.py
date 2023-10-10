@@ -29,7 +29,7 @@ class UserForm(FlaskForm):
 
 class CompanyForm(FlaskForm):
     name = StringField('Company Name', validators=[DataRequired()])
-    kundennummer = StringField('Kundennummer', validators=[DataRequired()])  # Add this line
+    kundennummer = StringField('Kundennummer', validators=[DataRequired()])
     submit_company = SubmitField('Add Company')
 
 def get_all_users():
@@ -163,9 +163,6 @@ def add_search_terms(company_id):
     if current_user.username != "admin":
         flash("Only the admin can add search terms.")
         return redirect(url_for('admin.admin_settings'))
-
-    # Your logic here for adding search terms.
-    # For demonstration, redirecting to the same admin settings page.
 
     return redirect(url_for('admin.admin_settings'))
 

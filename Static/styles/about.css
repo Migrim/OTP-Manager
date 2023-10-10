@@ -84,7 +84,8 @@ body {
 
 .stats-container,
 .settings-container,
-.license-container {
+.license-container,
+.backup-container {
     margin-top: 20px;
     padding: 15px;
     background-color: #ffffff;
@@ -125,4 +126,19 @@ body {
 .older-stats {
     max-height: 14em; 
     overflow-y: auto; 
+}
+
+.backup-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.backup-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
 }

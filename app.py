@@ -18,6 +18,7 @@ from datetime import datetime, timedelta
 from flask_login import LoginManager, UserMixin, current_user, login_user
 from search import search_blueprint
 from math import ceil
+from flask import send_file
 import subprocess 
 import sqlite3
 import logging
@@ -65,6 +66,7 @@ def load_user(user_id):
             user = UserMixin()
             user.id = user_data[0]
             user.username = user_data[1]
+            user.is_admin = bool(user_data[5])
             return user
         return None
 
@@ -88,7 +90,8 @@ def init_db():
                 username TEXT NOT NULL UNIQUE,
                 password TEXT NOT NULL,
                 last_login_time TEXT,
-                session_token TEXT
+                session_token TEXT,
+                is_admin INTEGER DEFAULT 0
             )
         """)
         cursor.execute("""
@@ -393,6 +396,7 @@ def login():
     return render_template('login.html')
 
 @app.route('/profile')
+@login_required
 def profile():
     last_login_time = get_last_login_time_from_db()
     print("Profile function executed.")
@@ -406,6 +410,7 @@ def profile():
         return make_response(redirect(url_for('login')))
 
 @app.route('/about')
+@login_required
 def about():
     stats = get_statistics()
     stored_otps = len(load_from_db())
@@ -419,7 +424,8 @@ def about():
     older_stats = get_older_statistics()
     uptime = get_uptime()
     ping_time, speed = get_ping_time("google.com")
-    
+    is_admin = current_user.is_admin
+
     return render_template(
         'about.html',
         stored_otps=stored_otps,
@@ -428,9 +434,10 @@ def about():
         uptime=uptime,
         ping_time=ping_time,
         speed=speed,
-        last_user_login_time=last_user_login_time,  
+        last_user_login_time=last_user_login_time,
         current_server_time=current_server_time,
-        older_stats=older_stats
+        older_stats=older_stats,
+        is_admin=is_admin
     )
 
 def get_uptime():
@@ -619,6 +626,22 @@ def edit(name):
     flash('Secret Not Found')
     logging.error(f"OTP with name {name} not found.")
     return redirect(url_for('home'))
+
+@app.route('/create_backup', methods=['GET'])
+def create_backup():
+    if not current_user.is_admin:
+        return {'success': False, 'message': 'Not authorized'}
+    backup_file_path = "otp.db"
+    return send_file(backup_file_path, as_attachment=True, download_name='backup.db')
+
+@app.route('/load_backup', methods=['POST'])
+def load_backup():
+    if not current_user.is_admin:
+        return {'success': False, 'message': 'Not authorized'}
+    file = request.files['backup']
+    if file:
+        file.save("path/to/save/backup/file")
+    return {'success': True}
 
 @app.route('/delete_secret/<name>', methods=['POST'])
 @login_required

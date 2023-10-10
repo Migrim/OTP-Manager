@@ -52,46 +52,81 @@
 
 {% block content %}
 <div class="container mt-5 about-container fade-in">
-        <h1 class="text-center">OTP-Manager</h1>
-        <div class="row">
-            <div class="col-md-6">
-                <section class="stats-container">
-                    <h2 class="text-center">Stats</h2>
-                    <ul class="stats">
-                        <li id="stored_otps"></li>
-                        <li id="logins_today"></li>
-                        <li id="times_refreshed"></li>
-                        <li id="uptime"></li>
-                        <li id="last_user_login_time"></li>
-                        <li id="current_server_time"></li>
-                    </ul>
-                </section>
-            </div>
-            <div class="col-md-6">
-                <section class="settings-container">
-                    <h2 class="text-center">Recent Stats:</h2>
-                    <ul class="older-stats">
-                        {% for stat in older_stats %}
-                        <li class="older-stat-item">Date: {{ stat[3] }}, Logins: {{ stat[1] }}, Times Refreshed: {{ stat[2] }}</li>
-                        {% endfor %}
-                    </ul>                                      
-                </section>
-                <section class="license-container text-center">
-                    <p>OTP Manager is licensed under the Creative Commons License by Sebastian Junginger © 2023.</p>
-                    <p>Source code is available on GitHub:</p>
-                    <a href="https://github.com/Migrim/OTP-Manager">https://github.com/Migrim/OTP-Manager</a>
-                </section>
-            </div>
+    <h1 class="text-center">OTP-Manager</h1>
+    <div class="row">
+        <div class="col-md-6">
+            <section class="stats-container">
+                <h2 class="text-center">Stats</h2>
+                <ul class="stats">
+                    <li id="stored_otps"></li>
+                    <li id="logins_today"></li>
+                    <li id="times_refreshed"></li>
+                    <li id="uptime"></li>
+                    <li id="last_user_login_time"></li>
+                    <li id="current_server_time"></li>
+                </ul>
+            </section>
         </div>
-        <footer class="footer text-center">
-            <p>&copy; 2023 OTP Manager. All rights reserved.</p>
-        </footer>
+        <div class="col-md-6">
+            <section class="settings-container">
+                <h2 class="text-center">Recent Stats:</h2>
+                <ul class="older-stats">
+                    {% for stat in older_stats %}
+                    <li class="older-stat-item">Date: {{ stat[3] }}, Logins: {{ stat[1] }}, Times Refreshed: {{ stat[2] }}</li>
+                    {% endfor %}
+                </ul>                                      
+            </section>
+
+            {% if is_admin %}
+            <section class="backup-container mt-5">
+                <h2 class="text-center">Database Backup</h2>
+                <button id="createBackup" onclick="createBackup()">Create Backup</button>
+                <input type="file" id="loadBackup" style="display: none;" onchange="loadBackup(event)">
+                <button onclick="document.getElementById('loadBackup').click()">Load Backup</button>
+            </section>
+            {% endif %}
+
+            <section class="license-container text-center">
+                <p>OTP Manager is licensed under the Creative Commons License by Sebastian Junginger © 2023.</p>
+                <p>Source code is available on GitHub:</p>
+                <a href="https://github.com/Migrim/OTP-Manager">https://github.com/Migrim/OTP-Manager</a>
+            </section>
+        </div>
     </div>
+    <footer class="footer text-center">
+        <p>&copy; 2023 OTP Manager. All rights reserved.</p>
+    </footer>
+</div>
 {% endblock %}
 
 {% block scripts %}
 {{ super() }}
     <script>
+        function createBackup() {
+            window.location.href = '/create_backup';
+        }
+
+        function loadBackup(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const formData = new FormData();
+                formData.append('backup', file);
+
+                fetch('/load_backup', {
+                    method: 'POST',
+                    body: formData
+                }).then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        console.log("Backup loaded successfully.");
+                    } else {
+                        console.log("Failed to load backup.");
+                    }
+                });
+            }
+        }
+
+
         function updateStats() {
             fetch('/get_stats')
             .then(response => response.json())
