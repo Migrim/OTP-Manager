@@ -123,7 +123,8 @@ def save_to_db(otp_secrets):
         cursor.execute("""
         INSERT INTO otp_secrets (name, secret, otp_type, refresh_time, company_id)
         VALUES (?, ?, ?, ?, ?)
-        """, (otp_secret['name'], otp_secret['secret'], otp_secret['otp_type'], otp_secret['refresh_time'], otp_secret['company_id']))
+        ON CONFLICT(name) DO UPDATE SET secret = ?, otp_type = ?, refresh_time = ?, company_id = ?
+        """, (otp_secret['name'], otp_secret['secret'], otp_secret['otp_type'], otp_secret['refresh_time'], otp_secret['company_id'], otp_secret['secret'], otp_secret['otp_type'], otp_secret['refresh_time'], otp_secret['company_id']))
 
     conn.commit()
     conn.close()
@@ -136,9 +137,9 @@ def save_companies_to_db(companies):
 
     for company in companies:
         cursor.execute("""
-        INSERT INTO companies (name)
-        VALUES (?)
-        """, (company['name'],))
+        INSERT OR IGNORE INTO companies (company_id, name)
+        VALUES (?, ?)
+        """, (company['company_id'], company['name']))
 
     conn.commit()
     conn.close()
