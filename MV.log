@@ -115,3 +115,6 @@
 2023-10-11 20:26:16,012 [INFO] Server started.
 2023-10-11 20:26:56,350 [INFO] Server started.
 2023-10-11 20:26:59,992 [WARNING] User 'admin' attempted to add an OTP with a duplicate name.
+2023-10-15 12:53:26,425 [INFO] Server started.
+2023-10-15 12:53:51,844 [INFO] User: admin Logged in!
+2023-10-15 12:53:51,873 [INFO] admin is authenticated

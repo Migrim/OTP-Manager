@@ -51,10 +51,22 @@
 <script>
     function updateCountdown() {
         const countdownElement = document.getElementById("countdown");
+        const otpCodeElements = document.querySelectorAll('[id^="otp_code_"]');
         const currentDateTime = new Date();
         const secondsUntilNextInterval = 30 - (currentDateTime.getSeconds() % 30);
 
         countdownElement.textContent = `OTP Expires in ${secondsUntilNextInterval} seconds`;
+        countdownElement.classList.add('animated-countdown');
+
+        if (secondsUntilNextInterval <= 5) {
+            otpCodeElements.forEach((element) => {
+                element.classList.add('fade-to-red');
+            });
+        } else {
+            otpCodeElements.forEach((element) => {
+                element.classList.remove('fade-to-red');
+            });
+        }
 
         setTimeout(updateCountdown, 1000);
     }
@@ -168,6 +180,13 @@
 
         startAutoRefresh();
         updateCountdown();
+
+        let countdownTimer = document.getElementById('countdown');
+        setTimeout(() => {
+            countdownTimer.classList.add('show');
+        }, 500);
+
+        animateTableRows();
     };
 
     document.getElementById('searchInput').addEventListener('input', function() {
@@ -205,6 +224,17 @@
         showToast();
     }
 
+    function animateTableRows() {
+        const rows = document.querySelectorAll('tbody tr');
+        let delay = 0;
+        rows.forEach((row) => {
+            setTimeout(() => {
+                row.classList.add('slide-down');
+            }, delay);
+            delay += 100;
+        });
+    }
+
     function showToast() {
         let toast = document.getElementById('toast');
         toast.style.display = 'block';
@@ -227,6 +257,20 @@
             formToSubmit.submit();
         };
     });
+
+    function revealSecret(element) {
+        const hiddenSecret = element.querySelector('.hiddenSecret');
+        const maskedSecret = element.querySelector('.maskedSecret');
+        hiddenSecret.style.display = 'inline';
+        maskedSecret.style.display = 'none';
+    }
+
+    function hideSecret(element) {
+        const hiddenSecret = element.querySelector('.hiddenSecret');
+        const maskedSecret = element.querySelector('.maskedSecret');
+        hiddenSecret.style.display = 'none';
+        maskedSecret.style.display = 'inline';
+    }
 </script>
 
 <div class="container">
@@ -253,7 +297,10 @@
             {% for secret in matched_secrets %}
                 <tr>
                     <td>{{ secret.name }}</td>
-                    <td>{{ secret.secret }}</td>
+                    <td class="secretField" onmouseover="revealSecret(this)" onmouseout="hideSecret(this)">
+                        <span class="hiddenSecret">{{ secret.secret }}</span>
+                        <span class="maskedSecret">*</span>
+                    </td>                    
                     <td>{{ secret.otp_type }}</td>
                     <td id="otp_code_{{ secret.name }}"></td>
                     <td>{{ secret.company }}</td>

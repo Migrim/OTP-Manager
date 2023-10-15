@@ -124,3 +124,47 @@ h1 {
     background-color: #fff;
     color: #222;
 }
+
+.hiddenSecret {
+    display: none;
+}
+
+.maskedSecret {
+    display: inline;
+}
+
+.secretField:hover .hiddenSecret {
+    display: inline;
+}
+
+.secretField:hover .maskedSecret {
+    display: none;
+}
+
+.secretField {
+    width: 200px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+tbody tr {
+    opacity: 0;
+    transform: translateY(-20px);
+    transition: opacity 0.4s ease, transform 0.4s ease;
+}
+
+tbody tr.slide-down {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.fade-to-red {
+    color: #CD5C5C !important;
+    transition: color 4s ease-in-out;
+}
+
+.animated-countdown {
+    transition: all 0.5s ease;
+    font-size: 1.2rem;
+}
