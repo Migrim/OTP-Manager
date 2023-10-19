@@ -67,65 +67,112 @@
                 </ul>
             </section>
         </div>
-        <div class="col-md-6">
-            <section class="settings-container">
-                <h2 class="text-center">Recent Stats:</h2>
-                <ul class="older-stats">
-                    {% for stat in older_stats %}
-                    <li class="older-stat-item">Date: {{ stat[3] }}, Logins: {{ stat[1] }}, Times Refreshed: {{ stat[2] }}</li>
-                    {% endfor %}
-                </ul>                                      
-            </section>
 
             {% if is_admin %}
-            <section class="backup-container mt-5">
+            <section class="backup-container mt-5 text-center">
                 <h2 class="text-center">Database Backup</h2>
                 <button id="createBackup" onclick="createBackup()">Create Backup</button>
                 <input type="file" id="loadBackup" style="display: none;" onchange="loadBackup(event)">
-                <button onclick="document.getElementById('loadBackup').click()">Load Backup</button>
+                <button onclick="document.getElementById('loadBackup').click()">Load Backup from File</button>
+                <select id="olderBackups">
+                    <!-- Options will be filled dynamically -->
+                </select>
+                <button onclick="loadSelectedBackup()">Load Selected Backup</button>
             </section>
             {% endif %}
 
-            <section class="license-container text-center">
-                <p>OTP Manager is licensed under the Creative Commons License by Sebastian Junginger © 2023.</p>
-                <p>Source code is available on GitHub:</p>
-                <a href="https://github.com/Migrim/OTP-Manager">https://github.com/Migrim/OTP-Manager</a>
-            </section>
+            <div class="col-md-6">
+                <section class="settings-container">
+                    <h2 class="text-center">Recent Stats:</h2>
+                    <ul class="older-stats">
+                        {% for stat in older_stats %}
+                        <li class="older-stat-item">Date: {{ stat[3] }}, Logins: {{ stat[1] }}, Times Refreshed: {{ stat[2] }}</li>
+                        {% endfor %}
+                    </ul>                                      
+                </section>
+
+            
+                <section class="license-container text-center mt-5">
+                    <p>OTP Manager is licensed under the Creative Commons License by Sebastian Junginger © 2023.</p>
+                    <p>Source code is available on GitHub:</p>
+                    <a href="https://github.com/Migrim/OTP-Manager">https://github.com/Migrim/OTP-Manager</a>
+                </section>
+            </div>
         </div>
+    
+        <footer class="footer text-center">
+            <p>&copy; 2023 OTP Manager. All rights reserved.</p>
+        </footer>
     </div>
-    <footer class="footer text-center">
-        <p>&copy; 2023 OTP Manager. All rights reserved.</p>
-    </footer>
-</div>
-{% endblock %}
+    {% endblock %}
 
 {% block scripts %}
 {{ super() }}
     <script>
         function createBackup() {
-            window.location.href = '/create_backup';
+            fetch('/create_backup')
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert("Backup created successfully at " + data.message);
+                } else {
+                    alert("Failed to create backup: " + data.message);
+                }
+            });
         }
 
-        function loadBackup(event) {
-            const file = event.target.files[0];
-            if (file) {
-                const formData = new FormData();
-                formData.append('backup', file);
+        function loadOlderBackups() {
+            fetch('/list_backups')
+            .then(response => response.json())
+            .then(data => {
+            const select = document.getElementById('olderBackups');
+            data.backups.forEach(backup => {
+                const option = document.createElement('option');
+                option.value = backup;
+                option.textContent = backup;
+                select.appendChild(option);
+            });
+            });
+        }
 
-                fetch('/load_backup', {
-                    method: 'POST',
-                    body: formData
-                }).then(response => response.json())
+        function loadSelectedBackup() {
+            console.log("loadSelectedBackup function reached");
+            const selectedBackup = document.getElementById('olderBackups').value;
+            console.log(`Selected Backup: ${selectedBackup}`);
+            
+            if (selectedBackup) {
+                fetch(`/backups/${selectedBackup}`)
+                .then(response => {
+                    console.log("Received response for blob");
+                    return response.blob();
+                })
+                .then(blob => {
+                    console.log("Creating FormData");
+                    const formData = new FormData();
+                    formData.append('backup', blob, selectedBackup);
+                    
+                    return fetch('/load_backup', {
+                        method: 'POST',
+                        body: formData
+                    });
+                })
+                .then(response => response.json())
                 .then(data => {
                     if (data.success) {
                         console.log("Backup loaded successfully.");
                     } else {
                         console.log("Failed to load backup.");
                     }
+                })
+                .catch(err => {
+                    console.log(`Error occurred: ${err}`);
                 });
+            } else {
+                console.log("No backup selected");
             }
         }
 
+        loadOlderBackups();
 
         function updateStats() {
             fetch('/get_stats')
@@ -175,6 +222,6 @@
                     console.log("Failed to update session timeout.");
                 }
             });
-        }
+        }   
     </script>
 {% endblock %}

@@ -19,6 +19,8 @@ from flask_login import LoginManager, UserMixin, current_user, login_user
 from search import search_blueprint
 from math import ceil
 from flask import send_file
+import shutil
+import os
 import subprocess 
 import sqlite3
 import logging
@@ -540,6 +542,9 @@ def home():
             continue
         otp_code['company'] = otp.get('company', 'Unbekannt')
         otp_codes.append(otp_code)
+    
+    if not otp_codes and selected_company:
+        flash(f"No matching secrets for company: {selected_company}")
 
     total_pages = ceil(len(otp_codes) / items_per_page)
     start_index = (page - 1) * items_per_page
@@ -630,19 +635,64 @@ def edit(name):
 
 @app.route('/create_backup', methods=['GET'])
 def create_backup():
-    if not current_user.is_admin:
-        return {'success': False, 'message': 'Not authorized'}
-    backup_file_path = "otp.db"
-    return send_file(backup_file_path, as_attachment=True, download_name='backup.db')
+    try:
+        if not current_user.is_admin:
+            return jsonify({'success': False, 'message': 'Not authorized'})
+        
+        backup_folder = "backups"
+        if not os.path.exists(backup_folder):
+            os.makedirs(backup_folder)
+
+        timestamp = datetime.now().strftime("%Y%m%d%H%M%S")
+        backup_file_path = os.path.join(backup_folder, f"otp_backup_{timestamp}.db")
+
+        shutil.copy2("otp.db", backup_file_path)
+        
+        return jsonify({'success': True, 'message': f'Backup created at {backup_file_path}'})
+    except Exception as e:
+        return jsonify({'success': False, 'message': str(e)})
 
 @app.route('/load_backup', methods=['POST'])
 def load_backup():
-    if not current_user.is_admin:
-        return {'success': False, 'message': 'Not authorized'}
-    file = request.files['backup']
-    if file:
-        file.save("path/to/save/backup/file")
-    return {'success': True}
+    try:
+        print("load_backup function reached")
+        if not current_user.is_admin:
+            print("Not authorized")
+            return {'success': False, 'message': 'Not authorized'}
+        
+        file = request.files.get('backup')
+        if file:
+            backup_folder = "backups"
+            backup_file_path = os.path.join(backup_folder, file.filename)
+            
+            file.save(backup_file_path)
+            
+            with open(backup_file_path, 'rb') as f_in:
+                with open("otp.db", 'wb') as f_out:
+                    shutil.copyfileobj(f_in, f_out)
+
+            print(f"Copying backup file from {backup_file_path}")
+            return {'success': True}
+        else:
+            print("No backup file provided")
+            return {'success': False, 'message': 'No backup file provided'}
+    except Exception as e:
+        return {'success': False, 'message': str(e)}
+
+@app.route('/list_backups', methods=['GET'])
+def list_backups():
+    try:
+        if not current_user.is_admin:
+            return jsonify({'success': False, 'message': 'Not authorized'})
+        
+        backup_folder = "backups"
+        backups = []
+        if os.path.exists(backup_folder):
+            backups = os.listdir(backup_folder)
+        
+        return jsonify({'success': True, 'backups': backups})
+    except Exception as e:
+        return jsonify({'success': False, 'message': str(e)})
 
 @app.route('/delete_secret/<name>', methods=['POST'])
 @login_required

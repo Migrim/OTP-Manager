@@ -87,12 +87,14 @@
                         <div class="progress-bar" role="progressbar" style="width: 100%;" id="progressBar{{ otp.name }}" data-refresh-time="{{ otp.refresh_time }}">30s</div>
                     </div>
                     <div class="btn-group" role="group">
+                        {% if current_user.is_admin %}
                         <form id="deleteForm_{{ otp.name }}" action="{{ url_for('delete_secret', name=otp.name) }}" method="post" style="display: inline-block;">
                             <button type="button" style="margin-right:5px" class="btn btn-danger delete-btn" data-toggle="modal" data-target="#deleteConfirmationModal" data-otp-name="{{ otp.name }}">
                                 <i class="icon-center material-icons-outlined icon-small">delete</i>
                             </button>
                             <input type="hidden" name="otpName" value="{{ otp.name }}" />
                         </form>
+                    {% endif %}
                         <form action="{{ url_for('edit', name=otp.name) }}" method="get" style="display: inline-block;">
                             <button style="margin-right:5px" class="btn btn-primary">
                                 <i class="icon-center material-icons-outlined icon-small">edit</i>
@@ -280,9 +282,21 @@
                     document.getElementById('searchInput').addEventListener('keydown', function(event) {
                         if (event.key === 'Enter') {
                             event.preventDefault();
-
                             let query = encodeURIComponent(this.value);
-                            window.location.href = `/search_otp?name=${query}`;
+                            
+                            var otpDivs = document.getElementsByClassName('col-md-4');
+                            var displayed = 0;
+                            for (var i = 0; i < otpDivs.length; i++) {
+                                if (otpDivs[i].style.display !== 'none') {
+                                    displayed++;
+                                }
+                            }
+                            
+                            if (displayed === 0) {
+                                alert("No matched secrets");
+                            } else {
+                                window.location.href = `/search_otp?name=${query}`;
+                            }
                         }
                     });
 

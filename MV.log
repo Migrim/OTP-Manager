@@ -118,3 +118,47 @@
 2023-10-15 12:53:26,425 [INFO] Server started.
 2023-10-15 12:53:51,844 [INFO] User: admin Logged in!
 2023-10-15 12:53:51,873 [INFO] admin is authenticated
+2023-10-15 12:56:53,771 [INFO] Server started.
+2023-10-15 17:16:49,522 [INFO] Server started.
+2023-10-15 17:17:49,075 [INFO] Server started.
+2023-10-15 17:22:01,824 [INFO] Server started.
+2023-10-15 17:24:01,861 [INFO] Server started.
+2023-10-15 21:33:23,029 [INFO] Server started.
+2023-10-15 21:33:39,827 [INFO] Server started.
+2023-10-18 23:00:29,476 [INFO] Server started.
+2023-10-18 23:00:48,434 [WARNING] Failed login attempt for user: Sebastian
+2023-10-18 23:00:53,141 [INFO] User: admin Logged in!
+2023-10-18 23:00:53,165 [INFO] admin is authenticated
+2023-10-18 23:07:21,994 [INFO] Server started.
+2023-10-18 23:09:58,920 [INFO] Server started.
+2023-10-18 23:14:04,000 [INFO] Server started.
+2023-10-18 23:14:42,352 [INFO] Server started.
+2023-10-18 23:16:35,803 [INFO] Server started.
+2023-10-18 23:21:10,878 [INFO] Server started.
+2023-10-18 23:32:48,078 [INFO] Server started.
+2023-10-18 23:34:05,907 [INFO] User: admin Logged in!
+2023-10-18 23:34:05,934 [INFO] admin is authenticated
+2023-10-18 23:38:29,854 [INFO] Server started.
+2023-10-18 23:39:05,948 [INFO] Server started.
+2023-10-18 23:40:05,566 [INFO] User: admin Logged in!
+2023-10-18 23:40:05,592 [INFO] admin is authenticated
+2023-10-18 23:43:03,643 [INFO] Server started.
+2023-10-18 23:43:32,877 [INFO] Server started.
+2023-10-18 23:43:39,331 [INFO] User: admin Logged in!
+2023-10-18 23:43:39,357 [INFO] admin is authenticated
+2023-10-18 23:44:40,455 [INFO] Server started.
+2023-10-18 23:45:24,447 [INFO] User: admin Logged in!
+2023-10-18 23:45:24,472 [INFO] admin is authenticated
+2023-10-18 23:50:32,831 [INFO] Server started.
+2023-10-18 23:50:41,461 [INFO] User: admin Logged in!
+2023-10-18 23:50:41,486 [INFO] admin is authenticated
+2023-10-19 21:27:44,745 [INFO] Server started.
+2023-10-19 21:28:00,564 [INFO] User: admin Logged in!
+2023-10-19 21:28:00,588 [INFO] admin is authenticated
+2023-10-19 22:06:25,528 [INFO] User: admin Logged in!
+2023-10-19 22:06:25,556 [INFO] admin is authenticated
+2023-10-19 22:08:37,915 [WARNING] Failed login attempt for user: test
+2023-10-19 22:08:44,776 [INFO] User: memmo Logged in!
+2023-10-19 22:08:44,798 [INFO] memmo is authenticated
+2023-10-19 22:09:12,638 [INFO] User: admin Logged in!
+2023-10-19 22:09:12,663 [INFO] admin is authenticated
