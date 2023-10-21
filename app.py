@@ -300,9 +300,13 @@ def login_required(f):
 @login_required
 def settings():
     if request.method == 'POST':
-        enable_pagination = request.form.get('enable_pagination', type=int)
+        enable_pagination = 1 if request.form.get('enable_pagination') else 0
         current_user.enable_pagination = enable_pagination
-        db.session.commit()
+        user_id = session.get('user_id')
+        with sqlite3.connect("otp.db") as db:
+            cursor = db.cursor()
+            cursor.execute("UPDATE users SET enable_pagination = ? WHERE id = ?", (enable_pagination, user_id))
+            db.commit()
         flash('Settings updated')
         return redirect(url_for('settings'))
     return render_template('settings.html', enable_pagination=current_user.enable_pagination)

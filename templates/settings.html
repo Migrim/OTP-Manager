@@ -1,10 +1,11 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Settings</title>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+{% extends 'bootstrap/base.html' %}
+
+{% block title %} Live Logs {% endblock %}
+
+{% block styles %}
+    {{ super() }}
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
     <style>
         body {
             background: #202020;
@@ -40,18 +41,156 @@
         .form-check {
             font-weight: 300;
         }
+
+        .toggle-switch {
+            position: relative;
+            display: inline-block;
+            width: 60px;
+            height: 34px;
+        }
+
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: .4s;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 26px;
+            width: 26px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .4s;
+        }
+
+        input:checked + .slider {
+            background-color: #2196F3;
+        }
+
+        input:checked + .slider:before {
+            transform: translateX(26px);
+        }
+
+        .navbar {
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.1);
+        }
+
+        .navbar-dark .navbar-brand {
+            color: #f1f1f1;
+            font-size: 1.5rem;
+            margin-right: 20px;
+            transition: color 0.3s;
+        }
+
+        .navbar-dark .navbar-brand:hover {
+            color: #CD5C5C;
+        }
+
+        #logoutContainer {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end; 
+        }
+
+        #logoutBtn {
+            position: absolute;
+            right: -1px; 
+            top: 0.1px;
+            cursor: pointer;
+        }
+
+        #logoutBtn a {
+            margin-top: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center; 
+            padding: 4px 12px;
+            font-size: 1.4rem; 
+            background-color: #CD5C5C;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+            width: 100px; 
+            height: 40px; 
+        }
+
+        #logoutBtn a:hover {
+            background-color: #E68A89;
+        }
+
+        #logoutBtn a i.material-icons-outlined {
+            font-size: 18px; 
+            margin-left: 8px; 
+        }
     </style>
-</head>
+{% endblock %}
+
+{% block navbar %}
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="navbar-nav mr-auto">
+        <a class="navbar-brand" href="{{ url_for('home') }}">Home</a> 
+    </div>
+    <div class="navbar-nav mr-auto">
+        <a class="navbar-brand" href="{{ url_for('add') }}">Add</a>
+    </div>
+    <div class="navbar-nav mr-auto">
+        <a class="navbar-brand" href="{{ url_for('view_logs') }}">Logs</a>
+    </div>
+    <div class="navbar-nav mr-auto">
+        <a class="navbar-brand" href="{{ url_for('admin.admin_settings') }}">Settings</a>
+    </div>
+    <div class="navbar-nav mr-auto">
+        <a class="navbar-brand" href="{{ url_for('about') }}">About</a>
+    </div>   
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <div class="navbar-nav ml-auto">
+                <div class="alert alert-warning alert-dismissible fade show mb-0" role="alert">
+                    {{ messages[0] }}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            </div>
+        {% endif %}
+    {% endwith %}
+    
+    <div id="logoutContainer">
+        <div id="logoutBtn">
+            <a class="navbar-brand" href="{{ url_for('logout') }}">
+                Logout
+                <i class="material-icons-outlined">logout</i>
+            </a>
+        </div>                    
+    </div>            
+</nav>
+{% endblock %}
+
+{% block content %}
 <body>
     <div class="settings-container">
         <h1>User Settings</h1>
         <form method="post">
-            <div class="form-check">
-                <input class="form-check-input" type="checkbox" value="1" id="enablePagination" name="enable_pagination" {% if enable_pagination %}checked{% endif %}>
-                <label class="form-check-label" for="enablePagination">
-                    Enable Pagination
-                </label>
-            </div>
+            <label class="toggle-switch">
+                <input type="checkbox" name="enable_pagination" {% if enable_pagination %}checked{% endif %}>
+                <span class="slider"></span>
+            </label>
+            <span> Enable Pagination</span>
             <button type="submit" class="btn btn-primary">Save</button>
         </form>
     </div>
@@ -65,3 +204,4 @@
     </script>
 </body>
 </html>
+{% endblock %}
