@@ -50,82 +50,101 @@
 {% endblock %}
 
 {% block content %}
-<div class="center-content">
-
-    {% if is_admin %}
-    <div class="form-container">
-        <h1 class="form-title">User Management</h1>
-        <form method="post">
-            {{ user_form.hidden_tag() }}
-            <div class="form-group">
-                <label class="form-label">{{ user_form.username.label }}</label>
-                {{ user_form.username(class="form-control") }}
+    <div class="center-content settings-wrapper">
+        {% if is_admin %}
+            <div class="form-container">
+                <h1 class="form-title">User Management</h1>
+                <form method="post">
+                    {{ user_form.hidden_tag() }}
+                    <div class="form-group">
+                        <div class="label-input-wrapper"> 
+                            <label class="form-label">{{ user_form.username.label }}</label>
+                            {{ user_form.username(class="form-control") }}
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="label-input-wrapper"> 
+                            <label class="form-label">{{ user_form.password.label }}</label>
+                            {{ user_form.password(class="form-control") }}
+                        </div>
+                    </div>
+                    <div class="form-submit">
+                        {{ user_form.submit(class="btn form-submit washed-purple-btn", value="Add User") }}
+                    </div>
+                </form>
+                <h2 class="form-title">Existing Users</h2>
+                <div class="table-wrapper">
+                    <ul class="list-group">
+                        {% for user in users %}
+                            <li class="list-group-item">
+                                {{ user[1] }}
+                                {% if user[2] %}
+                                    <span> (Admin) </span>
+                                {% endif %}
+                                <div>
+                                    <form style="display:inline;"
+                                            action="{{ url_for('admin.delete_user', user_id=user[0]) }}"
+                                            method="POST">
+                                        <button type="submit" class="btn btn-danger">
+                                            <i class="material-icons-outlined">delete_outline</i>
+                                        </button>
+                                    </form>
+                                    
+                                    <a href="{{ url_for('admin.toggle_admin', user_id=user[0]) }}"
+                                        class="btn btn-success">
+                                        <i class="material-icons-outlined">admin_panel_settings</i>
+                                    </a>
+                
+                                    <a href="{{ url_for('reset_password', user_id=user[0]) }}"
+                                        class="btn btn-success">
+                                        <i class="material-icons-outlined">password</i>
+                                    </a>
+                                </div>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </div>
             </div>
-            <div class="form-group">
-                <label class="form-label">{{ user_form.password.label }}</label>
-                {{ user_form.password(class="form-control") }}
-            </div>
-            <div class="form-submit">
-                {{ user_form.submit(class="btn btn-primary btn-block form-submit", value="Add User") }}
-            </div>
-        </form>
-        <h2 class="form-title">Existing Users</h2>
-        <div class="scrollable-container">
-            <ul class="list-group">
-                {% for user in users %}
-                    <li class="list-group-item">
-                        {{ user[1] }}
-                        <div>
-                            <form style="display:inline;" action="{{ url_for('admin.delete_user', user_id=user[0]) }}" method="POST">
+        {% endif %}
+        <div class="form-container">
+            <h1 class="form-title">Company Management</h1>
+            <form method="post">
+                {{ company_form.hidden_tag() }}
+                <div class="form-group company-form-group">
+                    <div class="label-input-wrapper"> 
+                        <label class="form-label">{{ company_form.name.label }}</label>
+                        {{ company_form.name(class="form-control") }}
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="label-input-wrapper"> 
+                    <label class="form-label">{{ company_form.kundennummer.label }}</label>
+                    {{ company_form.kundennummer(class="form-control") }}
+                </div>
+                <div class="form-submit">
+                    {{ company_form.submit_company(class="btn form-submit washed-purple-btn", value="Add Company") }}
+                </div>
+            </form>
+            <h2 class="form-title">Existing Companies</h2>
+            <div class="table-wrapper">
+                <ul class="list-group">
+                    {% for company in companies %}
+                        <li class="list-group-item">
+                            <span class="company-name">{{ company.name }}</span>
+                            <form style="display:inline;"
+                                  action="{{ url_for('admin.delete_company', company_id=company.company_id) }}"
+                                  method="POST">
+                                {{ company_form.hidden_tag() }}
                                 <button type="submit" class="btn btn-danger">
                                     <i class="material-icons-outlined">delete_outline</i>
-                                </button>                               
+                                </button>
                             </form>
-                            <a href="{{ url_for('reset_password', user_id=user[0]) }}" class="btn btn-warning">
-                                <i class="material-icons-outlined">lock_reset</i>
-                            </a>                              
-                        </div>
-                    </li>
-                {% endfor %}
-            </ul>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
         </div>
     </div>
-    {% endif %}
-
-    <div class="form-container">
-        <h1 class="form-title">Company Management</h1>
-        <form method="post">
-            {{ company_form.hidden_tag() }}
-            <div class="form-group">
-                <label class="form-label">{{ company_form.name.label }}</label>
-                {{ company_form.name(class="form-control") }}
-            </div>
-            <div class="form-group">
-                <label class="form-label">{{ company_form.kundennummer.label }}</label>  
-                {{ company_form.kundennummer(class="form-control") }}
-            </div>
-            <div class="form-submit">
-                {{ company_form.submit_company(class="btn btn-primary btn-block form-submit", value="Add Company") }}
-            </div>
-        </form>
-        <h2 class="form-title">Existing Companies</h2>
-        <div class="company-list-container">
-            <ul class="list-group">
-                {% for company in companies %}
-                <li class="list-group-item">
-                    <span class="company-name">{{ company.name }}</span>
-                        <form style="display:inline;" action="{{ url_for('admin.delete_company', company_id=company.company_id) }}" method="POST">
-                            {{ company_form.hidden_tag() }}
-                            <button type="submit" class="btn btn-danger">
-                                <i class="material-icons-outlined">delete_outline</i>
-                            </button>
-                        </form>
-                    </li>
-                {% endfor %}
-            </ul>
-        </div>
-    </div>
-</div>
 {% endblock %}
 
 {% block scripts %}

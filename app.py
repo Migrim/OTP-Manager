@@ -296,6 +296,17 @@ def login_required(f):
         return f(*args, **kwargs)
     return decorated_function
 
+@app.route('/settings', methods=['GET', 'POST'])
+@login_required
+def settings():
+    if request.method == 'POST':
+        enable_pagination = request.form.get('enable_pagination', type=int)
+        current_user.enable_pagination = enable_pagination
+        db.session.commit()
+        flash('Settings updated')
+        return redirect(url_for('settings'))
+    return render_template('settings.html', enable_pagination=current_user.enable_pagination)
+
 @app.route('/refresh_codes_v2')
 @login_required
 def refresh_codes_v2():

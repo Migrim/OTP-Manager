@@ -36,7 +36,7 @@ def get_all_users():
     try:
         with sqlite3.connect("otp.db") as db:
             cursor = db.cursor()
-            cursor.execute("SELECT * FROM users")
+            cursor.execute("SELECT id, username, is_admin FROM users")
             users = cursor.fetchall()
         return users
     except sqlite3.Error as e:
@@ -53,6 +53,28 @@ def load_companies_from_db():
         return companies
     except sqlite3.Error as e:
         return []
+
+@admin_bp.route('/toggle_admin/<int:user_id>', methods=['GET'])
+@login_required
+def toggle_admin(user_id):
+    if current_user.username != "admin":
+        flash("Only the admin can toggle admin status.")
+        return redirect(url_for('admin.admin_settings'))
+
+    try:
+        with sqlite3.connect("otp.db") as db:
+            cursor = db.cursor()
+            cursor.execute("SELECT is_admin FROM users WHERE id = ?", (user_id,))
+            current_status = cursor.fetchone()[0]
+            new_status = not current_status
+            cursor.execute("UPDATE users SET is_admin = ? WHERE id = ?", (new_status, user_id))
+            db.commit()
+        flash(f"Admin status toggled for user ID {user_id}.")
+    except sqlite3.Error as e:
+        flash("Failed to toggle admin status.")
+        logging.error(f"Error toggling admin status: {e}")
+
+    return redirect(url_for('admin.admin_settings'))
 
 @admin_bp.route('/admin_settings', methods=['GET', 'POST'])
 @login_required
