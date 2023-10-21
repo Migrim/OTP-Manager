@@ -69,6 +69,7 @@ def load_user(user_id):
             user.id = user_data[0]
             user.username = user_data[1]
             user.is_admin = bool(user_data[5])
+            user.enable_pagination = bool(user_data[6])
             return user
         return None
 
@@ -93,7 +94,8 @@ def init_db():
                 password TEXT NOT NULL,
                 last_login_time TEXT,
                 session_token TEXT,
-                is_admin INTEGER DEFAULT 0
+                is_admin INTEGER DEFAULT 0,
+                enable_pagination INTEGER DEFAULT 0
             )
         """)
         cursor.execute("""
@@ -125,8 +127,7 @@ def save_to_db(otp_secrets):
         cursor.execute("""
         INSERT INTO otp_secrets (name, secret, otp_type, refresh_time, company_id)
         VALUES (?, ?, ?, ?, ?)
-        ON CONFLICT(name) DO UPDATE SET secret = ?, otp_type = ?, refresh_time = ?, company_id = ?
-        """, (otp_secret['name'], otp_secret['secret'], otp_secret['otp_type'], otp_secret['refresh_time'], otp_secret['company_id'], otp_secret['secret'], otp_secret['otp_type'], otp_secret['refresh_time'], otp_secret['company_id']))
+        """, (otp_secret['name'], otp_secret['secret'], otp_secret['otp_type'], otp_secret['refresh_time'], otp_secret['company_id']))
 
     conn.commit()
     conn.close()
@@ -507,7 +508,9 @@ def home():
     form = OTPForm()
     otp_secrets = session.get('filtered_secrets', load_from_db())
     otp_codes = []
-    items_per_page = 9
+    
+    # Determine items per page based on user's setting
+    items_per_page = 0 if not current_user.enable_pagination else 9
 
     page = request.args.get('page', type=int, default=1)
 
@@ -546,15 +549,16 @@ def home():
     if not otp_codes and selected_company:
         flash(f"No matching secrets for company: {selected_company}")
 
-    total_pages = ceil(len(otp_codes) / items_per_page)
+    total_pages = 1 if not current_user.enable_pagination else ceil(len(otp_codes) / items_per_page)
+    
     start_index = (page - 1) * items_per_page
-    end_index = start_index + items_per_page
+    end_index = start_index + items_per_page if items_per_page > 0 else len(otp_codes)
 
     displayed_otp_codes = otp_codes[start_index:end_index]
 
     search_name = request.args.get('name')
 
-    return render_template('home.html', form=form, otp_codes=displayed_otp_codes, companies=companies, search_name=search_name, page=page, total_pages=total_pages)
+    return render_template('home.html', form=form, otp_codes=displayed_otp_codes, companies=companies, search_name=search_name, page=page, total_pages=total_pages, enable_pagination=current_user.enable_pagination)
 
 @app.route('/get_logs', methods=['GET'])
 @login_required

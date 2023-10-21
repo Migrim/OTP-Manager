@@ -110,6 +110,7 @@
         </div>
                 
                 <nav aria-label="Page navigation">
+                    {% if enable_pagination %}
                     <ul class="pagination justify-content-center">
                         <li class="page-item {% if page is not defined or page <= 1 %}disabled{% endif %}">
                             <a class="page-link" href="{{ url_for('home', page=page-1) }}" aria-label="Previous">
@@ -127,6 +128,7 @@
                             </a>
                         </li>
                     </ul>
+                    {% endif %}
                 </nav>
 
                 <div class="modal fade" id="deleteConfirmationModal" tabindex="-1" role="dialog" aria-labelledby="deleteConfirmationModalLabel" aria-hidden="true">
