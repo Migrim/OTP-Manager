@@ -195,6 +195,11 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 <script>
+    function scrollToBottom() {
+        var logsBox = document.getElementById("logs-box");
+        logsBox.scrollTop = logsBox.scrollHeight;
+    }
+
     function updateLogs() {
         $(document).ready(function(){
             $('.logs-section').css('opacity', '1');
@@ -207,12 +212,12 @@
                                 .replace(/Logged in!/g, '<span class="washed-purple-log">Logged in!</span>')
                                 .replace(/is authenticated/g, '<span class="washed-purple-log">is authenticated</span>');
             $('#logs').html(updatedLogs);
-            scrollToBottom();
+            scrollToBottom(); 
         });
     }
 
     setInterval(updateLogs, 1000);
-    updateLogs();
+    updateLogs(); 
 
     var scrollToButton = document.getElementById("scroll-to-end");
     scrollToButton.addEventListener("click", scrollToBottom);

@@ -827,10 +827,15 @@ def add():
         save_companies_to_db(companies_from_db)
 
         flash(f"New OTP secret '{name}' added successfully.")
+        logging.info(f"User '{current_user.username}' added a new OTP secret: {name}")
         return redirect(url_for('home'))
 
     return render_template('add.html', form=form)
 
 if __name__ == '__main__':
-    logging.info("Server started.")
-    app.run(debug=True, port=5001, host='0.0.0.0', use_reloader=False)
+    port = 5001 
+    logging.info(f"Server started on port {port}.")
+    try:
+        app.run(debug=True, port=port, host='0.0.0.0', use_reloader=False)
+    except KeyboardInterrupt:
+        logging.info("Server stopped.")
