@@ -8,29 +8,50 @@
     <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
     <style>
         body {
-            background: #202020;
-            color: #fff;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
             font-family: 'Roboto', sans-serif;
-            transition: opacity 0.6s ease-in;
+            background-color: #222222;
+            color: #FFF;
+            margin: 0;
+            padding: 0;
         }
 
-        body.loaded {
-            background: url('{{ url_for("static", filename="Background.jpg") }}') center/cover no-repeat;
-            opacity: 1;
+        .navbar {
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.1);
+        }
+
+        .navbar-dark .navbar-brand {
+            color: #f1f1f1;
+            font-size: 1.5rem;
+            margin-right: 20px;
+            transition: color 0.3s;
+        }
+
+        .navbar-dark .navbar-brand:hover {
+            color: #CD5C5C;
         }
 
         .settings-container {
-            text-align: center;
-            border-radius: 20px;
-            background: #333;
-            padding: 20px;
-            width: 400px;
+            padding: 30px;
+            margin: auto;
+            width: 50%;
+            opacity: 1;
+            transition: opacity 0.5s ease-in-out;
+            background-color: #252526;
+            border: 1px solid #dee2e6;
+            border-radius: 0.25rem;
+        }
+
+        .d-flex {
+            display: flex;
+        }
+
+        .justify-content-center {
+            justify-content: center;
+        }
+
+        .settings-container label, .settings-container button {
+            color: #FFF;
+            margin: 15px;
         }
 
         h1 {
@@ -44,9 +65,9 @@
 
         .toggle-switch {
             position: relative;
-            display: inline-block;
             width: 60px;
-            height: 34px;
+            height: 28px;
+            display: inline-block;
         }
 
         .toggle-switch input {
@@ -57,32 +78,33 @@
 
         .slider {
             position: absolute;
-            cursor: pointer;
             top: 0;
             left: 0;
-            right: 0;
-            bottom: 0;
+            width: 100%;
+            height: 100%;
             background-color: #ccc;
-            transition: .4s;
+            border-radius: 28px;
+            transition: all 0.4s ease;
         }
 
         .slider:before {
-            position: absolute;
             content: "";
-            height: 26px;
-            width: 26px;
-            left: 4px;
-            bottom: 4px;
+            position: absolute;
+            left: 2px;
+            top: 2px;
+            width: 24px;
+            height: 24px;
             background-color: white;
-            transition: .4s;
+            border-radius: 50%;
+            transition: all 0.4s ease;
         }
 
-        input:checked + .slider {
+        input[type="checkbox"]:checked + .slider {
             background-color: #2196F3;
         }
 
-        input:checked + .slider:before {
-            transform: translateX(26px);
+        input[type="checkbox"]:checked + .slider:before {
+            transform: translateX(32px);
         }
 
         .navbar {
@@ -153,9 +175,14 @@
     </div>
     <div class="navbar-nav mr-auto">
         <a class="navbar-brand" href="{{ url_for('admin.admin_settings') }}">Settings</a>
-    </div>
+    </div>    
     <div class="navbar-nav mr-auto">
         <a class="navbar-brand" href="{{ url_for('about') }}">About</a>
+    </div>
+    <div class="navbar-nav mr-auto">
+        <a class="navbar-brand" href="{{ url_for('settings') }}">
+            <i class="material-icons-outlined">settings</i> 
+        </a>
     </div>   
     {% with messages = get_flashed_messages() %}
         {% if messages %}
@@ -182,26 +209,22 @@
 {% endblock %}
 
 {% block content %}
-<body>
-    <div class="settings-container">
+<div class="settings-container">
+    <div class="d-flex justify-content-center">
         <h1>User Settings</h1>
-        <form method="post">
+    </div>
+
+    <form method="post" class="d-flex flex-column justify-content-center"> 
+        <div class="d-flex justify-content-center align-items-center">
             <label class="toggle-switch">
                 <input type="checkbox" name="enable_pagination" {% if enable_pagination %}checked{% endif %}>
                 <span class="slider"></span>
             </label>
-            <span> Enable Pagination</span>
+            <span> Enable Pages</span>
+        </div>
+        <div class="d-flex justify-content-center">
             <button type="submit" class="btn btn-primary">Save</button>
-        </form>
-    </div>
-
-    <script>
-        var image = new Image();
-        image.src = '{{ url_for("static", filename="Background.jpg") }}';
-        image.onload = function() {
-            document.body.classList.add('loaded');
-        };
-    </script>
-</body>
-</html>
+        </div>
+    </form>
+</div>
 {% endblock %}
