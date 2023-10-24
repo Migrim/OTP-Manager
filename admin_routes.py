@@ -211,6 +211,6 @@ def delete_company(company_id):
             db.commit()
         flash('Company deleted!')
     except sqlite3.Error as e:
-        flash('Failed to delete company.')
+        flash('Insufficient Rights!.')
 
     return redirect(url_for('admin.admin_settings'))
