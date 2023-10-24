@@ -111,7 +111,7 @@
                 </div>
             </div>
         {% endif %}
-        <div class="form-container">
+        <div class="form-container {% if not is_admin %}center-if-single{% endif %}">
             <h1 class="form-title">Company Management</h1>
             <form method="post">
                 {{ company_form.hidden_tag() }}

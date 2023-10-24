@@ -79,10 +79,19 @@ def toggle_admin(user_id):
 @admin_bp.route('/admin_settings', methods=['GET', 'POST'])
 @login_required
 def admin_settings():
-    
     user_form = UserForm()
     company_form = CompanyForm()
-    
+
+    is_admin = False
+    try:
+        with sqlite3.connect("otp.db") as db:
+            cursor = db.cursor()
+            cursor.execute("SELECT is_admin FROM users WHERE id = ?", (current_user.id,))
+            is_admin = bool(cursor.fetchone()[0])
+    except sqlite3.Error as e:
+        flash('Failed to fetch admin status.')
+        logging.error(f"Error fetching admin status: {e}")
+
     if user_form.validate_on_submit() and user_form.submit.data:
         username = user_form.username.data
         password = user_form.password.data
@@ -116,7 +125,6 @@ def admin_settings():
 
     users = get_all_users()
     companies = load_companies_from_db()
-    is_admin = (current_user.username == "admin") 
     return render_template('admin_settings.html', user_form=user_form, company_form=company_form, users=users, companies=companies, is_admin=is_admin)
 
 @admin_bp.route('/delete_user/<int:user_id>', methods=['GET'])

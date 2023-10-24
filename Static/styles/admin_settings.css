@@ -244,3 +244,8 @@ body {
 .company-form-group {
     margin-bottom: 25px;
 }
+
+.center-if-single {
+    margin-left: auto;
+    margin-right: auto;
+}
