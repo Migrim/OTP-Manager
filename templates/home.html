@@ -70,7 +70,7 @@
     
         <form method="get" action="{{ url_for('search_blueprint.search_otp') }}" class="search-bar">
             <input type="hidden" name="page" value="{{ page|default(1) }}" />
-            <input type="text" id="searchInput" name="name" placeholder="Search for OTPs" />
+            <input type="text" id="searchInput" name="name" placeholder="" class="search-input" />
             <select name="company" id="companyDropdown" class="form-select custom-dropdown" onchange="this.form.submit()">
                 <option value="All Companies" {% if request.args.get('company') == "All Companies" %}selected{% endif %}>All Companies</option>
                 {% for company in companies %}
@@ -341,6 +341,33 @@
                             formToSubmit.submit();
                         };
                     });
+
+                    document.addEventListener("DOMContentLoaded", function() {
+                        let placeholders = [
+                        "Search for One-Time Passwords",
+                        "Press Enter to Display All Results",
+                        "Type a Company Name to Search Directly",
+                        "Keine Ahnung was ich hier einfügen soll..",
+                        "Use Keywords to Narrow Down Results",
+                        "Enter the Name of the OTP for Immediate Retrieval"
+                        ];
+
+                        let randomIndex = Math.floor(Math.random() * placeholders.length);
+                        let selectedPlaceholder = placeholders[randomIndex];
+
+                        let placeholderText = Array.from(selectedPlaceholder);
+                        let input = document.getElementById("searchInput");
+
+                        let i = 0;
+                        let placeholderInterval = setInterval(function(){
+                            if(i < placeholderText.length){
+                            input.setAttribute("placeholder", input.getAttribute("placeholder") + placeholderText[i]);
+                            i++;
+                            } else {
+                            clearInterval(placeholderInterval);
+                            }
+                        }, 100);
+                        });
                 </script>
         {% endblock %}
     </body>

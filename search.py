@@ -66,10 +66,10 @@ def search_otp():
     for otp_secret in otp_secrets:
         stored_name = otp_secret.get('name', 'Unnamed').lower()
         stored_kundennummer = str(otp_secret.get('company_kundennummer', '')).lower()
-        stored_company = otp_secret.get('company', 'Unbekannt')
+        stored_company = otp_secret.get('company', 'Unbekannt').lower()
 
-        if (selected_company == 'All Companies' or selected_company == stored_company):
-            if query in stored_name or query in stored_kundennummer:
+        if (selected_company.lower() == 'All Companies'.lower() or selected_company.lower() == stored_company.lower()):
+            if query in stored_name or query in stored_kundennummer or query in stored_company:
                 if otp_secret['otp_type'] == 'totp':
                     if not is_base32(otp_secret['secret']):
                         return 'Invalid base32 secret', 400
