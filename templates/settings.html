@@ -159,6 +159,22 @@
             font-size: 18px; 
             margin-left: 8px; 
         }
+
+        .form-container {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .form-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .setting-description {
+            margin-left: 15px;
+        }
     </style>
 {% endblock %}
 
@@ -214,13 +230,20 @@
         <h1>User Settings</h1>
     </div>
 
-    <form method="post" class="d-flex flex-column justify-content-center"> 
-        <div class="d-flex justify-content-center align-items-center">
+    <form method="post" class="form-container"> 
+        <div class="form-item">
             <label class="toggle-switch">
                 <input type="checkbox" name="enable_pagination" {% if enable_pagination %}checked{% endif %}>
                 <span class="slider"></span>
             </label>
-            <span> Enable Pages</span>
+            <span class="setting-description">Enable Pages</span>
+        </div>
+        <div class="form-item">
+            <label class="toggle-switch">
+                <input type="checkbox" id="showTimer" name="show_timer" {% if current_user.show_timer %}checked{% endif %}>
+                <span class="slider"></span>
+            </label>
+            <span class="setting-description">Show Timer instead of Progress Bar</span>
         </div>
         <div class="d-flex justify-content-center">
             <button type="submit" class="btn btn-primary">Save</button>

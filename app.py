@@ -70,6 +70,7 @@ def load_user(user_id):
             user.username = user_data[1]
             user.is_admin = bool(user_data[5])
             user.enable_pagination = bool(user_data[6])
+            user.show_timer = bool(user_data[7])
             return user
         return None
 
@@ -95,7 +96,8 @@ def init_db():
                 last_login_time TEXT,
                 session_token TEXT,
                 is_admin INTEGER DEFAULT 0,
-                enable_pagination INTEGER DEFAULT 0
+                enable_pagination INTEGER DEFAULT 0,
+                show_timer INTEGER DEFAULT 0
             )
         """)
         cursor.execute("""
@@ -300,16 +302,16 @@ def login_required(f):
 @login_required
 def settings():
     if request.method == 'POST':
-        enable_pagination = 1 if request.form.get('enable_pagination') else 0
-        current_user.enable_pagination = enable_pagination
+        show_timer = 1 if request.form.get('show_timer') else 0
+        current_user.show_timer = show_timer
         user_id = session.get('user_id')
         with sqlite3.connect("otp.db") as db:
             cursor = db.cursor()
-            cursor.execute("UPDATE users SET enable_pagination = ? WHERE id = ?", (enable_pagination, user_id))
+            cursor.execute("UPDATE users SET show_timer = ? WHERE id = ?", (show_timer, user_id))
             db.commit()
         flash('Settings updated')
         return redirect(url_for('settings'))
-    return render_template('settings.html', enable_pagination=current_user.enable_pagination)
+    return render_template('settings.html', show_timer=current_user.show_timer)
 
 @app.route('/refresh_codes_v2')
 @login_required

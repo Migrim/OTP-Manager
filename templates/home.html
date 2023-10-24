@@ -82,15 +82,19 @@
         <div class="row">
             {% for otp in otp_codes %}
             <div class="col-md-4">
-                <div class="alert alert-success mt-3">
+                <div class="alert alert-success mt-3 position-relative">
                     Firma: {{ otp.company }} <br>
                     Name: {{ otp.name }} <br>
                     <p>Secret: <span class="spoiler">{{otp.secret}}</span></p>
                     OTP type: {{ otp.otp_type }} <br>
                     OTP code: <span class="otp-code" id="otp_code_{{ otp.name }}" onclick="copyToClipboard(this)">{{ otp.otp_code }}</span>
-                    <div class="progress mt-2">
-                        <div class="progress-bar" role="progressbar" style="width: 100%;" id="progressBar{{ otp.name }}" data-refresh-time="{{ otp.refresh_time }}">30s</div>
-                    </div>
+                    {% if current_user.show_timer %}
+                        <div id="timer{{ otp.name }}" data-refresh-time="{{ otp.refresh_time }}">30s</div>
+                    {% else %}
+                        <div class="progress mt-2">
+                            <div class="progress-bar" role="progressbar" style="width: 100%;" id="progressBar{{ otp.name }}" data-refresh-time="{{ otp.refresh_time }}">30s</div>
+                        </div>
+                    {% endif %}
                     <div class="btn-group" role="group">
                         {% if current_user.is_admin %}
                         <form id="deleteForm_{{ otp.name }}" action="{{ url_for('delete_secret', name=otp.name) }}" method="post" style="display: inline-block;">
@@ -243,6 +247,49 @@
                         timeout = setTimeout(() => func.apply(context, args), wait);
                     };
                 }
+
+                function startTimer(elementId, duration) {
+                    var display = document.getElementById(elementId);
+
+                    function updateDisplay() {
+                        var localTime = new Date();
+                        var secondsElapsed = localTime.getSeconds() % duration;
+                        var timer = duration - secondsElapsed - 1;
+                        var minutes = parseInt(timer / 60, 10);
+                        var seconds = parseInt(timer % 60, 10);
+
+                        minutes = minutes < 10 ? "0" + minutes : minutes;
+                        seconds = seconds < 10 ? "0" + seconds : seconds;
+
+                        if (timer <= 5) {
+                            display.textContent = "Remaining Time: " + seconds + "s - Expiring!";
+                        } else {
+                            display.textContent = "Remaining Time: " + seconds + "s";
+                        }
+                    }
+
+                    function loop() {
+                        updateDisplay();
+
+                        // calculate time to the next second boundary
+                        var now = new Date();
+                        var delay = 1000 - now.getMilliseconds();
+
+                        setTimeout(loop, delay);
+                    }
+
+                    loop();
+                }
+
+                document.addEventListener('DOMContentLoaded', function() {
+                    var elements = document.querySelectorAll('[id^="timer"]');
+                    elements.forEach(function(element) {
+                        if (element) {
+                            var refreshTime = parseInt(element.getAttribute('data-refresh-time'), 10);
+                            startTimer(element.id, refreshTime);
+                        }
+                    });
+                });
 
                 window.onload = function() {
                     let spoilerElements = document.getElementsByClassName('spoiler');
