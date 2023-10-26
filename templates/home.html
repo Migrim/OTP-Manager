@@ -80,42 +80,47 @@
         </form>
         
         <div class="row">
-            {% for otp in otp_codes %}
-            <div class="col-md-4">
-                <div class="alert alert-success mt-3 position-relative">
-                    Firma: {{ otp.company }} <br>
-                    Name: <span style="text-decoration: underline;">{{ otp.name }}</span> <br>
-                    <p>Secret: <span class="spoiler">{{otp.secret}}</span></p>
-                    OTP type: {{ otp.otp_type }} <br>
-                    OTP code: <span class="otp-code" id="otp_code_{{ otp.name }}" onclick="copyToClipboard(this)">{{ otp.otp_code }}</span>
-                    {% if current_user.show_timer %}
-                        <div id="timer{{ otp.name }}" data-refresh-time="{{ otp.refresh_time }}">30s</div>
-                    {% else %}
-                        <div class="progress mt-2">
-                            <div class="progress-bar" role="progressbar" style="width: 100%;" id="progressBar{{ otp.name }}" data-refresh-time="{{ otp.refresh_time }}">30s</div>
-                        </div>
-                    {% endif %}
-                    <div class="btn-group" role="group">
-                        {% if current_user.is_admin %}
-                        <form id="deleteForm_{{ otp.name }}" action="{{ url_for('delete_secret', name=otp.name) }}" method="post" style="display: inline-block;">
-                            <button type="button" style="margin-right:5px" class="btn btn-danger delete-btn" data-toggle="modal" data-target="#deleteConfirmationModal" data-otp-name="{{ otp.name }}">
-                                <i class="icon-center material-icons-outlined icon-small">delete</i>
-                            </button>
-                            <input type="hidden" name="otpName" value="{{ otp.name }}" />
-                        </form>
-                    {% endif %}
-                        <form action="{{ url_for('edit', name=otp.name) }}" method="get" style="display: inline-block;">
-                            <button style="margin-right:5px" class="btn btn-primary">
-                                <i class="icon-center material-icons-outlined icon-small">edit</i>
-                            </button>
-                            <button type="button" style="margin-right: 5px" class="btn btn-light" onclick="copyToClipboard(document.querySelector('#otp_code_{{ otp.name }}'))">
-                                <i class="icon-center material-icons-outlined icon-small">content_copy</i>
-                            </button>
-                        </form>
-                    </div>
+            {% for company, otp_list in grouped_otp_codes.items() %}
+                <div class="col-md-12 mt-4">
+                    <h3>{{ company }}</h3>
                 </div>
-            </div>
-            {% endfor %}
+                {% for otp in otp_list %}
+                    <div class="col-md-4">
+                        <div class="alert alert-success mt-3 position-relative">
+                            Firma: {{ otp.company }} <br>
+                            Name: <span style="text-decoration: underline;">{{ otp.name }}</span> <br>
+                            <p>Secret: <span class="spoiler">{{otp.secret}}</span></p>
+                            OTP type: {{ otp.otp_type }} <br>
+                            OTP code: <span class="otp-code" id="otp_code_{{ otp.name }}" onclick="copyToClipboard(this)">{{ otp.otp_code }}</span>
+                            {% if current_user.show_timer %}
+                                <div id="timer{{ otp.name }}" data-refresh-time="{{ otp.refresh_time }}">30s</div>
+                            {% else %}
+                                <div class="progress mt-2">
+                                    <div class="progress-bar" role="progressbar" style="width: 100%;" id="progressBar{{ otp.name }}" data-refresh-time="{{ otp.refresh_time }}">30s</div>
+                                </div>
+                            {% endif %}
+                            <div class="btn-group" role="group">
+                                {% if current_user.is_admin %}
+                                <form id="deleteForm_{{ otp.name }}" action="{{ url_for('delete_secret', name=otp.name) }}" method="post" style="display: inline-block;">
+                                    <button type="button" style="margin-right:5px" class="btn btn-danger delete-btn" data-toggle="modal" data-target="#deleteConfirmationModal" data-otp-name="{{ otp.name }}">
+                                        <i class="icon-center material-icons-outlined icon-small">delete</i>
+                                    </button>
+                                    <input type="hidden" name="otpName" value="{{ otp.name }}" />
+                                </form>
+                                {% endif %}
+                                <form action="{{ url_for('edit', name=otp.name) }}" method="get" style="display: inline-block;">
+                                    <button style="margin-right:5px" class="btn btn-primary">
+                                        <i class="icon-center material-icons-outlined icon-small">edit</i>
+                                    </button>
+                                    <button type="button" style="margin-right: 5px" class="btn btn-light" onclick="copyToClipboard(document.querySelector('#otp_code_{{ otp.name }}'))">
+                                        <i class="icon-center material-icons-outlined icon-small">content_copy</i>
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %} 
+            {% endfor %} 
         </div>
                 
                 <nav aria-label="Page navigation">

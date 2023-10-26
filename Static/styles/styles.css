@@ -338,3 +338,8 @@ body {
 .underlined-name {
     text-decoration: underline;
 }
+
+.alert:hover {
+    background-color: #405d77;
+    cursor: pointer;
+}

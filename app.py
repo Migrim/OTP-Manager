@@ -19,6 +19,7 @@ from flask_login import LoginManager, UserMixin, current_user, login_user
 from search import search_blueprint
 from math import ceil
 from flask import send_file
+from collections import defaultdict
 import shutil
 import os
 import subprocess 
@@ -526,7 +527,6 @@ def home():
     otp_secrets = session.get('filtered_secrets', load_from_db())
     otp_codes = []
     
-    # Determine items per page based on user's setting
     items_per_page = 0 if not current_user.enable_pagination else 9
 
     page = request.args.get('page', type=int, default=1)
@@ -562,6 +562,12 @@ def home():
             continue
         otp_code['company'] = otp.get('company', 'Unbekannt')
         otp_codes.append(otp_code)
+
+    grouped_otp_codes = defaultdict(list)
+    for otp_code in otp_codes:
+        grouped_otp_codes[otp_code['company']].append(otp_code)
+
+    grouped_otp_codes = {k: v for k, v in grouped_otp_codes.items() if v}
     
     if not otp_codes and selected_company:
         flash(f"No matching secrets for company: {selected_company}")
@@ -574,8 +580,13 @@ def home():
     displayed_otp_codes = otp_codes[start_index:end_index]
 
     search_name = request.args.get('name')
+    if search_name:
+        for k, v in list(grouped_otp_codes.items()): 
+            grouped_otp_codes[k] = [x for x in v if search_name.lower() in x['name'].lower()]
 
-    return render_template('home.html', form=form, otp_codes=displayed_otp_codes, companies=companies, search_name=search_name, page=page, total_pages=total_pages, enable_pagination=current_user.enable_pagination)
+        grouped_otp_codes = {k: v for k, v in grouped_otp_codes.items() if v}
+
+    return render_template('home.html', form=form, grouped_otp_codes=grouped_otp_codes, companies=companies, search_name=search_name, page=page, total_pages=total_pages, enable_pagination=current_user.enable_pagination)
 
 @app.route('/get_logs', methods=['GET'])
 @login_required
