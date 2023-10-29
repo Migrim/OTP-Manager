@@ -185,9 +185,19 @@
 <div class="logs-section">
     <h1>Real-time Logs</h1>
     <div class="logs-box">
-        <div id="logs">
-            {{ logs|safe }}
-        </div>
+        <table id="logs-table" class="table table-dark table-striped">
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Time</th>
+                    <th>Type</th>
+                    <th>Message</th>
+                </tr>
+            </thead>
+            <tbody id="logs">
+                <!-- Content will be filled dynamically -->
+            </tbody>
+        </table>               
     </div>
     <div class="scroll-to-end-button" id="scroll-to-end">Scroll to End</div>
 </div>
@@ -196,28 +206,37 @@
 
 <script>
     function scrollToBottom() {
-        var logsBox = document.getElementById("logs-box");
+        var logsBox = document.querySelector(".logs-box");
         logsBox.scrollTop = logsBox.scrollHeight;
     }
 
-    function updateLogs() {
-        $(document).ready(function(){
-            $('.logs-section').css('opacity', '1');
-            var logs = $('#logs').html();
-            var updatedLogs = logs
-                                .replace(/\[ERROR\]/g, '<span class="error-log">[ERROR]</span>')
-                                .replace(/\[INFO\]/g, '<span class="info-log">[INFO]</span>')
-                                .replace(/\[WARNING\]/g, '<span class="warning-log">[WARNING]</span>')
-                                .replace(/was Logged out\!./g, '<span class="washed-purple-log">was Logged out!.</span>')
-                                .replace(/Logged in!/g, '<span class="washed-purple-log">Logged in!</span>')
-                                .replace(/is authenticated/g, '<span class="washed-purple-log">is authenticated</span>');
-            $('#logs').html(updatedLogs);
-            scrollToBottom(); 
+    function fetchAndUpdateLogs() {
+        $.getJSON('/get_logs', function(data) {
+            var logs = data.logs;
+            var logLines = logs.split('\n');
+            $('#logs').empty(); 
+            logLines.forEach(function(logLine) {
+                var logMatch = logLine.match(/(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2},\d{3}) \[(\w+)\] (.+)/);
+                if (logMatch) {
+                    var datetime = logMatch[1];
+                    var type = logMatch[2];
+                    var message = logMatch[3];
+                    var datetimeParts = datetime.split(' ');
+                    var date = datetimeParts[0];
+                    var time = datetimeParts[1];
+                    var logRow = '<tr>' +
+                                    '<td>' + date + '</td>' +
+                                    '<td>' + time + '</td>' +
+                                    '<td class="' + type.toLowerCase() + '-log">' + type + '</td>' +
+                                    '<td>' + message + '</td>' +
+                                '</tr>';
+                    $('#logs').append(logRow);
+                }
+            });
         });
     }
 
-    setInterval(updateLogs, 1000);
-    updateLogs(); 
+    setInterval(fetchAndUpdateLogs, 1000); 
 
     var scrollToButton = document.getElementById("scroll-to-end");
     scrollToButton.addEventListener("click", scrollToBottom);
