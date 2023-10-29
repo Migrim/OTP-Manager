@@ -584,8 +584,7 @@ def home():
         for k, v in list(grouped_otp_codes.items()): 
             grouped_otp_codes[k] = [x for x in v if search_name.lower() in x['name'].lower()]
 
-        grouped_otp_codes = {k: v for k, v in grouped_otp_codes.items() if v}
-
+    grouped_otp_codes = {k: v for k, v in grouped_otp_codes.items() if v} 
     return render_template('home.html', form=form, grouped_otp_codes=grouped_otp_codes, companies=companies, search_name=search_name, page=page, total_pages=total_pages, enable_pagination=current_user.enable_pagination)
 
 @app.route('/get_logs', methods=['GET'])

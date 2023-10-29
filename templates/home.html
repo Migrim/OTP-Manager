@@ -243,7 +243,6 @@
                     countdownIntervals.set(element.id, intervalId);
                 }
 
-                // Debounce function
                 function debounce(func, wait) {
                     let timeout;
                     return function() {
@@ -276,7 +275,6 @@
                     function loop() {
                         updateDisplay();
 
-                        // calculate time to the next second boundary
                         var now = new Date();
                         var delay = 1000 - now.getMilliseconds();
 
@@ -326,16 +324,37 @@
 
                     document.getElementById('searchInput').addEventListener('input', function() {
                         var filter = this.value.toUpperCase();
-                        var otpDivs = document.getElementsByClassName('col-md-4');
-                        for (var i = 0; i < otpDivs.length; i++) {
-                            var div = otpDivs[i];
+                        var rowDiv = document.querySelector('.row'); 
+                        
+                        var otpDivs = rowDiv.querySelectorAll('.col-md-4');
+                        otpDivs.forEach(function(div) {
                             var name = div.querySelector('.alert').textContent;
                             if (name.toUpperCase().indexOf(filter) > -1) {
-                                div.style.display = 'block'; 
+                                div.style.display = 'block';
                             } else {
-                                div.style.display = 'none'; 
+                                div.style.display = 'none';
                             }
-                        }
+                        });
+                        
+                        var companyGroups = rowDiv.querySelectorAll('.col-md-12.mt-4');
+                        companyGroups.forEach(function(companyGroup) {
+                            var nextSibling = companyGroup.nextElementSibling;
+                            var atLeastOneVisible = false;
+                            
+                            while (nextSibling && !nextSibling.matches('.col-md-12.mt-4')) {
+                                if (nextSibling.style.display !== 'none') {
+                                    atLeastOneVisible = true;
+                                    break;
+                                }
+                                nextSibling = nextSibling.nextElementSibling;
+                            }
+                            
+                            if (atLeastOneVisible) {
+                                companyGroup.style.display = 'block';
+                            } else {
+                                companyGroup.style.display = 'none';
+                            }
+                        });
                     });
 
                     document.getElementById('searchInput').addEventListener('keydown', function(event) {
