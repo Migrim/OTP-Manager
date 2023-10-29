@@ -71,7 +71,7 @@
         <form method="get" action="{{ url_for('search_blueprint.search_otp') }}" class="search-bar">
             <input type="hidden" name="page" value="{{ page|default(1) }}" />
             <input type="text" id="searchInput" name="name" placeholder="" class="search-input" />
-            <select name="company" id="companyDropdown" class="form-select custom-dropdown" onchange="this.form.submit()">
+            <select name="company" id="companyDropdown" class="form-select custom-dropdown" title="Filter by Company" onchange="this.form.submit()">
                 <option value="All Companies" {% if request.args.get('company') == "All Companies" %}selected{% endif %}>All Companies</option>
                 {% for company in companies %}
                     <option value="{{ company.name }}" {% if request.args.get('company') == company.name %}selected{% endif %}>{{ company.name }}</option>
@@ -102,17 +102,17 @@
                             <div class="btn-group" role="group">
                                 {% if current_user.is_admin %}
                                 <form id="deleteForm_{{ otp.name }}" action="{{ url_for('delete_secret', name=otp.name) }}" method="post" style="display: inline-block;">
-                                    <button type="button" style="margin-right:5px" class="btn btn-danger delete-btn" data-toggle="modal" data-target="#deleteConfirmationModal" data-otp-name="{{ otp.name }}">
+                                    <button type="button" style="margin-right:5px" class="btn btn-danger delete-btn" title="Delete this Secret" data-toggle="modal" data-target="#deleteConfirmationModal" data-otp-name="{{ otp.name }}">
                                         <i class="icon-center material-icons-outlined icon-small">delete</i>
                                     </button>
                                     <input type="hidden" name="otpName" value="{{ otp.name }}" />
                                 </form>
                                 {% endif %}
                                 <form action="{{ url_for('edit', name=otp.name) }}" method="get" style="display: inline-block;">
-                                    <button style="margin-right:5px" class="btn btn-primary">
+                                    <button style="margin-right:5px" class="btn btn-primary" title="Edit OTP">
                                         <i class="icon-center material-icons-outlined icon-small">edit</i>
                                     </button>
-                                    <button type="button" style="margin-right: 5px" class="btn btn-light" onclick="copyToClipboard(document.querySelector('#otp_code_{{ otp.name }}'))">
+                                    <button type="button" style="margin-right: 5px" class="btn btn-light" title="Copy OTP to Clipboard" onclick="copyToClipboard(document.querySelector('#otp_code_{{ otp.name }}'))">
                                         <i class="icon-center material-icons-outlined icon-small">content_copy</i>
                                     </button>
                                 </form>

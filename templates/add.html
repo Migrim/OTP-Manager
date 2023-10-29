@@ -69,16 +69,18 @@
         <h1 class="form-title">Add OTP Secret</h1>
         <form method="POST">
             {{ form.hidden_tag() }}
-            <div class="form-group">
+            <div class="form-group form-group-with-icon">
                 {{ form.name.label }} 
-                {{ form.name(class="form-control", title="Enter a unique name for the OTP secret", autofocus=true) }}
+                {{ form.name(class="form-control", placeholder="Enter a unique name", title="Enter a unique name for the OTP secret", autofocus=true) }}
+                <span class="validation-icon" id="nameCheck"><i class="material-icons-outlined">check_small</i></span>
                 {% for error in form.name.errors %}
                     <span class="text-danger">{{ error }}</span>
                 {% endfor %}
             </div>
-            <div class="form-group">
+            <div class="form-group form-group-with-icon">
                 {{ form.secret.label }} 
-                {{ form.secret(class="form-control", title="Enter a secure secret, at least 16 characters") }}
+                {{ form.secret(class="form-control", placeholder="Enter a unique secret", title="Enter a secure secret, at least 16 characters") }}
+                <span class="validation-icon" id="secretCheck"><i class="material-icons-outlined">check_small</i></span>
             </div>
             <div class="form-group"> 
                 {{ form.otp_type.label(class="form-check-label") }} <span>  (Only TOTP is supported)</span>
@@ -99,7 +101,7 @@
                     <span class="text-danger">{{ error }}</span>
                 {% endfor %}
             </div>
-            {{ form.submit(class="btn btn-primary btn-block form-submit") }}
+            {{ form.submit(value="Add OTP", class="btn btn-primary btn-block form-submit") }}
         </form>
     </div>
 </div>
@@ -124,16 +126,90 @@
 {{ super() }}
 <script>
     $(document).ready(function() {
-        if ($('.text-danger').length > 0) {
-            $('.toast').toast({ delay: 5000 });
-            $('.toast').toast('show');
+        $("form").submit(function(e) {
+            let valid = true;
+            let errorMsgs = [];
+
+            const name = $("input[name='name']").val();
+            const secret = $("input[name='secret']").val();
+            const otpType = $("select[name='otp_type']").val();
+            const refreshTime = $("input[name='refresh_time']").val();
+
+            if (!validateName(name)) {
+                errorMsgs.push("Name must be at least 4 characters long");
+                valid = false;
+            }
+
+            if (!validateSecret(secret)) {
+                errorMsgs.push("Secret must be at least 16 characters long");
+                valid = false;
+            }
+
+            if (!/^[a-zA-Z0-9]+$/.test(secret)) {
+                errorMsgs.push("Secret must contain only alphanumeric characters");
+                valid = false;
+            }
+
+            if (!/^[A-Z2-7=]{16,}$/i.test(secret) || secret.length % 8 !== 0) {
+                errorMsgs.push("Secret must be a valid base32 string with a length that is a multiple of 8 characters");
+                valid = false;
+            }
+
+            if (!["totp", "hotp"].includes(otpType)) {
+                errorMsgs.push("Invalid OTP type. Choose either TOTP or HOTP");
+                valid = false;
+            }
+
+            if (!Number.isInteger(parseInt(refreshTime)) || parseInt(refreshTime) <= 0) {
+                errorMsgs.push("Refresh time must be a positive number");
+                valid = false;
+            }
+
+            const suspiciousPattern = /(--|;|--|;|\/\*|\*\/|@@|@|char|nchar|varchar|nvarchar|alter|begin|cast|create|cursor|declare|delete|drop|end|exec|execute|fetch|insert|kill|open|select|sys|sysobjects|syscolumns|table|update)/i;
+            if (suspiciousPattern.test(name) || suspiciousPattern.test(secret)) {
+                errorMsgs.push("Suspicious patterns detected in input fields");
+                valid = false;
+            }
+
+            if (!valid) {
+                e.preventDefault();
+                alert(errorMsgs.join("\n"));
+                $('.toast').toast({ delay: 5000 });
+                $('.toast').toast('show');
+            }
+        });
+
+        function validateName(name) {
+            return name && name.length >= 4;
         }
 
-        if ($('.flash-message').length > 0) {
-            setTimeout(function() {
-                $('.flash-message').fadeOut('slow');
-            }, 5000);
+        function validateSecret(secret) {
+            return secret && secret.length >= 16;
         }
+
+        function updateValidationStatus(isValid, elementID) {
+            if (isValid) {
+                $(`#${elementID}`).html('<i class="material-icons-outlined" style="color:green;">check_small</i>');
+            } else {
+                $(`#${elementID}`).html('');
+            }
+        }
+
+        $("input[name='name']").on("input", function() {
+            if ($(this).val().length >= 4) {
+                $("#nameCheck").show();
+            } else {
+                $("#nameCheck").hide();
+            }
+        });
+
+        $("input[name='secret']").on("input", function() {
+            if ($(this).val().length >= 16) {
+                $("#secretCheck").show();
+            } else {
+                $("#secretCheck").hide();
+            }
+        });
     });
 </script>
 {% endblock %}
