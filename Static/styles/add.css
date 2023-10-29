@@ -33,7 +33,7 @@ body {
     border-radius: 10px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.4);
     background: #333;
-    animation: floatIn 1s ease-out;
+    animation: floatIn 1s ease-in-out;
 }
 
 .form-title {
@@ -139,35 +139,35 @@ select.form-control option {
 }
 
 @keyframes floatIn {
-    from {
+    0% {
       opacity: 0;
       transform: translateY(50px);
     }
-    to {
+    100% {
       opacity: 1;
       transform: translateY(0);
     }
-  }
+  }  
 
   @keyframes circleHue {
     0% {
-        box-shadow: 0 0 0 0.2rem rgba(255, 0, 0, 0),
-                    0 0 0 0.4rem rgba(255, 0, 0, 0),
-                    0 0 0 0.6rem rgba(255, 0, 0, 0);
+      box-shadow: 0 0 0 0.2rem rgba(128, 0, 128, 0),
+                  0 0 0 0.4rem rgba(128, 0, 128, 0),
+                  0 0 0 0.6rem rgba(128, 0, 128, 0);
     }
     40% {
-        box-shadow: 0 0 0 0.2rem rgba(255, 0, 0, 0.2),
-                    0 0 0 0.4rem rgba(255, 0, 0, 0.1),
-                    0 0 0 0.6rem rgba(255, 0, 0, 0.05);
+      box-shadow: 0 0 0 0.2rem rgba(128, 0, 128, 0.2),
+                  0 0 0 0.4rem rgba(128, 0, 128, 0.1),
+                  0 0 0 0.6rem rgba(128, 0, 128, 0.05);
     }
     80% {
-        box-shadow: 0 0 0 0.6rem rgba(255, 0, 0, 0),
-                    0 0 0 0.4rem rgba(255, 0, 0, 0),
-                    0 0 0 0.2rem rgba(255, 0, 0, 0);
+      box-shadow: 0 0 0 0.6rem rgba(128, 0, 128, 0),
+                  0 0 0 0.4rem rgba(128, 0, 128, 0),
+                  0 0 0 0.2rem rgba(128, 0, 128, 0);
     }
     100% {
-        box-shadow: 0 0 0 0.2rem rgba(255, 0, 0, 0),
-                    0 0 0 0.4rem rgba(255, 0, 0, 0),
-                    0 0 0 0.6rem rgba(255, 0, 0, 0);
+      box-shadow: 0 0 0 0.2rem rgba(128, 0, 128, 0),
+                  0 0 0 0.4rem rgba(128, 0, 128, 0),
+                  0 0 0 0.6rem rgba(128, 0, 128, 0);
     }
-}
+  }  

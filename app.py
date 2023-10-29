@@ -415,7 +415,7 @@ def login():
             flash('Die Zugangsdaten konnten nicht validiert werden!')
             my_logger.warning(f"Failed login attempt for user: {username}")
 
-    return render_template('login.html')
+    return render_template('login.html', username=username if username else "")
 
 @app.route('/profile')
 @login_required
