@@ -36,7 +36,7 @@ body {
 }
 
 .custom-dropdown option {
-    background-color: #314558;
+    background-color: #333;
     color: #fff;
 }
 
@@ -132,7 +132,7 @@ body {
 }
 
 .alert {
-    background-color: #314558;
+    background-color: #333;
     color: #fff;
     padding: 10px;
     margin: 10px 0;

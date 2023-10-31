@@ -66,10 +66,10 @@ body {
 }
 
 .form-control:focus {
-    border-color: #CD5C5C;
-    box-shadow: 0 0 0 0.2rem rgba(255, 0, 0, 0.25);
-    animation: circleHue 3s ease infinite;
-}
+    border-color: rgba(138, 43, 226, 0.2);  
+    box-shadow: 0 0 0 0.2rem rgba(138, 43, 226, 0.2); 
+    animation: circleHue 2s ease infinite;
+  }
 
 .form-control:read-only:hover::after {
     content: "Read Only";
@@ -174,24 +174,11 @@ select.form-control option {
   }  
 
   @keyframes circleHue {
-    0% {
-      box-shadow: 0 0 0 0.2rem rgba(128, 0, 128, 0),
-                  0 0 0 0.4rem rgba(128, 0, 128, 0),
-                  0 0 0 0.6rem rgba(128, 0, 128, 0);
+    0%, 100% {
+      box-shadow: 0 0 0 0.2rem rgba(138, 43, 226, 0);
     }
-    40% {
-      box-shadow: 0 0 0 0.2rem rgba(128, 0, 128, 0.2),
-                  0 0 0 0.4rem rgba(128, 0, 128, 0.1),
-                  0 0 0 0.6rem rgba(128, 0, 128, 0.05);
+    50% {
+      box-shadow: 0 0 0 0.2rem rgba(138, 43, 226, 0.2);
     }
-    80% {
-      box-shadow: 0 0 0 0.6rem rgba(128, 0, 128, 0),
-                  0 0 0 0.4rem rgba(128, 0, 128, 0),
-                  0 0 0 0.2rem rgba(128, 0, 128, 0);
-    }
-    100% {
-      box-shadow: 0 0 0 0.2rem rgba(128, 0, 128, 0),
-                  0 0 0 0.4rem rgba(128, 0, 128, 0),
-                  0 0 0 0.6rem rgba(128, 0, 128, 0);
-    }
-  }  
+  }
+   

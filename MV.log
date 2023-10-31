@@ -4,3 +4,20 @@
 2023-10-29 16:21:20,794 [INFO] User: admin Logged in!
 2023-10-29 16:21:20,821 [INFO] admin is authenticated
 2023-10-29 16:25:19,919 [INFO] Server started on port 5001.
+2023-10-31 11:32:27,340 [INFO] Server started on port 5001.
+2023-10-31 11:33:08,993 [INFO] User: admin Logged in!
+2023-10-31 11:33:09,021 [INFO] admin is authenticated
+2023-10-31 11:46:32,442 [WARNING] Failed login attempt for user: apodja
+2023-10-31 11:47:09,894 [INFO] User: admin Logged in!
+2023-10-31 11:47:09,918 [INFO] admin is authenticated
+2023-10-31 11:48:52,685 [WARNING] Failed login attempt for user: ,,
+2023-10-31 11:49:09,660 [WARNING] Failed login attempt for user: admin 
+2023-10-31 11:49:15,356 [INFO] User: admin Logged in!
+2023-10-31 11:49:15,380 [INFO] admin is authenticated
+2023-10-31 11:56:36,180 [INFO] Server started on port 5001.
+2023-10-31 12:37:28,529 [INFO] Server started on port 5001.
+2023-10-31 12:37:46,146 [INFO] User: admin Logged in!
+2023-10-31 12:37:46,178 [INFO] admin is authenticated
+2023-10-31 14:42:40,812 [INFO] Server started on port 5001.
+2023-10-31 14:43:30,218 [INFO] User: admin Logged in!
+2023-10-31 14:43:30,267 [INFO] admin is authenticated
