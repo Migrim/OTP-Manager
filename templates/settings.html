@@ -261,6 +261,16 @@
         <div class="d-flex justify-content-center">
             <button type="submit" class="btn btn-primary">Save</button>
         </div>
+        <div class="form-item">
+            <label for="otpColor">OTP Container Color:</label>
+            <select name="otp_color" id="otpColor">
+                <option value="#333" {% if otp_color == "#333" %}selected{% endif %}>Grey (Default)</option>
+                <option value="#795F80" {% if otp_color == "#795F80" %}selected{% endif %}>Purple</option>
+                <option value="#3e4838" {% if otp_color == "#3e4838" %}selected{% endif %}>Olive-Green</option>
+                <option value="#3B5059" {% if otp_color == "#3B5059" %}selected{% endif %}>Ocean Blue</option>
+                <option value="#80695F" {% if otp_color == "#80695F" %}selected{% endif %}>Dirt :D</option>
+            </select>
+        </div>        
     </form>
 </div>
 {% endblock %}
