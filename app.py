@@ -98,8 +98,7 @@ def init_db():
                 session_token TEXT,
                 is_admin INTEGER DEFAULT 0,
                 enable_pagination INTEGER DEFAULT 0,
-                show_timer INTEGER DEFAULT 0,
-                otp_color TEXT DEFAULT #333
+                show_timer INTEGER DEFAULT 0
             )
         """)
         cursor.execute("""
@@ -303,52 +302,17 @@ def login_required(f):
 @app.route('/settings', methods=['GET', 'POST'])
 @login_required
 def settings():
-    user_id = session.get('user_id')
-    show_timer = None
-    otp_color = None 
-
-    with sqlite3.connect("otp.db") as db:
-        cursor = db.cursor()
-        if request.method == 'POST':
-            if request.is_json:  # New condition to handle JSON POST
-                json_data = request.get_json()
-                otp_color = json_data.get('otp_color', '#333')
-                
-                # Update the database with new OTP color
-                cursor.execute("UPDATE users SET otp_color = ? WHERE id = ?", (otp_color, user_id))
-                db.commit()
-
-                # Update session and user object
-                session['otp_color'] = otp_color
-                current_user.otp_color = otp_color
-
-                # Return a JSON response
-                return jsonify(status="success")
-                
-            else:  # Existing form-based POST handling
-                show_timer = 1 if request.form.get('show_timer') else 0
-                otp_color = request.form.get('otp_color', '#333')
-                
-                current_user.show_timer = show_timer
-                current_user.otp_color = otp_color
-                
-                cursor.execute("UPDATE users SET show_timer = ?, otp_color = ? WHERE id = ?", (show_timer, otp_color, user_id))
-                db.commit()
-                
-                session['otp_color'] = otp_color
-                
-                flash('Settings updated')
-                return redirect(url_for('settings'))
-        
-        else:
-            cursor.execute("SELECT show_timer, otp_color FROM users WHERE id = ?", (user_id,))
-            row = cursor.fetchone()
-            
-            if row:
-                show_timer = row[0]
-                otp_color = row[1]
-
-    return render_template('settings.html', show_timer=show_timer, otp_color=otp_color)
+    if request.method == 'POST':
+        show_timer = 1 if request.form.get('show_timer') else 0
+        current_user.show_timer = show_timer
+        user_id = session.get('user_id')
+        with sqlite3.connect("otp.db") as db:
+            cursor = db.cursor()
+            cursor.execute("UPDATE users SET show_timer = ? WHERE id = ?", (show_timer, user_id))
+            db.commit()
+        flash('Settings updated')
+        return redirect(url_for('settings'))
+    return render_template('settings.html', show_timer=current_user.show_timer)
 
 @app.route('/refresh_codes_v2')
 @login_required
@@ -621,22 +585,25 @@ def home():
             grouped_otp_codes[k] = [x for x in v if search_name.lower() in x['name'].lower()]
 
     grouped_otp_codes = {k: v for k, v in grouped_otp_codes.items() if v} 
-    otp_color = session.get('otp_color', '#333')
-    return render_template('home.html', form=form, grouped_otp_codes=grouped_otp_codes, companies=companies, search_name=search_name, page=page, total_pages=total_pages, enable_pagination=current_user.enable_pagination, otp_color=otp_color)
+    return render_template('home.html', form=form, grouped_otp_codes=grouped_otp_codes, companies=companies, search_name=search_name, page=page, total_pages=total_pages, enable_pagination=current_user.enable_pagination)
 
 @app.route('/get_logs', methods=['GET'])
 @login_required
 def get_logs():
     num_lines = request.args.get('lines', 10, type=int)
+    log_filename = 'MV.log' 
 
-    with open('MV.log', 'r') as f:
-        lines = f.readlines()
+    try:
+        with open(log_filename, 'r') as f:
+            lines = f.readlines()
+        output = "".join(lines[-num_lines:])
+    except IOError:
+        output = "Error: Unable to read log file."
 
-    output = "".join(lines[-num_lines:])
-    
     return jsonify({"logs": output})
 
 @app.route('/view_logs')
+@login_required
 def view_logs():
     with open("mv.log", "r") as f:
         logs = f.read()

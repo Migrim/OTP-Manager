@@ -41,3 +41,20 @@
 2023-11-01 21:07:24,581 [INFO] User: admin Logged in!
 2023-11-01 21:07:24,606 [INFO] admin is authenticated
 2023-11-01 21:10:54,984 [INFO] Server started on port 5001.
+2023-11-02 11:04:15,390 [INFO] Server started on port 5001.
+2023-11-02 11:04:28,409 [INFO] User: admin Logged in!
+2023-11-02 11:04:28,433 [INFO] admin is authenticated
+2023-11-02 11:14:52,965 [INFO] Server started on port 5001.
+2023-11-02 11:14:59,033 [INFO] User: admin Logged in!
+2023-11-02 11:14:59,061 [INFO] admin is authenticated
+2023-11-02 11:15:35,101 [INFO] Server started on port 5001.
+2023-11-02 11:25:37,161 [INFO] Server started on port 5001.
+2023-11-02 12:18:24,753 [WARNING] Failed login attempt for user: asf
+2023-11-02 12:18:28,570 [WARNING] Failed login attempt for user: admin 
+2023-11-02 12:18:32,194 [INFO] User: admin Logged in!
+2023-11-02 12:18:32,221 [INFO] admin is authenticated
+2023-11-02 12:26:05,187 [INFO] User: Bra Logged in!
+2023-11-02 12:26:05,222 [INFO] Bra is authenticated
+2023-11-02 12:33:09,611 [INFO] User: admin Logged in!
+2023-11-02 12:33:09,636 [INFO] admin is authenticated
+2023-11-02 13:08:49,575 [INFO] Server started on port 5001.

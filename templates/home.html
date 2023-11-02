@@ -86,7 +86,7 @@
                 </div>
                 {% for otp in otp_list %}
                     <div class="col-md-4">
-                        <div class="alert alert-success mt-3 position-relative" style="background-color: {{ otp_color }};">
+                        <div class="alert alert-success mt-3 position-relative">
                             Firma: {{ otp.company }} <br>
                             Name: <span style="text-decoration: underline;">{{ otp.name }}</span> <br>
                             <p>Secret: <span class="spoiler">{{otp.secret}}</span></p>
@@ -194,33 +194,6 @@
                         updateOtpCodes(data.otp_codes);
                     } catch (error) {
                         console.error('Fetch error:', error);
-                    }
-                }
-
-                async function updateColor() {
-                    const colorPicker = document.getElementById("colorPicker");
-                    const selectedColor = colorPicker.value;
-
-                    const requestOptions = {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({ otp_color: selectedColor })
-                    };
-
-                    try {
-                        const response = await fetch('/settings', requestOptions);
-                        if (response.ok) {
-                            const jsonResponse = await response.json();
-
-                            if (jsonResponse.status === "success") {
-                                const otpContainers = document.querySelectorAll('.alert');
-                                otpContainers.forEach((container) => {
-                                    container.style.backgroundColor = selectedColor;
-                                });
-                            }
-                        }
-                    } catch (error) {
-                        console.error('Error updating color:', error);
                     }
                 }
 
@@ -447,6 +420,7 @@
                         "Type a Company Name to Search Directly",
                         "Keine Ahnung was ich hier einfügen soll..",
                         "Use Keywords to Narrow Down Results",
+                        "Python Python Python; Bim Bim Bam Bam, hehehaha",
                         "Enter the Name of the OTP for Immediate Retrieval"
                         ];
 
