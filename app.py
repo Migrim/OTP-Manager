@@ -590,13 +590,12 @@ def home():
 @app.route('/get_logs', methods=['GET'])
 @login_required
 def get_logs():
-    num_lines = request.args.get('lines', 10, type=int)
     log_filename = 'MV.log' 
 
     try:
         with open(log_filename, 'r') as f:
             lines = f.readlines()
-        output = "".join(lines[-num_lines:])
+        output = "".join(lines)
     except IOError:
         output = "Error: Unable to read log file."
 

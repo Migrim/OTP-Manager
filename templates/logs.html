@@ -80,16 +80,20 @@
     }
 
     .logs-section {
-        padding: 30px;
+        padding-top: 10px; 
+        padding-left: 30px;
+        padding-right: 30px;
+        padding-bottom: 30px;
         opacity: 1;  
         transition: opacity 0.5s ease-in-out;
     }
+
 
     .logs-box {
         background-color: #252526;
         border: 1px solid #dee2e6;
         border-radius: 0.25rem;
-        max-height: 70vh;
+        max-height: none; 
         overflow-y: auto;
     }
 
@@ -203,11 +207,60 @@
     .washed-purple-log {
         color: #b19cd9; 
     }
+
+    .loading-animation {
+        color: #FFF;
+        font-size: 1.5rem;
+        text-align: center;
+        padding: 20px;
+    }
+
+    .loading-dots {
+        display: inline-block;
+        position: relative;
+        font-size: 1.5rem;
+    }
+
+    .loading-dots::after {
+        content: '...'; 
+        position: absolute;
+        left: 0;
+        animation: dots 1.5s steps(5, end) infinite;
+    }
+
+
+    @keyframes dots {
+        0%, 20% {
+            color: rgba(0,0,0,0);
+            text-shadow:
+                .25em 0 0 rgba(0,0,0,0),
+                .5em 0 0 rgba(0,0,0,0);
+        }
+        40% {
+            color: white;
+            text-shadow:
+                .25em 0 0 rgba(0,0,0,0),
+                .5em 0 0 rgba(0,0,0,0);
+        }
+        60% {
+            text-shadow:
+                .25em 0 0 white,
+                .5em 0 0 rgba(0,0,0,0);
+        }
+        80%, 100% {
+            text-shadow:
+                .25em 0 0 white,
+                .5em 0 0 white;
+        }
+    }
 </style>
 
 <div class="logs-section">
-    <h1>Logs</h1>
-    <div class="logs-box">
+    <h1>Server Logs</h1>
+    <div id="loading-placeholder" class="loading-animation">
+        Fetching Logs from Server<span class="loading-dots">.</span>
+    </div>
+    <div class="logs-box" style="display: none;">
         <table id="logs-table" class="table table-dark table-striped">
             <thead>
                 <tr>
@@ -221,16 +274,34 @@
             </tbody>
         </table>               
     </div>
-    <div class="scroll-to-end-button" id="scroll-to-end">Scroll to End</div>
 </div>
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 <script>
-    function scrollToBottom() {
-        var logsBox = document.querySelector(".logs-box");
-        logsBox.scrollTop = logsBox.scrollHeight;
+    var previousLogs = ""; 
+
+    function displayLogs() {
+        var logsBox = $('.logs-box'); 
+        var loadingPlaceholder = $('#loading-placeholder');
+        $.getJSON('/get_logs', function(data) {
+            var currentLogs = JSON.stringify(data.logs); 
+            if (currentLogs !== previousLogs) {
+                previousLogs = currentLogs;
+
+                if (data.logs) {
+                    loadingPlaceholder.hide();
+                    logsBox.fadeIn('slow'); 
+                    $('html, body').animate({ scrollTop: $(document).height() }, 'slow'); 
+                } else {
+                    loadingPlaceholder.show();
+                    logsBox.hide();
+                }
+            }
+        });
     }
+
+    setInterval(displayLogs, 1000);
 
     function fetchAndUpdateLogs() {
         $.getJSON('/get_logs', function(data) {
@@ -259,9 +330,6 @@
     }
 
     setInterval(fetchAndUpdateLogs, 1000); 
-
-    var scrollToButton = document.getElementById("scroll-to-end");
-    scrollToButton.addEventListener("click", scrollToBottom);
 </script>
 
 {% endblock %}
