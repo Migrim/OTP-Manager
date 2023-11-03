@@ -57,7 +57,9 @@
 
 {% block content %}
 <div class="container mt-5 about-container fade-in">
+    {% if current_user.show_content_titles %}
     <h1 class="text-center">OTP-Manager</h1>
+    {% endif %}   
     <div class="row">
         <div class="col-md-6">
             <section class="stats-container">

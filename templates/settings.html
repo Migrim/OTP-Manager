@@ -240,17 +240,12 @@
 {% block content %}
 <div class="settings-container">
     <div class="d-flex justify-content-center">
+        {% if current_user.show_content_titles %}
         <h1>User Settings</h1>
+        {% endif %}
     </div>
 
     <form method="post" class="form-container"> 
-        <div class="form-item">
-            <label class="toggle-switch">
-                <input type="checkbox" name="enable_pagination" {% if enable_pagination %}checked{% endif %}>
-                <span class="slider"></span>
-            </label>
-            <span class="setting-description">Enable Pages</span>
-        </div>
         <div class="form-item">
             <label class="toggle-switch">
                 <input type="checkbox" id="showTimer" name="show_timer" {% if current_user.show_timer %}checked{% endif %}>
@@ -258,6 +253,20 @@
             </label>
             <span class="setting-description">Show Timer instead of Progress Bar</span>
         </div>
+        <div class="form-item">
+            <label class="toggle-switch">
+                <input type="checkbox" id="showOtpType" name="show_otp_type" {% if current_user.show_otp_type %}checked{% endif %}>
+                <span class="slider"></span>
+            </label>
+            <span class="setting-description">Show OTP Type in Home Menu</span>
+        </div>
+        <div class="form-item">
+            <label class="toggle-switch">
+                <input type="checkbox" id="showContentTitles" name="show_content_titles" {% if current_user.show_content_titles %}checked{% endif %}>
+                <span class="slider"></span>
+            </label>
+            <span class="setting-description">Show Content Titles</span>
+        </div>        
         <div class="d-flex justify-content-center">
             <button type="submit" class="btn btn-primary">Save</button>
         </div>

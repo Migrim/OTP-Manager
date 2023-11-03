@@ -1,21 +1,7 @@
-2023-11-03 12:45:18,282 [WARNING] Failed login attempt for user: admin
-2023-11-03 12:45:22,256 [INFO] User: admin Logged in!
-2023-11-03 12:45:22,281 [INFO] admin is authenticated
-2023-11-03 12:45:22,281 [INFO] Placeholder 1
-2023-11-03 12:45:22,281 [INFO] Placeholder 2
-2023-11-03 12:45:22,281 [INFO] Placeholder 3 
-2023-11-03 12:45:22,281 [INFO] Placeholder 4
-2023-11-03 12:45:22,281 [INFO] Placeholder 5
-2023-11-03 12:45:22,281 [INFO] Placeholder 6
-2023-11-03 12:45:22,281 [INFO] Placeholder 7 
-2023-11-03 12:45:22,281 [INFO] Placeholder 8
-2023-11-03 12:45:22,281 [INFO] Placeholder 9
-2023-11-03 12:45:22,281 [INFO] Placeholder 10
-2023-11-03 12:45:22,281 [INFO] Placeholder 11
-2023-11-03 12:45:22,281 [INFO] Placeholder 12
-2023-11-03 12:45:22,281 [INFO] Placeholder 132023-11-03 12:54:08,862 [INFO] Server started on port 5001.
-2023-11-03 12:56:45,783 [WARNING] Failed login attempt for user: Memmo
-2023-11-03 12:56:54,152 [WARNING] Failed login attempt for user: Memmo
-2023-11-03 12:57:06,560 [WARNING] Failed login attempt for user: was ein Müll
-2023-11-03 13:01:30,633 [WARNING] Failed login attempt for user: memmo
-2023-11-03 13:09:43,747 [INFO] Server started on port 5001.
+2023-11-03 14:04:31,922 [WARNING] Failed login attempt for user: John Memmo
+2023-11-03 19:53:34,147 [INFO] Server started on port 5001.
+2023-11-03 19:55:57,290 [INFO] Server started on port 5001.
+2023-11-03 19:58:24,827 [INFO] Server started on port 5001.
+2023-11-03 20:11:04,088 [INFO] Server started on port 5001.
+2023-11-03 20:11:53,310 [INFO] Server started on port 5001.
+2023-11-03 20:18:49,597 [INFO] Server started on port 5001.

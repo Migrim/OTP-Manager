@@ -72,6 +72,8 @@ def load_user(user_id):
             user.is_admin = bool(user_data[5])
             user.enable_pagination = bool(user_data[6])
             user.show_timer = bool(user_data[7])
+            user.show_otp_type = bool(user_data[8]) 
+            user.show_content_titles = bool(user_data[9])
             return user
         return None
 
@@ -98,7 +100,9 @@ def init_db():
                 session_token TEXT,
                 is_admin INTEGER DEFAULT 0,
                 enable_pagination INTEGER DEFAULT 0,
-                show_timer INTEGER DEFAULT 0
+                show_timer INTEGER DEFAULT 0,
+                show_otp_type INTEGER DEFAULT 1,
+                show_content_titles INTEGER DEFAULT 1
             )
         """)
         cursor.execute("""
@@ -304,15 +308,24 @@ def login_required(f):
 def settings():
     if request.method == 'POST':
         show_timer = 1 if request.form.get('show_timer') else 0
+        show_otp_type = 1 if request.form.get('show_otp_type') else 0  
+        show_content_titles = 1 if request.form.get('show_content_titles') else 0
+        
+        current_user.show_content_titles = show_content_titles
         current_user.show_timer = show_timer
+        current_user.show_otp_type = show_otp_type  
+        
         user_id = session.get('user_id')
         with sqlite3.connect("otp.db") as db:
             cursor = db.cursor()
-            cursor.execute("UPDATE users SET show_timer = ? WHERE id = ?", (show_timer, user_id))
+            cursor.execute("UPDATE users SET show_timer = ?, show_otp_type = ?, show_content_titles = ? WHERE id = ?", 
+                        (show_timer, show_otp_type, show_content_titles, user_id))
             db.commit()
-        flash('Settings updated')
-        return redirect(url_for('settings'))
-    return render_template('settings.html', show_timer=current_user.show_timer)
+            
+            flash('Settings updated')
+            return redirect(url_for('settings'))
+    
+    return render_template('settings.html', show_timer=current_user.show_timer, show_otp_type=current_user.show_otp_type)
 
 @app.route('/refresh_codes_v2')
 @login_required

@@ -66,7 +66,9 @@
         
     {% block content %}
     <div class="container">
+        {% if current_user.show_content_titles %}
         <h1 class="text-center text-white">One Time Passwords</h1>
+        {% endif %}
     
         <form method="get" action="{{ url_for('search_blueprint.search_otp') }}" class="search-bar">
             <input type="hidden" name="page" value="{{ page|default(1) }}" />
@@ -90,7 +92,9 @@
                             Firma: {{ otp.company }} <br>
                             Name: <span style="text-decoration: underline;">{{ otp.name }}</span> <br>
                             <p>Secret: <span class="spoiler">{{otp.secret}}</span></p>
+                            {% if current_user.show_otp_type %}
                             OTP type: {{ otp.otp_type }} <br>
+                            {% endif %}
                             OTP code: <span class="otp-code" id="otp_code_{{ otp.name }}" onclick="copyToClipboard(this)">{{ otp.otp_code }}</span>
                             {% if current_user.show_timer %}
                                 <div id="timer{{ otp.name }}" data-refresh-time="{{ otp.refresh_time }}">30s</div>

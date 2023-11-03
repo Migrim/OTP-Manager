@@ -61,7 +61,9 @@
 </style>
 
 <div class="logs-section">
+    {% if current_user.show_content_titles %}
     <h1>Server Logs</h1>
+    {% endif %}
     <div id="loading-placeholder" class="loading-animation">
         Fetching Logs from Server<span class="loading-dots">.</span>
     </div>
