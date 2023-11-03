@@ -136,27 +136,22 @@
             const refreshTime = $("input[name='refresh_time']").val();
 
             if (!validateName(name)) {
-                errorMsgs.push("Name must be at least 4 characters long");
                 valid = false;
             }
 
             if (!validateSecret(secret)) {
-                errorMsgs.push("Secret must be at least 16 characters long");
                 valid = false;
             }
 
             if (!/^[a-zA-Z0-9]+$/.test(secret)) {
-                errorMsgs.push("Secret must contain only alphanumeric characters");
                 valid = false;
             }
 
             if (!/^[A-Z2-7=]{16,}$/i.test(secret) || secret.length % 8 !== 0) {
-                errorMsgs.push("Secret must be a valid base32 string with a length that is a multiple of 8 characters");
                 valid = false;
             }
 
             if (!["totp", "hotp"].includes(otpType)) {
-                errorMsgs.push("Invalid OTP type. Choose either TOTP or HOTP");
                 valid = false;
             }
 
