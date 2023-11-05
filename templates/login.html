@@ -14,10 +14,9 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        overflow: hidden; /* Hinzugefügt, um den Hintergrund auszublenden */
+        overflow: hidden;
     }
     
-    /* Hinzugefügte Animation für den Text oben links */
     @keyframes slideIn {
         from {
             top: -50px;
@@ -34,16 +33,6 @@
         transition: background 1s ease-in-out;
     }
     
-    body::before {
-        content: "Willkommen zur Authentifizierung!";
-        position: absolute;
-        top: 20px;
-        left: 20px;
-        font-size: 16px;
-        font-weight: bold;
-        animation: slideIn 1s ease forwards; /* Hinzugefügte Animation */
-    }
-    
     a {
         color: #0d6efd;
     }
@@ -56,6 +45,8 @@
         display: flex;
         flex-direction: column; 
         align-items: center; 
+        justify-content: center; 
+        height: 100vh; 
     }
     
     .form-container {
@@ -147,7 +138,7 @@
         z-index: 2;
     }
 
-    .idle-animation.active {
+    .idle-animation.active { 
         opacity: 1;
         pointer-events: auto;
     }
@@ -162,6 +153,82 @@
         0% { transform: rotate(0deg); }
         100% { transform: rotate(360deg); }
     }
+
+    .wave-group {
+        position: relative; 
+        display: flex; 
+        flex-direction: column; 
+        align-items: center; 
+        width: 100%; 
+        margin-bottom: 15px; 
+    }
+
+
+    .wave-group .input {
+        font-size: 16px;
+        padding: 10px 10px 10px 5px;
+        display: block;
+        width: 200px;
+        border: none;
+        border-bottom: 1px solid #515151;
+        background: transparent;
+    }
+
+        .wave-group .input:focus {
+        outline: none;
+    }
+
+    .wave-group .label {
+        position: absolute;
+        top: -8px; 
+        left: 50%;
+        transform: translateX(-50%); 
+        transition: 0.3s ease all;
+    }
+
+        .wave-group .label-char {
+        transition: 0.2s ease all;
+        transition-delay: calc(var(--index) * .05s);
+    }
+
+        .wave-group .input:focus ~ label .label-char,
+        .wave-group .input:valid ~ label .label-char {
+        transform: translateY(-20px);
+        font-size: 14px;
+        color: #5264AE;
+    }
+
+        .wave-group .bar {
+        position: relative;
+        display: block;
+        width: 200px;
+    }
+
+        .wave-group .bar:before,.wave-group .bar:after {
+        content: '';
+        height: 2px;
+        width: 0;
+        bottom: 1px;
+        position: absolute;
+        background: #5264AE;
+        transition: 0.2s ease all;
+        -moz-transition: 0.2s ease all;
+        -webkit-transition: 0.2s ease all;
+    }
+
+        .wave-group .bar:before {
+        left: 50%;
+    }
+
+        .wave-group .bar:after {
+        right: 50%;
+    }
+
+        .wave-group .input:focus ~ .bar:before,
+        .wave-group .input:focus ~ .bar:after {
+        width: 50%;
+    }
+
     </style>
 
 <script>
@@ -212,13 +279,33 @@
     <div class="form-container">
         <h1 class="form-title">Login</h1>
         <form method="post">
-            <div class="form-group">
-                <label for="username" class="text-white" data-bs-toggle="tooltip" data-bs-placement="top" title="Geben Sie Ihren Benutzernamen ein.">Username:</label>
-                <input type="text" name="username" class="form-control" value="{{ username }}" required>
-            </div>
-            <div class="form-group">
-                <label for="password" class="text-white" data-bs-toggle="tooltip" data-bs-placement="top" title="Geben Sie Ihr Passwort ein.">Password:</label>
-                <input type="password" name="password" class="form-control" required>
+            <div class="wave-group">
+                <input required="" type="text" name="username" class="input" value="{{ username }}" autocomplete="username">
+                <span class="bar"></span>
+                <label class="label">
+                  <span class="label-char" style="--index: 0">U</span>
+                  <span class="label-char" style="--index: 1">s</span>
+                  <span class="label-char" style="--index: 2">e</span>
+                  <span class="label-char" style="--index: 3">r</span>
+                  <span class="label-char" style="--index: 4">n</span>
+                  <span class="label-char" style="--index: 5">a</span>
+                  <span class="label-char" style="--index: 6">m</span>
+                  <span class="label-char" style="--index: 7">e</span>
+                </label>
+              </div>
+              <div class="wave-group">
+                <input required="" type="password" name="password" class="input">
+                <span class="bar"></span>
+                <label class="label">
+                  <span class="label-char" style="--index: 0">P</span>
+                  <span class="label-char" style="--index: 1">a</span>
+                  <span class="label-char" style="--index: 2">s</span>
+                  <span class="label-char" style="--index: 3">s</span>
+                  <span class="label-char" style="--index: 4">w</span>
+                  <span class="label-char" style="--index: 5">o</span>
+                  <span class="label-char" style="--index: 6">r</span>
+                  <span class="label-char" style="--index: 7">d</span>
+                </label>
             </div>
             <div class="form-group form-check">
                 <input type="checkbox" class="form-check-input" name="keep_logged_in" id="keep_logged_in">
