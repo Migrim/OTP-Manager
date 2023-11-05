@@ -603,11 +603,14 @@ def home():
 @app.route('/get_logs', methods=['GET'])
 @login_required
 def get_logs():
-    log_filename = 'MV.log' 
+    log_filename = 'MV.log'
+    filter_out = request.args.get('filter_out', 'false').lower() == 'true'
 
     try:
         with open(log_filename, 'r') as f:
             lines = f.readlines()
+        if filter_out:
+            lines = [line for line in lines if "Server started" not in line]
         output = "".join(lines)
     except IOError:
         output = "Error: Unable to read log file."
