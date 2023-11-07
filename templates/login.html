@@ -1,6 +1,6 @@
 {% extends 'bootstrap/base.html' %}
 
-{% block title %} Login {% endblock %}
+{% block title %} Login at OTP-Manager {% endblock %}
 
 {% block content %}
 <style>
@@ -55,7 +55,7 @@
         padding: 20px; 
         margin-bottom: 20px;
         border-radius: 20px; 
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); 
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); 
         background: #333333;
         opacity: 0;
         transition: opacity 0.6s ease-out;
@@ -155,80 +155,175 @@
     }
 
     .wave-group {
-        position: relative; 
-        display: flex; 
-        flex-direction: column; 
-        align-items: center; 
         width: 100%; 
-        margin-bottom: 15px; 
+        display: flex; 
+        justify-content: center; 
+        margin-bottom: 10px;
     }
 
-
-    .wave-group .input {
-        font-size: 16px;
-        padding: 10px 10px 10px 5px;
-        display: block;
-        width: 200px;
-        border: none;
-        border-bottom: 1px solid #515151;
-        background: transparent;
-    }
-
-        .wave-group .input:focus {
+    .input {
+        width: 100%;
+        max-width: 220px;
+        height: 45px;
+        padding: 16px;
+        border-radius: 12px;
+        border: 1.5px solid lightgrey;
         outline: none;
+        transition: all 0.3s cubic-bezier(0.19, 1, 0.22, 1);
+        box-shadow: 0px 0px 20px -18px;
+        background: #3a3a3a; 
+        color: #ffffff;
     }
 
-    .wave-group .label {
-        position: absolute;
-        top: -8px; 
-        left: 50%;
-        transform: translateX(-50%); 
-        transition: 0.3s ease all;
+    .input:hover {
+        border: 2px solid lightgrey;
+        box-shadow: 0px 0px 20px -17px;
     }
 
-        .wave-group .label-char {
-        transition: 0.2s ease all;
-        transition-delay: calc(var(--index) * .05s);
+    .input:active {
+        transform: scale(0.95);
     }
 
-        .wave-group .input:focus ~ label .label-char,
-        .wave-group .input:valid ~ label .label-char {
-        transform: translateY(-20px);
-        font-size: 14px;
-        color: #5264AE;
+    .input:focus {
+        border: 2px solid #4A90E2; 
+        box-shadow: 0 0 8px rgba(74, 144, 226, 0.5); 
     }
 
-        .wave-group .bar {
+
+    .form-check {
+        text-align: center;
+        margin-top: 15px;
+        margin-bottom: 15px
+    }
+
+    .cl-checkbox {
         position: relative;
-        display: block;
-        width: 200px;
+        display: inline-block;
     }
 
-        .wave-group .bar:before,.wave-group .bar:after {
-        content: '';
-        height: 2px;
-        width: 0;
-        bottom: 1px;
+    .cl-checkbox > input {
+        appearance: none;
+        -moz-appearance: none;
+        -webkit-appearance: none;
+        z-index: -1;
         position: absolute;
-        background: #5264AE;
-        transition: 0.2s ease all;
-        -moz-transition: 0.2s ease all;
-        -webkit-transition: 0.2s ease all;
+        left: -10px;
+        top: -8px;
+        display: block;
+        margin: 0;
+        border-radius: 50%;
+        width: 40px;
+        height: 40px;
+        background-color: rgba(0, 0, 0, 0.6);
+        box-shadow: none;
+        outline: none;
+        opacity: 0;
+        transform: scale(1);
+        pointer-events: none;
+        transition: opacity 0.3s, transform 0.2s;
     }
 
-        .wave-group .bar:before {
-        left: 50%;
-    }
+.cl-checkbox > span {
+    display: inline-block;
+    width: 100%;
+    cursor: pointer;
+}
 
-        .wave-group .bar:after {
-        right: 50%;
-    }
 
-        .wave-group .input:focus ~ .bar:before,
-        .wave-group .input:focus ~ .bar:after {
-        width: 50%;
-    }
+.cl-checkbox > span::before {
+    content: "";
+    display: inline-block;
+    box-sizing: border-box;
+    margin: 3px 11px 3px 1px;
+    border: solid 2px;
+    border-color: rgba(0, 0, 0, 0.6);
+    border-radius: 2px;
+    width: 18px;
+    height: 18px;
+    vertical-align: top;
+    transition: border-color 0.2s, background-color 0.2s;
+}
 
+.cl-checkbox > span::after {
+    content: "";
+    display: block;
+    position: absolute;
+    top: 3px;
+    left: 1px;
+    width: 10px;
+    height: 5px;
+    border: solid 2px transparent;
+    border-right: none;
+    border-top: none;
+    transform: translate(3px, 4px) rotate(-45deg);
+}
+
+.cl-checkbox > input:checked,
+.cl-checkbox > input:indeterminate {
+    background-color: #018786;
+}
+
+.cl-checkbox > input:checked + span::before,
+.cl-checkbox > input:indeterminate + span::before {
+    border-color: #018786;
+    background-color: #018786;
+}
+
+.cl-checkbox > input:checked + span::after,
+.cl-checkbox > input:indeterminate + span::after {
+    border-color: #fff;
+}
+
+.cl-checkbox > input:indeterminate + span::after {
+    border-left: none;
+    transform: translate(4px, 3px);
+}
+
+.cl-checkbox:hover > input {
+    opacity: 0.04;
+}
+
+.cl-checkbox > input:focus {
+    opacity: 0.12;
+}
+
+.cl-checkbox:hover > input:focus {
+    opacity: 0.16;
+}
+
+.cl-checkbox > input:active {
+    opacity: 1;
+    transform: scale(0);
+    transition: transform 0s, opacity 0s;
+}
+
+.cl-checkbox > input:active + span::before {
+    border-color: #85b8b7;
+}
+
+.cl-checkbox > input:checked:active + span::before {
+    border-color: transparent;
+    background-color: rgba(0, 0, 0, 0.6);
+}
+
+.cl-checkbox > input:disabled {
+    opacity: 0;
+}
+
+.cl-checkbox > input:disabled + span {
+    color: rgba(0, 0, 0, 0.38);
+    cursor: initial;
+}
+
+.cl-checkbox > input:disabled + span::before {
+    border-color: currentColor;
+}
+
+.cl-checkbox > input:checked:disabled + span::before,
+.cl-checkbox > input:indeterminate:disabled + span::before {
+    border-color: transparent;
+    background-color: currentColor;
+}    
     </style>
 
 <script>
@@ -280,33 +375,13 @@
         <h1 class="form-title">Login</h1>
         <form method="post">
             <div class="wave-group">
-                <input required="" type="text" name="username" class="input" value="{{ username }}" autocomplete="username">
-                <span class="bar"></span>
-                <label class="label">
-                  <span class="label-char" style="--index: 0">U</span>
-                  <span class="label-char" style="--index: 1">s</span>
-                  <span class="label-char" style="--index: 2">e</span>
-                  <span class="label-char" style="--index: 3">r</span>
-                  <span class="label-char" style="--index: 4">n</span>
-                  <span class="label-char" style="--index: 5">a</span>
-                  <span class="label-char" style="--index: 6">m</span>
-                  <span class="label-char" style="--index: 7">e</span>
-                </label>
-              </div>
-              <div class="wave-group">
-                <input required="" type="password" name="password" class="input">
-                <span class="bar"></span>
-                <label class="label">
-                  <span class="label-char" style="--index: 0">P</span>
-                  <span class="label-char" style="--index: 1">a</span>
-                  <span class="label-char" style="--index: 2">s</span>
-                  <span class="label-char" style="--index: 3">s</span>
-                  <span class="label-char" style="--index: 4">w</span>
-                  <span class="label-char" style="--index: 5">o</span>
-                  <span class="label-char" style="--index: 6">r</span>
-                  <span class="label-char" style="--index: 7">d</span>
-                </label>
+                <input class="input" required="" type="text" name="username" placeholder="Username" value="{{ username or '' }}" autocomplete="username">
+                <label class="label"></label>
             </div>
+            <div class="wave-group">
+                <input class="input" required="" type="password" name="password" placeholder="Password" autocomplete="current-password">
+                <label class="label"></label>
+            </div>        
             <div class="form-group form-check">
                 <input type="checkbox" class="form-check-input" name="keep_logged_in" id="keep_logged_in">
                 <label class="form-check-label" for="keep_logged_in">Keep me logged in</label>
@@ -329,7 +404,7 @@
         <div class="loader"></div>
         <div class="error-message" style="display: none;">Benutzername oder Passwort ist falsch!</div>
     </div>
-    <p class="instruction-text">Bitte melden Sie sich mit den Ihnen zugewiesenen Zugangsdaten an, die von Ihrem verantwortlichen Systemadministrator bereitgestellt wurden, um Zugriff auf die Liste der OTPs zu erhalten.</p>
+    <p class="instruction-text">Please login with your Credentials to gain Access to the OTP-List.</p>
 </div>
 
 <div class="idle-animation">

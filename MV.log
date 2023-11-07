@@ -9,3 +9,29 @@
 2023-11-05 14:54:32,713 [INFO] User: admin Logged in!
 2023-11-05 14:54:32,740 [INFO] admin is authenticated
 2023-11-05 15:05:55,554 [INFO] Server started on port 5001.
+2023-11-05 15:51:41,255 [INFO] User: admin Logged in!
+2023-11-05 15:51:41,280 [INFO] admin is authenticated
+2023-11-05 16:06:47,285 [INFO] User: admin Logged in!
+2023-11-05 16:06:47,309 [INFO] admin is authenticated
+2023-11-05 21:11:33,867 [INFO] User: admin Logged in!
+2023-11-05 21:11:33,900 [INFO] admin is authenticated
+2023-11-05 21:38:21,391 [INFO] User: admin Logged in!
+2023-11-05 21:38:21,417 [INFO] admin is authenticated
+2023-11-05 21:41:12,125 [INFO] Server started on port 5001.
+2023-11-05 21:41:14,312 [INFO] User: admin Logged in!
+2023-11-05 21:41:14,344 [INFO] admin is authenticated
+2023-11-05 21:42:25,856 [WARNING] Failed login attempt for user: memmo
+2023-11-05 21:42:29,782 [INFO] User: memmo Logged in!
+2023-11-05 21:42:29,805 [INFO] memmo is authenticated
+2023-11-05 21:42:48,441 [INFO] User: Bra Logged in!
+2023-11-05 21:42:48,466 [INFO] Bra is authenticated
+2023-11-05 21:57:09,429 [INFO] Server started on port 5001.
+2023-11-07 15:55:57,642 [INFO] Server started on port 5001.
+2023-11-07 17:04:18,241 [WARNING] Failed login attempt for user: ad
+2023-11-07 17:04:45,006 [INFO] Server started on port 5001.
+2023-11-07 17:04:50,181 [WARNING] Failed login attempt for user: ad
+2023-11-07 17:04:56,165 [WARNING] Failed login attempt for user: admin
+2023-11-07 17:04:58,735 [INFO] User: admin Logged in!
+2023-11-07 17:04:58,758 [INFO] admin is authenticated
+2023-11-07 17:05:12,838 [INFO] User: admin Logged in!
+2023-11-07 17:05:12,861 [INFO] admin is authenticated

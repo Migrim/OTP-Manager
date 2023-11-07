@@ -381,11 +381,14 @@ def get_last_login_time_from_db():
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
-    user = None
+    username = None 
     if request.method == 'POST':
         username = request.form.get('username')
         password = request.form.get('password')
         keep_logged_in = 'keep_logged_in' in request.form
+
+        if username.lower() == 'none':
+            username = None
 
         with sqlite3.connect("otp.db") as db:
             cursor = db.cursor()
@@ -427,8 +430,11 @@ def login():
         else:
             flash('Die Zugangsdaten konnten nicht validiert werden!')
             my_logger.warning(f"Failed login attempt for user: {username}")
+            if username.lower() == 'none':
+                username = None
 
-    return render_template('login.html')
+    return render_template('login.html', username=username)
+
 
 @app.route('/profile')
 @login_required
@@ -827,7 +833,7 @@ def add():
         if not valid_base32 or len(secret) % 8 != 0:
             flash('Secret must be a valid base32 string with a length that is a multiple of 8 characters.')
             logging.warning(f"User '{current_user.username}' attempted to add an OTP with an invalid secret.")
-            return redirect(url_for('add'))
+            return rediect(url_for('add'))
 
         suspicious_pattern = re.compile(r'(--|;|--|;|/\*|\*/|@@|@|char|nchar|varchar|nvarchar|alter|begin|cast|create|cursor|declare|delete|drop|end|exec|execute|fetch|insert|kill|open|select|sys|sysobjects|syscolumns|table|update)', re.IGNORECASE)
         if suspicious_pattern.search(name) or suspicious_pattern.search(secret):
