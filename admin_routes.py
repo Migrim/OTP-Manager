@@ -12,11 +12,11 @@ from logging.handlers import RotatingFileHandler
 logger = logging.getLogger('mv_admin_logger')
 logger.setLevel(logging.DEBUG)
 
-log_file = 'mv_admin.log'
+log_file = 'MV.log'
 file_handler = RotatingFileHandler(log_file, maxBytes=1024 * 1024, backupCount=10)
 file_handler.setLevel(logging.DEBUG)
 
-formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+formatter = logging.Formatter('%(asctime)s [%(levelname)s] %(message)s')
 file_handler.setFormatter(formatter)
 logger.addHandler(file_handler)
 
@@ -38,9 +38,10 @@ def get_all_users():
             cursor = db.cursor()
             cursor.execute("SELECT id, username, is_admin FROM users")
             users = cursor.fetchall()
+        logger.info("Fetched all users successfully.")
         return users
     except sqlite3.Error as e:
-        logging.error(f"Error fetching all users: {e}")
+        logger.error(f"Error fetching all users: {e}")
         return []
 
 def load_companies_from_db():
@@ -72,7 +73,7 @@ def toggle_admin(user_id):
         flash(f"Admin status toggled for user ID {user_id}.")
     except sqlite3.Error as e:
         flash("Failed to toggle admin status.")
-        logging.error(f"Error toggling admin status: {e}")
+        logger.error(f"Error toggling admin status for user_id {user_id}: {e}")
 
     return redirect(url_for('admin.admin_settings'))
 
@@ -140,9 +141,10 @@ def delete_user(user_id):
             cursor.execute("DELETE FROM users WHERE id = ?", (user_id,))
             db.commit()
         flash("User successfully deleted.")
+        logging.info(f"Successfully deleted user: {e}")
     except sqlite3.Error as e:
         flash("Failed to delete user.")
-        logging.error(f"Error deleting user: {e}")
+        logger.error(f"Error deleting user with user_id {user_id}: {e}")
 
     return redirect(url_for('admin.admin_settings'))
 
@@ -210,6 +212,7 @@ def delete_company(company_id):
             cursor.execute("DELETE FROM companies WHERE company_id = ?", (company_id,))
             db.commit()
         flash('Company deleted!')
+        logger.warning(f"Company Deleted!")
     except sqlite3.Error as e:
         flash('Insufficient Rights!.')
 

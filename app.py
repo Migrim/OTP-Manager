@@ -272,12 +272,16 @@ def register():
 @app.route('/logout')
 def logout():
     user_id = session.pop('user_id', None)
-    session.pop('session_token', None)
+    session_token = session.pop('session_token', None)
 
-    with sqlite3.connect("otp.db") as db:
-        cursor = db.cursor()
-        cursor.execute("UPDATE users SET session_token = NULL WHERE id = ?", (user_id,))
-        db.commit()
+    try:
+        with sqlite3.connect("otp.db") as db:
+            cursor = db.cursor()
+            cursor.execute("UPDATE users SET session_token = NULL WHERE id = ?", (user_id,))
+            db.commit()
+        logging.info(f"User ID {user_id} successfully logged out.")
+    except sqlite3.Error as e:
+        logging.error(f"Error logging out User ID {user_id}: {e}")
 
     return redirect(url_for('login'))
 
@@ -306,24 +310,32 @@ def login_required(f):
 @app.route('/settings', methods=['GET', 'POST'])
 @login_required
 def settings():
+    user_id = session.get('user_id')  
     if request.method == 'POST':
         show_timer = 1 if request.form.get('show_timer') else 0
-        show_otp_type = 1 if request.form.get('show_otp_type') else 0  
+        show_otp_type = 1 if request.form.get('show_otp_type') else 0
         show_content_titles = 1 if request.form.get('show_content_titles') else 0
         
-        current_user.show_content_titles = show_content_titles
-        current_user.show_timer = show_timer
-        current_user.show_otp_type = show_otp_type  
-        
-        user_id = session.get('user_id')
-        with sqlite3.connect("otp.db") as db:
-            cursor = db.cursor()
-            cursor.execute("UPDATE users SET show_timer = ?, show_otp_type = ?, show_content_titles = ? WHERE id = ?", 
-                        (show_timer, show_otp_type, show_content_titles, user_id))
-            db.commit()
+        try:
+            with sqlite3.connect("otp.db") as db:
+                cursor = db.cursor()
+                cursor.execute(
+                    "UPDATE users SET show_timer = ?, show_otp_type = ?, show_content_titles = ? WHERE id = ?",
+                    (show_timer, show_otp_type, show_content_titles, user_id)
+                )
+                db.commit()
             
+            current_user.show_content_titles = show_content_titles
+            current_user.show_timer = show_timer
+            current_user.show_otp_type = show_otp_type
+
             flash('Settings updated')
-            return redirect(url_for('settings'))
+            logging.info(f'User ID {user_id} updated settings successfully.')
+        except sqlite3.Error as e:
+            flash('An error occurred while updating settings.')
+            logging.error(f'Error updating settings for User ID {user_id}: {e}')
+        
+        return redirect(url_for('settings'))
     
     return render_template('settings.html', show_timer=current_user.show_timer, show_otp_type=current_user.show_otp_type)
 
@@ -351,7 +363,8 @@ def reset_password(user_id):
     if request.method == 'POST':
         new_password = request.form.get('new_password')
         if not new_password:
-            flash('Passwort fehlt!')
+            flash('Password is missing!')
+            logging.warning(f'Password reset attempted without providing a new password for user_id: {user_id}')
             return render_template('reset_password.html', user_id=user_id)
         
         hashed_password = generate_password_hash(new_password, method='sha256')
@@ -361,11 +374,15 @@ def reset_password(user_id):
                 cursor = db.cursor()
                 cursor.execute("UPDATE users SET password = ? WHERE id = ?", (hashed_password, user_id))
                 db.commit()
-            flash('Passwort erfolgreich geändert!')
+            flash('Password changed successfully!')
+            logging.info(f'Password for user_id {user_id} was successfully updated.')
         except sqlite3.Error as e:
-            flash('Es gab ein Problem beim Ändern des Passworts!')
+            flash('There was a problem changing the password!')
+            logging.error(f'Error updating password for user_id {user_id}: {e}')
         
         return redirect(url_for('home'))
+    
+    logging.info(f'Password reset page accessed for user_id: {user_id}')
     return render_template('reset_password.html', user_id=user_id)
 
 def get_last_login_time_from_db():
@@ -493,6 +510,7 @@ def get_uptime():
 
 def get_ping_time(host):
     try:
+        logging.info(f"Attempting to ping {host}")
         response = subprocess.check_output(
             ["ping", "-c", "1", host],
             stderr=subprocess.STDOUT,
@@ -502,8 +520,10 @@ def get_ping_time(host):
         time = response.split("time=")[1].split(" ")[0]
         speed = response.split("bytes from")[1].split(": icmp_seq=")[0]
         
+        logging.info(f"Ping to {host} successful: Time {time} ms, Speed {speed}")
         return f"{time} ms", speed
     except Exception as e:
+        logging.error(f"Ping to {host} failed: {e}")
         return "failed", "Unknown"
 
 @app.route('/get_stats', methods=['GET'])
@@ -545,66 +565,68 @@ def home():
     form = OTPForm()
     otp_secrets = session.get('filtered_secrets', load_from_db())
     otp_codes = []
-    
+
     items_per_page = 0 if not current_user.enable_pagination else 9
 
     page = request.args.get('page', type=int, default=1)
 
-    if form.validate_on_submit():
-        logging.info('Form validated.')
-        otp_secrets.append({
-            'name': form.name.data,
-            'company': form.company.data if form.company.data else 'N/A',
-            'secret': form.secret.data,
-            'otp_type': form.otp_type.data,
-            'refresh_time': form.refresh_time.data
-        })
-        save_to_db(otp_secrets)
-        form.name.data = ''
-        form.company.data = ''
-        form.secret.data = ''
-        form.otp_type.data = ''
-        form.refresh_time.data = ''
-        logging.info(f'OTP secret added: {otp_secrets[-1]}')
+    try:
+        if form.validate_on_submit():
+            logging.info('OTP form submission validated.')
+            new_secret = {
+                'name': form.name.data,
+                'company': form.company.data if form.company.data else 'N/A',
+                'secret': form.secret.data,
+                'otp_type': form.otp_type.data,
+                'refresh_time': form.refresh_time.data
+            }
+            otp_secrets.append(new_secret)
+            save_to_db(otp_secrets)
+            logging.info(f'New OTP secret added for {new_secret["name"]}.')
+            return redirect(url_for('home'))
+        
+        companies = load_companies_from_db()
+        selected_company = request.args.get('company')
+
+        if selected_company:
+            logging.info(f'Filtering by company: {selected_company}')
+            otp_secrets = [otp for otp in otp_secrets if otp['company'] == selected_company]
+
+        for otp in otp_secrets:
+            otp_code = generate_otp_code(otp)
+            if otp_code is None:
+                logging.warning(f'Invalid OTP secret for {otp["name"]}.')
+                flash('Invalid OTP secret')
+                continue
+            otp_code['company'] = otp.get('company', 'Unknown')
+            otp_codes.append(otp_code)
+
+        grouped_otp_codes = defaultdict(list)
+        for otp_code in otp_codes:
+            grouped_otp_codes[otp_code['company']].append(otp_code)
+
+        if not otp_codes and selected_company:
+            flash(f"No matching secrets for company: {selected_company}")
+
+        total_pages = ceil(len(otp_codes) / items_per_page) if current_user.enable_pagination else 1
+        
+        start_index = (page - 1) * items_per_page
+        end_index = start_index + items_per_page if items_per_page > 0 else len(otp_codes)
+
+        displayed_otp_codes = otp_codes[start_index:end_index]
+
+        search_name = request.args.get('name')
+        if search_name:
+            logging.info(f'Filtering by name: {search_name}')
+            for k, v in list(grouped_otp_codes.items()): 
+                grouped_otp_codes[k] = [x for x in v if search_name.lower() in x['name'].lower()]
+
+        return render_template('home.html', form=form, grouped_otp_codes=grouped_otp_codes, companies=companies, search_name=search_name, page=page, total_pages=total_pages, enable_pagination=current_user.enable_pagination)
+
+    except Exception as e:
+        logging.error('An error occurred on the home page.', exc_info=True)
+        flash('An unexpected error occurred.')
         return redirect(url_for('home'))
-
-    companies = load_companies_from_db()
-    selected_company = request.args.get('company')
-
-    if selected_company:
-        otp_secrets = [otp for otp in otp_secrets if otp['company'] == selected_company]
-
-    for otp in otp_secrets:
-        otp_code = generate_otp_code(otp)
-        if otp_code is None:
-            flash('Invalid OTP secret')
-            continue
-        otp_code['company'] = otp.get('company', 'Unbekannt')
-        otp_codes.append(otp_code)
-
-    grouped_otp_codes = defaultdict(list)
-    for otp_code in otp_codes:
-        grouped_otp_codes[otp_code['company']].append(otp_code)
-
-    grouped_otp_codes = {k: v for k, v in grouped_otp_codes.items() if v}
-    
-    if not otp_codes and selected_company:
-        flash(f"No matching secrets for company: {selected_company}")
-
-    total_pages = 1 if not current_user.enable_pagination else ceil(len(otp_codes) / items_per_page)
-    
-    start_index = (page - 1) * items_per_page
-    end_index = start_index + items_per_page if items_per_page > 0 else len(otp_codes)
-
-    displayed_otp_codes = otp_codes[start_index:end_index]
-
-    search_name = request.args.get('name')
-    if search_name:
-        for k, v in list(grouped_otp_codes.items()): 
-            grouped_otp_codes[k] = [x for x in v if search_name.lower() in x['name'].lower()]
-
-    grouped_otp_codes = {k: v for k, v in grouped_otp_codes.items() if v} 
-    return render_template('home.html', form=form, grouped_otp_codes=grouped_otp_codes, companies=companies, search_name=search_name, page=page, total_pages=total_pages, enable_pagination=current_user.enable_pagination)
 
 @app.route('/get_logs', methods=['GET'])
 @login_required
@@ -643,12 +665,18 @@ def page_not_found(e):
 @login_required
 def search_otp():
     query = request.args.get('name', '')
-    all_secrets = fetch_all_secrets()
-    
-    matched_secrets = [secret for secret in all_secrets if query.lower() in secret['name'].lower()]
-    
-    print(matched_secrets)
-    return render_template('otp.html', otp_secrets=matched_secrets)
+    logging.info(f"Search initiated for query: {query}")
+    try:
+        all_secrets = fetch_all_secrets()
+        
+        matched_secrets = [secret for secret in all_secrets if query.lower() in secret['name'].lower()]
+        
+        logging.info(f"Search results for '{query}': {matched_secrets}")
+        return render_template('otp.html', otp_secrets=matched_secrets)
+    except Exception as e:
+        logging.error(f"Search operation failed: {e}", exc_info=True)
+        flash('An error occurred during search.')
+        return redirect(url_for('home'))
 
 @app.route('/edit/<name>', methods=['GET', 'POST'])
 @login_required
@@ -690,9 +718,11 @@ def edit(name):
     return redirect(url_for('home'))
 
 @app.route('/create_backup', methods=['GET'])
+@login_required
 def create_backup():
     try:
         if not current_user.is_admin:
+            logging.warning('Non-admin user attempted to create a backup.')
             return jsonify({'success': False, 'message': 'Not authorized'})
         
         backup_folder = "backups"
@@ -703,12 +733,15 @@ def create_backup():
         backup_file_path = os.path.join(backup_folder, f"otp_backup_{timestamp}.db")
 
         shutil.copy2("otp.db", backup_file_path)
-        
+        logging.info(f'Backup created at {backup_file_path}')
+
         return jsonify({'success': True, 'message': f'Backup created at {backup_file_path}'})
     except Exception as e:
+        logging.error(f'Error creating backup: {e}', exc_info=True)
         return jsonify({'success': False, 'message': str(e)})
 
 @app.route('/load_backup', methods=['POST'])
+@login_required
 def load_backup():
     try:
         print("load_backup function reached")
@@ -736,9 +769,11 @@ def load_backup():
         return {'success': False, 'message': str(e)}
 
 @app.route('/list_backups', methods=['GET'])
+@login_required
 def list_backups():
     try:
         if not current_user.is_admin:
+            logging.warning('Non-admin user attempted to list backups.')
             return jsonify({'success': False, 'message': 'Not authorized'})
         
         backup_folder = "backups"
@@ -746,8 +781,10 @@ def list_backups():
         if os.path.exists(backup_folder):
             backups = os.listdir(backup_folder)
         
+        logging.info('Backups listed successfully.')
         return jsonify({'success': True, 'backups': backups})
     except Exception as e:
+        logging.error(f'Error listing backups: {e}')
         return jsonify({'success': False, 'message': str(e)})
 
 @app.route('/delete_secret/<name>', methods=['POST'])
@@ -759,8 +796,10 @@ def delete_secret(name):
             cursor.execute("DELETE FROM otp_secrets WHERE name = ?", (name,))
             conn.commit()
         flash(f'Successfully deleted secret with name: {name}', 'success')
+        logging.info(f'Secret with name {name} was successfully deleted.')
     except sqlite3.Error as e:
         flash(f'Could not delete secret: {e}', 'danger')
+        logging.error(f'Error when trying to delete secret with name {name}: {e}')
     return redirect(url_for('home'))
 
 @app.route('/delete/<name>', methods=['POST'])
