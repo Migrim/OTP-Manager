@@ -34,12 +34,13 @@ body {
 }
 
 .logs-box {
-    background-color: #252526;
-    border: 1px solid #dee2e6;
-    border-radius: 0.25rem;
-    max-height: none; 
-    overflow-y: auto;
-}
+    display: none; /* existing style */
+    border: 1px solid #ffffff; /* Replace with the color that fits your design */
+    border-radius: 10px; /* Adjust the px value to increase or decrease the roundness */
+    overflow: hidden; /* This ensures that the content inside the box respects the border radius */
+    padding: 10px; /* Adds space inside the border, adjust the value as needed */
+    margin: 0 30px; /* Adds space outside the border, only to left and right. Adjust the value as needed */
+  }
 
 #logs tr:nth-child(odd) {
     background-color: #3c3c3c; 

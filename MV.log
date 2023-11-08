@@ -35,3 +35,9 @@
 2023-11-07 17:04:58,758 [INFO] admin is authenticated
 2023-11-07 17:05:12,838 [INFO] User: admin Logged in!
 2023-11-07 17:05:12,861 [INFO] admin is authenticated
+2023-11-07 17:08:39,738 [INFO] Server started on port 5001.
+2023-11-07 17:08:50,673 [WARNING] Failed login attempt for user: a
+2023-11-07 17:09:53,193 [WARNING] Failed login attempt for user: a
+2023-11-08 17:06:42,553 [INFO] Server started on port 5001.
+2023-11-08 17:07:21,405 [INFO] User: admin Logged in!
+2023-11-08 17:07:21,441 [INFO] admin is authenticated
