@@ -109,7 +109,6 @@
                 if (data.logs) {
                     loadingPlaceholder.hide();
                     logsBox.fadeIn('slow'); 
-                    $('html, body').animate({ scrollTop: $(document).height() }, 'slow'); 
                 } else {
                     loadingPlaceholder.show();
                     logsBox.hide();
@@ -122,7 +121,7 @@
 
     function filterLogs(logLines) {
         return logLines.filter(function (logLine) {
-            return !filterToggle.is(':checked') || !logLine.includes('Server started');
+            return filterToggle.is(':checked') || !logLine.includes('Server started');
         });
     }
 
@@ -144,13 +143,14 @@
                     var datetimeParts = datetime.split(' ');
                     var date = datetimeParts[0];
                     var time = datetimeParts[1];
+                    var typeClass = type.toLowerCase() === 'error' ? 'error-log' : type.toLowerCase() + '-log';
                     var logRow = '<tr>' +
                                     '<td>' + date + '</td>' +
                                     '<td>' + time + '</td>' +
-                                    '<td class="' + type.toLowerCase() + '-log">' + type + '</td>' +
+                                    '<td class="' + typeClass + '">' + type + '</td>' +
                                     '<td>' + message + '</td>' +
                                 '</tr>';
-                    $('#logs').append(logRow);
+                    $('#logs').prepend(logRow); 
                 }
             });
         });
@@ -162,15 +162,20 @@
         var checkbox = document.getElementById('filter-toggle');
         var toggleButton = document.getElementById('toggle-btn');
 
-        toggleButton.textContent = checkbox.checked ? 'Hide Start Messages' : 'Show Start Messages';
+        checkbox.checked = false;
+        toggleButton.textContent = 'Show Start Messages';
 
         toggleButton.addEventListener('click', function() {
             checkbox.checked = !checkbox.checked;
             toggleButton.textContent = checkbox.checked ? 'Hide Start Messages' : 'Show Start Messages';
+            fetchAndUpdateLogs(); 
         });
 
         checkbox.addEventListener('change', function() {
+            fetchAndUpdateLogs(); 
         });
+
+        fetchAndUpdateLogs();
     });
 </script>
 

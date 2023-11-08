@@ -34,12 +34,12 @@ body {
 }
 
 .logs-box {
-    display: none; /* existing style */
-    border: 1px solid #ffffff; /* Replace with the color that fits your design */
-    border-radius: 10px; /* Adjust the px value to increase or decrease the roundness */
-    overflow: hidden; /* This ensures that the content inside the box respects the border radius */
-    padding: 10px; /* Adds space inside the border, adjust the value as needed */
-    margin: 0 30px; /* Adds space outside the border, only to left and right. Adjust the value as needed */
+    display: none;
+    border: 1px solid #ffffff;
+    border-radius: 10px;
+    overflow: hidden;
+    padding: 10px; 
+    margin: 0 80px; 
   }
 
 #logs tr:nth-child(odd) {
@@ -142,6 +142,8 @@ body {
 
 .error-log {
     color: #FF5555;
+    position: relative;
+    padding-left: 20px;
 }
 .info-log {
     color: #55AAFF;
@@ -272,3 +274,28 @@ button {
     transition: box-shadow 0.2s ease-in;
   }
   
+
+  .error-log::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    right: 5px; 
+    transform: translateY(-50%);
+    width: 10px;
+    height: 10px;
+    background-color: red;
+    border-radius: 50%;
+    animation: pulse-error 1s infinite;
+}
+
+@keyframes pulse-error {
+    0% {
+        box-shadow: 0 0 0 0 rgba(255, 85, 85, 0.7);
+    }
+    70% {
+        box-shadow: 0 0 0 10px rgba(255, 85, 85, 0); 
+    }
+    100% {
+        box-shadow: 0 0 0 0 rgba(255, 85, 85, 0);
+    }
+}
