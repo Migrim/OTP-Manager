@@ -128,14 +128,20 @@
 {{ super() }}
 <script>
     $(document).ready(function() {
+        $("input[name='secret']").on('blur', function() {
+            $(this).val($(this).val().toUpperCase());
+        });
+
         $("form").submit(function(e) {
             let valid = true;
             let errorMsgs = [];
 
             const name = $("input[name='name']").val();
-            const secret = $("input[name='secret']").val();
+            const secret = $("input[name='secret']").val().toUpperCase();
             const otpType = $("select[name='otp_type']").val();
             const refreshTime = $("input[name='refresh_time']").val();
+
+            $("input[name='secret']").val(secret);
 
             if (!validateName(name)) {
                 valid = false;
@@ -145,15 +151,13 @@
                 valid = false;
             }
 
-            if (!/^[a-zA-Z0-9]+$/.test(secret)) {
+            if (!/^[A-Z2-7=]{16,}$/.test(secret)) {
+                errorMsgs.push("Secret must be at least 16 characters long and in all uppercase letters.");
                 valid = false;
             }
 
-            if (!/^[A-Z2-7=]{16,}$/i.test(secret) || secret.length % 8 !== 0) {
-                valid = false;
-            }
-
-            if (!["totp", "hotp"].includes(otpType)) {
+            if (!["totp", "hotp"].includes(otpType.toLowerCase())) {
+                errorMsgs.push("OTP type is invalid.");
                 valid = false;
             }
 
@@ -200,7 +204,8 @@
             }
         });
 
-        $("input[name='secret']").on("input", function() {
+        $("input[name='secret']").on('input', function() {
+            this.value = this.value.toUpperCase();
             if ($(this).val().length >= 16) {
                 $("#secretCheck").show();
             } else {
