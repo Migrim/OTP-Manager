@@ -72,6 +72,9 @@
         <button id="toggle-btn" aria-label="Toggle Filter">
             Show Start Messages
         </button>
+        <button id="warning-btn" class="log-filter-btn" aria-label="Toggle Warning">Warning Messages</button>
+        <button id="info-btn" class="log-filter-btn" aria-label="Toggle Info">Info Messages</button>
+        <button id="error-btn" class="log-filter-btn" aria-label="Toggle Error">Error Messages</button>
     </div>
 </div>
 
@@ -119,13 +122,17 @@
 
     setInterval(displayLogs, 1000);
 
-    function filterLogs(logLines) {
-        return logLines.filter(function (logLine) {
-            return filterToggle.is(':checked') || !logLine.includes('Server started');
-        });
-    }
-
     var filterToggle = $('#filter-toggle');
+    var logFilters = {
+        showStart: false,
+        showWarning: true,
+        showInfo: true,
+        showError: true
+    };
+
+    function updateButtonText(button, show, text) {
+        button.textContent = show ? `Hide ${text}` : `Show ${text}`;
+    }
 
     function fetchAndUpdateLogs() {
         var filterStatus = filterToggle.is(':checked');
@@ -136,8 +143,14 @@
             logLines.forEach(function(logLine) {
                 var logMatch = logLine.match(/(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2},\d{3}) \[(\w+)\] (.+)/);
                 if (logMatch) {
+                    var type = logMatch[2].toLowerCase();
+                    if ((type === 'warning' && !logFilters.showWarning) ||
+                        (type === 'info' && !logFilters.showInfo) ||
+                        (type === 'error' && !logFilters.showError) ||
+                        (type === 'start' && !logFilters.showStart)) {
+                        return; 
+                    }
                     var datetime = logMatch[1];
-                    var type = logMatch[2];
                     var message = logMatch[3];
                     var datetimeParts = datetime.split(' ');
                     var date = datetimeParts[0];
@@ -157,18 +170,52 @@
 
     setInterval(fetchAndUpdateLogs, 1000); 
 
+    function updateButtonState(button, isActive, text) {
+        button.textContent = isActive ? `Hide ${text}` : `Show ${text}`;
+        if (button.textContent.includes("Hide")) {
+            button.classList.add('button-active');
+        } else {
+            button.classList.remove('button-active');
+        }
+    }
+
     document.addEventListener('DOMContentLoaded', function() {
         var toggleButton = document.getElementById('toggle-btn');
+        var warningButton = document.getElementById('warning-btn');
+        var infoButton = document.getElementById('info-btn');
+        var errorButton = document.getElementById('error-btn');
 
         filterToggle.prop('checked', false);
         toggleButton.textContent = 'Hide Start Messages';
+        updateButtonText(warningButton, logFilters.showWarning, 'Warning Messages');
+        updateButtonText(infoButton, logFilters.showInfo, 'Info Messages');
+        updateButtonText(errorButton, logFilters.showError, 'Error Messages');
 
         toggleButton.addEventListener('click', function() {
-            filterToggle.prop('checked', !filterToggle.prop('checked'));
-            toggleButton.textContent = filterToggle.prop('checked') ? 'Show Start Messages' : 'Hide Start Messages';
+            logFilters.showStart = !logFilters.showStart;
+            updateButtonState(toggleButton, logFilters.showStart, 'Start Messages');
+            fetchAndUpdateLogs(); 
+        });
+
+        warningButton.addEventListener('click', function() {
+            logFilters.showWarning = !logFilters.showWarning;
+            updateButtonState(warningButton, logFilters.showWarning, 'Warning Messages');
+            fetchAndUpdateLogs(); 
+        });
+
+        infoButton.addEventListener('click', function() {
+            logFilters.showInfo = !logFilters.showInfo;
+            updateButtonState(infoButton, logFilters.showInfo, 'Info Messages');
+            fetchAndUpdateLogs(); 
+        });
+
+        errorButton.addEventListener('click', function() {
+            logFilters.showError = !logFilters.showError;
+            updateButtonState(errorButton, logFilters.showError, 'Error Messages');
             fetchAndUpdateLogs(); 
         });
     });
 </script>
+
 
 {% endblock %}
