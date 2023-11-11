@@ -132,7 +132,6 @@
         $.getJSON('/get_logs', { filter_out: filterStatus }, function(data) {
             var logs = data.logs;
             var logLines = logs.split('\n');
-            logLines = filterLogs(logLines); 
             $('#logs').empty(); 
             logLines.forEach(function(logLine) {
                 var logMatch = logLine.match(/(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2},\d{3}) \[(\w+)\] (.+)/);
@@ -159,23 +158,16 @@
     setInterval(fetchAndUpdateLogs, 1000); 
 
     document.addEventListener('DOMContentLoaded', function() {
-        var checkbox = document.getElementById('filter-toggle');
         var toggleButton = document.getElementById('toggle-btn');
 
-        checkbox.checked = false;
-        toggleButton.textContent = 'Show Start Messages';
+        filterToggle.prop('checked', false);
+        toggleButton.textContent = 'Hide Start Messages';
 
         toggleButton.addEventListener('click', function() {
-            checkbox.checked = !checkbox.checked;
-            toggleButton.textContent = checkbox.checked ? 'Hide Start Messages' : 'Show Start Messages';
+            filterToggle.prop('checked', !filterToggle.prop('checked'));
+            toggleButton.textContent = filterToggle.prop('checked') ? 'Show Start Messages' : 'Hide Start Messages';
             fetchAndUpdateLogs(); 
         });
-
-        checkbox.addEventListener('change', function() {
-            fetchAndUpdateLogs(); 
-        });
-
-        fetchAndUpdateLogs();
     });
 </script>
 

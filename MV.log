@@ -71,3 +71,23 @@
 2023-11-08 17:47:35,653 [INFO] Fetched all users successfully.
 2023-11-08 18:01:42,633 [INFO] Fetched all users successfully.
 2023-11-08 18:01:42,633 [INFO] Fetched all users successfully.
+2023-11-09 11:23:12,517 [INFO] Server started on port 5001.
+2023-11-09 11:23:33,649 [INFO] User: admin Logged in!
+2023-11-09 11:23:33,674 [INFO] admin is authenticated
+2023-11-09 11:40:01,970 [INFO] User ID 1 successfully logged out.
+2023-11-09 11:43:41,852 [INFO] User: admin Logged in!
+2023-11-09 11:43:41,876 [INFO] admin is authenticated
+2023-11-09 11:43:46,085 [INFO] User ID 1 successfully logged out.
+2023-11-09 11:43:51,622 [INFO] User: admin Logged in!
+2023-11-09 11:43:51,644 [INFO] admin is authenticated
+2023-11-09 11:43:54,849 [INFO] User ID 1 successfully logged out.
+2023-11-09 12:04:13,922 [INFO] User: admin Logged in!
+2023-11-09 12:04:13,950 [INFO] admin is authenticated
+2023-11-11 14:39:15,361 [INFO] Server started on port 5001.
+2023-11-11 14:39:24,968 [INFO] User: admin Logged in!
+2023-11-11 14:39:25,001 [INFO] admin is authenticated
+2023-11-11 14:39:31,605 [INFO] Attempting to ping google.com
+2023-11-11 14:39:31,614 [ERROR] Ping to google.com failed: Command '['ping', '-c', '1', 'google.com']' returned non-zero exit status 1.
+2023-11-11 14:39:31,718 [INFO] Backups listed successfully.
+2023-11-11 14:39:32,533 [INFO] Fetched all users successfully.
+2023-11-11 14:39:32,533 [INFO] Fetched all users successfully.
