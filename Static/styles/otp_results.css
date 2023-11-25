@@ -159,12 +159,30 @@ tbody tr.slide-down {
     transform: translateY(0);
 }
 
-.fade-to-red {
-    color: #CD5C5C !important;
-    transition: color 4s ease-in-out;
-}
+
 
 .animated-countdown {
     transition: all 0.5s ease;
     font-size: 1.2rem;
+}
+
+.otp-code:hover {
+    background-color: #333; /*# grey background */
+    cursor: pointer;
+    transition: background-color 0.3s ease; /* Fade-in effect for background */
+}
+
+.toast {
+    position: fixed;
+    bottom: 20px;
+    right: 20px; /* Positioning to the bottom right */
+    padding: 10px 20px;
+    border: 1px solid #333;
+    background-color: #201e1e; /* Dark background for better readability */
+    color: #fff; /* White text for contrast */
+    z-index: 1000;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    opacity: 0; /* Initially invisible */
+    transition: opacity 0.5s ease; /* Fade-in and fade-out effect */
 }

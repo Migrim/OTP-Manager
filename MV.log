@@ -1,93 +1,42 @@
-<<<<<<< HEAD
-2023-11-03 14:04:31,922 [WARNING] Failed login attempt for user: John Memmo
-2023-11-03 19:53:34,147 [INFO] Server started on port 5001.
-2023-11-03 19:55:57,290 [INFO] Server started on port 5001.
-2023-11-03 19:58:24,827 [INFO] Server started on port 5001.
-2023-11-03 20:11:04,088 [INFO] Server started on port 5001.
-2023-11-03 20:11:53,310 [INFO] Server started on port 5001.
-2023-11-03 20:18:49,597 [INFO] Server started on port 5001.
-2023-11-05 14:54:18,261 [INFO] Server started on port 5001.
-2023-11-05 14:54:32,713 [INFO] User: admin Logged in!
-2023-11-05 14:54:32,740 [INFO] admin is authenticated
-2023-11-05 15:05:55,554 [INFO] Server started on port 5001.
-2023-11-05 15:51:41,255 [INFO] User: admin Logged in!
-2023-11-05 15:51:41,280 [INFO] admin is authenticated
-2023-11-05 16:06:47,285 [INFO] User: admin Logged in!
-2023-11-05 16:06:47,309 [INFO] admin is authenticated
-2023-11-05 21:11:33,867 [INFO] User: admin Logged in!
-2023-11-05 21:11:33,900 [INFO] admin is authenticated
-2023-11-05 21:38:21,391 [INFO] User: admin Logged in!
-2023-11-05 21:38:21,417 [INFO] admin is authenticated
-2023-11-05 21:41:12,125 [INFO] Server started on port 5001.
-2023-11-05 21:41:14,312 [INFO] User: admin Logged in!
-2023-11-05 21:41:14,344 [INFO] admin is authenticated
-2023-11-05 21:42:25,856 [WARNING] Failed login attempt for user: memmo
-2023-11-05 21:42:29,782 [INFO] User: memmo Logged in!
-2023-11-05 21:42:29,805 [INFO] memmo is authenticated
-2023-11-05 21:42:48,441 [INFO] User: Bra Logged in!
-2023-11-05 21:42:48,466 [INFO] Bra is authenticated
-2023-11-05 21:57:09,429 [INFO] Server started on port 5001.
-2023-11-07 15:55:57,642 [INFO] Server started on port 5001.
-2023-11-07 17:04:18,241 [WARNING] Failed login attempt for user: ad
-2023-11-07 17:04:45,006 [INFO] Server started on port 5001.
-2023-11-07 17:04:50,181 [WARNING] Failed login attempt for user: ad
-2023-11-07 17:04:56,165 [WARNING] Failed login attempt for user: admin
-2023-11-07 17:04:58,735 [INFO] User: admin Logged in!
-2023-11-07 17:04:58,758 [INFO] admin is authenticated
-2023-11-07 17:05:12,838 [INFO] User: admin Logged in!
-2023-11-07 17:05:12,861 [INFO] admin is authenticated
-2023-11-07 17:08:39,738 [INFO] Server started on port 5001.
-2023-11-07 17:08:50,673 [WARNING] Failed login attempt for user: a
-2023-11-07 17:09:53,193 [WARNING] Failed login attempt for user: a
-2023-11-08 17:06:42,553 [INFO] Server started on port 5001.
-2023-11-08 17:07:21,405 [INFO] User: admin Logged in!
-2023-11-08 17:07:21,441 [INFO] admin is authenticated
-=======
-2023-11-08 08:24:04,519 [INFO] Server started on port 5001.
-2023-11-08 08:24:07,602 [INFO] Fetched all users successfully.
-2023-11-08 08:24:07,602 [INFO] Fetched all users successfully.
-2023-11-08 08:24:11,515 [INFO] Password reset page accessed for user_id: 5
-2023-11-08 08:24:18,696 [INFO] Password for user_id 5 was successfully updated.
-2023-11-08 08:26:01,723 [INFO] Server started on port 5001.
-2023-11-08 08:26:24,937 [INFO] User ID 1 updated settings successfully.
-2023-11-08 08:27:38,385 [INFO] Server started on port 5001.
-2023-11-08 08:27:44,907 [INFO] User ID 1 successfully logged out.
-2023-11-08 08:27:48,878 [INFO] User: admin Logged in!
-2023-11-08 08:27:48,910 [INFO] admin is authenticated
-2023-11-08 08:32:01,169 [INFO] Server started on port 5001.
-2023-11-08 08:45:39,864 [INFO] Attempting to ping google.com
-2023-11-08 08:45:39,876 [ERROR] Ping to google.com failed: Command '['ping', '-c', '1', 'google.com']' returned non-zero exit status 1.
-2023-11-08 08:45:39,992 [INFO] Backups listed successfully.
->>>>>>> cde00d367aa70632630d4112fd4e335032faa31a
-2023-11-08 17:11:43,644 [INFO] Server started on port 5001.
-2023-11-08 17:35:36,621 [INFO] User ID 1 updated settings successfully.
-2023-11-08 17:44:54,864 [INFO] Fetched all users successfully.
-2023-11-08 17:44:54,864 [INFO] Fetched all users successfully.
-2023-11-08 17:47:20,779 [INFO] Fetched all users successfully.
-2023-11-08 17:47:20,779 [INFO] Fetched all users successfully.
-2023-11-08 17:47:27,734 [INFO] Fetched all users successfully.
-2023-11-08 17:47:27,734 [INFO] Fetched all users successfully.
-2023-11-08 17:47:35,653 [INFO] Fetched all users successfully.
-2023-11-08 17:47:35,653 [INFO] Fetched all users successfully.
-2023-11-08 18:01:42,633 [INFO] Fetched all users successfully.
-2023-11-08 18:01:42,633 [INFO] Fetched all users successfully.
-2023-11-09 11:23:12,517 [INFO] Server started on port 5001.
-2023-11-09 11:23:33,649 [INFO] User: admin Logged in!
-2023-11-09 11:23:33,674 [INFO] admin is authenticated
-2023-11-09 11:40:01,970 [INFO] User ID 1 successfully logged out.
-2023-11-09 11:43:41,852 [INFO] User: admin Logged in!
-2023-11-09 11:43:41,876 [INFO] admin is authenticated
-2023-11-09 11:43:46,085 [INFO] User ID 1 successfully logged out.
-2023-11-09 11:43:51,622 [INFO] User: admin Logged in!
-2023-11-09 11:43:51,644 [INFO] admin is authenticated
-2023-11-09 11:43:54,849 [INFO] User ID 1 successfully logged out.
-2023-11-09 12:04:13,922 [INFO] User: admin Logged in!
-2023-11-09 12:04:13,950 [INFO] admin is authenticated
-2023-11-11 14:39:15,361 [INFO] Server started on port 5001.
-2023-11-11 14:39:24,968 [INFO] User: admin Logged in!
-2023-11-11 14:39:25,001 [INFO] admin is authenticated
-2023-11-11 14:39:31,605 [INFO] Attempting to ping google.com
-2023-11-11 14:39:31,614 [ERROR] Ping to google.com failed: Command '['ping', '-c', '1', 'google.com']' returned non-zero exit status 1.
-2023-11-11 14:39:31,718 [INFO] Backups listed successfully.
-2023-11-11 14:39:32,533 [INFO] Fetched all users successfully.
-2023-11-11 14:39:32,533 [INFO] Fetched all users successfully.
+2023-11-21 00:59:31,139 [INFO] Fetched all users successfully.
+2023-11-21 00:59:31,139 [INFO] Fetched all users successfully.
+2023-11-21 00:59:32,852 [INFO] Attempting to ping google.com
+2023-11-21 00:59:32,858 [ERROR] Ping to google.com failed: Command '['ping', '-c', '1', 'google.com']' returned non-zero exit status 1.
+2023-11-21 00:59:32,942 [INFO] Backups listed successfully.
+2023-11-21 01:15:45,922 [INFO] Attempting to ping google.com
+2023-11-21 01:15:45,928 [ERROR] Ping to google.com failed: Command '['ping', '-c', '1', 'google.com']' returned non-zero exit status 1.
+2023-11-21 01:15:46,151 [INFO] Backups listed successfully.
+2023-11-22 23:20:12,126 [INFO] Server started on port 5001.
+2023-11-22 23:21:30,941 [INFO] User ID 1 successfully logged out.
+2023-11-22 23:23:17,081 [INFO] User: admin Logged in!
+2023-11-22 23:23:17,109 [INFO] admin is authenticated
+2023-11-24 20:14:29,011 [INFO] Server started on port 5001.
+2023-11-24 20:14:38,079 [INFO] User: admin Logged in!
+2023-11-24 20:14:38,104 [INFO] admin is authenticated
+2023-11-24 20:33:11,450 [INFO] Fetched all users successfully.
+2023-11-24 20:33:11,450 [INFO] Fetched all users successfully.
+2023-11-24 20:33:18,554 [INFO] Fetched all users successfully.
+2023-11-24 20:33:18,554 [INFO] Fetched all users successfully.
+2023-11-24 20:39:40,744 [INFO] Fetched all users successfully.
+2023-11-24 20:39:40,744 [INFO] Fetched all users successfully.
+2023-11-24 20:39:42,036 [INFO] Attempting to ping google.com
+2023-11-24 20:39:42,045 [ERROR] Ping to google.com failed: Command '['ping', '-c', '1', 'google.com']' returned non-zero exit status 1.
+2023-11-24 20:39:42,157 [INFO] Backups listed successfully.
+2023-11-24 20:59:58,298 [INFO] User ID 1 successfully logged out.
+2023-11-24 21:00:54,262 [INFO] User: admin Logged in!
+2023-11-24 21:00:54,294 [INFO] admin is authenticated
+2023-11-24 21:02:05,494 [INFO] User ID 1 successfully logged out.
+2023-11-24 21:02:10,590 [WARNING] Failed login attempt for user: admin
+2023-11-24 21:04:14,468 [WARNING] Failed login attempt for user: admin
+2023-11-24 21:04:32,010 [WARNING] Failed login attempt for user: admin
+2023-11-24 21:04:49,384 [WARNING] Failed login attempt for user: admin
+2023-11-24 21:12:01,144 [WARNING] Failed login attempt for user: admin
+2023-11-24 21:12:10,059 [WARNING] Failed login attempt for user: admin
+2023-11-24 21:12:28,582 [WARNING] Failed login attempt for user: admin
+2023-11-24 21:13:00,926 [WARNING] Failed login attempt for user: admin
+2023-11-24 21:13:29,487 [WARNING] Failed login attempt for user: admin
+2023-11-24 21:14:53,163 [INFO] User: admin Logged in!
+2023-11-24 21:14:53,199 [INFO] admin is authenticated
+2023-11-24 21:15:17,363 [INFO] User ID 1 successfully logged out.
+2023-11-24 21:15:32,518 [INFO] User: admin Logged in!
+2023-11-24 21:15:32,541 [INFO] admin is authenticated

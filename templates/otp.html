@@ -271,15 +271,27 @@
         hiddenSecret.style.display = 'none';
         maskedSecret.style.display = 'inline';
     }
+
+    function showToast() {
+        let toast = document.getElementById('toast');
+        toast.style.opacity = '1'; // Make toast visible
+        toast.style.display = 'block';
+
+        setTimeout(() => {
+            toast.style.opacity = '0'; // Begin to fade out after 3 seconds
+        }, 3000);
+
+        setTimeout(() => {
+            toast.style.display = 'none'; // Hide after fade out completes
+        }, 3500); // Slightly longer than fade-out duration for smooth transition
+    }
 </script>
 
 <div class="container">
     <h1>OTP Secrets</h1>
     <div class="countdown-timer" id="countdown">Calculating OTP Expiry...</div>
 
-    <div class="back-to-home">
-        <a href="{{ url_for('home') }}">Back to Home</a>
-    </div>
+    <div id="toast" class="toast" style="display:none;">Copied to clipboard!</div>
 
     <div class="table-wrapper">
     <table>
@@ -302,7 +314,7 @@
                         <span class="maskedSecret">*</span>
                     </td>                    
                     <td>{{ secret.otp_type }}</td>
-                    <td id="otp_code_{{ secret.name }}"></td>
+                    <td id="otp_code_{{ secret.name }}" class="otp-code" onclick="copyToClipboard(this)"></td>
                     <td>{{ secret.company }}</td>
                     <td>{{ secret.company_kundennummer }}</td>
                 </tr>

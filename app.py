@@ -359,6 +359,7 @@ def refresh_codes_v2():
     return jsonify({"otp_codes": otp_codes})
 
 @app.route('/reset/<int:user_id>', methods=['GET', 'POST'])
+@login_required
 def reset_password(user_id):
     if request.method == 'POST':
         new_password = request.form.get('new_password')
@@ -653,6 +654,7 @@ def view_logs():
     return render_template('logs.html', logs=logs)
 
 @app.route('/search_form', methods=['GET'])
+@login_required
 def search_form():
     return render_template('search.html')
 
