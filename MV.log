@@ -40,3 +40,33 @@
 2023-11-24 21:15:17,363 [INFO] User ID 1 successfully logged out.
 2023-11-24 21:15:32,518 [INFO] User: admin Logged in!
 2023-11-24 21:15:32,541 [INFO] admin is authenticated
+2023-11-25 12:41:52,391 [INFO] Server started on port 5001.
+2023-11-25 12:42:00,618 [WARNING] Failed login attempt for user: admin
+2023-11-25 12:42:57,217 [WARNING] Failed login attempt for user: admin
+2023-11-25 12:43:09,171 [WARNING] Failed login attempt for user: admin
+2023-11-25 12:43:32,226 [WARNING] Failed login attempt for user: admin
+2023-11-25 12:44:37,138 [WARNING] Failed login attempt for user: admin
+2023-11-25 12:45:41,719 [WARNING] Failed login attempt for user: admin
+2023-11-25 12:46:38,145 [WARNING] Failed login attempt for user: admin
+2023-11-25 12:47:57,228 [WARNING] Failed login attempt for user: admin
+2023-11-25 12:49:22,613 [WARNING] Failed login attempt for user: admin
+2023-11-25 12:50:44,923 [WARNING] Failed login attempt for user: admin
+2023-11-25 12:52:25,287 [WARNING] Failed login attempt for user: admin
+2023-11-25 12:53:25,945 [WARNING] Failed login attempt for user: admin
+2023-11-25 12:54:23,754 [WARNING] Failed login attempt for user: admin
+2023-11-25 12:56:21,643 [WARNING] Failed login attempt for user: admin
+2023-11-25 12:56:37,276 [WARNING] Failed login attempt for user: admin
+2023-11-25 13:34:46,170 [WARNING] Failed login attempt for user: admin
+2023-11-25 13:35:04,591 [WARNING] Failed login attempt for user: admin
+2023-11-25 13:35:36,679 [WARNING] Failed login attempt for user: admin
+2023-11-25 13:35:53,588 [WARNING] Failed login attempt for user: admin
+2023-11-25 13:37:08,523 [WARNING] Failed login attempt for user: admin
+2023-11-25 13:38:52,223 [WARNING] Failed login attempt for user: admin
+2023-11-25 13:40:00,475 [WARNING] Failed login attempt for user: admin
+2023-11-25 13:41:22,349 [WARNING] Failed login attempt for user: admin
+2023-11-25 13:42:06,549 [WARNING] Failed login attempt for user: admin
+2023-11-25 13:42:14,532 [WARNING] Failed login attempt for user: admin
+2023-11-25 13:44:10,945 [WARNING] Failed login attempt for user: admin
+2023-11-25 13:44:24,690 [WARNING] Failed login attempt for user: admin
+2023-11-25 13:44:33,349 [INFO] User: admin Logged in!
+2023-11-25 13:44:33,376 [INFO] admin is authenticated

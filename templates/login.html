@@ -105,23 +105,39 @@
         animation: spin 1s linear infinite;
         display: none;
     }
-    
+
     .flash-messages {
         position: absolute;
         top: 10px; 
         left: 50%; 
         transform: translateX(-50%); 
-        background: none; 
         padding: 10px 20px; 
         text-align: center;
         font-size: 14px;
         border-radius: 10px; 
-        color: #fff; 
-        text-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
-        display: none;
+        color: #fff;
+        opacity: 0;
         z-index: 1;
+        transition: opacity 0.5s ease;
     }
-    
+
+    @keyframes glowEffect {
+        0%, 100% {
+            box-shadow: 0 0 5px rgba(255, 0, 0, 0); 
+        }
+        50% {
+            box-shadow: 0 0 5px 2px rgba(255, 0, 0, 0.6); 
+        }
+    }
+
+    .flash-messages .alert-danger {
+        background-color: #333333; 
+        border: none; 
+        color: #ffffff; 
+        box-shadow: none; 
+        animation: glowEffect 2s infinite;
+    }
+
     .idle-animation {
         position: fixed;
         top: 0;
@@ -179,16 +195,6 @@
         border: 2px solid lightgrey;
         box-shadow: 0px 0px 20px -17px;
     }
-
-    .input:active {
-        transform: scale(0.95);
-    }
-
-    .input:focus {
-        border: 2px solid #4A90E2; 
-        box-shadow: 0 0 8px rgba(74, 144, 226, 0.5); 
-    }
-
 
     .form-check {
         text-align: center;
@@ -265,6 +271,16 @@
         var idleAnimation = document.querySelector(".idle-animation");
         idleAnimation.classList.remove("active");
         idleTimeout = setTimeout(showIdleAnimation, 300000); 
+    });
+
+    document.addEventListener("DOMContentLoaded", function() {
+        var flashMessage = document.querySelector(".flash-messages");
+        if (flashMessage) {
+            flashMessage.style.opacity = "1"; 
+            setTimeout(function() {
+                flashMessage.style.opacity = "0"; 
+            }, 5000); 
+        }
     });
 </script>
 
