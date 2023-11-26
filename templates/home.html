@@ -68,7 +68,8 @@
     <div class="container">
         {% if current_user.show_content_titles %}
         <h1 class="text-center text-white">One Time Passwords</h1>
-        {% endif %}
+        <h5 class="text-center text-white">Total Secrets: {{ total_otp_count }}</h5>
+        {% endif %}        
     
         <form method="get" action="{{ url_for('search_blueprint.search_otp') }}" class="search-bar">
             <input type="hidden" name="page" value="{{ page|default(1) }}" />

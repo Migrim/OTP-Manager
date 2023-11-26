@@ -606,6 +606,8 @@ def home():
         for otp_code in otp_codes:
             grouped_otp_codes[otp_code['company']].append(otp_code)
 
+        total_otp_count = len(otp_secrets)
+
         if not otp_codes and selected_company:
             flash(f"No matching secrets for company: {selected_company}")
 
@@ -622,7 +624,7 @@ def home():
             for k, v in list(grouped_otp_codes.items()): 
                 grouped_otp_codes[k] = [x for x in v if search_name.lower() in x['name'].lower()]
 
-        return render_template('home.html', form=form, grouped_otp_codes=grouped_otp_codes, companies=companies, search_name=search_name, page=page, total_pages=total_pages, enable_pagination=current_user.enable_pagination)
+        return render_template('home.html', form=form, grouped_otp_codes=grouped_otp_codes, total_otp_count=total_otp_count, companies=companies, search_name=search_name, page=page, total_pages=total_pages, enable_pagination=current_user.enable_pagination)
 
     except Exception as e:
         logging.error('An error occurred on the home page.', exc_info=True)
