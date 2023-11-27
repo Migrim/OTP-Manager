@@ -132,7 +132,7 @@ body {
 }
 
 .alert {
-    background-color: #333;
+    background-color: #232627;
     color: #fff;
     padding: 10px;
     margin: 10px 0;
@@ -335,6 +335,6 @@ body {
 }
 
 .alert:hover {
-    background-color: #2e2e2e;
+    background-color: #393e40;
     cursor: pointer;
 }

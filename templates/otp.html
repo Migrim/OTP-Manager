@@ -18,7 +18,7 @@
         <a class="navbar-brand" href="{{ url_for('view_logs') }}">Logs</a>
     </div>
     <div class="navbar-nav mr-auto">
-        <a class="navbar-brand" href="{{ url_for('admin.admin_settings') }}">Settings</a>
+        <a class="navbar-brand" href="{{ url_for('admin.admin_settings') }}">Management</a>
     </div>
     <div class="navbar-nav mr-auto">
         <a class="navbar-brand" href="{{ url_for('about') }}">About</a>
@@ -91,6 +91,9 @@
     async function manuallyRefreshOtps() {
         try {
             const response = await fetch('/refresh_codes_v2');
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
             const data = await response.json();
             updateOtpCodes(data.otp_codes);
         } catch (error) {
@@ -144,12 +147,18 @@
         countdownIntervals.set(element.id, intervalId);
     }
 
-    function debounce(func, wait) {
+    function debounce(func, wait, immediate) {
         let timeout;
         return function() {
             const context = this, args = arguments;
+            const later = function() {
+                timeout = null;
+                if (!immediate) func.apply(context, args);
+            };
+            const callNow = immediate && !timeout;
             clearTimeout(timeout);
-            timeout = setTimeout(() => func.apply(context, args), wait);
+            timeout = setTimeout(later, wait);
+            if (callNow) func.apply(context, args);
         };
     }
 
