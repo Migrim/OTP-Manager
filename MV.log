@@ -91,3 +91,6 @@
 2023-11-26 23:19:05,980 [INFO] Backups listed successfully.
 2023-11-26 23:21:06,975 [INFO] User ID 1 updated settings successfully.
 2023-11-26 23:21:10,812 [INFO] User ID 1 updated settings successfully.
+2023-11-26 22:39:44,966 [INFO] Server started on port 5001.
+2023-11-26 22:40:06,308 [INFO] User: admin Logged in!
+2023-11-26 22:40:06,332 [INFO] admin is authenticated
