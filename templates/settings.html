@@ -30,15 +30,25 @@
             color: #CD5C5C;
         }
 
+        @keyframes scaleFadeIn {
+            0% {
+                opacity: 0;
+                transform: scale(0.95);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
         .settings-container {
             padding: 30px;
             margin: auto;
             width: 50%;
-            opacity: 1;
-            transition: opacity 0.5s ease-in-out;
             background-color: #252526;
             border: 1px solid #dee2e6;
             border-radius: 0.25rem;
+            animation: scaleFadeIn 0.8s ease-in-out;
         }
 
         .d-flex {

@@ -33,27 +33,28 @@ body {
     align-items: center;
 }
 
-@keyframes scaleFadeIn {
+@keyframes fallDown {
     0% {
         opacity: 0;
-        transform: scale(0.95);
+        transform: translateY(-20px);
     }
     100% {
         opacity: 1;
-        transform: scale(1);
+        transform: translateY(0);
     }
 }
 
 .logs-box {
-    display: none;
+    display: none; /* Assuming you have some JavaScript to toggle display */
     border: 1px solid #ffffff;
     border-radius: 10px;
     overflow: hidden;
     padding: 10px;
     margin: 0 80px;
-    animation: scaleFadeIn 0.8s ease-in-out;
+    opacity: 0; /* Initially invisible */
+    transform: translateY(-20px); /* Initially positioned above */
+    animation: fallDown 0.8s ease-in-out forwards; /* Animation with forwards to maintain the final state */
 }
-
 
 #logs tr:nth-child(odd) {
     background-color: #3c3c3c; 
