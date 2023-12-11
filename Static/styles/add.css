@@ -33,7 +33,7 @@ body {
     border-radius: 10px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.4);
     background: #333;
-    animation: floatIn 1s ease-in-out;
+    animation: fadeInScale 0.8s ease-in-out;
 }
 
 .form-title {
@@ -162,16 +162,16 @@ select.form-control option {
     margin-left: 8px; 
 }
 
-@keyframes floatIn {
+@keyframes fadeInScale {
     0% {
-      opacity: 0;
-      transform: translateY(50px);
+        opacity: 0;
+        transform: scale(0.9);
     }
     100% {
-      opacity: 1;
-      transform: translateY(0);
+        opacity: 1;
+        transform: scale(1);
     }
-  }  
+}
 
   @keyframes circleHue {
     0%, 100% {

@@ -97,3 +97,21 @@
 2023-12-01 18:44:09,600 [INFO] Server started on port 5001.
 2023-12-01 18:44:49,955 [INFO] User: admin Logged in!
 2023-12-01 18:44:49,995 [INFO] admin is authenticated
+2023-12-01 19:08:58,411 [INFO] Server started on port 5001.
+2023-12-01 19:09:12,206 [INFO] Attempting to ping google.com
+2023-12-01 19:09:12,222 [ERROR] Ping to google.com failed: Command '['ping', '-c', '1', 'google.com']' returned non-zero exit status 1.
+2023-12-01 19:09:12,374 [INFO] Backups listed successfully.
+2023-12-11 20:44:40,119 [INFO] Server started on port 5001.
+2023-12-11 20:46:38,189 [INFO] User: admin Logged in!
+2023-12-11 20:46:38,231 [INFO] admin is authenticated
+2023-12-11 23:08:33,120 [INFO] Fetched all users successfully.
+2023-12-11 23:08:33,120 [INFO] Fetched all users successfully.
+2023-12-11 23:08:36,968 [INFO] Attempting to ping google.com
+2023-12-11 23:08:36,984 [ERROR] Ping to google.com failed: Command '['ping', '-c', '1', 'google.com']' returned non-zero exit status 1.
+2023-12-11 23:08:37,080 [INFO] Backups listed successfully.
+2023-12-11 23:12:44,447 [INFO] Attempting to ping google.com
+2023-12-11 23:12:44,455 [ERROR] Ping to google.com failed: Command '['ping', '-c', '1', 'google.com']' returned non-zero exit status 1.
+2023-12-11 23:12:44,535 [INFO] Backups listed successfully.
+2023-12-11 23:12:45,751 [INFO] Attempting to ping google.com
+2023-12-11 23:12:45,759 [ERROR] Ping to google.com failed: Command '['ping', '-c', '1', 'google.com']' returned non-zero exit status 1.
+2023-12-11 23:12:45,823 [INFO] Backups listed successfully.

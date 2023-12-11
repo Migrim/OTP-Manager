@@ -131,6 +131,17 @@ body {
     margin-left: 8px; 
 }
 
+@keyframes scaleFadeIn {
+    0% {
+        opacity: 0;
+        transform: scale(0.95);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
 .alert {
     background-color: #333;
     color: #fff;
@@ -141,6 +152,7 @@ body {
         0 4px 8px rgba(0, 0, 0, 0.2),
         inset 0 2px 4px rgba(100, 100, 100, 0.2);
     border-radius: 5px;
+    animation: scaleFadeIn 0.5s ease-out;
 }
 
 .otp-code {

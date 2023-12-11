@@ -33,14 +33,27 @@ body {
     align-items: center;
 }
 
+@keyframes scaleFadeIn {
+    0% {
+        opacity: 0;
+        transform: scale(0.95);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
 .logs-box {
     display: none;
     border: 1px solid #ffffff;
     border-radius: 10px;
     overflow: hidden;
-    padding: 10px; 
-    margin: 0 80px; 
-  }
+    padding: 10px;
+    margin: 0 80px;
+    animation: scaleFadeIn 0.8s ease-in-out;
+}
+
 
 #logs tr:nth-child(odd) {
     background-color: #3c3c3c; 
