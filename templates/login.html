@@ -5,7 +5,7 @@
 {% block content %}
 <style>
     body {
-        background: #202020; 
+        background: #333; 
         color: #ffffff; 
         font-family: 'Roboto', sans-serif;
         position: relative;
@@ -29,7 +29,6 @@
     }
     
     body.loaded {
-        background: url('{{ url_for("static", filename="Background.jpg") }}') center/cover no-repeat;
         transition: background 1s ease-in-out;
     }
     
@@ -58,9 +57,16 @@
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); 
         background: #333333;
         opacity: 0;
-        transition: opacity 0.6s ease-out;
+        transition: opacity 0.6s ease-out, transform 0.3s ease;
+        transition: opacity 0.6s ease-out; /* Smooth transition for opacity */
+        opacity: 1;
     }
     
+    .form-container.fade-out {
+        opacity: 0; /* Fully transparent when faded out */
+        transition: opacity 0.6s ease-out; /* Transition for fading out */
+    }
+
     .instruction-text {
         font-size: 14px; 
         text-align: center; 
@@ -228,49 +234,107 @@
         pointer-events: none;
         transition: opacity 0.3s, transform 0.2s;
     }
+
+    #matrixEffect {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background: #1d1d1d;
+        z-index: -1; 
+        color: green;
+        font-family: 'Courier New', Courier, monospace;
+        overflow: hidden;
+        display: block; 
+    }
     </style>
 
 <script>
     var idleTimeout;
 
+    function fadeOutForm() {
+        var formContainer = document.querySelector(".form-container");
+        formContainer.classList.add('fade-out');
+    }
+
+    function fadeInForm() {
+        var formContainer = document.querySelector(".form-container");
+        formContainer.classList.remove('fade-out');
+    }
+
     function showIdleAnimation() {
-        var idleAnimation = document.querySelector(".idle-animation");
-        idleAnimation.classList.add("active");
+        document.getElementById('matrixEffect').style.display = 'block';
+        document.body.classList.remove('loaded'); 
+        startMatrixAnimation();
+    }
+
+    document.addEventListener("mousemove", function () {
+        clearTimeout(idleTimeout);
+        hideIdleAnimation();
+        idleTimeout = setTimeout(showIdleAnimation, 300000);
+    });
+
+    function startMatrixAnimation() {
+        var c = document.createElement("canvas");
+        document.getElementById('matrixEffect').appendChild(c);
+        var ctx = c.getContext("2d");
+
+        c.height = window.innerHeight;
+        c.width = window.innerWidth;
+
+        var matrixChars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ123456789@#$%^&*()*&^%";
+        matrixChars = matrixChars.split("");
+
+        var font_size = 10;
+        var columns = c.width / font_size; 
+        var drops = [];
+
+        for(var x = 0; x < columns; x++) {
+            drops[x] = 1; 
+        }
+
+        function drawMatrix() {
+            ctx.fillStyle = "rgba(0, 0, 0, 0.04)";
+            ctx.fillRect(0, 0, c.width, c.height);
+            ctx.fillStyle = "#800080";
+            ctx.font = font_size + "px arial";
+            
+            for(var i = 0; i < drops.length; i++) {
+                var text = matrixChars[Math.floor(Math.random() * matrixChars.length)];
+                ctx.fillText(text, i * font_size, drops[i] * font_size);
+                
+                if(drops[i] * font_size > c.height && Math.random() > 0.975) {
+                    drops[i] = 0;
+                }
+                
+                drops[i]++;
+            }
+        }
+
+        setInterval(drawMatrix, 33);
     }
 
     document.addEventListener("DOMContentLoaded", function () {
-        var image = new Image();
-        image.src = '{{ url_for("static", filename="Background.jpg") }}';
-        image.onload = function () {
-            document.body.classList.add('loaded');
-        };
+        startMatrixAnimation();
+        idleTimeout = setTimeout(fadeOutForm, 30000); 
 
         var formContainer = document.querySelector(".form-container");
         formContainer.style.opacity = "1";
 
-        function redirectToProfile() {
-            formContainer.style.opacity = "0";
-            setTimeout(function () {
-                window.location.href = "{{ url_for('profile') }}";
-            }, 600);
-        }
-
         var flashMessage = document.querySelector(".flash-messages");
         if (flashMessage) {
-            flashMessage.style.display = "block";
-            setTimeout(function () {
-                flashMessage.style.display = "none";
-            }, 5000);
+            flashMessage.style.opacity = "1"; 
+            setTimeout(function() {
+                flashMessage.style.opacity = "0"; 
+            }, 5000); 
         }
-
-        idleTimeout = setTimeout(showIdleAnimation, 300000); 
     });
 
     document.addEventListener("mousemove", function () {
         clearTimeout(idleTimeout);
-        var idleAnimation = document.querySelector(".idle-animation");
-        idleAnimation.classList.remove("active");
-        idleTimeout = setTimeout(showIdleAnimation, 300000); 
+        fadeInForm(); // Fade in on mouse movement
+        idleTimeout = setTimeout(fadeOutForm, 30000); // Reset the timer on mouse movement
     });
 
     document.addEventListener("DOMContentLoaded", function() {
@@ -283,6 +347,8 @@
         }
     });
 </script>
+
+<div id="matrixEffect"></div>
 
 <div class="center-content">
     <div class="form-container">
@@ -319,11 +385,6 @@
         <div class="error-message" style="display: none;">Benutzername oder Passwort ist falsch!</div>
     </div>
     <p class="instruction-text">Please login with your Credentials to gain Access to the OTP-List.</p>
-</div>
-
-<div class="idle-animation">
-    <img src="{{ url_for('static', filename='idle.gif') }}" alt="Idle Animation GIF" style="max-width: 50%; max-height: 40%; position: absolute; top: 30px;">
-    <div class="idle-animation-text">Sie waren inaktiv. Klicken Sie, um fortzufahren.</div>
 </div>
 {% endblock %}
 
