@@ -248,6 +248,13 @@
         overflow: hidden;
         display: block; 
     }
+
+    .welcome-message {
+        color: #ffffff;
+        font-size: 36px; /* Increase the font size */
+        text-align: center;
+        margin-top: 20px;
+    }
     </style>
 
 <script>
@@ -333,8 +340,8 @@
 
     document.addEventListener("mousemove", function () {
         clearTimeout(idleTimeout);
-        fadeInForm(); // Fade in on mouse movement
-        idleTimeout = setTimeout(fadeOutForm, 30000); // Reset the timer on mouse movement
+        fadeInForm();
+        idleTimeout = setTimeout(fadeOutForm, 30000); 
     });
 
     document.addEventListener("DOMContentLoaded", function() {
@@ -346,9 +353,45 @@
             }, 5000); 
         }
     });
+
+    $(document).ready(function() {
+        $('form').submit(function(event) {
+            event.preventDefault(); // Prevent the form from submitting via the browser
+
+            var form = $(this);
+            $.ajax({
+                type: 'POST',
+                url: "{{ url_for('login') }}",
+                data: form.serialize(),
+                success: function(response) {
+                    if(response.status === 'success') {
+                        $('.center-content').hide(); // Hide the form
+                        $('.welcome-message').text(response.message).show(); // Show welcome message
+
+                        setTimeout(function() {
+                            window.location.href = "{{ url_for('home') }}";
+                        }, 4500);
+                    } else {
+                        alert(response.message); // Show error message
+                    }
+                }
+            });
+        });
+    });
 </script>
 
 <div id="matrixEffect"></div>
+
+{% if login_successful %}
+    <div class="welcome-message">
+        Welcome, {{ username }}!
+        <script>
+            setTimeout(function() {
+                window.location.href = "{{ url_for('home') }}"; 
+            }, 4500);
+        </script>
+    </div>
+{% else %}
 
 <div class="center-content">
     <div class="form-container">
@@ -367,18 +410,6 @@
                 <label class="form-check-label" for="keep_logged_in">Keep me logged in</label>
             </div>
 
-            {% with messages = get_flashed_messages() %}
-                {% if messages %}
-                    <div class="flash-messages">
-                        {% for message in messages %}
-                            <div class="alert alert-danger" role="alert">
-                                {{ message }}
-                            </div>
-                        {% endfor %}
-                    </div>
-                {% endif %}
-            {% endwith %}
-
             <input type="submit" value="Login" class="btn btn-primary btn-block form-submit">
         </form>
         <div class="loader"></div>
@@ -386,5 +417,6 @@
     </div>
     <p class="instruction-text">Please login with your Credentials to gain Access to the OTP-List.</p>
 </div>
+{% endif %}
 {% endblock %}
 

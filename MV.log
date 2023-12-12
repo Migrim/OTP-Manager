@@ -122,3 +122,84 @@
 2023-12-11 23:26:08,765 [ERROR] Ping to google.com failed: Command '['ping', '-c', '1', 'google.com']' returned non-zero exit status 1.
 2023-12-11 23:26:08,837 [INFO] Backups listed successfully.
 2023-12-12 10:00:54,096 [INFO] Server stopped.
+2023-12-12 17:18:03,080 [INFO] Server started on port 5001.
+2023-12-12 17:18:37,841 [INFO] Server started on port 5001.
+2023-12-12 17:25:14,463 [INFO] Server started on port 5001.
+2023-12-12 17:25:22,784 [INFO] User: admin Logged in!
+2023-12-12 17:25:22,815 [INFO] admin is authenticated
+2023-12-12 17:25:50,458 [INFO] Fetched all users successfully.
+2023-12-12 17:25:50,458 [INFO] Fetched all users successfully.
+2023-12-12 17:26:05,919 [INFO] Attempting to ping google.com
+2023-12-12 17:26:05,928 [ERROR] Ping to google.com failed: Command '['ping', '-c', '1', 'google.com']' returned non-zero exit status 1.
+2023-12-12 17:26:06,007 [INFO] Backups listed successfully.
+2023-12-12 17:26:29,268 [INFO] User ID 1 successfully logged out.
+2023-12-12 17:30:29,427 [INFO] User: admin Logged in!
+2023-12-12 17:30:29,456 [INFO] admin is authenticated
+2023-12-12 17:30:33,211 [INFO] Attempting to ping google.com
+2023-12-12 17:30:33,218 [ERROR] Ping to google.com failed: Command '['ping', '-c', '1', 'google.com']' returned non-zero exit status 1.
+2023-12-12 17:30:33,299 [INFO] Backups listed successfully.
+2023-12-12 17:30:38,025 [INFO] Backup created at backups\otp_backup_20231212173038.db
+2023-12-12 17:30:40,731 [INFO] Attempting to ping google.com
+2023-12-12 17:30:40,738 [ERROR] Ping to google.com failed: Command '['ping', '-c', '1', 'google.com']' returned non-zero exit status 1.
+2023-12-12 17:30:40,800 [INFO] Backups listed successfully.
+2023-12-12 17:33:28,151 [INFO] Fetched all users successfully.
+2023-12-12 17:33:28,151 [INFO] Fetched all users successfully.
+2023-12-12 17:39:28,090 [INFO] Attempting to ping google.com
+2023-12-12 17:39:28,097 [ERROR] Ping to google.com failed: Command '['ping', '-c', '1', 'google.com']' returned non-zero exit status 1.
+2023-12-12 17:39:28,170 [INFO] Backups listed successfully.
+2023-12-12 22:00:08,360 [INFO] User: admin Logged in!
+2023-12-12 22:00:08,384 [INFO] admin is authenticated
+2023-12-12 22:01:25,846 [INFO] User ID 1 successfully logged out.
+2023-12-12 22:01:30,397 [INFO] User: admin Logged in!
+2023-12-12 22:01:30,421 [INFO] admin is authenticated
+2023-12-12 22:01:33,550 [INFO] User ID 1 successfully logged out.
+2023-12-12 22:05:26,049 [INFO] User: admin Logged in!
+2023-12-12 22:05:26,074 [INFO] admin is authenticated
+2023-12-12 22:05:32,725 [INFO] Server started on port 5001.
+2023-12-12 22:05:35,344 [INFO] User ID 1 successfully logged out.
+2023-12-12 22:05:39,296 [INFO] User: admin Logged in!
+2023-12-12 22:05:39,321 [INFO] admin is authenticated
+2023-12-12 22:08:41,422 [INFO] User ID 1 successfully logged out.
+2023-12-12 22:13:46,680 [INFO] User: admin Logged in!
+2023-12-12 22:13:46,705 [INFO] admin is authenticated
+2023-12-12 22:13:50,527 [INFO] User ID 1 successfully logged out.
+2023-12-12 22:26:01,382 [INFO] User: admin Logged in!
+2023-12-12 22:26:01,407 [INFO] admin is authenticated
+2023-12-12 22:27:10,938 [INFO] Server started on port 5001.
+2023-12-12 22:27:35,205 [INFO] User ID 1 successfully logged out.
+2023-12-12 22:27:44,590 [WARNING] Failed login attempt for user: admin
+2023-12-12 22:27:48,048 [INFO] User: admin Logged in!
+2023-12-12 22:27:53,941 [INFO] User ID 1 successfully logged out.
+2023-12-12 22:27:57,196 [INFO] User: admin Logged in!
+2023-12-12 22:32:51,446 [INFO] User ID 1 successfully logged out.
+2023-12-12 22:32:57,131 [INFO] User: admin Logged in!
+2023-12-12 22:42:03,134 [INFO] User ID 1 successfully logged out.
+2023-12-12 22:42:10,440 [INFO] User: admin Logged in!
+2023-12-12 22:42:20,973 [INFO] User: admin Logged in!
+2023-12-12 22:43:06,820 [INFO] User: admin Logged in!
+2023-12-12 22:43:15,336 [INFO] Server started on port 5001.
+2023-12-12 22:56:37,964 [INFO] Server started on port 5001.
+2023-12-12 22:56:42,266 [INFO] User: admin Logged in!
+2023-12-12 23:03:29,978 [INFO] Server started on port 5001.
+2023-12-12 23:03:36,190 [INFO] User ID 1 successfully logged out.
+2023-12-12 23:03:43,961 [INFO] User: admin Logged in!
+2023-12-12 23:03:49,681 [INFO] User ID 1 successfully logged out.
+2023-12-12 23:03:58,723 [INFO] User: admin Logged in!
+2023-12-12 23:04:10,145 [INFO] User ID 1 successfully logged out.
+2023-12-12 23:04:15,241 [INFO] User: admin Logged in!
+2023-12-12 23:07:16,474 [INFO] User ID 1 successfully logged out.
+2023-12-12 23:07:27,553 [INFO] User: admin Logged in!
+2023-12-12 23:10:47,917 [INFO] Server started on port 5001.
+2023-12-12 23:10:52,003 [INFO] User ID 1 successfully logged out.
+2023-12-12 23:10:55,196 [INFO] User: admin Logged in!
+2023-12-12 23:11:49,732 [INFO] User ID 1 successfully logged out.
+2023-12-12 23:11:57,605 [INFO] User: admin Logged in!
+2023-12-12 23:12:34,215 [INFO] User ID 1 successfully logged out.
+2023-12-12 23:12:37,575 [INFO] User: admin Logged in!
+2023-12-12 23:12:52,170 [INFO] User ID 1 successfully logged out.
+2023-12-12 23:18:58,545 [INFO] User: admin Logged in!
+2023-12-12 23:19:07,790 [INFO] User ID 1 successfully logged out.
+2023-12-12 23:19:12,951 [INFO] User: admin Logged in!
+2023-12-12 23:35:05,354 [INFO] Server started on port 5001.
+2023-12-12 23:35:09,323 [INFO] User ID 1 successfully logged out.
+2023-12-12 23:35:16,026 [INFO] User: admin Logged in!
