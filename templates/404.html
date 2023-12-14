@@ -7,49 +7,102 @@
     <style>
         body {
             font-family: 'Arial', sans-serif;
-            background-color: #212121;
+            background-color: #222222;
             color: #fff;
-            text-align: center;
-            padding: 100px;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            align-items: flex-start; /* Align items to the top */
+            justify-content: center;
+            height: 100vh;
+            overflow: hidden;
+            padding-top: 50px; /* Add some padding to the top */
         }
 
         .container {
-            max-width: 600px;
-            margin: 0 auto;
+            text-align: center;
+            max-width: 800px;
         }
 
         h1 {
-            font-size: 3em;
+            font-size: 9em; /* Increased size */
             margin-bottom: 20px;
+            position: relative;
         }
 
         p {
             font-size: 1.5em;
+            margin-bottom: 10px;
         }
 
-        a {
-            color: #29b6f6;
-            text-decoration: none;
-            border-bottom: 1px solid #29b6f6;
-            transition: border-bottom-color 0.3s ease;
+        @keyframes glitch {
+            0% {
+                transform: translate(0);
+                opacity: 1;
+                clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+            }
+            20% {
+                transform: translate(-5px, 5px);
+                opacity: 0.8;
+                clip-path: polygon(0 25%, 100% 25%, 100% 75%, 0 75%);
+            }
+            40% {
+                transform: translate(5px, -5px);
+                opacity: 0.6;
+                clip-path: polygon(0 50%, 100% 50%, 100% 100%, 0 100%);
+            }
+            60% {
+                transform: translate(-5px, 5px);
+                opacity: 0.4;
+                clip-path: polygon(0 0, 100% 0, 100% 50%, 0 50%);
+            }
+            80% {
+                transform: translate(5px, -5px);
+                opacity: 0.2;
+                clip-path: polygon(0 25%, 100% 25%, 100% 75%, 0 75%);
+            }
+            100% {
+                transform: translate(0);
+                opacity: 1;
+                clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+            }
         }
 
-        a:hover {
-            border-bottom-color: transparent;
+        .glitch {
+            position: relative;
+            animation: glitch 1s linear infinite;
         }
 
-        .emoji {
-            font-size: 2em;
-            margin-top: 20px;
+        .glitch::before,
+        .glitch::after {
+            content: attr(data-text);
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #222222;
+            color: #fff;
+            overflow: hidden;
+        }
+
+        .glitch::before {
+            animation: glitch 500ms linear infinite alternate-reverse;
+            clip-path: polygon(0 0, 100% 0, 100% 25%, 0 25%);
+        }
+
+        .glitch::after {
+            animation: glitch 500ms linear infinite alternate;
+            clip-path: polygon(0 75%, 100% 75%, 100% 100%, 0 100%);
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>404 - Page Not Found</h1>
-        <p>Oops! It looks like you're lost....</p>
+        <h1 class="glitch" data-text="404">404</h1>
+        <p>Oops! It looks like you're lost...</p>
         <p>Return to <a href="/">Home</a> or try <a href="#" onclick="history.back()">going back</a>.</p>
-        <div class="emoji">Bim Bim Bam Bam</div>
-    </div>
+        <div class="emoji">🙈</div>
+    </div>    
 </body>
 </html>

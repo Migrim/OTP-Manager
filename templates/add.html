@@ -181,7 +181,8 @@
         });
 
         function validateName(name) {
-            return name && name.length >= 4;
+            var validNamePattern = /^[a-zA-Z0-9@.]+$/;
+            return name && name.length >= 4 && validNamePattern.test(name);
         }
 
         function validateSecret(secret) {

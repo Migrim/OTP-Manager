@@ -482,7 +482,6 @@ def about():
 
     older_stats = get_older_statistics()
     uptime = get_uptime()
-    ping_time, speed = get_ping_time("google.com")
     is_admin = current_user.is_admin
 
     return render_template(
@@ -491,8 +490,6 @@ def about():
         logins_today=logins_today,
         times_refreshed=times_refreshed,
         uptime=uptime,
-        ping_time=ping_time,
-        speed=speed,
         last_user_login_time=last_user_login_time,
         current_server_time=current_server_time,
         older_stats=older_stats,
@@ -508,24 +505,6 @@ def get_uptime():
     minutes, seconds = divmod(remainder, 60)
 
     return f"{days} Days {hours}h:{minutes}m:{seconds}s"
-
-def get_ping_time(host):
-    try:
-        logging.info(f"Attempting to ping {host}")
-        response = subprocess.check_output(
-            ["ping", "-c", "1", host],
-            stderr=subprocess.STDOUT,
-            universal_newlines=True
-        )
-
-        time = response.split("time=")[1].split(" ")[0]
-        speed = response.split("bytes from")[1].split(": icmp_seq=")[0]
-        
-        logging.info(f"Ping to {host} successful: Time {time} ms, Speed {speed}")
-        return f"{time} ms", speed
-    except Exception as e:
-        logging.error(f"Ping to {host} failed: {e}")
-        return "failed", "Unknown"
 
 @app.route('/get_stats', methods=['GET'])
 def get_stats_json():
@@ -785,7 +764,6 @@ def list_backups():
         if os.path.exists(backup_folder):
             backups = os.listdir(backup_folder)
         
-        logging.info('Backups listed successfully.')
         return jsonify({'success': True, 'backups': backups})
     except Exception as e:
         logging.error(f'Error listing backups: {e}')
@@ -878,7 +856,7 @@ def add():
             logging.warning(f"User '{current_user.username}' attempted to add an OTP with an invalid secret.")
             return rediect(url_for('add'))
 
-        suspicious_pattern = re.compile(r'(--|;|--|;|/\*|\*/|@@|@|char|nchar|varchar|nvarchar|alter|begin|cast|create|cursor|declare|delete|drop|end|exec|execute|fetch|insert|kill|open|select|sys|sysobjects|syscolumns|table|update)', re.IGNORECASE)
+        suspicious_pattern = re.compile(r'(--|;|--|;|/\*|\*/|char|nchar|varchar|nvarchar|alter|begin|cast|create|cursor|declare|delete|drop|end|exec|execute|fetch|insert|kill|open|select|sys|sysobjects|syscolumns|table|update)', re.IGNORECASE)
         if suspicious_pattern.search(name) or suspicious_pattern.search(secret):
             flash('Suspicious patterns detected in input fields.')
             logging.warning(f"User '{current_user.username}' attempted to add an OTP with suspicious patterns in input fields.")

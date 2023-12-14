@@ -283,44 +283,57 @@
     });
 
     function startMatrixAnimation() {
-        var c = document.createElement("canvas");
-        document.getElementById('matrixEffect').appendChild(c);
-        var ctx = c.getContext("2d");
+            var c = document.createElement("canvas");
+            document.getElementById('matrixEffect').appendChild(c);
+            var ctx = c.getContext("2d");
 
-        c.height = window.innerHeight;
-        c.width = window.innerWidth;
-
-        var matrixChars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ123456789@#$%^&*()*&^%";
-        matrixChars = matrixChars.split("");
-
-        var font_size = 10;
-        var columns = c.width / font_size; 
-        var drops = [];
-
-        for(var x = 0; x < columns; x++) {
-            drops[x] = 1; 
-        }
-
-        function drawMatrix() {
-            ctx.fillStyle = "rgba(0, 0, 0, 0.04)";
-            ctx.fillRect(0, 0, c.width, c.height);
-            ctx.fillStyle = "#800080";
-            ctx.font = font_size + "px arial";
-            
-            for(var i = 0; i < drops.length; i++) {
-                var text = matrixChars[Math.floor(Math.random() * matrixChars.length)];
-                ctx.fillText(text, i * font_size, drops[i] * font_size);
-                
-                if(drops[i] * font_size > c.height && Math.random() > 0.975) {
-                    drops[i] = 0;
-                }
-                
-                drops[i]++;
+            function resizeCanvas() {
+                c.height = window.innerHeight;
+                c.width = window.innerWidth;
             }
-        }
 
-        setInterval(drawMatrix, 33);
-    }
+            var matrixChars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ123456789@#$%^&*()*&^%";
+            matrixChars = matrixChars.split("");
+
+            var font_size = 10;
+            var columns;
+            var drops = [];
+
+            function resetDrops() {
+                columns = c.width / font_size; 
+                drops = [];
+                for(var x = 0; x < columns; x++) {
+                    drops[x] = 1; 
+                }
+            }
+
+            function drawMatrix() {
+                ctx.fillStyle = "rgba(0, 0, 0, 0.04)";
+                ctx.fillRect(0, 0, c.width, c.height);
+                ctx.fillStyle = "#800080";
+                ctx.font = font_size + "px arial";
+
+                for(var i = 0; i < drops.length; i++) {
+                    var text = matrixChars[Math.floor(Math.random() * matrixChars.length)];
+                    ctx.fillText(text, i * font_size, drops[i] * font_size);
+
+                    if(drops[i] * font_size > c.height && Math.random() > 0.975) {
+                        drops[i] = 0;
+                    }
+
+                    drops[i]++;
+                }
+            }
+
+            resizeCanvas();
+            resetDrops();
+            window.addEventListener('resize', function() {
+                resizeCanvas();
+                resetDrops();
+            });
+
+            setInterval(drawMatrix, 33);
+        }
 
     document.addEventListener("DOMContentLoaded", function () {
         startMatrixAnimation();
@@ -383,14 +396,11 @@
 <div id="matrixEffect"></div>
 
 {% if login_successful %}
-    <div class="welcome-message">
-        Welcome, {{ username }}!
         <script>
             setTimeout(function() {
                 window.location.href = "{{ url_for('home') }}"; 
-            }, 4500);
+            }, 0);
         </script>
-    </div>
 {% else %}
 
 <div class="center-content">
