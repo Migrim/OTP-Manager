@@ -34,17 +34,15 @@
                 <i class="material-icons-outlined">settings</i>
             </a>
         </div>                
-        {% with messages = get_flashed_messages() %}
-            {% if messages %}
-                <div class="navbar-nav ml-auto">
-                    <div class="alert alert-warning alert-dismissible fade show mb-0" role="alert">
-                        {{ messages[0] }}
-                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                </div>
-            {% endif %}
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% for category, message in messages %}
+            <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+                {{ message }}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        {% endfor %}
         {% endwith %}
         
         <div id="logoutContainer">
@@ -304,7 +302,7 @@
                         }
                     });
                 });
-
+ 
                 window.onload = function() {
                     let spoilerElements = document.getElementsByClassName('spoiler');
                     for (let i = 0; i < spoilerElements.length; i++) {

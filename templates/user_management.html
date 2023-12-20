@@ -1,0 +1,181 @@
+{% extends 'bootstrap/base.html' %}
+{% block title %}User Management{% endblock %}
+
+{% block styles %}
+{{ super() }}
+<link rel="stylesheet" href="{{ url_for('static', filename='styles/user-settings.css') }}">  
+<link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet">
+{% endblock %}
+
+{% block navbar %}
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="navbar-nav mr-auto">
+        <a class="navbar-brand" href="{{ url_for('home') }}">Home</a> 
+    </div>
+    <div class="navbar-nav mr-auto">
+        <a class="navbar-brand" href="{{ url_for('add') }}">Add</a>
+    </div>
+    <div class="navbar-nav mr-auto">
+        <a class="navbar-brand" href="{{ url_for('view_logs') }}">Logs</a>
+    </div>
+    <div class="navbar-nav mr-auto">
+        <a class="navbar-brand" href="{{ url_for('admin.admin_settings') }}">Management</a>
+    </div>    
+    <div class="navbar-nav mr-auto">
+        <a class="navbar-brand" href="{{ url_for('about') }}">About</a>
+    </div>
+    <div class="navbar-nav mr-auto">
+        <a class="navbar-brand" href="{{ url_for('settings') }}">
+            <i class="material-icons-outlined">settings</i> 
+        </a>
+    </div>   
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+        {% endif %}
+    {% endwith %}
+    
+    <div id="logoutContainer">
+        <div id="logoutBtn">
+            <a class="navbar-brand" href="{{ url_for('logout') }}">
+                Logout
+                <i class="material-icons-outlined">logout</i>
+            </a>
+        </div>                    
+    </div>            
+</nav>
+{% endblock %}
+
+{% block content %}
+
+<div class="flash-messages">
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% for category, message in messages %}
+            <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+                {{ message }}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        {% endfor %}
+    {% endwith %}
+</div>
+
+<div class="modal fade" id="confirmDeleteModal" tabindex="-1" role="dialog" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="confirmDeleteModalLabel">Confirm Deletion</h5>
+            </div>
+            <div class="modal-body">
+                <p>Type "confirm" to delete the user:</p>
+                <input type="text" class="form-control" id="deleteConfirmationInput">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-danger" id="confirmDeleteButton">Delete</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="floating-add-user-button">
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addUserModal">
+            Add a new user
+        </button>
+    </div>
+</div>
+
+        <div class="modal fade" id="addUserModal" tabindex="-1" role="dialog" aria-labelledby="addUserModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="addUserModalLabel">Add New User</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form method="post">
+                            {{ user_form.hidden_tag() }}
+                            <div class="form-group">
+                                {{ user_form.username.label }} {{ user_form.username(class="form-control") }}
+                            </div>
+                            <div class="form-group">
+                                {{ user_form.password.label }} {{ user_form.password(class="form-control") }}
+                            </div>
+                            <div class="form-group">
+                                {{ user_form.submit(class="btn btn-primary") }}
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="user-list">
+            <h2>Existing Users</h2>
+            <div class="user-grid">
+                {% for user in users %}
+                <div class="user-card">
+                    <div class="user-info">
+                        {{ user[1] }} {% if user[2] %} (Admin) {% endif %}
+                    </div>
+                    <div class="user-actions">
+                        <form action="{{ url_for('admin.delete_user', user_id=user[0]) }}" method="POST" class="action-form">
+                            <button type="button" class="btn btn-danger delete-user-btn" data-user-id="{{ user[0] }}" title="Delete User">
+                                <span class="material-symbols-outlined">delete_forever</span>
+                            </button>
+                        </form>                        
+                        <a href="{{ url_for('admin.toggle_admin', user_id=user[0]) }}" class="btn btn-secondary" title="Toggle Admin">
+                            <span class="material-symbols-outlined">admin_panel_settings</span>
+                        </a>
+                        <a href="{{ url_for('reset_password', user_id=user[0]) }}" class="btn btn-secondary" title="Reset Password">
+                            <span class="material-symbols-outlined">password</span>
+                        </a>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var userCards = document.querySelectorAll('.user-card');
+        userCards.forEach(function(card, index) {
+            var delay = (index + 1) * 0.1; 
+            card.style.animationDelay = delay + 's';
+        });
+    });
+
+    document.addEventListener('DOMContentLoaded', function() {
+        var confirmDeleteButton = document.getElementById('confirmDeleteButton');
+        var deleteConfirmationInput = document.getElementById('deleteConfirmationInput');
+        var userIdToDelete = null;
+
+        document.querySelectorAll('.delete-user-btn').forEach(function(button) {
+            button.addEventListener('click', function() {
+                userIdToDelete = button.getAttribute('data-user-id');
+                $('#confirmDeleteModal').modal('show');
+            });
+        });
+
+        confirmDeleteButton.addEventListener('click', function() {
+            if (deleteConfirmationInput.value.toLowerCase() === 'confirm') {
+                var form = document.createElement('form');
+                form.method = 'POST';
+                form.action = '/admin/delete_user/' + userIdToDelete;
+                document.body.appendChild(form);
+                form.submit();
+            } else {
+                alert('Please type "confirm" to proceed with deletion.');
+            }
+        });
+    });
+</script>
+
+{% endblock %}

@@ -1,0 +1,157 @@
+{% extends 'bootstrap/base.html' %}
+{% block title %}Company Management{% endblock %}
+
+{% block styles %}
+{{ super() }}
+<link rel="stylesheet" href="{{ url_for('static', filename='styles/company-settings.css') }}">  
+<link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet">
+{% endblock %}
+
+{% block navbar %}
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="navbar-nav mr-auto">
+        <a class="navbar-brand" href="{{ url_for('home') }}">Home</a> 
+    </div>
+    <div class="navbar-nav mr-auto">
+        <a class="navbar-brand" href="{{ url_for('add') }}">Add</a>
+    </div>
+    <div class="navbar-nav mr-auto">
+        <a class="navbar-brand" href="{{ url_for('view_logs') }}">Logs</a>
+    </div>
+    <div class="navbar-nav mr-auto">
+        <a class="navbar-brand" href="{{ url_for('admin.admin_settings') }}">Management</a>
+    </div>    
+    <div class="navbar-nav mr-auto">
+        <a class="navbar-brand" href="{{ url_for('about') }}">About</a>
+    </div>
+    <div class="navbar-nav mr-auto">
+        <a class="navbar-brand" href="{{ url_for('settings') }}">
+            <i class="material-icons-outlined">settings</i> 
+        </a>
+    </div>   
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+        {% endif %}
+    {% endwith %}
+    
+    <div id="logoutContainer">
+        <div id="logoutBtn">
+            <a class="navbar-brand" href="{{ url_for('logout') }}">
+                Logout
+                <i class="material-icons-outlined">logout</i>
+            </a>
+        </div>                    
+    </div>            
+</nav>
+{% endblock %}
+
+{% block content %}
+
+<div class="flash-messages">
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% for category, message in messages %}
+            <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+                {{ message }}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        {% endfor %}
+    {% endwith %}
+</div>
+
+<div class="container">
+    <div class="floating-add-user-button">
+        <button type="button" class="btn btn-primary large-button" data-toggle="modal" data-target="#addCompanyModal">
+            Add a new company
+        </button>        
+    </div>
+</div>
+
+<div class="modal fade" id="addCompanyModal" tabindex="-1" role="dialog" aria-labelledby="addCompanyModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addCompanyModalLabel">Add New Company</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form method="post">
+                    {{ company_form.hidden_tag() }}
+                    <div class="form-group">
+                        {{ company_form.name.label }} {{ company_form.name(class="form-control") }}
+                    </div>
+                    <div class="form-group">
+                        {{ company_form.kundennummer.label }} {{ company_form.kundennummer(class="form-control") }}
+                    </div>
+                    <div class="form-group">
+                        {{ company_form.submit_company(class="btn btn-primary") }}
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="company-list">
+    <h2>Existing Companies</h2>
+    <div class="company-grid">
+        {% for company in companies %}
+        <div class="company-card">
+            <div class="company-info">
+                {{ company.name }} 
+            </div>
+            <div class="company-actions">
+                    <a href="{{ url_for('admin.delete_company', company_id=company.company_id) }}" class="btn btn-danger" title="Delete Company">
+                        <span class="material-symbols-outlined">delete_forever</span>
+                    </a>
+                    <a href="{{ url_for('admin.edit_company', company_id=company.company_id) }}" class="btn btn-secondary" title="Edit Company">
+                        <span class="material-symbols-outlined">edit</span>
+                    </a>                
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+</div>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var userCards = document.querySelectorAll('.company-card');
+        userCards.forEach(function(card, index) {
+            var delay = (index + 1) * 0.1; 
+            card.style.animationDelay = delay + 's';
+        });
+    });
+
+    document.addEventListener('DOMContentLoaded', function() {
+        var confirmDeleteButton = document.getElementById('confirmDeleteButton');
+        var deleteConfirmationInput = document.getElementById('deleteConfirmationInput');
+        var userIdToDelete = null;
+
+        document.querySelectorAll('.delete-user-btn').forEach(function(button) {
+            button.addEventListener('click', function() {
+                userIdToDelete = button.getAttribute('data-user-id');
+                $('#confirmDeleteModal').modal('show');
+            });
+        });
+
+        confirmDeleteButton.addEventListener('click', function() {
+            if (deleteConfirmationInput.value.toLowerCase() === 'confirm') {
+                var form = document.createElement('form');
+                form.method = 'POST';
+                form.action = '/admin/delete_user/' + userIdToDelete;
+                document.body.appendChild(form);
+                form.submit();
+            } else {
+                alert('Please type "confirm" to proceed with deletion.');
+            }
+        });
+    });
+</script>
+
+{% endblock %}

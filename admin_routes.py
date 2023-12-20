@@ -55,12 +55,61 @@ def load_companies_from_db():
     except sqlite3.Error as e:
         return []
 
+@admin_bp.route('/user_management', methods=['GET', 'POST'])
+@login_required
+def user_management():
+    user_form = UserForm()
+
+    users = get_all_users()
+    return render_template('user_management.html', user_form=user_form, users=users)
+
+@admin_bp.route('/company_management', methods=['GET', 'POST'])
+@login_required
+def company_management():
+    company_form = CompanyForm()
+
+    companies = load_companies_from_db()
+    return render_template('company_management.html', company_form=company_form, companies=companies)
+
+
+@admin_bp.route('/edit_company/<int:company_id>', methods=['GET', 'POST'])
+@login_required
+def edit_company(company_id):
+    company_form = CompanyForm()
+
+    if request.method == 'POST':
+        if company_form.validate_on_submit():
+            try:
+                with sqlite3.connect("otp.db") as db:
+                    cursor = db.cursor()
+                    cursor.execute("UPDATE companies SET name = ?, kundennummer = ? WHERE id = ?",
+                                   (company_form.name.data, company_form.kundennummer.data, company_id))
+                    db.commit()
+                flash("Company details updated successfully.", "success")
+            except sqlite3.Error as e:
+                flash("Failed to update company details.", "error")
+                logger.error(f"Error updating company details: {e}")
+            return redirect(url_for('admin.company_management'))
+
+    try:
+        with sqlite3.connect("otp.db") as db:
+            cursor = db.cursor()
+            cursor.execute("SELECT name, kundennummer FROM companies WHERE id = ?", (company_id,))
+            company = cursor.fetchone()
+            company_form.name.data = company[0]
+            company_form.kundennummer.data = company[1]
+    except sqlite3.Error as e:
+        flash("Failed to retrieve company details.", "error")
+        logger.error(f"Error retrieving company details: {e}")
+
+    return render_template('edit_company.html', company_form=company_form, company_id=company_id)
+
 @admin_bp.route('/toggle_admin/<int:user_id>', methods=['GET'])
 @login_required
 def toggle_admin(user_id):
     if current_user.username != "admin":
         flash("Only the admin can toggle admin status.")
-        return redirect(url_for('admin.admin_settings'))
+        return redirect(url_for('admin.user_management'))
 
     try:
         with sqlite3.connect("otp.db") as db:
@@ -70,12 +119,12 @@ def toggle_admin(user_id):
             new_status = not current_status
             cursor.execute("UPDATE users SET is_admin = ? WHERE id = ?", (new_status, user_id))
             db.commit()
-        flash(f"Admin status toggled for user ID {user_id}.")
+        flash(f"Admin status for user ID {user_id} {'enabled' if new_status else 'disabled'}.", "success")
     except sqlite3.Error as e:
-        flash("Failed to toggle admin status.")
+        flash("Failed to toggle admin status.", "error")
         logger.error(f"Error toggling admin status for user_id {user_id}: {e}")
 
-    return redirect(url_for('admin.admin_settings'))
+    return redirect(url_for('admin.user_management'))
 
 @admin_bp.route('/admin_settings', methods=['GET', 'POST'])
 @login_required

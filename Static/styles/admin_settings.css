@@ -16,15 +16,6 @@ body {
 .navbar-dark .navbar-brand:hover {
     color: #CD5C5C;
 }
-.center-content {
-    display: flex;
-    justify-content: center;
-    align-items: flex-start;
-    flex-wrap: wrap;
-    min-height: 20vh; 
-    padding-top: 10px;
-    margin-top: 0;
-}
 
 .form-container {
     width: 48%; 
@@ -207,62 +198,88 @@ body {
     margin-left: 8px; 
 }
 
-.btn-danger i.material-icons-outlined {
-    font-size: 20px;
-    vertical-align: middle;
-}
-
-.btn-warning i.material-icons-outlined {
-    font-size: 20px;
-    vertical-align: middle;
-}
-
-.settings-wrapper {
-    display: flex;
-    justify-content: space-between;
-}
-
-.btn {
-    width: 100px; 
-    height: 40px; 
-}
-
-.table-wrapper {
-    max-height: 300px;
-    overflow-y: auto;
-}
-
-.small-btn {
-    width: 150px;  
-    height: auto; 
-    padding: 10px 20px; 
+.management-options {
     text-align: center;
+    margin-top: 50px;
 }
 
-.washed-purple-btn {
-    background-color: #B3AEC6 !important;  
-    border-color: #B3AEC6 !important;  
-    color: #fff !important; 
-    width: 160px;  
+.management-options a {
+    margin: 10px;
     padding: 10px 20px;
+    font-size: 20px;
+    display: inline-block; 
 }
 
-.company-form-group {
-    margin-bottom: 25px;
+.center-content {
+    display: flex;
+    justify-content: center; /* Align cards in a row */
+    align-items: start; /* Align to the top */
+    padding-top: 50px; /* Move closer to the top */
+    gap: 20px; /* Add some space between the cards */
 }
 
-.center-if-single {
-    margin-left: auto;
-    margin-right: auto;
+.management-card {
+    border: 1px solid #333;
+    border-radius: 8px;
+    padding: 40px; /* More padding for larger size */
+    width: 40%; /* Increase width */
+    height: 400px; /* Increase height */
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center; 
+    cursor: pointer; 
+    background-color: #333;
+    color: #fff;
+    transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+    text-align: center;
+    margin: 0 20px; /* Ensure some space between the cards */
 }
 
-.btn-success {
-    background-color: #333 !important; 
-    border-color: #333 !important;
-    color: #fff !important;
+.management-card:hover {
+    transform: translateY(-10px); /* Move up slightly on hover */
+    box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.3);
+    border-color: #7D3C98; /* Change border color on hover */
+    /* Animated hue glow */
+    box-shadow: 0 0 20px #9b59b6;
+    border-color: #9b59b6;
 }
 
-.btn-success:hover {
-    background-color: #444 !important;
-    border-color: #444 !important;
+.card-title {
+    text-align: center;
+    margin-bottom: 20;
+    color: #ffffff;
+}
+
+.card-text {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #ffffff;
+}
+
+.btn-primary {
+    padding: 10px 20px;
+    font-size: 1rem;
+    border-radius: 5px;
+    cursor: pointer;
+    color: white;
+    text-decoration: none; 
+    background-color: #007bff;
+    border-color: #007bff;
+}
+
+.btn-primary:hover {
+    background-color: #0056b3;
+    border-color: #0056b3;
+}
+
+@media (max-width: 768px) {
+    .center-content {
+        flex-direction: column;
+    }
+    .management-card {
+        width: 80%; 
+        margin: 20px 0; 
+    }
 }
