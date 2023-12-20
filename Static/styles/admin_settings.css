@@ -235,6 +235,17 @@ body {
     transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
     text-align: center;
     margin: 0 20px; /* Ensure some space between the cards */
+    transform: scale(0.9); /* Start slightly smaller */
+    opacity: 0; /* Start fully transparent */
+    animation: scaleFadeIn 0.5s ease forwards; /* Apply the animation */
+    animation-delay: 0.2s; /* Start the animation with a slight delay */
+}
+
+@keyframes scaleFadeIn {
+    to {
+        transform: scale(1); /* Scale to normal size */
+        opacity: 1; /* Fade in to full opacity */
+    }
 }
 
 .management-card:hover {
@@ -282,4 +293,10 @@ body {
         width: 80%; 
         margin: 20px 0; 
     }
+}
+
+.disabled {
+    opacity: 0.5; /* Grays out the card */
+    pointer-events: none; /* Disables clicking */
+    cursor: default; /* Changes cursor to indicate non-interactive */
 }

@@ -125,9 +125,9 @@
                     </div>
                     <div class="user-actions">
                         <form action="{{ url_for('admin.delete_user', user_id=user[0]) }}" method="POST" class="action-form">
-                            <button type="button" class="btn btn-danger delete-user-btn" data-user-id="{{ user[0] }}" title="Delete User">
+                            <button type="button" class="btn btn-danger delete-user-btn" data-user-id="{{ user[0] }}" title="Delete User" data-toggle="modal" data-target="#confirmDeleteModal">
                                 <span class="material-symbols-outlined">delete_forever</span>
-                            </button>
+                            </button>                            
                         </form>                        
                         <a href="{{ url_for('admin.toggle_admin', user_id=user[0]) }}" class="btn btn-secondary" title="Toggle Admin">
                             <span class="material-symbols-outlined">admin_panel_settings</span>
@@ -150,9 +150,7 @@
             var delay = (index + 1) * 0.1; 
             card.style.animationDelay = delay + 's';
         });
-    });
 
-    document.addEventListener('DOMContentLoaded', function() {
         var confirmDeleteButton = document.getElementById('confirmDeleteButton');
         var deleteConfirmationInput = document.getElementById('deleteConfirmationInput');
         var userIdToDelete = null;
@@ -160,17 +158,28 @@
         document.querySelectorAll('.delete-user-btn').forEach(function(button) {
             button.addEventListener('click', function() {
                 userIdToDelete = button.getAttribute('data-user-id');
-                $('#confirmDeleteModal').modal('show');
             });
         });
 
         confirmDeleteButton.addEventListener('click', function() {
             if (deleteConfirmationInput.value.toLowerCase() === 'confirm') {
-                var form = document.createElement('form');
-                form.method = 'POST';
-                form.action = '/admin/delete_user/' + userIdToDelete;
-                document.body.appendChild(form);
-                form.submit();
+                fetch('/admin/delete_user/' + userIdToDelete, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded'
+                    },
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        window.location.reload();
+                    } else {
+                        alert(data.message);
+                    }
+                })
+                .catch(error => {
+                    alert('Error: ' + error);
+                });
             } else {
                 alert('Please type "confirm" to proceed with deletion.');
             }

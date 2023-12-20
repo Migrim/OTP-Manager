@@ -126,7 +126,7 @@ body {
 }
 
 .modal-dialog {
-    max-width: 300px;
+    max-width: 400px; /* Increase the width of the modal */
     margin: 1.75rem auto;
 }
 
@@ -160,6 +160,8 @@ body {
 
 .modal-body {
     padding: 20px;
+    text-align: center; /* Center the text */
+    font-size: 1.2rem; /* Increase font size */
 }
 
 .close:hover {
@@ -199,8 +201,15 @@ body {
 }
 
 .modal-footer {
+    display: flex;
+    justify-content: space-around; /* Aligns buttons side by side */
     border-top: none;
     padding: 20px;
+}
+
+.modal-footer .btn {
+    padding: 6px 12px; /* Adjust padding */
+    width: auto; /* Adjust width */
 }
 
 .add-company-button {
