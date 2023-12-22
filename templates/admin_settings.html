@@ -60,10 +60,10 @@
         <h3 class="card-title">Company Management</h3>
         <p class="card-text">Manage company profiles, view company data, and perform administrative tasks related to companies.</p>
     </div>
-    <div class="management-card {% if not is_admin %}disabled{% endif %}" data-url="{{ url_for('admin.admin_settings') }}">
+    <div class="management-card" data-url="{{ url_for('server_settings') }}">
         <h3 class="card-title">Server Management</h3>
         <p class="card-text">Under Construction.</p>
-    </div>
+    </div>    
     <div class="management-card {% if not is_admin %}disabled{% endif %}" data-url="{{ url_for('admin.user_management') }}">
         <h3 class="card-title">User Management</h3>
         <p class="card-text">Oversee user accounts, adjust permissions, and handle user-related settings and issues.</p>

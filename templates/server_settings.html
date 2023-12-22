@@ -1,0 +1,83 @@
+{% extends 'bootstrap/base.html' %}
+{% block title %}Server Management{% endblock %}
+
+{% block styles %}
+{{ super() }}
+<link rel="stylesheet" href="{{ url_for('static', filename='styles/server-settings.css') }}">  <!-- Ensure you have this CSS file -->
+<link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet">
+{% endblock %}
+
+{% block navbar %}
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="navbar-nav mr-auto">
+        <a class="navbar-brand" href="{{ url_for('home') }}">Home</a> 
+    </div>
+    <div class="navbar-nav mr-auto">
+        <a class="navbar-brand" href="{{ url_for('add') }}">Add</a>
+    </div>
+    <div class="navbar-nav mr-auto">
+        <a class="navbar-brand" href="{{ url_for('view_logs') }}">Logs</a>
+    </div>
+    <div class="navbar-nav mr-auto">
+        <a class="navbar-brand" href="{{ url_for('admin.admin_settings') }}">Management</a>
+    </div>    
+    <div class="navbar-nav mr-auto">
+        <a class="navbar-brand" href="{{ url_for('about') }}">About</a>
+    </div>
+    <div class="navbar-nav mr-auto">
+        <a class="navbar-brand" href="{{ url_for('settings') }}">
+            <i class="material-icons-outlined">settings</i> 
+        </a>
+    </div>   
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+
+        {% endif %}
+    {% endwith %}
+    
+    <div id="logoutContainer">
+        <div id="logoutBtn">
+            <a class="navbar-brand" href="{{ url_for('logout') }}">
+                Logout
+                <i class="material-icons-outlined">logout</i>
+            </a>
+        </div>                    
+    </div>            
+</nav>
+{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2>Server Management</h2>
+    <div class="server-settings-form">
+        <form method="POST" action="/server_settings">
+            <div class="form-group">
+                <label for="server_port">Server Port:</label>
+                <input type="number" class="form-control port-input" id="server_port" name="server_port" value="{{ current_port }}" min="0" max="9999" oninput="validity.valid||(value='');">
+            </div>
+        </form>
+
+        <form method="POST" action="/server_settings">
+            <input type="hidden" name="server_action" value="restart">
+            <button type="submit" class="btn btn-warning mt-2">Restart Server</button>
+        </form>
+
+        <form method="POST" action="{{ url_for('shutdown_server') }}" id="shutdown-form">
+            <button type="submit" class="btn btn-danger mt-2" id="stop-server-btn">Stop Server</button>
+        </form>
+    </div>
+</div>
+<button type="submit" form="server-settings-form" class="btn btn-primary floating-update-button">Update Settings</button>
+
+<script>
+document.getElementById('stop-server-btn').onclick = function(e) {
+    e.preventDefault();  // Prevent the form from submitting immediately
+    var confirmShutdown = confirm("Are you sure you want to shut down the server?");
+    if (confirmShutdown) {
+        document.getElementById('shutdown-form').submit();
+    }
+};
+</script>
+{% endblock %}

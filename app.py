@@ -28,6 +28,7 @@ import sqlite3
 import logging
 import re
 import uuid
+import signal
 
 logging.basicConfig(filename='MV.log', level=logging.INFO, format='%(asctime)s [%(levelname)s] %(message)s')
 my_logger = logging.getLogger('MV_logger')
@@ -769,6 +770,68 @@ def list_backups():
         logging.error(f'Error listing backups: {e}')
         return jsonify({'success': False, 'message': str(e)})
 
+@app.route('/shutdown', methods=['POST'])
+@login_required
+def shutdown_server():
+    if not current_user.is_admin: 
+        return jsonify({'status': 'error', 'message': 'Unauthorized'}), 401
+
+    try:
+        shutdown_function = request.environ.get('werkzeug.server.shutdown')
+        if shutdown_function is None:
+            raise RuntimeError('Not running the Werkzeug server')
+        
+        shutdown_function()  
+        
+        return jsonify({'status': 'success', 'message': 'Server shutting down...'}), 200
+    except Exception as e:
+        logging.error(f"Failed to shut down server: {e}")
+        return jsonify({'status': 'error', 'message': str(e)}), 500
+
+@app.route('/server_settings', methods=['GET', 'POST'])
+@login_required
+def server_settings():
+    if not current_user.is_admin:
+        flash('Access denied: Admins only.')
+        return redirect(url_for('home'))
+    
+    if request.method == 'POST':
+        # Assuming you have form fields named 'server_port' and 'server_action'
+        new_port = request.form.get('server_port')
+        action = request.form.get('server_action')
+
+        if new_port:
+            # Implement logic to change server port here
+            change_server_port(new_port)
+
+        if action == 'restart':
+            restart_server()
+        elif action == 'stop':
+            stop_server()
+
+        flash('Server settings updated successfully!')
+
+    # Render the server settings page with current configurations
+    current_port = get_current_server_port()  # Implement this function to retrieve current server port
+    return render_template('server_settings.html', current_port=current_port)
+
+def change_server_port(new_port):
+    # Implement your logic to change the server's port
+    pass
+
+def restart_server():
+    try:
+        logging.info("Attempting to restart server.")
+
+        os.execv(__file__, ['python'] + sys.argv)
+
+    except Exception as e:
+        logging.error(f"Failed to restart server: {e}")
+
+def get_current_server_port():
+    # Implement your logic to get the current server's port
+    return '5001'
+
 @app.route('/delete_secret/<name>', methods=['POST'])
 @login_required
 def delete_secret(name):
@@ -825,41 +888,34 @@ def add():
         refresh_time = form.refresh_time.data
         company_id = form.company.data
 
-        if not name or not secret:
-            flash('Name and secret fields cannot be empty.')
-            logging.warning(f"User '{current_user.username}' attempted to add an OTP with empty name or secret.")
+        if not re.match(r'^[a-zA-Z0-9@. ]+$', name):
+            flash('Invalid characters in name. Only alphanumeric characters, "@", ".", and spaces are allowed.')
             return redirect(url_for('add'))
 
         if otp_type not in ['totp', 'hotp']:
             flash('Invalid OTP type. Choose either TOTP or HOTP.')
-            logging.error(f"User '{current_user.username}' submitted an invalid OTP-Type in the /add form.")
             return redirect(url_for('add'))
         
         if len(secret) < 16:
             flash('Secret is too short. It should be at least 16 characters.')
-            logging.warning(f"User '{current_user.username}' attempted to add an OTP with a too short secret.")
             return redirect(url_for('add'))
-        
+
         if not secret.isalnum():
             flash('Secret must contain only alphanumeric characters.')
-            logging.warning(f"User '{current_user.username}' attempted to add an OTP with a secret containing special characters.")
             return redirect(url_for('add'))
 
         if not isinstance(refresh_time, int) or refresh_time <= 0:
             flash('Refresh time must be a positive number.')
-            logging.warning(f"User '{current_user.username}' attempted to add an OTP with invalid refresh time.")
             return redirect(url_for('add'))
 
         valid_base32 = re.fullmatch('[A-Z2-7=]{16,}', secret, re.IGNORECASE)
         if not valid_base32 or len(secret) % 8 != 0:
             flash('Secret must be a valid base32 string with a length that is a multiple of 8 characters.')
-            logging.warning(f"User '{current_user.username}' attempted to add an OTP with an invalid secret.")
-            return rediect(url_for('add'))
+            return redirect(url_for('add'))
 
         suspicious_pattern = re.compile(r'(--|;|--|;|/\*|\*/|char|nchar|varchar|nvarchar|alter|begin|cast|create|cursor|declare|delete|drop|end|exec|execute|fetch|insert|kill|open|select|sys|sysobjects|syscolumns|table|update)', re.IGNORECASE)
         if suspicious_pattern.search(name) or suspicious_pattern.search(secret):
             flash('Suspicious patterns detected in input fields.')
-            logging.warning(f"User '{current_user.username}' attempted to add an OTP with suspicious patterns in input fields.")
             return redirect(url_for('add'))
 
         selected_company_name = next((company['name'] for company in companies_from_db if company['company_id'] == company_id), 'N/A')
@@ -867,7 +923,6 @@ def add():
         existing_otp_secrets = load_from_db()
         if any(secret['name'] == name for secret in existing_otp_secrets):
             flash('A secret with this name already exists. Please choose a different name.')
-            logging.warning(f"User '{current_user.username}' attempted to add an OTP with a duplicate name.")
             return redirect(url_for('add'))
 
         new_otp_secret = {
@@ -881,11 +936,9 @@ def add():
 
         existing_otp_secrets.append(new_otp_secret)
         save_to_db(existing_otp_secrets)
-
         save_companies_to_db(companies_from_db)
 
         flash(f"New OTP secret '{name}' added successfully.")
-        logging.info(f"User '{current_user.username}' added a new OTP secret: {name}")
         return redirect(url_for('home'))
 
     return render_template('add.html', form=form)
