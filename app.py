@@ -401,16 +401,10 @@ def get_last_login_time_from_db():
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
-    username = None 
-    login_successful = False
-
     if request.method == 'POST':
         username = request.form.get('username')
         password = request.form.get('password')
         keep_logged_in = 'keep_logged_in' in request.form
-
-        if username and username.lower() == 'none':
-            username = None
 
         with sqlite3.connect("otp.db") as db:
             cursor = db.cursor()
@@ -432,7 +426,7 @@ def login():
             last_login_time = datetime.now().strftime('%d/%m/%Y %H:%M:%S')
             with sqlite3.connect("otp.db") as db:
                 cursor = db.cursor()
-                cursor.execute("UPDATE users SET last_login_time = ? WHERE id = ?", (last_login_time, user[0]))
+                cursor.execute("UPDATE users SET last_login_time = ?, session_token = ? WHERE id = ?", (last_login_time, session_token, user[0]))
                 db.commit()
 
             user_obj = UserMixin()
@@ -440,20 +434,13 @@ def login():
             user_obj.username = user[1]
             login_user(user_obj)
 
-            with sqlite3.connect("otp.db") as db:
-                cursor = db.cursor()
-                cursor.execute("UPDATE users SET session_token = ? WHERE id = ?", (session_token, user[0]))
-                db.commit()
-
-            login_successful = True 
+            return redirect(url_for('home')) 
 
         else:
             flash('Die Zugangsdaten konnten nicht validiert werden!')
             my_logger.warning(f"Failed login attempt for user: {username}")
-            if username and username.lower() == 'none':
-                username = None
 
-    return render_template('login.html', login_successful=login_successful, username=username)
+    return render_template('login.html')
 
 @app.route('/profile')
 @login_required
