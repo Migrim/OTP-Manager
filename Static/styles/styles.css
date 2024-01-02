@@ -350,3 +350,30 @@ body {
     background-color: #2e2e2e;
     cursor: pointer;
 }
+
+@keyframes fadeInScale {
+    0% {
+        opacity: 0;
+        transform: scale(0.95);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.no-secrets {
+    display: inline-block; 
+    margin-top: 20px; 
+    font-size: 2rem; 
+    border: 1px solid #757575;
+    padding: 10px 20px;
+    border-radius: 10px; 
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); 
+    position: absolute;
+    top: 50%; 
+    left: 50%;
+    transform: translate(-50%, -50%); 
+    background: #222; 
+    animation: fadeInScale 1s ease-out forwards; 
+}

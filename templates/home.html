@@ -74,7 +74,9 @@
                 {% endfor %}
             </select>            
         </form>
-        
+
+        <div id="noSecretsFound" class="no-secrets text-center" style="display: none;">No secrets found :3</div>
+
         <div class="row">
             {% for company, otp_list in grouped_otp_codes.items() %}
                 <div class="col-md-12 mt-4">
@@ -326,19 +328,21 @@
                     startAutoRefresh();
                 };
 
-                    document.getElementById('searchInput').addEventListener('input', function() {
-                        var filter = this.value.toUpperCase();
-                        var rowDiv = document.querySelector('.row'); 
-                        
-                        var otpDivs = rowDiv.querySelectorAll('.col-md-4');
-                        otpDivs.forEach(function(div) {
-                            var name = div.querySelector('.alert').textContent;
-                            if (name.toUpperCase().indexOf(filter) > -1) {
-                                div.style.display = 'block';
-                            } else {
-                                div.style.display = 'none';
-                            }
-                        });
+                document.getElementById('searchInput').addEventListener('input', function() {
+                    var filter = this.value.toUpperCase();
+                    var rowDiv = document.querySelector('.row'); 
+                    
+                    var otpDivs = rowDiv.querySelectorAll('.col-md-4');
+                    var displayed = 0;
+                    otpDivs.forEach(function(div) {
+                        var name = div.querySelector('.alert').textContent;
+                        if (name.toUpperCase().indexOf(filter) > -1) {
+                            div.style.display = 'block';
+                            displayed++;
+                        } else {
+                            div.style.display = 'none';
+                        }
+                    });
                         
                         var companyGroups = rowDiv.querySelectorAll('.col-md-12.mt-4');
                         companyGroups.forEach(function(companyGroup) {
@@ -359,13 +363,20 @@
                                 companyGroup.style.display = 'none';
                             }
                         });
+
+                        // Show or hide the "No matched secrets found" message based on the displayed count
+                        if (displayed === 0) {
+                            document.getElementById('noSecretsFound').style.display = 'block';
+                        } else {
+                            document.getElementById('noSecretsFound').style.display = 'none';
+                        }
                     });
 
                     document.getElementById('searchInput').addEventListener('keydown', function(event) {
                         if (event.key === 'Enter') {
                             event.preventDefault();
                             let query = encodeURIComponent(this.value);
-                            
+
                             var otpDivs = document.getElementsByClassName('col-md-4');
                             var displayed = 0;
                             for (var i = 0; i < otpDivs.length; i++) {
@@ -375,8 +386,9 @@
                             }
                             
                             if (displayed === 0) {
-                                alert("No matched secrets");
+                                document.getElementById('noSecretsFound').style.display = 'block'; // Show the "no secrets" message
                             } else {
+                                document.getElementById('noSecretsFound').style.display = 'none'; // Hide the "no secrets" message
                                 window.location.href = `/search_otp?name=${query}`;
                             }
                         }

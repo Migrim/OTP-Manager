@@ -83,7 +83,7 @@ def search_otp():
     if matched_secrets:
         return render_template('otp.html', matched_secrets=matched_secrets)
     else:
-        return 'No matches found', 404
+        return render_template('no_secrets.html')
 
 if __name__ == '__main__':
     app.run(debug=True)

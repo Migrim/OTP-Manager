@@ -43,7 +43,7 @@ Bootstrap(app)
 
 from admin_routes import admin_bp
 app.register_blueprint(admin_bp, url_prefix='/admin')
-app.register_blueprint(search_blueprint)
+app.register_blueprint(search_blueprint, url_prefix='/search_blueprint')
 
 login_manager = LoginManager()
 login_manager.init_app(app)
@@ -216,6 +216,11 @@ def get_all_users():
         users = cursor.fetchall()
     return users
 
+@app.route('/show_endpoints')
+def show_endpoints():
+    import pprint
+    return pprint.pformat(app.url_map)
+
 def update_statistics(logins=0, refreshed=0):
     today = datetime.now().strftime('%Y-%m-%d')
     with sqlite3.connect("otp.db") as db:
@@ -294,6 +299,7 @@ def login_required(f):
         session_token = session.get('session_token')
 
         if not user_id or not session_token:
+            app.logger.info("Redirecting to login: No user_id or session_token")
             return redirect(url_for('login'))
         
         with sqlite3.connect("otp.db") as db:
@@ -401,6 +407,10 @@ def get_last_login_time_from_db():
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
+    # If user is already logged in, redirect to home or dashboard immediately
+    if 'user_id' in session:
+        return redirect(url_for('home'))
+
     if request.method == 'POST':
         username = request.form.get('username')
         password = request.form.get('password')
@@ -416,10 +426,7 @@ def login():
             session['user_id'] = user[0]
             session['session_token'] = session_token
 
-            if keep_logged_in:
-                session.permanent = True 
-            else:
-                session.permanent = False
+            session.permanent = keep_logged_in
 
             my_logger.info(f"User: {username} Logged in!")
 
@@ -596,7 +603,7 @@ def home():
     except Exception as e:
         logging.error('An error occurred on the home page.', exc_info=True)
         flash('An unexpected error occurred.')
-        return redirect(url_for('home'))
+        return render_template('home.html')
 
 @app.route('/get_logs', methods=['GET'])
 @login_required
