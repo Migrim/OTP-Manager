@@ -175,7 +175,7 @@
 
 
         function validateName(name) {
-            var validNamePattern = /^[a-zA-Z0-9@. ]+$/;
+            var validNamePattern = /^[a-zA-Z0-9@. ]+$/; 
             return name && name.length >= 4 && validNamePattern.test(name);
         }
 
@@ -192,7 +192,7 @@
         }
 
         $("input[name='name']").on("input", function() {
-            if ($(this).val().length >= 4) {
+            if ($(this).val().length >= 5) {
                 $("#nameCheck").show();
             } else {
                 $("#nameCheck").hide();
@@ -201,7 +201,7 @@
 
         $("input[name='secret']").on('input', function() {
             this.value = this.value.toUpperCase();
-            if ($(this).val().length >= 16) {
+            if ($(this).val().length == 16) {
                 $("#secretCheck").show();
             } else {
                 $("#secretCheck").hide();
