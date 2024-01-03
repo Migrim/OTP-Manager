@@ -10584,3 +10584,6 @@ werkzeug.routing.exceptions.BuildError: Could not build url for endpoint 'search
 2024-01-02 20:39:00,426 Redirecting to login: No user_id or session_token
 2024-01-02 20:39:30,601 Redirecting to login: No user_id or session_token
 2024-01-02 20:40:00,847 Redirecting to login: No user_id or session_token
+2024-01-03 18:46:52,571 [INFO] Server started on port 5001.
+2024-01-03 18:46:58,293 Redirecting to login: No user_id or session_token
+2024-01-03 21:09:55,125 [INFO] User: admin Logged in!

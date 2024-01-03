@@ -74,9 +74,12 @@ body {
 }
 
 #logs-table th:nth-child(1), 
-#logs-table th:nth-child(2), 
-#logs-table th:nth-child(3) { 
+#logs-table th:nth-child(2) { 
     width: 1%; 
+}
+
+#logs-table th:nth-child(3) { 
+    width: 3%;
 }
 
 .logs-box div {
@@ -253,7 +256,8 @@ button {
     color: white; 
     transition: all 0.2s ease-in-out 0ms;
     user-select: none;
-    font-family: 'Poppins', sans-serif;
+    font-size: small;
+    font-family: 'Roboto', sans-serif;
 }
 
 button:hover {

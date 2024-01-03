@@ -74,7 +74,7 @@
             </div>
             <div class="form-group form-group-with-icon">
                 {{ form.secret.label }} 
-                {{ form.secret(class="form-control", placeholder="Enter a unique secret", title="Enter a secure secret, at least 16 characters") }}
+                {{ form.secret(class="form-control", placeholder="Enter a 16-character secret", title="Enter a secure secret, exactly 16 characters") }}
                 <span class="validation-icon" id="secretCheck"><i class="material-icons-outlined">check_small</i></span>
             </div>
             <div class="form-group"> 
@@ -115,6 +115,23 @@
         </div>
     </div>
 </div>
+
+<div class="modal fade" id="errorModal" tabindex="-1" role="dialog" aria-labelledby="errorModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="errorModalLabel">Form Error</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" id="errorModalText">
+
+            </div>
+        </div>
+    </div>
+</div>
+
 {% endblock %} 
 
 {% block scripts %}
@@ -137,10 +154,12 @@
             $("input[name='secret']").val(secret);
 
             if (!validateName(name)) {
+                errorMsgs.push("The name must be at least 4 characters long and contain only alphanumeric characters, @, or .");
                 valid = false;
             }
 
             if (!validateSecret(secret)) {
+                errorMsgs.push("Secret must be at least 16 characters long and consist of uppercase letters A-Z, numbers 2-7, or the '=' character.");
                 valid = false;
             }
 
@@ -150,29 +169,28 @@
             }
 
             if (!["totp", "hotp"].includes(otpType.toLowerCase())) {
-                errorMsgs.push("OTP type is invalid.");
+                errorMsgs.push("Invalid OTP type selected. Only TOTP is supported at this moment.");
                 valid = false;
             }
 
             if (!Number.isInteger(parseInt(refreshTime)) || parseInt(refreshTime) <= 0) {
-                errorMsgs.push("Refresh time must be a positive number");
+                errorMsgs.push("Refresh time must be a positive integer number.");
                 valid = false;
             }
 
             const suspiciousPattern = /(--|;|--|;|\/\*|\*\/|char|nchar|varchar|nvarchar|alter|begin|cast|create|cursor|declare|delete|drop|end|exec|execute|fetch|insert|kill|open|select|sys|sysobjects|syscolumns|table|update)/i;
             if (suspiciousPattern.test(name) || suspiciousPattern.test(secret)) {
-                errorMsgs.push("Suspicious patterns detected in input fields");
+                errorMsgs.push("Your input contains suspicious patterns. Please remove any special SQL or programming keywords.");
                 valid = false;
             }
 
             if (!valid) {
                 e.preventDefault();
-                alert(errorMsgs.join("\n"));
-                $('.toast').toast({ delay: 5000 });
-                $('.toast').toast('show');
+                let errorMessageHtml = errorMsgs.join("<br/>");
+                $('#errorModalText').html(errorMessageHtml);
+                $('#errorModal').modal('show');
             }
         });
-
 
         function validateName(name) {
             var validNamePattern = /^[a-zA-Z0-9@. ]+$/; 
@@ -180,7 +198,7 @@
         }
 
         function validateSecret(secret) {
-            return secret && secret.length >= 16;
+            return secret && /^[A-Z2-7=]{16,}$/.test(secret); // RegEx for uppercase letters, numbers 2-7, or '='
         }
 
         function updateValidationStatus(isValid, elementID) {

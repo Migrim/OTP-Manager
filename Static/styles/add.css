@@ -210,3 +210,39 @@ select.form-control option {
                     0 0 30px rgba(138, 43, 226, 0.5);
     }
 }
+
+.modal-content {
+    background-color: #333; 
+    color: #fff;
+    border-radius: 10px; 
+    padding: 15px; /* Adjust as needed */
+    display: inline-block; /* Allows the content to define the width */
+}
+
+.modal-header {
+    border-bottom: none; /* Remove the border if you want a cleaner look */
+    padding-bottom: 0; /* Remove padding to tighten the spacing */
+    display: flex; /* Ensure flex layout */
+    justify-content: space-between; /* Space between title and close button */
+    align-items: center; /* Align items center */
+}
+
+.modal-title {
+    margin-bottom: 0; /* Remove margin for tighter fit */
+}
+
+.modal-header .close {
+    color: #aaa;
+    padding: 0; /* Reduce padding for tighter fit */
+    margin: 0 0 0 auto; /* Align to the right */
+}
+
+.modal-dialog {
+    margin: 30vh auto; /* Centered horizontally and vertically */
+    max-width: none; /* Allows modal width to fit the content */
+}
+
+.modal-body {
+    padding: 10px; /* Adjust padding for body */
+    overflow-y: auto; /* Keep as is for overflow content */
+}

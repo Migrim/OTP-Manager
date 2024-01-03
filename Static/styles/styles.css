@@ -131,10 +131,10 @@ body {
     margin-left: 8px; 
 }
 
-@keyframes scaleFadeIn {
+@keyframes smoothFadeIn {
     0% {
         opacity: 0;
-        transform: scale(0.95);
+        transform: scale(0.95); 
     }
     100% {
         opacity: 1;
@@ -151,8 +151,8 @@ body {
     box-shadow: 
         0 4px 8px rgba(0, 0, 0, 0.2),
         inset 0 2px 4px rgba(100, 100, 100, 0.2);
-    border-radius: 5px;
-    animation: scaleFadeIn 0.5s ease-out;
+    border-radius: 10px;
+    animation: smoothFadeIn 1s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
 
 .otp-code {
@@ -281,10 +281,26 @@ body {
     text-align: center;
 }
 
+.flash-expiring {
+    color: #cc5c5c;
+    animation: flash 1s steps(1, end) infinite; 
+}
+
+.flash-expiring-faster {
+    color: #cc5c5c;
+    animation: flash 0.5s steps(1, end) infinite;
+}
+
+.flash-expiring-fastest {
+    color: #cc5c5c;
+    animation: flash 0.25s steps(1, end) infinite; 
+}
+
 @keyframes flash {
     0%, 100% { opacity: 1; }
-    50% { opacity: 0.5; }
+    50% { opacity: 0; }
 }
+
 
 .flash {
     animation: flash 1.5s 2;
@@ -298,19 +314,6 @@ body {
     padding: 10px;
     font-size: 12px;
     opacity: 0.5;
-}
-
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-    }
-    to {
-        opacity: 1;
-    }
-}
-
-.fade-in {
-    animation: fadeIn 1s forwards;
 }
 
 .custom-active {
@@ -362,6 +365,14 @@ body {
     }
 }
 
+.parent {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; 
+    width: 100vw;
+}
+
 .no-secrets {
     display: inline-block; 
     margin-top: 20px; 
@@ -372,8 +383,12 @@ body {
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); 
     position: absolute;
     top: 50%; 
-    left: 50%;
+    left: 43%;
     transform: translate(-50%, -50%); 
     background: #222; 
     animation: fadeInScale 1s ease-out forwards; 
+}
+
+.btn-group {
+    margin-top: 5px; 
 }

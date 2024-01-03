@@ -65,9 +65,9 @@
         <button id="toggle-btn" aria-label="Toggle Filter">
             Show Start Messages
         </button>
-        <button id="warning-btn" class="log-filter-btn" aria-label="Toggle Warning">Warning Messages</button>
-        <button id="info-btn" class="log-filter-btn" aria-label="Toggle Info">Info Messages</button>
-        <button id="error-btn" class="log-filter-btn" aria-label="Toggle Error">Error Messages</button>
+        <button id="warning-btn" class="log-filter-btn" aria-label="Toggle Warning">Warn</button>
+        <button id="info-btn" class="log-filter-btn" aria-label="Toggle Info">Info</button>
+        <button id="error-btn" class="log-filter-btn" aria-label="Toggle Error">Errors</button>    
     </div>
 </div>
 
@@ -134,7 +134,7 @@
             var logLines = logs.split('\n');
             $('#logs').empty(); 
             logLines.forEach(function(logLine) {
-                var logMatch = logLine.match(/(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2},\d{3}) \[(\w+)\] (.+)/);
+                var logMatch = logLine.match(/(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}),\d{3} \[(\w+)\] (.+)/);
                 if (logMatch) {
                     var type = logMatch[2].toLowerCase();
                     if ((type === 'warning' && !logFilters.showWarning) ||
@@ -143,11 +143,11 @@
                         (type === 'start' && !logFilters.showStart)) {
                         return; 
                     }
-                    var datetime = logMatch[1];
+                    var datetime = logMatch[1]; // Now only contains date and time (HH:MM:SS) without milliseconds
                     var message = logMatch[3];
                     var datetimeParts = datetime.split(' ');
                     var date = datetimeParts[0];
-                    var time = datetimeParts[1];
+                    var time = datetimeParts[1]; // No longer contains milliseconds
                     var typeClass = type.toLowerCase() === 'error' ? 'error-log' : type.toLowerCase() + '-log';
                     var logRow = '<tr>' +
                                     '<td>' + date + '</td>' +

@@ -260,21 +260,34 @@
 
                 function startTimer(elementId, duration) {
                     var display = document.getElementById(elementId);
+                    var exclamation = document.createElement('span');
+                    exclamation.textContent = ' !';
+                    exclamation.style.color = '#cc5c5c'; 
 
                     function updateDisplay() {
                         var localTime = new Date();
                         var secondsElapsed = localTime.getSeconds() % duration;
                         var timer = duration - secondsElapsed - 1;
-                        var minutes = parseInt(timer / 60, 10);
                         var seconds = parseInt(timer % 60, 10);
 
-                        minutes = minutes < 10 ? "0" + minutes : minutes;
                         seconds = seconds < 10 ? "0" + seconds : seconds;
 
                         if (timer <= 5) {
-                            display.textContent = "Remaining Time: " + seconds + "s - Expiring!";
+                            display.textContent = "Remaining Time: " + seconds + "s - Expiring";
+                            display.appendChild(exclamation);
+
+                            var flashSpeed = 1;
+                            if (timer <= 4) flashSpeed = 0.8;
+                            if (timer <= 3) flashSpeed = 0.6;
+                            if (timer <= 2) flashSpeed = 0.4;
+                            if (timer <= 1) flashSpeed = 0.2;
+
+                            exclamation.style.animation = `flash ${flashSpeed}s steps(1, end) infinite`;
                         } else {
                             display.textContent = "Remaining Time: " + seconds + "s";
+                            if (display.contains(exclamation)) {
+                                display.removeChild(exclamation);
+                            }
                         }
                     }
 
