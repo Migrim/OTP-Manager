@@ -92,6 +92,7 @@
     }
     
     .form-submit {
+        border-radius: 8px;
         margin-top: 20px;
         background-color: #CD5C5C; 
         border: none;
@@ -188,8 +189,8 @@
         max-width: 220px;
         height: 45px;
         padding: 16px;
-        border-radius: 12px;
-        border: 1.5px solid lightgrey;
+        border-radius: 15px;
+        border: 1px solid lightgrey;
         outline: none;
         transition: all 0.3s cubic-bezier(0.19, 1, 0.22, 1);
         box-shadow: 0px 0px 20px -18px;
@@ -315,7 +316,7 @@
         function drawMatrix() {
             ctx.fillStyle = "rgba(0, 0, 0, 0.04)"; 
             ctx.fillRect(0, 0, c.width, c.height);
-            ctx.fillStyle = "#AF478C"; 
+            ctx.fillStyle = "#00BCE3"; 
             ctx.font = font_size + "px arial";
 
             for(var i = 0; i < drops.length; i++) {

@@ -1,83 +1,160 @@
-{% extends 'bootstrap/base.html' %}
-{% block title %}Server Management{% endblock %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Server Settings Dashboard</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/dashboard.css') }}">  
+</head>
+<body>
 
-{% block styles %}
-{{ super() }}
-<link rel="stylesheet" href="{{ url_for('static', filename='styles/server-settings.css') }}">  <!-- Ensure you have this CSS file -->
-<link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
-<link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet">
-{% endblock %}
+<div class="dashboard-container">
+    <header>
+        <h1><span class="material-icons">settings</span> Server Settings Dashboard</h1>
+    </header>
 
-{% block navbar %}
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <div class="navbar-nav mr-auto">
-        <a class="navbar-brand" href="{{ url_for('home') }}">Home</a> 
-    </div>
-    <div class="navbar-nav mr-auto">
-        <a class="navbar-brand" href="{{ url_for('add') }}">Add</a>
-    </div>
-    <div class="navbar-nav mr-auto">
-        <a class="navbar-brand" href="{{ url_for('view_logs') }}">Logs</a>
-    </div>
-    <div class="navbar-nav mr-auto">
-        <a class="navbar-brand" href="{{ url_for('admin.admin_settings') }}">Management</a>
-    </div>    
-    <div class="navbar-nav mr-auto">
-        <a class="navbar-brand" href="{{ url_for('about') }}">About</a>
-    </div>
-    <div class="navbar-nav mr-auto">
-        <a class="navbar-brand" href="{{ url_for('settings') }}">
-            <i class="material-icons-outlined">settings</i> 
-        </a>
-    </div>   
-    {% with messages = get_flashed_messages() %}
-        {% if messages %}
-
-        {% endif %}
-    {% endwith %}
-    
-    <div id="logoutContainer">
-        <div id="logoutBtn">
-            <a class="navbar-brand" href="{{ url_for('logout') }}">
-                Logout
-                <i class="material-icons-outlined">logout</i>
-            </a>
-        </div>                    
-    </div>            
-</nav>
-{% endblock %}
-
-{% block content %}
-<div class="container mt-5">
-    <h2>Server Management</h2>
-    <div class="server-settings-form">
-        <form method="POST" action="/server_settings">
-            <div class="form-group">
-                <label for="server_port">Server Port:</label>
-                <input type="number" class="form-control port-input" id="server_port" name="server_port" value="{{ current_port }}" min="0" max="9999" oninput="validity.valid||(value='');">
+    <section class="server-settings">
+        <h2>Server Settings</h2>
+        <form method="post">
+            <div class="input-group">
+                <label for="server_port">Change Port:</label>
+                <input type="number" id="server_port" name="server_port" min="1024" max="65535" required>
+            </div>
+            <div class="input-group">
+                <label>Server Control:</label>
+                <button type="submit" name="server_action" value="restart"><span class="material-icons">refresh</span> Restart</button>
+                <button type="submit" name="server_action" value="stop"><span class="material-icons">stop</span> Stop</button>
             </div>
         </form>
+    </section>
 
-        <form method="POST" action="/server_settings">
-            <input type="hidden" name="server_action" value="restart">
-            <button type="submit" class="btn btn-warning mt-2">Restart Server</button>
-        </form>
+    <section class="system-backups">
+        <h2>System Backups</h2>
+        <button type="button"><span class="material-icons">backup</span> Create Backup</button>
+        <button type="button"><span class="material-icons">restore</span> Restore Backup</button>
+        <ul id="backupList">
+        </ul>
+    </section>
 
-        <form method="POST" action="{{ url_for('shutdown_server') }}" id="shutdown-form">
-            <button type="submit" class="btn btn-danger mt-2" id="stop-server-btn">Stop Server</button>
-        </form>
+    <section class="customization">
+        <h2>Customization</h2>
+        <div class="input-group">
+            <label for="colorTheme">Login Matrix Color:</label>
+            <input type="color" id="colorTheme" name="colorTheme">
+        </div>
+        <div class="input-group">
+            <label>Among Us Mode:</label>
+            <button type="button"><span class="material-icons">sports_esports</span> Toggle Among Us Mode</button>
+        </div>
+        <div class="input-group">
+            <label for="matrixSpeed">Matrix Speed:</label>
+            <input type="range" id="matrixSpeed" name="matrixSpeed" min="1" max="10">
+        </div>
+    </section>
+</div>
+
+<div id="backupModal" class="modal">
+    <!-- Modal content -->
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <p>Are you sure you want to create a backup?</p>
+        <button id="confirmBackup" type="button"><span class="material-icons">check_circle</span> Yes</button>
+        <button id="cancelBackup" type="button"><span class="material-icons">cancel</span> No</button>
     </div>
 </div>
-<button type="submit" form="server-settings-form" class="btn btn-primary floating-update-button">Update Settings</button>
 
 <script>
-document.getElementById('stop-server-btn').onclick = function(e) {
-    e.preventDefault();  // Prevent the form from submitting immediately
-    var confirmShutdown = confirm("Are you sure you want to shut down the server?");
-    if (confirmShutdown) {
-        document.getElementById('shutdown-form').submit();
+    // Get the modal
+    var modal = document.getElementById("backupModal");
+    
+    // Get the button that opens the modal
+    var btn = document.querySelector(".system-backups button");
+    
+    // Get the <span> element that closes the modal
+    var span = document.getElementsByClassName("close")[0];
+    
+    // Get the confirmation button
+    var confirmBtn = document.getElementById("confirmBackup");
+    
+    // Get the cancel button
+    var cancelBtn = document.getElementById("cancelBackup");
+    
+    // When the user clicks the button, open the modal 
+    btn.onclick = function() {
+      modal.style.display = "block";
     }
-};
+    
+    // When the user clicks on <span> (x), close the modal
+    span.onclick = function() {
+      modal.style.display = "none";
+    }
+    
+    // When the user clicks confirm
+    confirmBtn.onclick = function() {
+        fetch('/create_backup', {
+            method: 'GET',  // or 'POST' if you change your route to accept POST
+        })
+        .then(response => response.json())
+        .then(data => {
+            // Check the response from Flask
+            if(data.success) {
+            alert("Backup created successfully at " + data.message); // Show success message
+            } else {
+            alert("Backup failed: " + data.message); // Show error message
+            }
+            modal.style.display = "none"; // Hide the modal
+        })
+        .catch((error) => {
+            console.error('Error:', error);
+            alert("Backup failed: " + error); // Show error message
+            modal.style.display = "none"; // Hide the modal
+        });
+    }
+
+    
+    // When the user clicks cancel
+    cancelBtn.onclick = function() {
+      modal.style.display = "none";
+    }
+    
+    // When the user clicks anywhere outside of the modal, close it
+    window.onclick = function(event) {
+      if (event.target == modal) {
+        modal.style.display = "none";
+      }
+    }
+
+document.addEventListener('DOMContentLoaded', function() {
+    function fetchAndDisplayBackups() {
+        fetch('/list_backups', {
+            method: 'GET'
+        })
+        .then(response => response.json())
+        .then(data => {
+            if(data.success) {
+                const backupList = document.getElementById('backupList');
+                backupList.innerHTML = "";  // Clear current list
+                data.backups.forEach(backup => {
+                    let li = document.createElement('li');
+                    li.textContent = backup;
+                    backupList.appendChild(li);
+                });
+            } else {
+                alert("Failed to fetch backups: " + data.message);
+            }
+        })
+        .catch((error) => {
+            console.error('Error:', error);
+            alert("Failed to fetch backups: " + error);
+        });
+    }
+
+    fetchAndDisplayBackups();
+});
 </script>
-{% endblock %}
+
+</body>
+</html>

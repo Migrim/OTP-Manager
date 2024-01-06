@@ -407,7 +407,6 @@ def get_last_login_time_from_db():
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
-    # If user is already logged in, redirect to home or dashboard immediately
     if 'user_id' in session:
         return redirect(url_for('home'))
 
@@ -703,20 +702,26 @@ def create_backup():
             logging.warning('Non-admin user attempted to create a backup.')
             return jsonify({'success': False, 'message': 'Not authorized'})
         
+        # Define the paths and check if the database exists
+        db_path = "otp.db"  # Adjust if your database is located elsewhere
+        if not os.path.isfile(db_path):
+            logging.error('Database file not found for backup.')
+            return jsonify({'success': False, 'message': 'Database file not found'})
+
         backup_folder = "backups"
         if not os.path.exists(backup_folder):
             os.makedirs(backup_folder)
 
+        # Create a backup
         timestamp = datetime.now().strftime("%Y%m%d%H%M%S")
         backup_file_path = os.path.join(backup_folder, f"otp_backup_{timestamp}.db")
-
-        shutil.copy2("otp.db", backup_file_path)
+        shutil.copy2(db_path, backup_file_path)
         logging.info(f'Backup created at {backup_file_path}')
 
-        return jsonify({'success': True, 'message': f'Backup created at {backup_file_path}'})
+        return jsonify({'success': True, 'message': backup_file_path})  # Send back the backup file path
     except Exception as e:
         logging.error(f'Error creating backup: {e}', exc_info=True)
-        return jsonify({'success': False, 'message': str(e)})
+        return jsonify({'success': False, 'message': str(e)}) 
 
 @app.route('/load_backup', methods=['POST'])
 @login_required
@@ -757,7 +762,8 @@ def list_backups():
         backup_folder = "backups"
         backups = []
         if os.path.exists(backup_folder):
-            backups = os.listdir(backup_folder)
+            # Fetch all backup files and sort them by modification time, newest first
+            backups = sorted(os.listdir(backup_folder), key=lambda x: os.path.getmtime(os.path.join(backup_folder, x)), reverse=True)
         
         return jsonify({'success': True, 'backups': backups})
     except Exception as e:
@@ -806,7 +812,7 @@ def server_settings():
         flash('Server settings updated successfully!')
 
     # Render the server settings page with current configurations
-    current_port = get_current_server_port()  # Implement this function to retrieve current server port
+    current_port = get_current_server_port()  
     return render_template('server_settings.html', current_port=current_port)
 
 def change_server_port(new_port):
