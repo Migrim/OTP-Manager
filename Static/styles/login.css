@@ -1,0 +1,318 @@
+body {
+    background: #333; 
+    color: #ffffff; 
+    font-family: 'Roboto', sans-serif;
+    position: relative;
+    height: 100vh;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+@keyframes slideIn {
+    from {
+        top: -50px;
+        opacity: 0;
+    }
+    to {
+        top: 20px;
+        opacity: 1;
+    }
+}
+
+body.loaded {
+    transition: background 1s ease-in-out;
+}
+
+a {
+    color: #0d6efd;
+}
+
+a:hover {
+    color: #0056b3;
+}
+
+.center-content {
+    display: flex;
+    flex-direction: column; 
+    align-items: center; 
+    justify-content: center; 
+    height: 100vh; 
+}
+
+.form-container {
+    max-width: 350px; 
+    width: 100%;
+    padding: 20px; 
+    margin-bottom: 20px;
+    border-radius: 20px; 
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); 
+    background: #333333;
+    opacity: 0;
+    transition: opacity 0.6s ease-out, transform 0.3s ease;
+    transition: opacity 0.6s ease-out; /* Smooth transition for opacity */
+    opacity: 1;
+}
+
+.form-container.fade-out {
+    opacity: 0; /* Fully transparent when faded out */
+    transition: opacity 0.6s ease-out; /* Transition for fading out */
+}
+
+.instruction-text {
+    font-size: 14px; 
+    text-align: center; 
+    font-style: italic;
+    width: 80%;
+    line-height: 1.4; 
+}
+
+.form-title {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.form-control {
+    border-radius: 5px;
+    background: #3a3a3a;
+    color: #ffffff;
+}
+
+.form-control:focus {
+    border-color: #555;
+    box-shadow: none;
+}
+
+.form-submit {
+    border-radius: 8px;
+    margin-top: 20px;
+    background-color: #CD5C5C; 
+    border: none;
+    transition: background-color 0.3s ease;
+}
+
+.form-submit:hover {
+    background-color: #B94A4A;
+}
+
+.loader {
+    border: 5px solid #f3f3f3; 
+    border-top: 5px solid #555; 
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    animation: spin 1s linear infinite;
+    display: none;
+}
+
+.flash-messages {
+    position: absolute;
+    top: 10px; 
+    left: 50%; 
+    transform: translateX(-50%); 
+    padding: 10px 20px; 
+    text-align: center;
+    font-size: 14px;
+    color: #fff;
+    opacity: 0;
+    z-index: 1;
+    transition: opacity 0.5s ease;
+    animation: glowEffect 2s infinite; 
+}
+
+@keyframes glowEffect {
+    0%, 100% {
+        background: radial-gradient(circle at center, #110e0e 0%, transparent 80%);
+        transform: scale(1);
+        opacity: 0.6;
+    }
+    50% {
+        background: radial-gradient(circle at center, #3d3737 0%, transparent 80%);
+        transform: scale(1.2);
+        opacity: 1;
+    }
+}
+
+.flash-messages .alert-danger {
+    background-color: #333333; 
+    border: none; 
+    color: #ffffff; 
+    box-shadow: none; 
+    animation: glowEffect 2s infinite;
+}
+
+.idle-animation {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out;
+    pointer-events: none;
+    z-index: 2;
+}
+
+.idle-animation.active { 
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.idle-animation-text {
+    color: #ffffff;
+    font-size: 24px;
+    text-align: center;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.wave-group {
+    width: 100%; 
+    display: flex; 
+    justify-content: center; 
+    margin-bottom: 10px;
+}
+
+.input {
+    width: 100%;
+    max-width: 220px;
+    height: 45px;
+    padding: 16px;
+    border-radius: 15px;
+    border: 1px solid lightgrey;
+    outline: none;
+    transition: all 0.3s cubic-bezier(0.19, 1, 0.22, 1);
+    box-shadow: 0px 0px 20px -18px;
+    background: #3a3a3a; 
+    color: #ffffff;
+}
+
+.input:hover {
+    border: 2px solid lightgrey;
+    box-shadow: 0px 0px 20px -17px;
+}
+
+.form-check {
+    text-align: center;
+    margin-top: 15px;
+    margin-bottom: 15px
+}
+
+.cl-checkbox {
+    position: relative;
+    display: inline-block;
+}
+
+.cl-checkbox > input {
+    appearance: none;
+    -moz-appearance: none;
+    -webkit-appearance: none;
+    z-index: -1;
+    position: absolute;
+    left: -10px;
+    top: -8px;
+    display: block;
+    margin: 0;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    background-color: rgba(0, 0, 0, 0.6);
+    box-shadow: none;
+    outline: none;
+    opacity: 0;
+    transform: scale(1);
+    pointer-events: none;
+    transition: opacity 0.3s, transform 0.2s;
+}
+
+#matrixEffect {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: #1d1d1d;
+    z-index: -1; 
+    font-family: 'Courier New', Courier, monospace;
+    overflow: hidden;
+    display: block; 
+}
+
+.welcome-message {
+    color: #ffffff;
+    font-size: 36px; 
+    text-align: center;
+    margin-top: 20px;
+}
+
+#whatsNewIcon {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    font-size: 24px; /* Size of the icon */
+    cursor: pointer;
+    animation: glowEffect 2s infinite;
+    z-index: 1001; /* Make sure it's above other elements */
+    border: none;
+    background: transparent; /* Ensuring background is transparent */
+    transition: opacity 0.5s ease;
+    /* Removed box-shadow as it's being controlled by the animation */
+}
+
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0,0,0,0.8); /* Darker background w/ more opacity */
+}
+
+.modal-content {
+    background-color: #333; /* Dark background for the content */
+    margin: 5% auto; /* Less vertical space to make it appear more centered */
+    padding: 15px; /* Reduced padding for a more compact layout */
+    border: 1px solid #555; /* Darker border color */
+    width: 50%; /* Reduced width to make the modal smaller */
+    color: #ddd; /* Light text color for contrast */
+    border-radius: 10px; /* Rounded corners for the modal */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Subtle shadow for depth */
+}
+
+ul {
+    padding: 0;
+    margin: 0; /* Remove default margin */
+    list-style-type: none; /* No bullets */
+}
+
+ul li {
+    margin-bottom: 10px; /* Reduced space between list items for compactness */
+    color: #ddd; /* Light text color for readability */
+    font-size: 14px; /* Reduced font size for compactness */
+}
+
+.close {
+    color: #bbb; /* Lighter color for the close button */
+    float: right;
+    font-size: 24px; /* Smaller close button */
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.close:hover,
+.close:focus {
+    color: #fff; /* Lighter color on hover for better visibility */
+    text-decoration: none;
+}

@@ -47,7 +47,7 @@
             width: 50%;
             background-color: #252526;
             border: 1px solid #dee2e6;
-            border-radius: 0.25rem;
+            border-radius: 20px;
             animation: scaleFadeIn 0.8s ease-in-out;
         }
 
@@ -199,6 +199,20 @@
             background-color: red;
             color: white;
         }
+
+        .colorSwatch {
+            display: inline-block;
+            width: 30px;
+            height: 30px;
+            margin: 5px;
+            border: 1px solid #000;
+            cursor: pointer;
+            border-radius: 6px;
+        }
+
+        .colorSwatch.selected {
+            box-shadow: 0 0 8px 1px #a386bf; 
+        }
     </style>
 {% endblock %}
 
@@ -276,10 +290,88 @@
                 <span class="slider"></span>
             </label>
             <span class="setting-description">Show Content Titles</span>
+        </div>    
+
+        <div class="form-item">
+            <label>OTP-Color</label>
+            <div id="colorPalette">
+                <div class="colorSwatch" data-color="#333333" style="background-color: #333333;"></div>
+                <div class="colorSwatch" data-color="#FCFBF4" style="background-color: #FCFBF4;"></div>
+                <div class="colorSwatch" data-color="#BFA3D0" style="background-color: #BFA3D0;"></div>
+                <div class="colorSwatch" data-color="#36454F" style="background-color: #36454F;"></div>
+                <div class="colorSwatch" data-color="#435C7C" style="background-color: #435C7C;"></div>
+                <div class="colorSwatch" data-color="#3e4637" style="background-color: #3e4637;"></div>
+                <div class="colorSwatch" data-color="#301934" style="background-color: #301934;"></div>
+                <div class="colorSwatch" data-color="#232b2b" style="background-color: #232b2b;"></div>
+                <div class="colorSwatch" data-color="#682424" style="background-color: #682424;"></div>
+                <div class="colorSwatch" data-color="#987456" style="background-color: #987456;"></div>
+            </div>
+            <input type="hidden" id="alertColor" name="alert_color" value="{{ alert_color }}">
         </div>        
+        
+    
         <div class="d-flex justify-content-center">
             <button type="submit" class="btn btn-primary">Save</button>
         </div>
     </form>
 </div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var form = document.querySelector('.form-container');
+        form.addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent the default form submission
+
+            var formData = new FormData(form);
+            var object = {};
+            formData.forEach(function(value, key) {
+                object[key] = value;
+            });
+            var json = JSON.stringify(object);
+
+            fetch('/settings', { // Your endpoint for updating settings
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                },
+                body: json
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log(data);
+                if(data.success) {
+                    alert("Settings updated successfully!");
+                }
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+            });
+        });
+    });
+
+    function setColor(color) {
+        document.getElementById('alertColor').value = color;
+        document.querySelectorAll('.colorSwatch').forEach(function(swatch) {
+            swatch.classList.remove('selected');
+        });
+        document.querySelector('.colorSwatch[data-color="' + color + '"]').classList.add('selected');
+    }
+
+    document.querySelectorAll('.colorSwatch').forEach(function(swatch) {
+        swatch.addEventListener('click', function() {
+            setColor(this.dataset.color);
+
+            document.querySelectorAll('.colorSwatch').forEach(function(swatch) {
+                swatch.style.border = '1px solid #000'; 
+            });
+            this.style.border = '2px solid #FFF'; 
+        });
+    });
+
+    window.onload = function() {
+        var selectedColor = document.getElementById('alertColor').value;
+        setColor(selectedColor);
+    };
+</script>
 {% endblock %}

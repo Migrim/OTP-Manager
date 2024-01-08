@@ -33,11 +33,17 @@
 
     <section class="system-backups">
         <h2>System Backups</h2>
-        <button type="button"><span class="material-icons">backup</span> Create Backup</button>
-        <button type="button"><span class="material-icons">restore</span> Restore Backup</button>
-        <ul id="backupList">
-        </ul>
-    </section>
+        <div class="buttons-container">
+            <button type="button"><span class="material-icons">backup</span> Create Backup</button>
+            <button type="button"><span class="material-icons">restore</span> Restore Backup</button>
+        </div>
+        <hr class="separator"> <!-- Separator line -->
+        <div class="backup-list-container"> <!-- Container for the backups -->
+            <ul id="backupList">
+                <!-- Backups will be listed here -->
+            </ul>
+        </div>
+    </section>    
 
     <section class="customization">
         <h2>Customization</h2>

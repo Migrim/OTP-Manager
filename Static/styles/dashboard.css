@@ -7,7 +7,7 @@ body {
 }
 
 .dashboard-container {
-    max-width: 800px;
+    max-width: 800px; 
     margin: auto;
 }
 
@@ -29,13 +29,16 @@ section {
 }
 
 .input-group {
+    display: flex; /* Changed to flex to align label and input side by side */
+    align-items: center; /* Align items vertically */
+    gap: 10px; /* Space between label and input */
     margin-bottom: 20px;
 }
 
 input[type="number"],
 input[type="color"],
 input[type="range"] {
-    width: 100%;
+    width: 50%; /* Shorter width */
     padding: 10px;
     background-color: #333;
     border: 1px solid #444;
@@ -108,24 +111,64 @@ button:hover {
     font-size: 16px; /* Larger button text */
   }
   
-  #backupList {
-    display: flex; /* Enables flexible box layout */
-    flex-wrap: wrap; /* Allows items to wrap into the next row */
-    gap: 10px; /* Adds gap between items */
-    justify-content: flex-start; /* Aligns items to the start */
+  .system-backups {
+    background-color: #1c1c1c;
+    margin-top: 20px;
+    padding: 20px;
+    border-radius: 8px;
+    text-align: center; /* Aligns text and inline elements like buttons to center */
+    display: flex;
+    align-items: center; /* Aligns flex items at the center of the container */
+    display: flex;
+    flex-direction: column; /* This ensures that children are stacked vertically */
+    align-items: center; /* This will center the buttons and separator */
+}
+
+.separator {
+    width: 100%; /* Set the width of the separator line */
+    border: 0;
+    border-top: 1px solid #666; /* Dark line for the separator */
+    margin: 20px 0; /* Space above and below the separator */
+}
+
+.buttons-container {
+    display: flex;
+    justify-content: center; /* Center the buttons horizontally */
+    gap: 20px; /* Add some space between the buttons */
+}
+
+#backupList {
+    list-style: none; /* Removes default list styling */
+    padding: 0; /* Removes default padding */
+    display: flex;
+    flex-wrap: wrap; /* Allows items to wrap onto the next line */
+    justify-content: center; /* Center items on the main axis */
+    gap: 10px; /* Space between list items */
 }
 
 #backupList li {
     background-color: #282c34; /* Slightly lighter than the section background */
     color: white;
     padding: 10px;
-    margin-bottom: 5px; /* Adds space between list items */
     border-radius: 5px;
     font-size: 0.9em;
-    max-width: 200px; /* Sets maximum width for each item */
+    width: calc(33.333% - 20px); /* Three items per row, accounting for gap */
+    text-align: center; /* Center text within each list item */
     overflow: hidden; /* Ensures text doesn't overflow */
     text-overflow: ellipsis; /* Adds an ellipsis to text that overflows */
     white-space: nowrap; /* Keeps the text on a single line */
+}
+
+@media (max-width: 768px) {
+    #backupList li {
+        width: calc(50% - 20px); /* Two items per row on smaller screens */
+    }
+}
+
+@media (max-width: 480px) {
+    #backupList li {
+        width: 100%; /* One item per row on very small screens */
+    }
 }
 
 input[type="color"] {

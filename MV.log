@@ -10773,3 +10773,184 @@ werkzeug.routing.exceptions.BuildError: Could not build url for endpoint 'search
 2024-01-05 20:00:45,593 [INFO] Backup created at backups\otp_backup_20240105200045.db
 2024-01-05 20:00:53,103 [INFO] Backup created at backups\otp_backup_20240105200053.db
 2024-01-05 20:13:25,099 [INFO] Server started on port 5001.
+2024-01-06 14:59:17,633 [INFO] Server started on port 5001.
+2024-01-06 14:59:42,932 Redirecting to login: No user_id or session_token
+2024-01-06 15:00:04,363 [INFO] User: admin Logged in!
+2024-01-06 15:00:08,908 [INFO] Fetched all users successfully.
+2024-01-06 15:00:10,774 [INFO] Fetched all users successfully.
+2024-01-08 11:41:21,876 [INFO] Server started on port 5001.
+2024-01-08 11:41:26,038 Redirecting to login: No user_id or session_token
+2024-01-08 11:41:34,132 [INFO] User: admin Logged in!
+2024-01-08 11:57:30,105 [INFO] Server started on port 5001.
+2024-01-08 12:26:08,190 [ERROR] An error occurred on the home page.
+Traceback (most recent call last):
+  File "c:\Users\Sebastian\Desktop\OTP-Manager\app.py", line 600, in home
+    return render_template('home.html', form=form, grouped_otp_codes=grouped_otp_codes, total_otp_count=total_otp_count, companies=companies, search_name=search_name, page=page, total_pages=total_pages, enable_pagination=current_user.enable_pagination)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Sebastian\AppData\Local\Programs\Python\Python311\Lib\site-packages\flask\templating.py", line 151, in render_template
+    template = app.jinja_env.get_or_select_template(template_name_or_list)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Sebastian\AppData\Local\Programs\Python\Python311\Lib\site-packages\jinja2\environment.py", line 1081, in get_or_select_template
+    return self.get_template(template_name_or_list, parent, globals)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Sebastian\AppData\Local\Programs\Python\Python311\Lib\site-packages\jinja2\environment.py", line 1010, in get_template
+    return self._load_template(name, globals)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Sebastian\AppData\Local\Programs\Python\Python311\Lib\site-packages\jinja2\environment.py", line 969, in _load_template
+    template = self.loader.load(self, name, self.make_globals(globals))
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Sebastian\AppData\Local\Programs\Python\Python311\Lib\site-packages\jinja2\loaders.py", line 138, in load
+    code = environment.compile(source, name, filename)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Sebastian\AppData\Local\Programs\Python\Python311\Lib\site-packages\jinja2\environment.py", line 768, in compile
+    self.handle_exception(source=source_hint)
+  File "C:\Users\Sebastian\AppData\Local\Programs\Python\Python311\Lib\site-packages\jinja2\environment.py", line 936, in handle_exception
+    raise rewrite_traceback_stack(source=source)
+  File "c:\Users\Sebastian\Desktop\OTP-Manager\templates\home.html", line 131, in template
+    {% endfor %}
+jinja2.exceptions.TemplateSyntaxError: Encountered unknown tag 'endfor'. You probably made a nesting mistake. Jinja is expecting this tag, but currently looking for 'elif' or 'else' or 'endif'. The innermost block that needs to be closed is 'if'.
+2024-01-08 12:44:23,447 [INFO] User ID 1 successfully logged out.
+2024-01-08 13:37:48,072 [INFO] User: admin Logged in!
+2024-01-08 14:02:59,943 [INFO] User ID 1 updated settings successfully.
+2024-01-08 14:09:15,932 [INFO] Server started on port 5001.
+2024-01-08 14:09:20,498 [INFO] User ID 1 successfully logged out.
+2024-01-08 14:09:21,662 [INFO] User: admin Logged in!
+2024-01-08 14:09:29,829 [INFO] User ID 1 updated settings successfully.
+2024-01-08 14:10:02,452 [INFO] User ID 1 updated settings successfully.
+2024-01-08 14:14:11,919 [INFO] Server started on port 5001.
+2024-01-08 14:14:20,966 [INFO] User ID 1 updated settings successfully.
+2024-01-08 14:20:23,986 [INFO] User ID 1 updated settings successfully.
+2024-01-08 14:36:00,890 [INFO] User ID 1 successfully logged out.
+2024-01-08 14:44:49,280 [INFO] User: admin Logged in!
+2024-01-08 14:44:56,197 [INFO] User ID 1 successfully logged out.
+2024-01-08 15:53:01,889 [INFO] User: admin Logged in!
+2024-01-08 16:02:24,089 [INFO] Server started on port 5001.
+2024-01-08 16:02:29,710 [INFO] User ID 1 updated settings successfully.
+2024-01-08 16:02:47,372 [INFO] User ID 1 updated settings successfully.
+2024-01-08 16:04:04,417 [INFO] User ID 1 updated settings successfully.
+2024-01-08 16:12:50,277 [INFO] Server started on port 5001.
+2024-01-08 16:20:05,345 [INFO] Server started on port 5001.
+2024-01-08 16:21:53,500 [INFO] User ID 1 updated settings successfully.
+2024-01-08 16:22:42,274 [INFO] User ID 1 updated settings successfully.
+2024-01-08 16:23:14,797 [INFO] User ID 1 updated settings successfully.
+2024-01-08 16:25:17,541 [INFO] User ID 1 updated settings successfully.
+2024-01-08 16:32:00,800 [INFO] Server started on port 5001.
+2024-01-08 16:32:08,567 [INFO] User ID 1 updated settings successfully.
+2024-01-08 16:32:13,994 [INFO] User ID 1 updated settings successfully.
+2024-01-08 16:32:21,455 [INFO] User ID 1 updated settings successfully.
+2024-01-08 16:32:28,558 [INFO] User ID 1 updated settings successfully.
+2024-01-08 16:32:32,610 [INFO] User ID 1 updated settings successfully.
+2024-01-08 16:37:13,594 [INFO] Server started on port 5001.
+2024-01-08 16:40:19,826 [INFO] User ID 1 updated settings successfully.
+2024-01-08 16:40:48,172 [INFO] User ID 1 updated settings successfully.
+2024-01-08 16:42:05,771 [INFO] Server started on port 5001.
+2024-01-08 16:42:11,989 [INFO] User ID 1 updated settings successfully.
+2024-01-08 16:42:18,317 [INFO] User ID 1 updated settings successfully.
+2024-01-08 16:53:37,033 [INFO] Server started on port 5001.
+2024-01-08 16:53:43,435 [ERROR] Error updating settings for User ID 1: near ",": syntax error
+2024-01-08 16:53:47,779 [ERROR] Error updating settings for User ID 1: near ",": syntax error
+2024-01-08 16:53:51,598 [ERROR] Error updating settings for User ID 1: near ",": syntax error
+2024-01-08 16:55:26,635 [INFO] Server started on port 5001.
+2024-01-08 16:58:30,868 [INFO] Server started on port 5001.
+2024-01-08 16:58:36,873 [ERROR] Error updating settings for User ID 1: near ",": syntax error
+2024-01-08 16:58:46,816 [ERROR] Error updating settings for User ID 1: near ",": syntax error
+2024-01-08 16:58:51,760 [ERROR] Error updating settings for User ID 1: near ",": syntax error
+2024-01-08 16:59:28,083 [INFO] Server started on port 5001.
+2024-01-08 17:00:40,188 [INFO] Server started on port 5001.
+2024-01-08 17:01:02,933 [INFO] Server started on port 5001.
+2024-01-08 17:01:12,955 [INFO] Server started on port 5001.
+2024-01-08 17:03:12,050 [INFO] User ID 1 updated settings successfully.
+2024-01-08 17:03:19,590 [INFO] User ID 1 updated settings successfully.
+2024-01-08 17:10:55,101 [INFO] Server started on port 5001.
+2024-01-08 17:11:06,338 [INFO] User ID 1 updated settings successfully.
+2024-01-08 17:11:15,152 [INFO] User ID 1 updated settings successfully.
+2024-01-08 17:12:33,916 [INFO] Server started on port 5001.
+2024-01-08 17:12:40,009 [INFO] User ID 1 updated settings successfully.
+2024-01-08 17:12:50,108 [INFO] User ID 1 updated settings successfully.
+2024-01-08 17:12:59,918 [INFO] User ID 1 updated settings successfully.
+2024-01-08 17:14:03,217 [INFO] Server started on port 5001.
+2024-01-08 17:14:09,943 [INFO] User ID 1 updated settings successfully.
+2024-01-08 17:14:21,512 [INFO] User ID 1 updated settings successfully.
+2024-01-08 17:15:06,848 [INFO] Server started on port 5001.
+2024-01-08 17:15:13,220 [INFO] User ID 1 updated settings successfully.
+2024-01-08 17:15:24,940 [INFO] User ID 1 updated settings successfully.
+2024-01-08 17:15:31,386 [INFO] User ID 1 updated settings successfully.
+2024-01-08 17:18:00,307 [INFO] Server started on port 5001.
+2024-01-08 17:18:06,673 [INFO] User ID 1 updated settings successfully.
+2024-01-08 17:18:28,143 [INFO] User ID 1 updated settings successfully.
+2024-01-08 17:18:33,307 [INFO] User ID 1 updated settings successfully.
+2024-01-08 17:20:38,970 [INFO] User ID 1 updated settings successfully.
+2024-01-08 17:23:01,130 [INFO] User ID 1 updated settings successfully.
+2024-01-08 17:24:43,062 [INFO] User ID 1 updated settings successfully.
+2024-01-08 17:24:49,820 [INFO] User ID 1 updated settings successfully.
+2024-01-08 17:24:54,271 [INFO] User ID 1 updated settings successfully.
+2024-01-08 17:26:21,510 [INFO] User ID 1 updated settings successfully.
+2024-01-08 17:27:19,479 [INFO] User ID 1 updated settings successfully.
+2024-01-08 17:29:23,020 [INFO] User ID 1 updated settings successfully.
+2024-01-08 17:29:33,425 [INFO] User ID 1 updated settings successfully.
+2024-01-08 17:29:47,134 [INFO] User ID 1 updated settings successfully.
+2024-01-08 17:30:30,334 [INFO] User ID 1 updated settings successfully.
+2024-01-08 17:30:44,102 [INFO] User ID 1 updated settings successfully.
+2024-01-08 17:32:35,035 [INFO] Fetched all users successfully.
+2024-01-08 17:40:57,119 [INFO] Server started on port 5001.
+2024-01-08 17:41:04,535 [INFO] User ID 1 updated settings successfully.
+2024-01-08 17:41:08,806 [INFO] User ID 1 updated settings successfully.
+2024-01-08 17:47:12,264 [INFO] User ID 1 updated settings successfully.
+2024-01-08 17:51:59,769 [INFO] User ID 1 successfully logged out.
+2024-01-08 17:52:06,724 [INFO] User: memmo Logged in!
+2024-01-08 17:52:12,521 [INFO] User ID 4 successfully logged out.
+2024-01-08 17:52:13,464 [INFO] User: admin Logged in!
+2024-01-08 17:52:19,804 [INFO] User ID 1 updated settings successfully.
+2024-01-08 17:52:27,871 [INFO] User ID 1 updated settings successfully.
+2024-01-08 17:52:33,594 [INFO] User ID 1 updated settings successfully.
+2024-01-08 17:52:41,850 [INFO] User ID 1 updated settings successfully.
+2024-01-08 18:29:39,660 [ERROR] Error updating settings for User ID 1: NOT NULL constraint failed: users.alert_color
+2024-01-08 18:29:49,609 [ERROR] Error updating settings for User ID 1: NOT NULL constraint failed: users.alert_color
+2024-01-08 18:32:00,983 [INFO] Server started on port 5001.
+2024-01-08 18:32:13,437 [INFO] User ID 1 updated settings successfully.
+2024-01-08 18:32:18,748 [INFO] User ID 1 updated settings successfully.
+2024-01-08 18:32:24,969 [INFO] User ID 1 updated settings successfully.
+2024-01-08 18:35:53,434 [INFO] Server started on port 5001.
+2024-01-08 18:36:10,051 [INFO] User ID 1 updated settings successfully.
+2024-01-08 18:36:19,110 [INFO] User ID 1 updated settings successfully.
+2024-01-08 18:36:42,926 [INFO] User ID 1 updated settings successfully.
+2024-01-08 18:36:48,935 [INFO] User ID 1 updated settings successfully.
+2024-01-08 18:36:54,952 [INFO] User ID 1 updated settings successfully.
+2024-01-08 18:37:16,644 [INFO] User ID 1 updated settings successfully.
+2024-01-08 18:39:59,402 [INFO] User ID 1 updated settings successfully.
+2024-01-08 18:40:34,945 [INFO] User ID 1 updated settings successfully.
+2024-01-08 18:41:00,780 [INFO] User ID 1 updated settings successfully.
+2024-01-08 18:45:53,345 [INFO] User ID 1 updated settings successfully.
+2024-01-08 18:45:56,821 [INFO] User ID 1 successfully logged out.
+2024-01-08 18:46:29,019 [INFO] User: admin Logged in!
+2024-01-08 18:47:18,382 [INFO] Fetched all users successfully.
+2024-01-08 18:47:22,057 [INFO] Fetched all users successfully.
+2024-01-08 18:47:24,532 [INFO] Fetched all users successfully.
+2024-01-08 18:49:52,886 [INFO] Fetched all users successfully.
+2024-01-08 18:51:28,098 [INFO] Server started on port 5001.
+2024-01-08 18:51:54,241 [INFO] Attempting to restart server.
+2024-01-08 18:51:54,241 [ERROR] Failed to restart server: name 'sys' is not defined
+2024-01-08 19:14:48,786 [INFO] Server started on port 5001.
+2024-01-08 19:14:54,498 [INFO] Backup created at backups\otpbcp-08.01.24-19:14.db
+2024-01-08 19:46:21,673 [INFO] Backup created at backups\otpbcp-08.01.24-19:46.db
+2024-01-08 19:46:23,520 [INFO] Backup created at backups\otpbcp-08.01.24-19:46.db
+2024-01-08 19:46:25,148 [INFO] Backup created at backups\otpbcp-08.01.24-19:46.db
+2024-01-08 19:46:26,963 [INFO] Backup created at backups\otpbcp-08.01.24-19:46.db
+2024-01-08 19:46:39,536 [INFO] Backup created at backups\otpbcp-08.01.24-19:46.db
+2024-01-08 19:47:49,814 [INFO] User ID 1 successfully logged out.
+2024-01-08 19:51:49,364 [INFO] User: admin Logged in!
+2024-01-08 19:51:53,057 [INFO] User ID 1 successfully logged out.
+2024-01-08 19:51:57,023 [INFO] User: admin Logged in!
+2024-01-08 19:52:18,628 [INFO] User ID 1 updated settings successfully.
+2024-01-08 19:52:37,678 [INFO] User ID 1 updated settings successfully.
+2024-01-08 19:53:13,289 [INFO] User ID 1 updated settings successfully.
+2024-01-08 19:53:38,194 [INFO] User ID 1 updated settings successfully.
+2024-01-08 19:53:40,713 [INFO] User ID 1 updated settings successfully.
+2024-01-08 19:56:11,121 Redirecting to login: No user_id or session_token
+2024-01-08 19:56:15,948 [INFO] User: cum Logged in!
+2024-01-08 19:57:14,711 [INFO] User ID 10 updated settings successfully.
+2024-01-08 19:57:58,858 [INFO] User ID 10 updated settings successfully.
+2024-01-08 19:58:14,473 [INFO] User ID 10 updated settings successfully.
+2024-01-08 19:58:23,261 [INFO] User ID 10 updated settings successfully.
+2024-01-08 19:58:31,377 [INFO] User ID 10 updated settings successfully.
+2024-01-08 19:58:34,136 [INFO] User ID 10 updated settings successfully.

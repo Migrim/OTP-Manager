@@ -105,6 +105,8 @@ def init_db():
                 show_timer INTEGER DEFAULT 0,
                 show_otp_type INTEGER DEFAULT 1,
                 show_content_titles INTEGER DEFAULT 1
+                alert_color TEXT DEFAULT 'alert-primary'
+                text_color TEXT DEFAULT '#FFFFFF'
             )
         """)
         cursor.execute("""
@@ -318,34 +320,43 @@ def login_required(f):
 @app.route('/settings', methods=['GET', 'POST'])
 @login_required
 def settings():
-    user_id = session.get('user_id')  
+    user_id = session.get('user_id')
+    
     if request.method == 'POST':
-        show_timer = 1 if request.form.get('show_timer') else 0
-        show_otp_type = 1 if request.form.get('show_otp_type') else 0
-        show_content_titles = 1 if request.form.get('show_content_titles') else 0
+        data = request.get_json()  
         
+        show_timer = 1 if data.get('show_timer') == 'on' else 0
+        show_otp_type = 1 if data.get('show_otp_type') == 'on' else 0
+        show_content_titles = 1 if data.get('show_content_titles') == 'on' else 0
+        alert_color = data.get('alert_color')
+
+        colors_for_dark_text = {'#FCFBF4', '#BFA3D0', '#FFFFFF'}
+        text_color = '#3E3E41' if alert_color in colors_for_dark_text else '#FFFFFF'
+
         try:
             with sqlite3.connect("otp.db") as db:
                 cursor = db.cursor()
                 cursor.execute(
-                    "UPDATE users SET show_timer = ?, show_otp_type = ?, show_content_titles = ? WHERE id = ?",
-                    (show_timer, show_otp_type, show_content_titles, user_id)
+                    "UPDATE users SET show_timer = ?, show_otp_type = ?, show_content_titles = ?, alert_color = ?, text_color = ? WHERE id = ?",
+                    (show_timer, show_otp_type, show_content_titles, alert_color, text_color, user_id)
                 )
                 db.commit()
-            
+
             current_user.show_content_titles = show_content_titles
             current_user.show_timer = show_timer
             current_user.show_otp_type = show_otp_type
+            current_user.alert_color = alert_color
+            current_user.text_color = text_color
 
-            flash('Settings updated')
             logging.info(f'User ID {user_id} updated settings successfully.')
+            return jsonify({'success': True, 'message': 'Settings updated successfully'})
         except sqlite3.Error as e:
-            flash('An error occurred while updating settings.')
             logging.error(f'Error updating settings for User ID {user_id}: {e}')
-        
-        return redirect(url_for('settings'))
+            return jsonify({'success': False, 'message': 'An error occurred while updating settings.'}), 500
     
-    return render_template('settings.html', show_timer=current_user.show_timer, show_otp_type=current_user.show_otp_type)
+    alert_color = getattr(current_user, 'alert_color', '#333333')  
+    text_color = getattr(current_user, 'text_color', '#FFFFFF') 
+    return render_template('settings.html', show_timer=current_user.show_timer, show_otp_type=current_user.show_otp_type, alert_color=alert_color)
 
 @app.route('/refresh_codes_v2')
 @login_required
@@ -533,6 +544,29 @@ def get_otp_v2(name):
             return render_template('otp.html', otp=otp_secret, otp_code=otp_code['otp_code'])
     return 'Secret Not Found', 404
 
+def get_user_colors(user_id):
+    with sqlite3.connect("otp.db") as db:
+        cursor = db.cursor()
+        cursor.execute("SELECT alert_color, text_color FROM users WHERE id = ?", (user_id,))
+        result = cursor.fetchone()
+        if result:
+            return result[0], result[1] 
+        else:
+            return 'alert-primary', '#FFFFFF'  
+
+def get_user_alert_color(user_id):
+    """
+    Fetch the user's alert color preference from the database.
+
+    :param user_id: The user's ID.
+    :return: The alert color as a string.
+    """
+    with sqlite3.connect("otp.db") as db:
+        cursor = db.cursor()
+        cursor.execute("SELECT alert_color FROM users WHERE id = ?", (user_id,))
+        result = cursor.fetchone()
+        return result[0] if result else 'alert-primary'  
+
 @app.route('/', methods=['GET', 'POST'])
 @login_required
 def home():
@@ -590,6 +624,7 @@ def home():
         end_index = start_index + items_per_page if items_per_page > 0 else len(otp_codes)
 
         displayed_otp_codes = otp_codes[start_index:end_index]
+        alert_color, text_color = get_user_colors(current_user.id)
 
         search_name = request.args.get('name')
         if search_name:
@@ -597,12 +632,12 @@ def home():
             for k, v in list(grouped_otp_codes.items()): 
                 grouped_otp_codes[k] = [x for x in v if search_name.lower() in x['name'].lower()]
 
-        return render_template('home.html', form=form, grouped_otp_codes=grouped_otp_codes, total_otp_count=total_otp_count, companies=companies, search_name=search_name, page=page, total_pages=total_pages, enable_pagination=current_user.enable_pagination)
+        return render_template('home.html', form=form, grouped_otp_codes=grouped_otp_codes, total_otp_count=total_otp_count, companies=companies, search_name=search_name, page=page, total_pages=total_pages, enable_pagination=current_user.enable_pagination,  alert_color=alert_color, text_color=text_color)
 
     except Exception as e:
         logging.error('An error occurred on the home page.', exc_info=True)
         flash('An unexpected error occurred.')
-        return render_template('home.html')
+        return render_template('home.html', alert_color=alert_color)
 
 @app.route('/get_logs', methods=['GET'])
 @login_required
@@ -702,8 +737,7 @@ def create_backup():
             logging.warning('Non-admin user attempted to create a backup.')
             return jsonify({'success': False, 'message': 'Not authorized'})
         
-        # Define the paths and check if the database exists
-        db_path = "otp.db"  # Adjust if your database is located elsewhere
+        db_path = "otp.db"  
         if not os.path.isfile(db_path):
             logging.error('Database file not found for backup.')
             return jsonify({'success': False, 'message': 'Database file not found'})
@@ -712,16 +746,15 @@ def create_backup():
         if not os.path.exists(backup_folder):
             os.makedirs(backup_folder)
 
-        # Create a backup
-        timestamp = datetime.now().strftime("%Y%m%d%H%M%S")
-        backup_file_path = os.path.join(backup_folder, f"otp_backup_{timestamp}.db")
+        timestamp = datetime.now().strftime("%d.%m.%y-%H:%M")
+        backup_file_path = os.path.join(backup_folder, f"otpbcp-{timestamp}.db")
         shutil.copy2(db_path, backup_file_path)
         logging.info(f'Backup created at {backup_file_path}')
 
-        return jsonify({'success': True, 'message': backup_file_path})  # Send back the backup file path
+        return jsonify({'success': True, 'message': backup_file_path}) 
     except Exception as e:
         logging.error(f'Error creating backup: {e}', exc_info=True)
-        return jsonify({'success': False, 'message': str(e)}) 
+        return jsonify({'success': False, 'message': str(e)})
 
 @app.route('/load_backup', methods=['POST'])
 @login_required

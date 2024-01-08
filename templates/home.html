@@ -84,7 +84,7 @@
                 </div>
                 {% for otp in otp_list %}
                     <div class="col-md-4">
-                        <div class="alert alert-success mt-3 position-relative">
+                        <div class="alert mt-3 position-relative" style="background-color: {{ alert_color | default('#ff0000', true) }}; color: {{ text_color | default('#000000', true) }};">
                             Firma: {{ otp.company }} <br>
                             Name: <span style="text-decoration: underline;">{{ otp.name }}</span> <br>
                             <p>Secret: <span class="spoiler">{{otp.secret}}</span></p>
@@ -164,7 +164,7 @@
                 </div>                
                 
                 <div id="toast" class="toast">Copied to clipboard</div>
-                <div class="copyright">Preview Build - December 23 - Not for Production Use
+                <div class="copyright">Indev Build - January 24 - Not for Production Use
                 </div>
 
                 <script>
@@ -415,13 +415,20 @@
                             console.error('Fehler beim Kopieren: ', err);
                         });
                     }
-
                     function showToast() {
-                        let toast = document.getElementById('toast');
+                        var toast = document.getElementById('toast');
                         toast.style.display = 'block';
-                        setTimeout(() => {
-                            toast.style.display = 'none';
-                        }, 5000);
+
+                        setTimeout(function() {
+                            toast.classList.add('toast-show');
+                        }, 10);
+
+                        setTimeout(function() {
+                            toast.classList.remove('toast-show');
+                            setTimeout(function() {
+                                toast.style.display = 'none';
+                            }, 500); 
+                        }, 5000); 
                     }
 
                     let formToSubmit;
