@@ -21,6 +21,7 @@ from math import ceil
 from flask import send_file
 from collections import defaultdict
 from markupsafe import Markup
+from flask_cors import CORS
 import shutil
 import os
 import subprocess 
@@ -34,6 +35,7 @@ logging.basicConfig(filename='MV.log', level=logging.INFO, format='%(asctime)s [
 my_logger = logging.getLogger('MV_logger')
 
 app = Flask(__name__)
+CORS(app)
 start_time = datetime.now()
 app.config['SECRET_KEY'] = 'your-secret-key'
 app.config['SESSION_TYPE'] = 'filesystem'
@@ -60,6 +62,9 @@ app.logger.addHandler(handler)
 
 formatter = logging.Formatter('%(asctime)s %(message)s')
 handler.setFormatter(formatter)
+
+is_restarting = False
+broadcast_message = None
 
 @login_manager.user_loader
 def load_user(user_id):
@@ -223,6 +228,20 @@ def show_endpoints():
     import pprint
     return pprint.pformat(app.url_map)
 
+@app.route('/status')
+def server_status():
+    return jsonify({'status': 'ok'}), 200
+
+@app.before_request
+def check_server_status():
+    global is_restarting
+    if is_restarting and request.endpoint != 'restarting':
+        return redirect(url_for('restarting'))
+
+@app.route('/restarting')
+def restarting():
+    return render_template('restarting.html')
+
 def update_statistics(logins=0, refreshed=0):
     today = datetime.now().strftime('%Y-%m-%d')
     with sqlite3.connect("otp.db") as db:
@@ -291,6 +310,9 @@ def logout():
         logging.info(f"User ID {user_id} successfully logged out.")
     except sqlite3.Error as e:
         logging.error(f"Error logging out User ID {user_id}: {e}")
+
+    if is_restarting:
+        return redirect(url_for('login'))
 
     return redirect(url_for('login'))
 
@@ -808,8 +830,11 @@ def list_backups():
 def shutdown_server():
     if not current_user.is_admin: 
         return jsonify({'status': 'error', 'message': 'Unauthorized'}), 401
-
+    
     try:
+        global is_restarting
+        is_restarting = True
+
         shutdown_function = request.environ.get('werkzeug.server.shutdown')
         if shutdown_function is None:
             raise RuntimeError('Not running the Werkzeug server')
@@ -818,6 +843,7 @@ def shutdown_server():
         
         return jsonify({'status': 'success', 'message': 'Server shutting down...'}), 200
     except Exception as e:
+        is_restarting = False
         logging.error(f"Failed to shut down server: {e}")
         return jsonify({'status': 'error', 'message': str(e)}), 500
 
@@ -829,12 +855,10 @@ def server_settings():
         return redirect(url_for('home'))
     
     if request.method == 'POST':
-        # Assuming you have form fields named 'server_port' and 'server_action'
         new_port = request.form.get('server_port')
         action = request.form.get('server_action')
 
         if new_port:
-            # Implement logic to change server port here
             change_server_port(new_port)
 
         if action == 'restart':
@@ -844,26 +868,62 @@ def server_settings():
 
         flash('Server settings updated successfully!')
 
-    # Render the server settings page with current configurations
     current_port = get_current_server_port()  
     return render_template('server_settings.html', current_port=current_port)
 
 def change_server_port(new_port):
-    # Implement your logic to change the server's port
     pass
 
-def restart_server():
-    try:
-        logging.info("Attempting to restart server.")
+def get_current_server_port():
+    return os.environ.get('SERVER_PORT', 'default_port')
 
-        os.execv(__file__, ['python'] + sys.argv)
+@app.before_request
+def check_for_restarting():
+    global is_restarting
+    if is_restarting and request.endpoint != 'restarting':
+        return redirect(url_for('restarting'))
+
+@app.route('/broadcast', methods=['POST'])
+@login_required
+def set_broadcast_message():
+    global broadcast_message
+    if not current_user.is_admin:
+        return jsonify({'status': 'error', 'message': 'Unauthorized'}), 401
+
+    message = request.form.get('message')
+    if message:
+        broadcast_message = message
+        return jsonify({'status': 'success', 'message': 'Message broadcasted'}), 200
+    return jsonify({'status': 'error', 'message': 'No message provided'}), 400
+
+@app.before_request
+def check_for_broadcast_message():
+    global broadcast_message
+    if broadcast_message and request.endpoint != 'broadcast':
+        flash(broadcast_message)
+
+def restart_server():
+    global is_restarting
+    try:
+        logging.info("Server restart initiated.")
+        is_restarting = True 
+        broadcast_message = 'Server is restarting, you will be redirected.'
+
+        with app.app_context():
+            flash(broadcast_message)
+
+        is_restarting = True
+
+        shutdown_function = request.environ.get('werkzeug.server.shutdown')
+        if shutdown_function is not None:
+            shutdown_function()
+
+        subprocess.Popen(["python", "static/script/reboot.py"])
 
     except Exception as e:
+        is_restarting = False  
         logging.error(f"Failed to restart server: {e}")
-
-def get_current_server_port():
-    # Implement your logic to get the current server's port
-    return '5001'
+        is_restarting = False
 
 @app.route('/delete_secret/<name>', methods=['POST'])
 @login_required

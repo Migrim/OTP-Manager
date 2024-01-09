@@ -63,7 +63,6 @@
 </div>
 
 <div id="backupModal" class="modal">
-    <!-- Modal content -->
     <div class="modal-content">
         <span class="close">&times;</span>
         <p>Are you sure you want to create a backup?</p>
@@ -73,60 +72,48 @@
 </div>
 
 <script>
-    // Get the modal
     var modal = document.getElementById("backupModal");
-    
-    // Get the button that opens the modal
+
     var btn = document.querySelector(".system-backups button");
-    
-    // Get the <span> element that closes the modal
+
     var span = document.getElementsByClassName("close")[0];
-    
-    // Get the confirmation button
+
     var confirmBtn = document.getElementById("confirmBackup");
-    
-    // Get the cancel button
+
     var cancelBtn = document.getElementById("cancelBackup");
-    
-    // When the user clicks the button, open the modal 
+
     btn.onclick = function() {
       modal.style.display = "block";
     }
-    
-    // When the user clicks on <span> (x), close the modal
+
     span.onclick = function() {
       modal.style.display = "none";
     }
-    
-    // When the user clicks confirm
+
     confirmBtn.onclick = function() {
         fetch('/create_backup', {
-            method: 'GET',  // or 'POST' if you change your route to accept POST
+            method: 'GET', 
         })
         .then(response => response.json())
         .then(data => {
-            // Check the response from Flask
             if(data.success) {
-            alert("Backup created successfully at " + data.message); // Show success message
+            alert("Backup created successfully at " + data.message);
             } else {
-            alert("Backup failed: " + data.message); // Show error message
+            alert("Backup failed: " + data.message); 
             }
-            modal.style.display = "none"; // Hide the modal
+            modal.style.display = "none"; 
         })
         .catch((error) => {
             console.error('Error:', error);
-            alert("Backup failed: " + error); // Show error message
-            modal.style.display = "none"; // Hide the modal
+            alert("Backup failed: " + error);
+            modal.style.display = "none"; 
         });
     }
 
-    
-    // When the user clicks cancel
     cancelBtn.onclick = function() {
       modal.style.display = "none";
     }
-    
-    // When the user clicks anywhere outside of the modal, close it
+
     window.onclick = function(event) {
       if (event.target == modal) {
         modal.style.display = "none";
@@ -142,23 +129,42 @@ document.addEventListener('DOMContentLoaded', function() {
         .then(data => {
             if(data.success) {
                 const backupList = document.getElementById('backupList');
-                backupList.innerHTML = "";  // Clear current list
+                backupList.innerHTML = ""; 
                 data.backups.forEach(backup => {
                     let li = document.createElement('li');
                     li.textContent = backup;
                     backupList.appendChild(li);
                 });
             } else {
-                alert("Failed to fetch backups: " + data.message);
             }
         })
         .catch((error) => {
             console.error('Error:', error);
-            alert("Failed to fetch backups: " + error);
         });
     }
 
     fetchAndDisplayBackups();
+
+    function checkServerStatus() {
+        fetch('/status')
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Server not OK');
+                }
+                return response.json();
+            })
+            .then(data => {
+                if (data.status !== 'ok') {
+                    throw new Error('Server status not OK');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                window.location.href = '/restarting';
+            });
+    }
+
+    setInterval(checkServerStatus, 100);
 });
 </script>
 
