@@ -301,6 +301,7 @@ def register():
 def logout():
     user_id = session.pop('user_id', None)
     session_token = session.pop('session_token', None)
+    print(f"Logging out user ID {user_id}")
 
     try:
         with sqlite3.connect("otp.db") as db:
@@ -324,6 +325,7 @@ def login_required(f):
 
         if not user_id or not session_token:
             app.logger.info("Redirecting to login: No user_id or session_token")
+            print(f"Redirecting to login: No user_id or session_token: {user_id}")
             return redirect(url_for('login'))
         
         with sqlite3.connect("otp.db") as db:
@@ -352,8 +354,13 @@ def settings():
         show_content_titles = 1 if data.get('show_content_titles') == 'on' else 0
         alert_color = data.get('alert_color')
 
-        colors_for_dark_text = {'#FCFBF4', '#BFA3D0', '#FFFFFF'}
-        text_color = '#3E3E41' if alert_color in colors_for_dark_text else '#FFFFFF'
+        if alert_color in {'#292d26', '#3e4637'}:
+            text_color = '#c4b550'
+        elif alert_color == '#1b2e4b':
+            text_color = '#e9bfff'
+        else:
+            colors_for_dark_text = {'#ffffff', '#9495df'}
+            text_color = '#3E3E41' if alert_color in colors_for_dark_text else '#FFFFFF'
 
         try:
             with sqlite3.connect("otp.db") as db:
@@ -371,9 +378,11 @@ def settings():
             current_user.text_color = text_color
 
             logging.info(f'User ID {user_id} updated settings successfully.')
+            print(f"User ID {user_id} updated settings successfully.")
             return jsonify({'success': True, 'message': 'Settings updated successfully'})
         except sqlite3.Error as e:
             logging.error(f'Error updating settings for User ID {user_id}: {e}')
+            print(f"Error updating settings for User ID {user_id}: {e}")
             return jsonify({'success': False, 'message': 'An error occurred while updating settings.'}), 500
     
     alert_color = getattr(current_user, 'alert_color', '#333333')  
@@ -391,6 +400,7 @@ def refresh_codes_v2():
         otp_code = generate_otp_code(otp)
         if otp_code is None:
             flash('Invalid OTP secret')
+            print(f"Invalid OTP secret was attempted to be loaded in the OTP-List")
             continue
         otp_codes.append({
             'name': otp['name'],
@@ -406,6 +416,7 @@ def reset_password(user_id):
         new_password = request.form.get('new_password')
         if not new_password:
             flash('Password is missing!')
+            print(f"Password reset attempted without providing a new password for user_id: {user_id}")
             logging.warning(f'Password reset attempted without providing a new password for user_id: {user_id}')
             return render_template('reset_password.html', user_id=user_id)
         
@@ -417,14 +428,17 @@ def reset_password(user_id):
                 cursor.execute("UPDATE users SET password = ? WHERE id = ?", (hashed_password, user_id))
                 db.commit()
             flash('Password changed successfully!')
+            print(f"Password for user_id {user_id} was successfully updated.")
             logging.info(f'Password for user_id {user_id} was successfully updated.')
         except sqlite3.Error as e:
             flash('There was a problem changing the password!')
+            print(f"Error updating password for user_id {user_id}: {e}")
             logging.error(f'Error updating password for user_id {user_id}: {e}')
         
         return redirect(url_for('home'))
     
     logging.info(f'Password reset page accessed for user_id: {user_id}')
+    print(f"Password reset page accessed for user_id: {user_id}")
     return render_template('reset_password.html', user_id=user_id)
 
 def get_last_login_time_from_db():
@@ -440,12 +454,15 @@ def get_last_login_time_from_db():
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
+    print("Accessing /login route")
     if 'user_id' in session:
+        print("User is already logged in, redirecting to home")
         return redirect(url_for('home'))
 
     if request.method == 'POST':
         username = request.form.get('username')
         password = request.form.get('password')
+        print(f"Attempting login for username: {username}")
         keep_logged_in = 'keep_logged_in' in request.form
 
         with sqlite3.connect("otp.db") as db:
@@ -620,12 +637,14 @@ def home():
 
         if selected_company:
             logging.info(f'Filtering by company: {selected_company}')
+            print(f"Filtering by company: {selected_company}")            
             otp_secrets = [otp for otp in otp_secrets if otp['company'] == selected_company]
 
         for otp in otp_secrets:
             otp_code = generate_otp_code(otp)
             if otp_code is None:
                 logging.warning(f'Invalid OTP secret for {otp["name"]}.')
+                print(f"Invalid OTP secret: check logs!")   
                 flash('Invalid OTP secret')
                 continue
             otp_code['company'] = otp.get('company', 'Unknown')
@@ -651,6 +670,7 @@ def home():
         search_name = request.args.get('name')
         if search_name:
             logging.info(f'Filtering by name: {search_name}')
+            print(f"Filtering by company name")            
             for k, v in list(grouped_otp_codes.items()): 
                 grouped_otp_codes[k] = [x for x in v if search_name.lower() in x['name'].lower()]
 
@@ -659,6 +679,7 @@ def home():
     except Exception as e:
         logging.error('An error occurred on the home page.', exc_info=True)
         flash('An unexpected error occurred.')
+        print(f"An unknown error occurred at the home page") 
         return render_template('home.html', alert_color=alert_color)
 
 @app.route('/get_logs', methods=['GET'])
@@ -757,11 +778,13 @@ def create_backup():
     try:
         if not current_user.is_admin:
             logging.warning('Non-admin user attempted to create a backup.')
+            print(f"Non-admin user attempted to create a backup.") 
             return jsonify({'success': False, 'message': 'Not authorized'})
         
         db_path = "otp.db"  
         if not os.path.isfile(db_path):
             logging.error('Database file not found for backup.')
+            print(f"Database file not found for backup.") 
             return jsonify({'success': False, 'message': 'Database file not found'})
 
         backup_folder = "backups"
@@ -771,11 +794,13 @@ def create_backup():
         timestamp = datetime.now().strftime("%d.%m.%y-%H:%M")
         backup_file_path = os.path.join(backup_folder, f"otpbcp-{timestamp}.db")
         shutil.copy2(db_path, backup_file_path)
+        print(f"Backup created at {backup_file_path}") 
         logging.info(f'Backup created at {backup_file_path}')
 
         return jsonify({'success': True, 'message': backup_file_path}) 
     except Exception as e:
         logging.error(f'Error creating backup: {e}', exc_info=True)
+        print(f"Error creating backup: {e}") 
         return jsonify({'success': False, 'message': str(e)})
 
 @app.route('/load_backup', methods=['POST'])

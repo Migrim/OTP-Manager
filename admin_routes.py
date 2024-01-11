@@ -181,9 +181,6 @@ def toggle_admin(user_id):
 @admin_bp.route('/admin_settings', methods=['GET', 'POST'])
 @login_required
 def admin_settings():
-    user_form = UserForm()
-    company_form = CompanyForm()
-
     is_admin = False
     try:
         with sqlite3.connect("otp.db") as db:
@@ -194,40 +191,11 @@ def admin_settings():
         flash('Failed to fetch admin status.')
         logging.error(f"Error fetching admin status: {e}")
 
-    if user_form.validate_on_submit() and user_form.submit.data:
-        username = user_form.username.data
-        password = user_form.password.data
-        hashed_password = generate_password_hash(password, method='sha256')
-        
-        try:
-            with sqlite3.connect("otp.db") as db:
-                cursor = db.cursor()
-                cursor.execute("INSERT INTO users (username, password) VALUES (?, ?)", (username, hashed_password))
-                db.commit()
-            flash(f"New user {username} added.")
-        except sqlite3.Error as e:
-            flash('Failed to add new user.')
-            logging.error(f"Error inserting new user: {e}")
+    if not is_admin:
+        flash('Accessing withoud admin privileges.')
+        return redirect(url_for('admin_settings.html'))
 
-        return redirect(url_for('admin.admin_settings'))
-
-    if company_form.validate_on_submit() and company_form.submit_company.data:
-        company_name = company_form.name.data
-        kundennummer = company_form.kundennummer.data
-        try:
-            with sqlite3.connect("otp.db") as db:
-                cursor = db.cursor()
-                cursor.execute("INSERT INTO companies (name, kundennummer) VALUES (?, ?)", (company_name, kundennummer))
-                db.commit()
-            flash(f"New company {company_name} with Kundennummer {kundennummer} added.")
-        except sqlite3.Error as e:
-            flash('Failed to add new company.')
-            logging.error(f"Error inserting new company: {e}")
-        return redirect(url_for('admin.admin_settings'))
-
-    users = get_all_users()
-    companies = load_companies_from_db()
-    return render_template('admin_settings.html', user_form=user_form, company_form=company_form, users=users, companies=companies, is_admin=is_admin)
+    return render_template('admin_settings.html')
 
 @admin_bp.route('/delete_user/<int:user_id>', methods=['POST'])
 @login_required

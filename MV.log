@@ -11136,3 +11136,260 @@ jinja2.exceptions.TemplateSyntaxError: Encountered unknown tag 'endfor'. You pro
 2024-01-09 19:33:17,594 [INFO] User: admin Logged in!
 2024-01-09 19:33:38,988 [INFO] Fetched all users successfully.
 2024-01-09 19:34:27,696 [INFO] Server started on port 5001.
+2024-01-10 12:29:12,572 [INFO] Server started on port 5001.
+2024-01-10 12:29:45,254 Redirecting to login: No user_id or session_token
+2024-01-10 12:29:52,448 [INFO] User: admin Logged in!
+2024-01-10 12:31:26,551 [INFO] Fetched all users successfully.
+2024-01-10 12:33:59,047 [INFO] Fetched all users successfully.
+2024-01-10 12:34:02,549 [INFO] Server restart initiated.
+2024-01-10 12:34:12,779 [INFO] Server started on port 5001.
+2024-01-10 12:39:16,574 [INFO] Fetched all users successfully.
+2024-01-10 12:39:21,053 [INFO] Server restart initiated.
+2024-01-10 12:39:31,784 [INFO] Server started on port 5001.
+2024-01-10 12:39:39,140 [INFO] User ID 1 successfully logged out.
+2024-01-10 12:39:47,556 [INFO] User: admin Logged in!
+2024-01-10 12:49:19,606 [INFO] Fetched all users successfully.
+2024-01-10 12:49:22,924 [INFO] Server restart initiated.
+2024-01-10 12:49:33,866 [INFO] Server started on port 5001.
+2024-01-10 12:49:56,088 [INFO] User ID 1 updated settings successfully.
+2024-01-10 12:50:07,143 [INFO] User ID 1 successfully logged out.
+2024-01-10 12:50:12,923 [INFO] User: admin Logged in!
+2024-01-10 12:51:11,653 [INFO] Fetched all users successfully.
+2024-01-10 12:51:14,916 [INFO] Server restart initiated.
+2024-01-10 12:51:25,918 [INFO] Server started on port 5001.
+2024-01-10 12:51:34,595 [INFO] User ID 1 updated settings successfully.
+2024-01-10 13:22:42,429 [INFO] Fetched all users successfully.
+2024-01-10 13:22:45,571 [INFO] Server restart initiated.
+2024-01-10 13:22:56,866 [INFO] Server started on port 5001.
+2024-01-10 13:23:03,913 [INFO] User ID 1 successfully logged out.
+2024-01-10 13:23:07,556 [INFO] User: admin Logged in!
+2024-01-10 13:25:39,933 [INFO] Fetched all users successfully.
+2024-01-10 13:25:43,308 [INFO] Server restart initiated.
+2024-01-10 13:25:53,910 [INFO] Server started on port 5001.
+2024-01-10 13:25:57,371 [INFO] Fetched all users successfully.
+2024-01-10 13:26:00,827 [INFO] Fetched all users successfully.
+2024-01-10 13:26:06,606 [INFO] Password reset page accessed for user_id: 8
+2024-01-10 13:26:15,811 [INFO] Password for user_id 8 was successfully updated.
+2024-01-10 13:26:22,401 [INFO] Fetched all users successfully.
+2024-01-10 13:26:25,446 [INFO] Server restart initiated.
+2024-01-10 13:26:35,912 [INFO] Server started on port 5001.
+2024-01-10 13:38:36,424 [INFO] Fetched all users successfully.
+2024-01-10 13:38:42,351 [INFO] Server restart initiated.
+2024-01-10 13:38:52,849 [INFO] Server started on port 5001.
+2024-01-10 13:39:00,450 [INFO] Fetched all users successfully.
+2024-01-10 13:39:03,796 [INFO] Backup created at backups\otpbcp-10.01.24-13:39.db
+2024-01-10 14:17:29,622 [INFO] User ID 1 updated settings successfully.
+2024-01-10 14:21:49,692 [INFO] User ID 1 updated settings successfully.
+2024-01-10 14:21:58,541 [INFO] User ID 1 updated settings successfully.
+2024-01-10 14:22:05,667 [INFO] User ID 1 updated settings successfully.
+2024-01-10 14:22:55,557 [INFO] User ID 1 updated settings successfully.
+2024-01-10 14:23:02,841 [INFO] User ID 1 updated settings successfully.
+2024-01-10 14:23:56,791 [INFO] Fetched all users successfully.
+2024-01-10 14:24:30,795 [INFO] Server started on port 5001.
+2024-01-10 14:24:36,670 [INFO] User ID 1 updated settings successfully.
+2024-01-10 14:24:56,318 [INFO] User ID 1 updated settings successfully.
+2024-01-10 14:25:41,320 [INFO] User ID 1 updated settings successfully.
+2024-01-10 14:26:39,003 [INFO] User ID 1 updated settings successfully.
+2024-01-10 14:26:47,171 [INFO] User ID 1 updated settings successfully.
+2024-01-10 14:26:58,113 [INFO] User ID 1 updated settings successfully.
+2024-01-10 14:27:32,588 [INFO] Server started on port 5001.
+2024-01-10 14:27:38,533 [INFO] User ID 1 updated settings successfully.
+2024-01-10 14:27:58,350 [INFO] User ID 1 updated settings successfully.
+2024-01-10 14:28:03,530 [INFO] User ID 1 updated settings successfully.
+2024-01-10 14:28:08,533 [INFO] User ID 1 updated settings successfully.
+2024-01-10 14:28:15,168 [INFO] User ID 1 updated settings successfully.
+2024-01-10 14:28:25,874 [INFO] User ID 1 updated settings successfully.
+2024-01-10 14:31:49,873 [INFO] Server started on port 5001.
+2024-01-10 14:31:55,278 [INFO] User ID 1 updated settings successfully.
+2024-01-10 14:34:34,677 [INFO] User ID 1 updated settings successfully.
+2024-01-10 14:36:02,915 [INFO] Server started on port 5001.
+2024-01-10 14:36:06,675 [INFO] User ID 1 updated settings successfully.
+2024-01-10 14:36:23,497 [INFO] Server started on port 5001.
+2024-01-10 14:36:28,125 [INFO] User ID 1 updated settings successfully.
+2024-01-10 14:36:35,624 [INFO] User ID 1 updated settings successfully.
+2024-01-10 14:36:40,552 [INFO] User ID 1 updated settings successfully.
+2024-01-10 14:38:52,126 [INFO] Server started on port 5001.
+2024-01-10 14:38:57,696 [INFO] User ID 1 updated settings successfully.
+2024-01-10 14:39:04,174 [INFO] User ID 1 updated settings successfully.
+2024-01-10 14:39:09,018 [INFO] User ID 1 updated settings successfully.
+2024-01-10 14:39:25,487 [INFO] Server started on port 5001.
+2024-01-10 14:39:32,519 [INFO] User ID 1 updated settings successfully.
+2024-01-10 14:39:41,878 [INFO] User ID 1 updated settings successfully.
+2024-01-10 14:39:48,199 [INFO] User ID 1 updated settings successfully.
+2024-01-10 14:40:11,915 [INFO] User ID 1 updated settings successfully.
+2024-01-10 14:40:21,413 [INFO] User ID 1 updated settings successfully.
+2024-01-10 14:40:45,621 [INFO] User ID 1 updated settings successfully.
+2024-01-10 14:42:19,848 [INFO] Server started on port 5001.
+2024-01-10 14:42:22,883 [INFO] User ID 1 updated settings successfully.
+2024-01-10 14:43:01,873 [INFO] User ID 1 updated settings successfully.
+2024-01-10 14:43:39,527 [INFO] User ID 1 updated settings successfully.
+2024-01-10 14:45:33,859 [INFO] Server started on port 5001.
+2024-01-10 14:45:37,874 [INFO] User ID 1 updated settings successfully.
+2024-01-10 14:46:20,274 [INFO] User ID 1 updated settings successfully.
+2024-01-10 15:06:59,989 [INFO] Server started on port 5001.
+2024-01-10 15:19:08,252 [INFO] User ID 1 updated settings successfully.
+2024-01-10 15:34:54,656 [INFO] User ID 1 updated settings successfully.
+2024-01-10 16:03:23,354 [INFO] Server started on port 5001.
+2024-01-10 16:04:52,252 [INFO] Server started on port 5001.
+2024-01-10 16:05:04,064 [INFO] User ID 1 updated settings successfully.
+2024-01-10 16:05:16,623 [INFO] User ID 1 updated settings successfully.
+2024-01-10 19:24:34,116 Redirecting to login: No user_id or session_token
+2024-01-10 19:24:42,349 [WARNING] Failed login attempt for user: Sebastian
+2024-01-10 19:24:51,075 [WARNING] Failed login attempt for user: amin
+2024-01-10 19:25:00,476 [INFO] User: admin Logged in!
+2024-01-10 19:25:11,281 [INFO] User ID 1 successfully logged out.
+2024-01-10 19:25:17,723 Redirecting to login: No user_id or session_token
+2024-01-10 19:25:24,984 [INFO] User: admin Logged in!
+2024-01-10 19:25:30,198 [INFO] Fetched all users successfully.
+2024-01-10 19:25:38,678 Redirecting to login: No user_id or session_token
+2024-01-10 19:25:42,280 [INFO] Server restart initiated.
+2024-01-10 19:25:52,839 [INFO] Server started on port 5001.
+2024-01-10 19:26:09,001 Redirecting to login: No user_id or session_token
+2024-01-10 19:26:39,352 Redirecting to login: No user_id or session_token
+2024-01-10 19:27:09,622 Redirecting to login: No user_id or session_token
+2024-01-10 19:27:39,986 Redirecting to login: No user_id or session_token
+2024-01-10 19:28:10,324 Redirecting to login: No user_id or session_token
+2024-01-10 19:28:40,726 Redirecting to login: No user_id or session_token
+2024-01-10 19:29:11,097 Redirecting to login: No user_id or session_token
+2024-01-10 19:29:41,400 Redirecting to login: No user_id or session_token
+2024-01-10 19:30:11,734 Redirecting to login: No user_id or session_token
+2024-01-10 19:30:42,078 Redirecting to login: No user_id or session_token
+2024-01-10 19:31:12,385 Redirecting to login: No user_id or session_token
+2024-01-10 19:31:42,756 Redirecting to login: No user_id or session_token
+2024-01-10 19:32:13,147 Redirecting to login: No user_id or session_token
+2024-01-10 19:32:43,461 Redirecting to login: No user_id or session_token
+2024-01-10 19:33:13,803 Redirecting to login: No user_id or session_token
+2024-01-10 19:33:44,241 Redirecting to login: No user_id or session_token
+2024-01-10 19:34:14,609 Redirecting to login: No user_id or session_token
+2024-01-10 19:34:44,905 Redirecting to login: No user_id or session_token
+2024-01-10 19:35:15,208 Redirecting to login: No user_id or session_token
+2024-01-10 19:35:45,505 Redirecting to login: No user_id or session_token
+2024-01-10 19:36:15,813 Redirecting to login: No user_id or session_token
+2024-01-10 19:36:46,162 Redirecting to login: No user_id or session_token
+2024-01-10 19:37:16,544 Redirecting to login: No user_id or session_token
+2024-01-10 19:37:46,899 Redirecting to login: No user_id or session_token
+2024-01-10 19:38:17,294 Redirecting to login: No user_id or session_token
+2024-01-10 19:38:47,610 Redirecting to login: No user_id or session_token
+2024-01-10 19:39:17,912 Redirecting to login: No user_id or session_token
+2024-01-10 19:39:48,268 Redirecting to login: No user_id or session_token
+2024-01-10 19:40:18,560 Redirecting to login: No user_id or session_token
+2024-01-10 19:40:48,865 Redirecting to login: No user_id or session_token
+2024-01-10 19:41:19,232 Redirecting to login: No user_id or session_token
+2024-01-10 19:41:49,608 Redirecting to login: No user_id or session_token
+2024-01-10 19:42:19,962 Redirecting to login: No user_id or session_token
+2024-01-10 19:42:50,247 Redirecting to login: No user_id or session_token
+2024-01-10 19:43:20,609 Redirecting to login: No user_id or session_token
+2024-01-10 19:43:50,832 Redirecting to login: No user_id or session_token
+2024-01-10 19:44:21,151 Redirecting to login: No user_id or session_token
+2024-01-10 19:44:51,681 Redirecting to login: No user_id or session_token
+2024-01-10 19:45:21,994 Redirecting to login: No user_id or session_token
+2024-01-10 19:45:52,254 Redirecting to login: No user_id or session_token
+2024-01-10 19:46:22,632 Redirecting to login: No user_id or session_token
+2024-01-10 19:46:53,045 Redirecting to login: No user_id or session_token
+2024-01-10 19:47:23,335 Redirecting to login: No user_id or session_token
+2024-01-10 19:47:53,678 Redirecting to login: No user_id or session_token
+2024-01-10 19:48:23,996 Redirecting to login: No user_id or session_token
+2024-01-10 19:48:54,320 Redirecting to login: No user_id or session_token
+2024-01-10 19:49:24,612 Redirecting to login: No user_id or session_token
+2024-01-10 19:49:54,874 Redirecting to login: No user_id or session_token
+2024-01-10 19:50:25,224 Redirecting to login: No user_id or session_token
+2024-01-10 19:50:55,435 Redirecting to login: No user_id or session_token
+2024-01-10 19:51:25,806 Redirecting to login: No user_id or session_token
+2024-01-10 19:51:56,149 Redirecting to login: No user_id or session_token
+2024-01-10 19:52:26,444 Redirecting to login: No user_id or session_token
+2024-01-10 19:52:56,800 Redirecting to login: No user_id or session_token
+2024-01-10 19:53:27,084 Redirecting to login: No user_id or session_token
+2024-01-10 19:53:57,434 Redirecting to login: No user_id or session_token
+2024-01-10 19:54:27,709 Redirecting to login: No user_id or session_token
+2024-01-10 19:54:57,984 Redirecting to login: No user_id or session_token
+2024-01-10 19:55:28,291 Redirecting to login: No user_id or session_token
+2024-01-10 19:55:58,665 Redirecting to login: No user_id or session_token
+2024-01-10 19:56:28,991 Redirecting to login: No user_id or session_token
+2024-01-10 19:56:59,382 Redirecting to login: No user_id or session_token
+2024-01-10 19:57:29,715 Redirecting to login: No user_id or session_token
+2024-01-10 19:58:00,062 Redirecting to login: No user_id or session_token
+2024-01-10 19:58:30,344 Redirecting to login: No user_id or session_token
+2024-01-10 19:59:00,688 Redirecting to login: No user_id or session_token
+2024-01-10 19:59:31,043 Redirecting to login: No user_id or session_token
+2024-01-10 20:00:01,388 Redirecting to login: No user_id or session_token
+2024-01-10 20:00:31,706 Redirecting to login: No user_id or session_token
+2024-01-10 20:01:02,042 Redirecting to login: No user_id or session_token
+2024-01-10 20:01:32,353 Redirecting to login: No user_id or session_token
+2024-01-10 20:02:02,684 Redirecting to login: No user_id or session_token
+2024-01-10 20:02:33,061 Redirecting to login: No user_id or session_token
+2024-01-10 20:03:03,376 Redirecting to login: No user_id or session_token
+2024-01-10 20:03:33,664 Redirecting to login: No user_id or session_token
+2024-01-10 20:04:03,964 Redirecting to login: No user_id or session_token
+2024-01-10 20:04:34,262 Redirecting to login: No user_id or session_token
+2024-01-10 20:05:04,551 Redirecting to login: No user_id or session_token
+2024-01-10 20:05:34,912 Redirecting to login: No user_id or session_token
+2024-01-10 20:06:05,220 Redirecting to login: No user_id or session_token
+2024-01-10 20:06:35,574 Redirecting to login: No user_id or session_token
+2024-01-10 20:07:05,977 Redirecting to login: No user_id or session_token
+2024-01-10 20:07:36,304 Redirecting to login: No user_id or session_token
+2024-01-10 20:08:06,659 Redirecting to login: No user_id or session_token
+2024-01-10 20:08:36,979 Redirecting to login: No user_id or session_token
+2024-01-10 20:09:07,331 Redirecting to login: No user_id or session_token
+2024-01-10 20:09:37,676 Redirecting to login: No user_id or session_token
+2024-01-10 20:10:07,990 Redirecting to login: No user_id or session_token
+2024-01-10 20:10:38,324 Redirecting to login: No user_id or session_token
+2024-01-10 20:11:08,605 Redirecting to login: No user_id or session_token
+2024-01-10 20:11:38,898 Redirecting to login: No user_id or session_token
+2024-01-10 20:12:09,279 Redirecting to login: No user_id or session_token
+2024-01-10 20:12:39,669 Redirecting to login: No user_id or session_token
+2024-01-10 20:13:10,017 Redirecting to login: No user_id or session_token
+2024-01-10 20:13:40,395 Redirecting to login: No user_id or session_token
+2024-01-10 20:14:10,742 Redirecting to login: No user_id or session_token
+2024-01-10 20:14:41,035 Redirecting to login: No user_id or session_token
+2024-01-10 20:15:11,361 Redirecting to login: No user_id or session_token
+2024-01-10 20:15:41,726 Redirecting to login: No user_id or session_token
+2024-01-10 20:16:12,016 Redirecting to login: No user_id or session_token
+2024-01-10 20:16:42,326 Redirecting to login: No user_id or session_token
+2024-01-10 20:17:12,655 Redirecting to login: No user_id or session_token
+2024-01-10 20:17:43,021 Redirecting to login: No user_id or session_token
+2024-01-10 20:18:13,449 Redirecting to login: No user_id or session_token
+2024-01-10 20:18:43,984 Redirecting to login: No user_id or session_token
+2024-01-10 20:19:14,340 Redirecting to login: No user_id or session_token
+2024-01-10 20:19:44,646 Redirecting to login: No user_id or session_token
+2024-01-10 20:20:15,045 Redirecting to login: No user_id or session_token
+2024-01-10 20:20:45,396 Redirecting to login: No user_id or session_token
+2024-01-10 20:21:15,742 Redirecting to login: No user_id or session_token
+2024-01-10 20:21:46,264 Redirecting to login: No user_id or session_token
+2024-01-10 20:22:16,608 Redirecting to login: No user_id or session_token
+2024-01-10 20:22:46,609 Redirecting to login: No user_id or session_token
+2024-01-10 20:23:17,183 Redirecting to login: No user_id or session_token
+2024-01-10 20:23:47,619 Redirecting to login: No user_id or session_token
+2024-01-10 20:23:53,388 [INFO] Server started on port 5001.
+2024-01-10 20:23:59,561 Redirecting to login: No user_id or session_token
+2024-01-10 20:24:04,876 [INFO] User: admin Logged in!
+2024-01-10 20:29:19,512 [INFO] Server started on port 5001.
+2024-01-10 20:30:48,528 [INFO] Server restart initiated.
+2024-01-10 20:30:58,842 [INFO] Server started on port 5001.
+2024-01-10 20:31:34,083 [INFO] User ID 1 updated settings successfully.
+2024-01-10 20:31:45,559 [INFO] User ID 1 updated settings successfully.
+2024-01-10 20:31:53,803 [INFO] User ID 1 updated settings successfully.
+2024-01-10 20:32:02,709 [INFO] User ID 1 updated settings successfully.
+2024-01-10 20:32:09,051 [INFO] User ID 1 updated settings successfully.
+2024-01-10 20:32:19,243 [INFO] User ID 1 updated settings successfully.
+2024-01-10 20:33:09,780 [INFO] Server restart initiated.
+2024-01-10 20:33:20,883 [INFO] Server started on port 5001.
+2024-01-10 20:33:29,234 [INFO] User ID 1 updated settings successfully.
+2024-01-10 20:45:04,628 [INFO] User ID 1 updated settings successfully.
+2024-01-10 20:45:46,806 [INFO] User ID 1 updated settings successfully.
+2024-01-10 20:51:30,042 [INFO] Server restart initiated.
+2024-01-10 20:51:40,825 [INFO] Server started on port 5001.
+2024-01-11 09:01:13,280 [INFO] Server started on port 5001.
+2024-01-11 09:01:22,933 Redirecting to login: No user_id or session_token
+2024-01-11 09:01:26,457 [INFO] User: admin Logged in!
+2024-01-11 09:01:40,708 [INFO] User ID 1 updated settings successfully.
+2024-01-11 09:05:17,679 [INFO] User ID 1 updated settings successfully.
+2024-01-11 09:07:33,726 [INFO] User ID 1 updated settings successfully.
+2024-01-11 09:08:22,307 [INFO] User ID 1 updated settings successfully.
+2024-01-11 09:09:59,736 [INFO] User ID 1 updated settings successfully.
+2024-01-11 09:15:10,731 [INFO] Server started on port 5001.
+2024-01-11 09:16:13,546 [INFO] User ID 1 updated settings successfully.
+2024-01-11 09:17:34,588 [INFO] User ID 1 updated settings successfully.
+2024-01-11 09:17:46,779 [INFO] User ID 1 updated settings successfully.
+2024-01-11 09:18:00,933 [INFO] User ID 1 updated settings successfully.
+2024-01-11 09:18:05,577 [INFO] User ID 1 updated settings successfully.
+2024-01-11 09:27:32,517 [INFO] Server started on port 5001.

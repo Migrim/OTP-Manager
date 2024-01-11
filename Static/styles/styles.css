@@ -166,12 +166,12 @@ body {
 }
 
 .progress-bar {
-    background-color: #6CB7E0;
+    background-color: #275cd5;
     height: 20px;
 }
 
 .btn-primary {
-    background-color: #6CB7E0;
+    background-color: #275cd5;
     color: #fff;
     border: none;
     border-radius: 5px;
@@ -179,21 +179,21 @@ body {
 }
 
 .btn-primary:hover {
-    background-color: #5A9CCD;
+    background-color: #44ABED;
 }
 
 .btn-danger {
-    background-color: #CD5C5C; 
+    background-color: #FF5252; 
     border: none; 
     transition: background-color 0.3s; 
 }
 
 .btn-danger:hover {
-    background-color: #dc8d8d; 
+    background-color: #ff5d51; 
 }
 
 .btn-light {
-    background-color: #f8f9fa;
+    background-color: #B6B6B6;
     color: #292b2c;
     border: none;
     border-radius: 5px;

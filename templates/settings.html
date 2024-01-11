@@ -13,6 +13,9 @@
             color: #FFF;
             margin: 0;
             padding: 0;
+            height: 100vh; 
+            max-height: 100vh; 
+            overflow: hidden;
         }
 
         .navbar {
@@ -49,6 +52,8 @@
             border: 1px solid #dee2e6;
             border-radius: 20px;
             animation: scaleFadeIn 0.8s ease-in-out;
+            max-height: calc(100vh - 60px); 
+            overflow: hidden;
         }
 
         .d-flex {
@@ -210,8 +215,55 @@
             border-radius: 6px;
         }
 
-        .colorSwatch.selected {
-            box-shadow: 0 0 8px 1px #a386bf; 
+        #toast-container {
+            position: fixed;
+            top: 20px;
+            left: 20px; 
+            z-index: 9999; 
+            max-width: 250px; 
+        }
+
+        .toast {
+            background-color: #333;
+            color: white;
+            padding: 10px; 
+            border-radius: 5px;
+            margin-bottom: 15px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            opacity: 0;
+            transition: opacity 0.5s, transform 0.5s;
+            transform: translateX(-100%);
+        }
+
+        .toast.show {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .toast-header {
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .toast-body {
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        @media screen and (max-width: 768px) {
+            .settings-container {
+                width: 90%;
+            }
+
+            .form-item {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .setting-description {
+                margin-left: 0;
+                margin-top: 10px;
+            }
         }
     </style>
 {% endblock %}
@@ -296,15 +348,17 @@
             <label>OTP-Color</label>
             <div id="colorPalette">
                 <div class="colorSwatch" data-color="#333333" style="background-color: #333333;"></div>
-                <div class="colorSwatch" data-color="#FCFBF4" style="background-color: #FCFBF4;"></div>
-                <div class="colorSwatch" data-color="#BFA3D0" style="background-color: #BFA3D0;"></div>
-                <div class="colorSwatch" data-color="#36454F" style="background-color: #36454F;"></div>
-                <div class="colorSwatch" data-color="#435C7C" style="background-color: #435C7C;"></div>
+                <div class="colorSwatch" data-color="#ffffff" style="background-color: #ffffff;"></div>
+                <div class="colorSwatch" data-color="#2c2c54" style="background-color: #2c2c54;"></div>
+                <div class="colorSwatch" data-color="#40407a" style="background-color: #40407a;"></div>
+                <div class="colorSwatch" data-color="#474787" style="background-color: #474787;"></div>
+                <div class="colorSwatch" data-color="#706fd3" style="background-color: #706fd3;"></div>
+                <div class="colorSwatch" data-color="#9495df" style="background-color: #9495df;"></div>
+                <div class="colorSwatch" data-color="#2f3542" style="background-color: #2f3542;"></div>
+                <div class="colorSwatch" data-color="#57606f" style="background-color: #57606f;"></div>
                 <div class="colorSwatch" data-color="#3e4637" style="background-color: #3e4637;"></div>
-                <div class="colorSwatch" data-color="#301934" style="background-color: #301934;"></div>
-                <div class="colorSwatch" data-color="#232b2b" style="background-color: #232b2b;"></div>
-                <div class="colorSwatch" data-color="#682424" style="background-color: #682424;"></div>
-                <div class="colorSwatch" data-color="#987456" style="background-color: #987456;"></div>
+                <div class="colorSwatch" data-color="#292d26" style="background-color: #292d26;"></div>
+                <div class="colorSwatch" data-color="#1b2e4b" style="background-color: #1b2e4b;"></div>
             </div>
             <input type="hidden" id="alertColor" name="alert_color" value="{{ alert_color }}">
         </div>        
@@ -316,11 +370,14 @@
     </form>
 </div>
 
+<div id="toast-container" aria-live="polite" aria-atomic="true" style="position: relative; min-height: 200px;">
+</div>
+
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         var form = document.querySelector('.form-container');
         form.addEventListener('submit', function(event) {
-            event.preventDefault(); // Prevent the default form submission
+            event.preventDefault(); 
 
             var formData = new FormData(form);
             var object = {};
@@ -329,7 +386,7 @@
             });
             var json = JSON.stringify(object);
 
-            fetch('/settings', { // Your endpoint for updating settings
+            fetch('/settings', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -341,7 +398,7 @@
             .then(data => {
                 console.log(data);
                 if(data.success) {
-                    alert("Settings updated successfully!");
+                    showToast("Settings updated successfully!");
                 }
             })
             .catch((error) => {
@@ -350,12 +407,32 @@
         });
     });
 
+    function showToast(message) {
+        let toast = document.createElement('div');
+        toast.className = 'toast';
+        toast.innerText = message;
+        document.getElementById('toast-container').appendChild(toast);
+
+        setTimeout(() => { toast.classList.add('show'); }, 100);
+
+        setTimeout(() => { toast.classList.remove('show'); }, 5000);
+
+        toast.addEventListener('transitionend', function() {
+            if (!toast.classList.contains('show')) {
+                toast.remove();
+            }
+        });
+    }
+
     function setColor(color) {
         document.getElementById('alertColor').value = color;
         document.querySelectorAll('.colorSwatch').forEach(function(swatch) {
             swatch.classList.remove('selected');
+            swatch.classList.remove('glow');
         });
-        document.querySelector('.colorSwatch[data-color="' + color + '"]').classList.add('selected');
+        var selectedSwatch = document.querySelector('.colorSwatch[data-color="' + color + '"]');
+        selectedSwatch.classList.add('selected');
+        selectedSwatch.classList.add('glow');
     }
 
     document.querySelectorAll('.colorSwatch').forEach(function(swatch) {

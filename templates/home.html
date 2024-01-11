@@ -312,7 +312,7 @@
                         }
                     });
                 });
- 
+                
                 window.onload = function() {
                     let spoilerElements = document.getElementsByClassName('spoiler');
                     for (let i = 0; i < spoilerElements.length; i++) {
@@ -377,7 +377,6 @@
                             }
                         });
 
-                        // Show or hide the "No matched secrets found" message based on the displayed count
                         if (displayed === 0) {
                             document.getElementById('noSecretsFound').style.display = 'block';
                         } else {
@@ -399,10 +398,10 @@
                             }
                             
                             if (displayed === 0) {
-                                document.getElementById('noSecretsFound').style.display = 'block'; // Show the "no secrets" message
+                                document.getElementById('noSecretsFound').style.display = 'block'; 
                             } else {
-                                document.getElementById('noSecretsFound').style.display = 'none'; // Hide the "no secrets" message
-                                window.location.href = `/search_otp?name=${query}`;
+                                document.getElementById('noSecretsFound').style.display = 'none';
+                                window.location.href = `/search_blueprint/search_otp?page=1&name=${query}`;
                             }
                         }
                     });
