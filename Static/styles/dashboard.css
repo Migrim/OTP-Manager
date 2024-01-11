@@ -35,10 +35,18 @@ section {
     margin-bottom: 20px;
 }
 
-input[type="number"],
 input[type="color"],
 input[type="range"] {
     width: 50%; /* Shorter width */
+    padding: 10px;
+    background-color: #333;
+    border: 1px solid #444;
+    border-radius: 5px;
+    color: white;
+}
+
+input[type="number"] {
+    width: 20%; /* Adjust the width as needed */
     padding: 10px;
     background-color: #333;
     border: 1px solid #444;
@@ -176,4 +184,85 @@ input[type="color"] {
     padding: 5px; /* smaller padding */
     margin: auto; /* center it */
     display: block;
+}
+
+.settings-divider {
+    border: none;
+    border-top: 1px solid #666; /* Dark line for the separator */
+    margin: 10px 0; /* Space above and below the separator */
+}
+
+.settings-columns {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.settings-column {
+    flex: 1;
+}
+
+/* Make sure the last column does not have a margin on the right */
+.settings-column:last-child {
+    margin-right: 0;
+}
+
+.vertical-divider {
+    width: 2px; /* Width of the divider line */
+    height: calc(100% - 40px); /* Height is the full height of the parent minus padding */
+    background-color: #666; /* Color of the divider line */
+    margin: auto 20px; /* Centered margin with space on the sides */
+}
+
+.navbar {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.1);
+}
+
+.navbar-dark .navbar-brand {
+    color: #f1f1f1;
+    font-size: 1.5rem;
+    margin-right: 20px;
+    transition: color 0.3s;
+}
+
+.navbar-dark .navbar-brand:hover {
+    color: #CD5C5C;
+}
+
+#logoutContainer {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end; 
+}
+
+#logoutBtn {
+    position: absolute;
+    right: -1px; 
+    top: 0.1px;
+    cursor: pointer;
+}
+
+#logoutBtn a {
+    margin-top: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center; 
+    padding: 4px 12px;
+    font-size: 1.4rem; 
+    background-color: #CD5C5C;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+    width: 100px; 
+    height: 40px; 
+}
+
+#logoutBtn a:hover {
+    background-color: #E68A89;
+}
+
+#logoutBtn a i.material-icons-outlined {
+    font-size: 18px; 
+    margin-left: 8px; 
 }

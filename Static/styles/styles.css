@@ -22,33 +22,47 @@ body {
     background: rgba(255, 255, 255, 0.1);
     color: #f1f1f1;
     border-radius: 12px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
-    transition: background 0.3s, border 0.3s;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5); 
+    appearance: none; 
+    -webkit-appearance: none; 
+    -moz-appearance: none; /
 }
 
-.custom-dropdown:focus {
-    background: rgba(255, 255, 255, 0.2);
-    border-color: #f1f1f1;
+.custom-dropdown option {
+    background-color: #313133; 
+    border-radius: 12px;
+    color: #fff;
+}
+
+.custom-dropdown {
+    background-image: url('down-arrow-icon.png');
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    background-size: 20px;
 }
 
 .custom-dropdown::-ms-expand {
     display: none;
 }
 
-.custom-dropdown option {
-    background-color: #333;
-    color: #fff;
+.custom-dropdown:hover {
+    background: rgba(50, 50, 50, 0.8);
+}
+
+.custom-dropdown:focus {
+    outline: none; 
 }
 
 .search-bar input[type="text"] {
     padding: 10px;
     font-size: 17px;
     border: 1px solid #757575;
+    border-radius: 12px;
     width: 50%;
     background: rgba(255, 255, 255, 0.1);
     color: #f1f1f1;
-    border-radius: 4px;
     transition: background 0.3s, border 0.3s;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
 }
 
 .search-bar input[type="text"]:focus {
@@ -318,9 +332,8 @@ body {
 
 @keyframes flash {
     0%, 100% { opacity: 1; }
-    50% { opacity: 0; }
+    50% { opacity: 0.5; } /* Adjusted opacity to 0.5 instead of 0 */
 }
-
 
 .flash {
     animation: flash 1.5s 2;

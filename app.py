@@ -878,7 +878,11 @@ def server_settings():
     if not current_user.is_admin:
         flash('Access denied: Admins only.')
         return redirect(url_for('home'))
-    
+
+    current_time = datetime.now()
+    uptime = current_time - start_time
+    formatted_uptime = f"{uptime.days} Days {uptime.seconds // 3600}h:{(uptime.seconds // 60) % 60}m:{uptime.seconds % 60}s"
+
     if request.method == 'POST':
         new_port = request.form.get('server_port')
         action = request.form.get('server_action')
@@ -889,12 +893,17 @@ def server_settings():
         if action == 'restart':
             restart_server()
         elif action == 'stop':
-            stop_server()
+            shutdown_server()
 
         flash('Server settings updated successfully!')
 
-    current_port = get_current_server_port()  
-    return render_template('server_settings.html', current_port=current_port)
+    server_time = current_time.strftime('%d/%m/%Y %H:%M:%S')
+    current_port = request.host.split(':')[1] if ':' in request.host else 80
+    return render_template('server_settings.html', current_port=current_port, uptime=formatted_uptime, server_time=server_time)
+
+@app.route('/get_start_time')
+def get_start_time():
+    return jsonify({'start_time': start_time.isoformat()})
 
 def change_server_port(new_port):
     pass

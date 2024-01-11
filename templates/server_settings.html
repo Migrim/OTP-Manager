@@ -18,17 +18,33 @@
 
     <section class="server-settings">
         <h2>Server Settings</h2>
-        <form method="post">
+        <div class="settings-columns">
+            <div class="settings-column">
+                <form method="post">
+                <div class="input-group">
+                    <label for="server_port">Change Port:</label>
+                    <input type="number" id="server_port" name="server_port" min="1024" max="65535" value="{{ current_port }}" oninput="this.value = this.value.replace(/[^0-9]/g, '').replace(/(\..*)\./g, '$1');" required>
+                </div>
+                <div class="input-group">
+                    <label>Server Control:</label>
+                    <button type="submit" name="server_action" value="restart"><span class="material-icons">refresh</span> Restart</button>
+                    <button type="submit" name="server_action" value="stop"><span class="material-icons">stop</span> Stop</button>
+                </div>
+            </form>
+        </div>
+
+    <div class="vertical-divider"></div>
+
+        <div class="settings-column">
             <div class="input-group">
-                <label for="server_port">Change Port:</label>
-                <input type="number" id="server_port" name="server_port" min="1024" max="65535" required>
+                <label>Uptime:</label>
+                <div id="uptime">{{ uptime }}</div>
             </div>
             <div class="input-group">
-                <label>Server Control:</label>
-                <button type="submit" name="server_action" value="restart"><span class="material-icons">refresh</span> Restart</button>
-                <button type="submit" name="server_action" value="stop"><span class="material-icons">stop</span> Stop</button>
-            </div>
-        </form>
+                <label>Server Time:</label>
+                <div id="serverTime">{{ server_time }}</div>
+            </div>        
+        </div>
     </section>
 
     <section class="system-backups">
@@ -72,14 +88,11 @@
 </div>
 
 <script>
+let serverStartTime;
     var modal = document.getElementById("backupModal");
-
     var btn = document.querySelector(".system-backups button");
-
     var span = document.getElementsByClassName("close")[0];
-
     var confirmBtn = document.getElementById("confirmBackup");
-
     var cancelBtn = document.getElementById("cancelBackup");
 
     btn.onclick = function() {
@@ -119,6 +132,41 @@
         modal.style.display = "none";
       }
     }
+
+    document.addEventListener('DOMContentLoaded', function() {
+    fetch('/get_start_time')
+        .then(response => response.json())
+        .then(data => {
+            serverStartTime = new Date(data.start_time);
+            updateServerTimeAndUptime();
+        });
+    setInterval(updateServerTimeAndUptime, 1000);
+});
+
+function updateServerTimeAndUptime() {
+    const now = new Date();
+    const uptimeDuration = new Date(now - serverStartTime);
+
+    // Update Uptime
+    const uptimeString = formatDuration(uptimeDuration);
+    document.getElementById('uptime').innerText = uptimeString;
+
+    // Update Server Time
+    document.getElementById('serverTime').innerText = now.toLocaleString();
+}
+
+function formatDuration(duration) {
+    let seconds = Math.floor((duration / 1000) % 60);
+    let minutes = Math.floor((duration / (1000 * 60)) % 60);
+    let hours = Math.floor((duration / (1000 * 60 * 60)) % 24);
+    let days = Math.floor(duration / (1000 * 60 * 60 * 24));
+
+    hours = (hours < 10) ? "0" + hours : hours;
+    minutes = (minutes < 10) ? "0" + minutes : minutes;
+    seconds = (seconds < 10) ? "0" + seconds : seconds;
+
+    return days + "d " + hours + "h " + minutes + "m " + seconds + "s";
+}
 
 document.addEventListener('DOMContentLoaded', function() {
     function fetchAndDisplayBackups() {

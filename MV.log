@@ -11393,3 +11393,107 @@ jinja2.exceptions.TemplateSyntaxError: Encountered unknown tag 'endfor'. You pro
 2024-01-11 09:18:00,933 [INFO] User ID 1 updated settings successfully.
 2024-01-11 09:18:05,577 [INFO] User ID 1 updated settings successfully.
 2024-01-11 09:27:32,517 [INFO] Server started on port 5001.
+2024-01-11 09:29:41,455 [INFO] Server started on port 5001.
+2024-01-11 10:01:37,401 [INFO] Server started on port 5001.
+2024-01-11 10:02:24,288 [INFO] User ID 1 updated settings successfully.
+2024-01-11 10:04:27,976 [INFO] User ID 1 updated settings successfully.
+2024-01-11 10:04:34,260 [INFO] User ID 1 updated settings successfully.
+2024-01-11 10:04:42,444 [INFO] User ID 1 updated settings successfully.
+2024-01-11 10:04:44,108 [INFO] User ID 1 updated settings successfully.
+2024-01-11 10:07:30,485 [INFO] User ID 1 updated settings successfully.
+2024-01-11 10:09:41,461 [INFO] User ID 1 updated settings successfully.
+2024-01-11 10:10:36,925 [INFO] User ID 1 updated settings successfully.
+2024-01-11 12:11:00,446 [INFO] User ID 1 updated settings successfully.
+2024-01-11 12:14:26,021 Redirecting to login: No user_id or session_token
+2024-01-11 12:14:33,528 [INFO] User: cum Logged in!
+2024-01-11 12:14:38,273 [INFO] User ID 10 updated settings successfully.
+2024-01-11 13:12:41,654 [INFO] User ID 1 updated settings successfully.
+2024-01-11 13:18:15,943 [INFO] User ID 1 updated settings successfully.
+2024-01-11 13:18:22,566 [INFO] User ID 1 updated settings successfully.
+2024-01-11 13:18:30,577 [INFO] User ID 1 updated settings successfully.
+2024-01-11 13:25:23,476 [INFO] User ID 1 updated settings successfully.
+2024-01-11 13:25:34,147 [INFO] User ID 1 updated settings successfully.
+2024-01-11 13:25:56,021 [INFO] User ID 1 updated settings successfully.
+2024-01-11 13:26:05,140 [INFO] User ID 1 updated settings successfully.
+2024-01-11 13:27:06,242 [INFO] User ID 1 updated settings successfully.
+2024-01-11 13:27:08,112 [INFO] User ID 1 updated settings successfully.
+2024-01-11 13:27:08,713 [INFO] User ID 1 updated settings successfully.
+2024-01-11 13:27:09,287 [INFO] User ID 1 updated settings successfully.
+2024-01-11 13:27:09,673 [INFO] User ID 1 updated settings successfully.
+2024-01-11 13:27:09,849 [INFO] User ID 1 updated settings successfully.
+2024-01-11 13:27:09,999 [INFO] User ID 1 updated settings successfully.
+2024-01-11 13:27:10,152 [INFO] User ID 1 updated settings successfully.
+2024-01-11 13:27:10,291 [INFO] User ID 1 updated settings successfully.
+2024-01-11 13:27:34,377 [INFO] User ID 1 updated settings successfully.
+2024-01-11 13:27:43,992 [INFO] User ID 1 updated settings successfully.
+2024-01-11 13:27:51,673 [INFO] User ID 1 updated settings successfully.
+2024-01-11 13:28:00,021 [INFO] User ID 1 updated settings successfully.
+2024-01-11 13:28:11,518 [INFO] User ID 1 updated settings successfully.
+2024-01-11 13:28:22,843 [INFO] User ID 1 updated settings successfully.
+2024-01-11 13:30:46,660 [INFO] User ID 1 updated settings successfully.
+2024-01-11 13:33:05,245 [INFO] User ID 1 updated settings successfully.
+2024-01-11 17:33:28,329 [INFO] User ID 1 updated settings successfully.
+2024-01-11 17:33:38,685 [INFO] User ID 1 updated settings successfully.
+2024-01-11 17:33:43,350 [INFO] User ID 1 updated settings successfully.
+2024-01-11 18:58:19,957 [INFO] User ID 1 updated settings successfully.
+2024-01-11 18:58:23,345 [INFO] User ID 1 updated settings successfully.
+2024-01-11 19:09:03,970 [INFO] User ID 1 updated settings successfully.
+2024-01-11 19:09:13,066 [INFO] User ID 1 updated settings successfully.
+2024-01-11 19:09:16,556 [INFO] User ID 1 updated settings successfully.
+2024-01-11 19:09:21,868 [INFO] User ID 1 updated settings successfully.
+2024-01-11 19:09:25,107 [INFO] User ID 1 updated settings successfully.
+2024-01-11 19:09:41,322 [INFO] User ID 1 updated settings successfully.
+2024-01-11 19:10:02,651 [INFO] User ID 1 updated settings successfully.
+2024-01-11 19:10:10,431 [INFO] User ID 1 updated settings successfully.
+2024-01-11 19:10:18,215 [INFO] User ID 1 updated settings successfully.
+2024-01-11 19:10:27,222 [INFO] User ID 1 updated settings successfully.
+2024-01-11 19:10:31,392 [INFO] User ID 1 updated settings successfully.
+2024-01-11 19:10:36,214 [INFO] User ID 1 updated settings successfully.
+2024-01-11 19:10:40,766 [INFO] User ID 1 updated settings successfully.
+2024-01-11 19:11:13,491 [INFO] User ID 1 updated settings successfully.
+2024-01-11 19:11:42,074 [INFO] User ID 1 updated settings successfully.
+2024-01-11 19:16:12,040 [INFO] User ID 1 updated settings successfully.
+2024-01-11 19:16:16,379 [INFO] User ID 1 updated settings successfully.
+2024-01-11 19:16:24,537 [INFO] Server started on port 5001.
+2024-01-11 19:16:29,393 [INFO] User ID 1 updated settings successfully.
+2024-01-11 19:16:33,131 [INFO] User ID 1 updated settings successfully.
+2024-01-11 19:19:50,262 [INFO] Server started on port 5001.
+2024-01-11 19:20:08,025 [INFO] User ID 1 updated settings successfully.
+2024-01-11 19:20:11,662 [INFO] User ID 1 updated settings successfully.
+2024-01-11 19:20:23,572 [INFO] User ID 1 updated settings successfully.
+2024-01-11 19:20:40,425 [INFO] User ID 1 updated settings successfully.
+2024-01-11 19:35:20,083 [INFO] Server started on port 5001.
+2024-01-11 19:35:29,897 [INFO] User ID 1 updated settings successfully.
+2024-01-11 19:35:35,923 [INFO] User ID 1 updated settings successfully.
+2024-01-11 19:35:40,795 [INFO] User ID 1 updated settings successfully.
+2024-01-11 19:35:46,142 [INFO] User ID 1 updated settings successfully.
+2024-01-11 19:35:50,837 [INFO] User ID 1 updated settings successfully.
+2024-01-11 19:35:57,048 [INFO] User ID 1 updated settings successfully.
+2024-01-11 19:39:35,618 [INFO] Server started on port 5001.
+2024-01-11 19:39:47,963 [INFO] User ID 1 updated settings successfully.
+2024-01-11 19:39:53,731 [INFO] User ID 1 updated settings successfully.
+2024-01-11 19:39:58,014 [INFO] User ID 1 updated settings successfully.
+2024-01-11 19:40:17,491 [INFO] User ID 1 updated settings successfully.
+2024-01-11 19:48:49,734 [INFO] Server started on port 5001.
+2024-01-11 19:48:58,007 [INFO] User ID 1 updated settings successfully.
+2024-01-11 19:50:03,822 [INFO] Server started on port 5001.
+2024-01-11 19:50:46,196 [INFO] User ID 1 updated settings successfully.
+2024-01-11 19:54:51,044 [INFO] User ID 1 updated settings successfully.
+2024-01-11 19:59:32,196 [INFO] Server started on port 5001.
+2024-01-11 20:01:48,272 [INFO] Server started on port 5001.
+2024-01-11 20:09:02,555 [INFO] Server started on port 5001.
+2024-01-11 20:09:19,935 [INFO] Server restart initiated.
+2024-01-11 20:09:30,823 [INFO] Server started on port 5001.
+2024-01-11 20:10:00,214 [INFO] Server restart initiated.
+2024-01-11 20:10:10,836 [INFO] Server started on port 5001.
+2024-01-11 20:11:04,733 [INFO] Server restart initiated.
+2024-01-11 20:11:15,816 [INFO] Server started on port 5001.
+2024-01-11 20:11:43,360 [INFO] Server started on port 5001.
+2024-01-11 20:12:02,204 [INFO] Server started on port 5001.
+2024-01-11 20:14:28,582 [INFO] Server started on port 5001.
+2024-01-11 20:14:42,464 [INFO] Server restart initiated.
+2024-01-11 20:14:52,852 [INFO] Server started on port 5001.
+2024-01-11 20:20:29,816 [INFO] Server started on port 5001.
+2024-01-11 20:21:01,309 [INFO] Server started on port 5001.
+2024-01-11 20:25:11,599 [INFO] Server started on port 5001.
+2024-01-11 20:45:51,803 [INFO] Server started on port 5001.

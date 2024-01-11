@@ -211,6 +211,8 @@
                 }
 
                 function startCountdown(element, duration) {
+                    element.textContent = "calculating expiry..."; 
+
                     if (countdownIntervals.has(element.id)) {
                         clearInterval(countdownIntervals.get(element.id));
                     }
@@ -219,8 +221,8 @@
                         let current_time = new Date().getSeconds();
                         let remaining = duration - (current_time % duration);
 
-                        if (remaining === 2) {
-                            element.textContent = "fetching...";
+                        if (remaining === 0) {
+                            element.textContent = "expiering...";
                         } else if (remaining === 1) {
                             let otpName = element.id.replace('progressBar', '');
                             let otpCodeElement = document.getElementById(`otp_code_${otpName}`);
@@ -414,6 +416,7 @@
                             console.error('Fehler beim Kopieren: ', err);
                         });
                     }
+                    
                     function showToast() {
                         var toast = document.getElementById('toast');
                         toast.style.display = 'block';
