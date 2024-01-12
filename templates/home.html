@@ -2,7 +2,7 @@
 <html>
 <head>
     {% extends 'bootstrap/base.html' %}
-    {% block title %} OTP List {% endblock %}
+    {% block title %}OTP-List | {{ total_otp_count }} Secrets stored{% endblock %}
         {% block styles %}
         {{ super() }}
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">

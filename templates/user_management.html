@@ -82,7 +82,7 @@
 
 <div class="container">
     <div class="floating-add-user-button">
-        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addUserModal">
+        <button type="button" class="btn btn-add" data-toggle="modal" data-target="#addUserModal">
             Add a new user
         </button>
     </div>
@@ -101,10 +101,12 @@
                         <form method="post">
                             {{ user_form.hidden_tag() }}
                             <div class="form-group">
-                                {{ user_form.username.label }} {{ user_form.username(class="form-control") }}
+                                {{ user_form.username.label }}
+                                {{ user_form.username(class="form-control", placeholder="Enter cool username") }}
                             </div>
                             <div class="form-group">
-                                {{ user_form.password.label }} {{ user_form.password(class="form-control") }}
+                                {{ user_form.password.label }}
+                                {{ user_form.password(class="form-control", placeholder="Enter secure password") }}
                             </div>
                             <div class="form-group">
                                 {{ user_form.submit(class="btn btn-primary") }}
@@ -125,21 +127,21 @@
                     </div>
                     <div class="user-actions">
                         <form action="{{ url_for('admin.delete_user', user_id=user[0]) }}" method="POST" class="action-form">
-                            <button type="button" class="btn btn-danger delete-user-btn" data-user-id="{{ user[0] }}" title="Delete User" data-toggle="modal" data-target="#confirmDeleteModal">
+                            <button type="button" class="btn btn-danger delete-user-btn" data-user-id="{{ user[0] }}" data-toggle="modal" data-target="#confirmDeleteModal" draggable="false">
                                 <span class="material-symbols-outlined">delete_forever</span>
                             </button>                            
                         </form>                        
-                        <a href="{{ url_for('admin.toggle_admin', user_id=user[0]) }}" class="btn btn-secondary" title="Toggle Admin">
+                        <a href="{{ url_for('admin.toggle_admin', user_id=user[0]) }}" class="btn btn-warning" draggable="false">
                             <span class="material-symbols-outlined">admin_panel_settings</span>
                         </a>
-                        <a href="{{ url_for('reset_password', user_id=user[0]) }}" class="btn btn-secondary" title="Reset Password">
+                        <a href="{{ url_for('reset_password', user_id=user[0]) }}" class="btn btn-secondary" draggable="false">
                             <span class="material-symbols-outlined">password</span>
                         </a>
                     </div>
                 </div>
                 {% endfor %}
             </div>
-        </div>
+        </div>        
     </div>
 </div>
 

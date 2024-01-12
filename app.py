@@ -204,13 +204,13 @@ class OTPForm(FlaskForm):
     submit = SubmitField('Submit')
 
 class UserForm(FlaskForm):
-    username = StringField('Username', validators=[DataRequired()])
-    password = PasswordField('Password', validators=[DataRequired()])
+    username = StringField('Username', validators=[DataRequired()], render_kw={"placeholder": "Enter cool username"})
+    password = PasswordField('Password', validators=[DataRequired()], render_kw={"placeholder": "Enter a secure password"})
     submit = SubmitField('Add User')
 
 class CompanyForm(FlaskForm):
-    name = StringField('Company Name', validators=[DataRequired()])
-    kundennummer = StringField('Kundennummer', validators=[DataRequired()])
+    name = StringField('Company Name', validators=[DataRequired()], render_kw={"placeholder": "Enter company name"})
+    kundennummer = StringField('Kundennummer', validators=[DataRequired()], render_kw={"placeholder": "Enter Kundennummer"})
     submit_company = SubmitField('Add Company')
 
 def get_current_user():

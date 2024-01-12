@@ -64,7 +64,7 @@
 
 <div class="container">
     <div class="floating-add-user-button">
-        <button type="button" class="btn btn-primary large-button" data-toggle="modal" data-target="#addCompanyModal">
+        <button type="button" class="btn btn-add large-button" data-toggle="modal" data-target="#addCompanyModal">
             Add a new company
         </button>        
     </div>
@@ -83,11 +83,13 @@
                 <form method="post">
                     {{ company_form.hidden_tag() }}
                     <div class="form-group">
-                        {{ company_form.name.label }} {{ company_form.name(class="form-control") }}
+                        {{ company_form.name.label }}
+                        {{ company_form.name(class="form-control", placeholder="Enter company name") }}
                     </div>
                     <div class="form-group">
-                        {{ company_form.kundennummer.label }} {{ company_form.kundennummer(class="form-control") }}
-                    </div>
+                        {{ company_form.kundennummer.label }}
+                        {{ company_form.kundennummer(class="form-control", placeholder="Enter Kundennummer") }}
+                    </div>                    
                     <div class="form-group">
                         {{ company_form.submit_company(class="btn btn-primary") }}
                     </div>
@@ -127,11 +129,13 @@
                 <form method="post" action="{{ url_for('admin.edit_company', company_id=0) }}" id="editCompanyForm">
                     {{ company_form.hidden_tag() }}
                     <div class="form-group">
-                        {{ company_form.name.label }} {{ company_form.name(class="form-control") }}
+                        {{ company_form.name.label }}
+                        {{ company_form.name(class="form-control", placeholder="Enter company name") }}
                     </div>
                     <div class="form-group">
-                        {{ company_form.kundennummer.label }} {{ company_form.kundennummer(class="form-control") }}
-                    </div>
+                        {{ company_form.kundennummer.label }}
+                        {{ company_form.kundennummer(class="form-control", placeholder="Enter Kundennummer") }}
+                    </div>                    
                     <input type="hidden" name="company_id" id="editCompanyId">
                     <div class="form-group">
                         <button type="submit" class="btn btn-primary">Save Changes</button>
@@ -152,11 +156,11 @@
             </div>
             <div class="company-actions">
                 {% if is_admin %}
-                <button class="btn btn-danger delete-company-btn" data-company-id="{{ company.company_id }}" title="Delete Company">
+                <button class="btn btn-danger delete-company-btn" data-company-id="{{ company.company_id }}">
                     <span class="material-symbols-outlined">delete_forever</span>
                 </button>
                 {% endif %}
-                <button class="btn btn-secondary edit-company-btn" data-company-id="{{ company.company_id }}" title="Edit Company">
+                <button class="btn btn-secondary edit-company-btn" data-company-id="{{ company.company_id }}">
                     <span class="material-symbols-outlined">edit</span>
                 </button>                              
             </div>

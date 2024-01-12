@@ -5,14 +5,14 @@ body {
 }
 
 .btn {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 6px 20px; /* Reduced top and bottom padding */
+    margin-top: 20px; 
+    padding: 5px 15px;
+    background-color: #555;
+    border: none;
+    color: #fff;
     border-radius: 5px;
     cursor: pointer;
-    font-size: 1.5rem; /* Adjust icon size as needed */
-    color: white; /* Icon color */
+    transition: background-color 0.3s ease;
 }
 
 .btn[title]:hover::before {
@@ -66,7 +66,6 @@ body {
 }
 
 .user-info {
-    margin-bottom: 15px;
     font-size: 20px;
     font-weight: bold;
     font-size: clamp(1rem, 2.5vw, 1.25rem);
@@ -94,9 +93,9 @@ body {
 }
 
 .form-control {
-    background-color: #6c757d;
+    background-color: #444444;
     color: #f8f9fa;
-    border: 1px solid #868e96;
+    border: 1px solid #444444;
     max-width: 300px;
     margin: auto;
 }
@@ -112,14 +111,14 @@ body {
 }
 
 .btn-secondary {
-    background-color: #6c757d;
-    border-color: #6c757d;
+    background-color: #355bcd;
+    border-color: #355bcd;
     color: #f8f9fa;
 }
 
 .btn-success:hover, .btn-secondary:hover {
-    background-color: #5a6268;
-    border-color: #5a6268;
+    background-color: #44abed;
+    border-color: #44abed;
 }
 
 .modal-dialog {
@@ -131,7 +130,7 @@ body {
     background-color: #333;
     color: #f8f9fa;
     border-radius: 15px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2); 
 }
 
 .modal-header {
@@ -146,6 +145,7 @@ body {
     font-size: 18px;
     line-height: 1.5; 
     font-weight: bold;
+    flex-grow: 1; 
 }
 
 .close {
@@ -153,18 +153,28 @@ body {
     opacity: 1;
     padding: 0; 
     margin: 0; 
+    border: 0;
+    background: none; 
+    cursor: pointer;
 }
 
 .modal-body {
-    color: #fff; /* Ensures text is white for readability */
-    background-color: #333; /* Dark background for contrast */
-    padding: 15px; /* Adjust padding for better spacing */
-    text-align: center; /* Center align the text */
+    padding: 20px;
+    padding-bottom: 30px; 
+    text-align: center;
+    font-size: 1.2rem;
+    box-shadow: 0 20px 25px rgba(0, 0, 0, 0.5); 
 }
 
-.modal-body p {
-    font-size: 1.2rem; /* Increased font size for better visibility */
-    margin-bottom: 15px; /* Spacing below the text */
+.close:hover {
+    color: #ccc;
+}
+
+.modal-body {
+    padding-top: 20px;
+    padding: 20px;
+    text-align: center; 
+    font-size: 1.2rem; 
 }
 
 .close:hover {
@@ -181,7 +191,7 @@ body {
 }
 
 .btn-primary {
-    background-color: #6c757d;
+    background-color: #444444;
     border-color: #6c757d;
     color: #f8f9fa;
 }
@@ -189,6 +199,28 @@ body {
 .btn-primary:hover {
     background-color: #5a6268;
     border-color: #5a6268;
+}
+
+.btn-warning {
+    background-color: #F39C12;
+    border-color: #F39C12;
+    color: #f8f9fa;
+}
+
+.btn-warning:hover {
+    background-color: #ffc942;
+    border-color: #ffc942;
+}
+
+.btn-add {
+    background-color: #355bcd;
+    border-color: #355bcd;
+    color: #f8f9fa;
+}
+
+.btn-add:hover {
+    background-color: #44abed;
+    border-color: #44abed;
 }
 
 .close {
@@ -232,7 +264,7 @@ body {
 
 @media (max-width: 768px) {
     .user-grid {
-        grid-template-columns: 1fr; /* 1 column on smaller screens */
+        grid-template-columns: 1fr; 
     }
 }
 
@@ -291,7 +323,7 @@ body {
 
 .flash-messages {
     position: fixed;
-    top: 70px; /* Adjust based on your navbar height */
+    top: 70px; 
     right: 20px;
     z-index: 1050;
     max-width: 300px;
@@ -300,7 +332,7 @@ body {
 .alert {
     background-color: #333;
     color: #fff;
-    border: 1px solid #6c757d;
+    border: 1px solid #444444;
     border-radius: 4px;
     padding: 15px;
     margin-bottom: 10px;
@@ -322,4 +354,10 @@ body {
         opacity: 1;
         transform: translateY(0);
     }
+}
+
+.form-label, label {
+    font-size: 1.5rem; 
+    color: #f8f9fa;
+    margin-bottom: .5rem; 
 }

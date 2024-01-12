@@ -5,14 +5,14 @@ body {
 }
 
 .btn {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 6px 12px; 
-    font-size: 1rem;
+    margin-top: 20px; 
+    padding: 5px 15px;
+    background-color: #555;
+    border: none;
+    color: #fff;
     border-radius: 5px;
     cursor: pointer;
-    color: white; 
+    transition: background-color 0.3s ease;
 }
 
 .btn[title]:hover::before {
@@ -97,9 +97,9 @@ body {
 }
 
 .form-control {
-    background-color: #6c757d;
+    background-color: #444444;
     color: #f8f9fa;
-    border: 1px solid #868e96;
+    border: 1px solid #444444;
     max-width: 300px;
     margin: auto;
 }
@@ -115,18 +115,29 @@ body {
 }
 
 .btn-secondary {
-    background-color: #6c757d;
-    border-color: #6c757d;
+    background-color: #355bcd;
+    border-color: #355bcd;
     color: #f8f9fa;
 }
 
 .btn-success:hover, .btn-secondary:hover {
-    background-color: #5a6268;
-    border-color: #5a6268;
+    background-color: #44abed;
+    border-color: #44abed;
+}
+
+.btn-add {
+    background-color: #355bcd;
+    border-color: #355bcd;
+    color: #f8f9fa;
+}
+
+.btn-add:hover {
+    background-color: #44abed;
+    border-color: #44abed;
 }
 
 .modal-dialog {
-    max-width: 400px; /* Increase the width of the modal */
+    max-width: 400px;
     margin: 1.75rem auto;
 }
 
@@ -134,7 +145,7 @@ body {
     background-color: #333;
     color: #f8f9fa;
     border-radius: 15px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+
 }
 
 .modal-header {
@@ -149,6 +160,7 @@ body {
     font-size: 18px;
     line-height: 1.5; 
     font-weight: bold;
+    flex-grow: 1; 
 }
 
 .close {
@@ -156,12 +168,28 @@ body {
     opacity: 1;
     padding: 0; 
     margin: 0; 
+    border: 0; 
+    background: none; 
+    cursor: pointer;
 }
 
 .modal-body {
     padding: 20px;
-    text-align: center; /* Center the text */
-    font-size: 1.2rem; /* Increase font size */
+    padding-bottom: 30px;
+    text-align: center;
+    font-size: 1.2rem;
+}
+
+.close:hover {
+    color: #ccc;
+}
+
+.modal-body {
+    padding-top: 20px;
+    padding: 20px;
+    text-align: center; 
+    font-size: 1.2rem; 
+    box-shadow: 0 20px 25px rgba(0, 0, 0, 0.5); 
 }
 
 .close:hover {
@@ -169,14 +197,14 @@ body {
 }
 
 .form-control {
-    background-color: #484e53;
+    background-color: #444444;
     color: #fff;
     border: none;
     box-shadow: none;
 }
 
 .form-control:focus {
-    background-color: #5a6268;
+    background-color: #444444;
     color: #fff;
 }
 
@@ -201,15 +229,22 @@ body {
 }
 
 .modal-footer {
+    padding: 10px 15px;
     display: flex;
-    justify-content: space-around; /* Aligns buttons side by side */
+    align-items: center;
+    justify-content: flex-end; 
+    background: transparent; 
     border-top: none;
-    padding: 20px;
 }
 
 .modal-footer .btn {
-    padding: 6px 12px; /* Adjust padding */
-    width: auto; /* Adjust width */
+    padding: 5px 15px;
+    background-color: #555;
+    border: none;
+    color: #fff;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
 }
 
 .add-company-button {
@@ -238,7 +273,7 @@ body {
 
 @media (max-width: 768px) {
     .company-grid {
-        grid-template-columns: 1fr; /* 1 column on smaller screens */
+        grid-template-columns: 1fr; 
     }
 }
 
@@ -333,4 +368,10 @@ body {
 .large-button {
     padding: 10px 20px; 
     font-size: 1.3rem;
+}
+
+.form-label, label {
+    font-size: 1.5rem; 
+    color: #f8f9fa; 
+    margin-bottom: .5rem; 
 }

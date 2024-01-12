@@ -181,6 +181,7 @@ def toggle_admin(user_id):
 @admin_bp.route('/admin_settings', methods=['GET', 'POST'])
 @login_required
 def admin_settings():
+
     is_admin = False
     try:
         with sqlite3.connect("otp.db") as db:
@@ -191,11 +192,7 @@ def admin_settings():
         flash('Failed to fetch admin status.')
         logging.error(f"Error fetching admin status: {e}")
 
-    if not is_admin:
-        flash('Accessing withoud admin privileges.')
-        return redirect(url_for('admin_settings.html'))
-
-    return render_template('admin_settings.html')
+    return render_template('admin_settings.html', is_admin=is_admin)
 
 @admin_bp.route('/delete_user/<int:user_id>', methods=['POST'])
 @login_required

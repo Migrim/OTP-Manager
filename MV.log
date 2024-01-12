@@ -11497,3 +11497,92 @@ jinja2.exceptions.TemplateSyntaxError: Encountered unknown tag 'endfor'. You pro
 2024-01-11 20:21:01,309 [INFO] Server started on port 5001.
 2024-01-11 20:25:11,599 [INFO] Server started on port 5001.
 2024-01-11 20:45:51,803 [INFO] Server started on port 5001.
+2024-01-12 08:03:33,036 [INFO] Server started on port 5001.
+2024-01-12 08:03:46,597 [INFO] User: admin Logged in!
+2024-01-12 08:04:49,310 [ERROR] Failed to shut down server: Not running the Werkzeug server
+2024-01-12 08:04:52,188 [ERROR] Failed to shut down server: Not running the Werkzeug server
+2024-01-12 08:05:14,778 [INFO] Backup created at backups\otpbcp-12.01.24-08:05.db
+2024-01-12 08:09:32,054 [INFO] Server started on port 5001.
+2024-01-12 08:10:48,887 [INFO] User ID 1 updated settings successfully.
+2024-01-12 08:11:08,771 [INFO] User ID 1 updated settings successfully.
+2024-01-12 08:11:15,943 [INFO] User ID 1 updated settings successfully.
+2024-01-12 08:11:16,122 [INFO] User ID 1 updated settings successfully.
+2024-01-12 08:11:16,277 [INFO] User ID 1 updated settings successfully.
+2024-01-12 08:11:16,488 [INFO] User ID 1 updated settings successfully.
+2024-01-12 08:11:23,647 [INFO] User ID 1 updated settings successfully.
+2024-01-12 08:11:42,853 [INFO] User ID 1 updated settings successfully.
+2024-01-12 08:12:22,268 [INFO] User ID 1 updated settings successfully.
+2024-01-12 08:12:30,664 [INFO] User ID 1 updated settings successfully.
+2024-01-12 08:19:48,828 [INFO] Server started on port 5001.
+2024-01-12 08:20:02,658 [INFO] User ID 1 successfully logged out.
+2024-01-12 08:20:06,945 [WARNING] Failed login attempt for user: cum
+2024-01-12 08:20:11,016 [INFO] User: cum Logged in!
+2024-01-12 08:38:07,081 [INFO] Server started on port 5001.
+2024-01-12 08:40:19,749 Redirecting to login: No user_id or session_token
+2024-01-12 08:40:27,151 [INFO] User: cum Logged in!
+2024-01-12 09:09:22,596 [INFO] User: admin Logged in!
+2024-01-12 09:09:27,783 [INFO] User ID 1 successfully logged out.
+2024-01-12 09:09:32,130 [INFO] User: cum Logged in!
+2024-01-12 09:42:12,600 [INFO] User ID 10 successfully logged out.
+2024-01-12 09:42:26,404 [INFO] User: admin Logged in!
+2024-01-12 09:42:34,218 [INFO] Fetched all users successfully.
+2024-01-12 09:43:49,287 [INFO] Fetched all users successfully.
+2024-01-12 09:45:59,093 [INFO] Fetched all users successfully.
+2024-01-12 09:46:10,824 [INFO] Fetched all users successfully.
+2024-01-12 09:52:33,588 [INFO] Server started on port 5001.
+2024-01-12 10:06:10,394 [INFO] Fetched all users successfully.
+2024-01-12 10:06:46,808 [INFO] Fetched all users successfully.
+2024-01-12 10:09:16,145 [INFO] Fetched all users successfully.
+2024-01-12 10:09:24,914 [INFO] Fetched all users successfully.
+2024-01-12 10:09:27,030 [INFO] Fetched all users successfully.
+2024-01-12 10:12:18,967 [INFO] Fetched all users successfully.
+2024-01-12 10:13:23,418 [INFO] Fetched all users successfully.
+2024-01-12 10:16:50,965 [INFO] Fetched all users successfully.
+2024-01-12 10:17:02,653 [INFO] Fetched all users successfully.
+2024-01-12 10:17:13,611 [INFO] Server started on port 5001.
+2024-01-12 10:17:16,492 [INFO] Fetched all users successfully.
+2024-01-12 10:20:51,101 [INFO] Fetched all users successfully.
+2024-01-12 10:21:58,490 [INFO] Fetched all users successfully.
+2024-01-12 10:22:48,550 [INFO] Fetched all users successfully.
+2024-01-12 10:23:14,623 [INFO] Fetched all users successfully.
+2024-01-12 10:23:43,982 [INFO] Fetched all users successfully.
+2024-01-12 10:29:04,090 [INFO] Fetched all users successfully.
+2024-01-12 10:29:16,244 [INFO] Fetched all users successfully.
+2024-01-12 10:29:32,409 [INFO] Fetched all users successfully.
+2024-01-12 10:30:31,088 [INFO] Server started on port 5001.
+2024-01-12 10:30:54,573 [INFO] Fetched all users successfully.
+2024-01-12 10:31:28,989 [INFO] Server started on port 5001.
+2024-01-12 10:31:32,270 [INFO] Fetched all users successfully.
+2024-01-12 10:33:56,023 [INFO] Fetched all users successfully.
+2024-01-12 10:38:00,446 [INFO] Fetched all users successfully.
+2024-01-12 10:38:15,688 [INFO] Fetched all users successfully.
+2024-01-12 10:39:16,579 [INFO] Fetched all users successfully.
+2024-01-12 10:39:41,751 [INFO] Fetched all users successfully.
+2024-01-12 10:39:59,689 [INFO] Fetched all users successfully.
+2024-01-12 10:40:39,022 [INFO] Fetched all users successfully.
+2024-01-12 10:43:09,882 [INFO] Fetched all users successfully.
+2024-01-12 10:49:13,922 [INFO] Fetched all users successfully.
+2024-01-12 10:50:11,897 [INFO] Fetched all users successfully.
+2024-01-12 10:52:22,112 [INFO] Fetched all users successfully.
+2024-01-12 11:01:22,601 [INFO] User ID 1 updated settings successfully.
+2024-01-12 11:01:33,318 [INFO] User ID 1 updated settings successfully.
+2024-01-12 11:02:25,221 [INFO] User ID 1 updated settings successfully.
+2024-01-12 11:05:48,565 [INFO] Fetched all users successfully.
+2024-01-12 11:06:00,377 [INFO] Fetched all users successfully.
+2024-01-12 11:06:16,830 [INFO] Fetched all users successfully.
+2024-01-12 11:06:35,853 [INFO] Fetched all users successfully.
+2024-01-12 11:06:57,354 [INFO] Fetched all users successfully.
+2024-01-12 11:10:39,683 [INFO] User ID 1 successfully logged out.
+2024-01-12 11:10:43,867 [INFO] User: cum Logged in!
+2024-01-12 11:13:50,898 [WARNING] Non-admin user attempted to list backups.
+2024-01-12 11:15:13,845 [INFO] User ID 10 updated settings successfully.
+2024-01-12 11:29:53,156 [WARNING] Non-admin user attempted to list backups.
+2024-01-12 11:44:41,679 [WARNING] Non-admin user attempted to list backups.
+2024-01-12 12:47:06,266 Redirecting to login: No user_id or session_token
+2024-01-12 12:47:10,988 [INFO] User: admin Logged in!
+2024-01-12 12:47:14,709 [INFO] Fetched all users successfully.
+2024-01-12 12:47:30,906 [INFO] Fetched all users successfully.
+2024-01-12 12:50:45,065 [INFO] Fetched all users successfully.
+2024-01-12 12:51:20,537 [INFO] Fetched all users successfully.
+2024-01-12 12:52:12,674 [INFO] Fetched all users successfully.
+2024-01-12 12:52:34,119 [INFO] Fetched all users successfully.

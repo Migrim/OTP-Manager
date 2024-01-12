@@ -3,16 +3,25 @@ body {
     color: #fff;
     font-family: 'Roboto', sans-serif;
 }
+
+.disabled {
+    opacity: 0.5; 
+    pointer-events: none; 
+    cursor: not-allowed; 
+}
+
 .navbar {
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.1);
     margin-bottom: 0;
 }
+
 .navbar-dark .navbar-brand {
     color: #f1f1f1;
     font-size: 1.5rem;
     margin-right: 20px;
     transition: color 0.3s;
 }
+
 .navbar-dark .navbar-brand:hover {
     color: #CD5C5C;
 }
@@ -46,10 +55,6 @@ body {
     text-align: center;
 }
 
-.label-input-wrapper {
-    text-align: center;
-}
-
 .form-control {
     border-radius: 5px;
     font-size: 1rem; 
@@ -62,102 +67,9 @@ body {
     color: #fff;
 }
 
-.form-container,
-.form-submit {
-    margin-top: 20px;
-    text-align: center;  
-    transition: background-color 0.3s, color 0.3s;
-}
-
-.list-group-item {
-    background-color: #444;
-    color: #fff;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 10px;
-    padding: 12px 16px; 
-    border-radius: 5px;
-    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
-}
-
-.list-group-item:hover {
-    background-color: #555; 
-}
-
-.btn-danger {
-    margin-left: auto;
-}
-.btn-warning {
-    margin-left: 10px;
-}
-
-.company-list-container {
-    max-height: 375px;
-    width: 300px; 
-    overflow-y: auto;
-    scrollbar-width: thin;
-    scrollbar-color: #888 #333;
-    padding-right: 16px;
-}
-
-.company-list-container::-webkit-scrollbar {
-    width: 8px;
-}
-.company-list-container::-webkit-scrollbar-track {
-    background: #333;
-}
-.company-list-container::-webkit-scrollbar-thumb {
-    background-color: #888;
-}
-
-.company-list-container,
-.scrollable-container {
-    max-height: 375px;
-    width: 316px;  
-    overflow-y: auto;
-    scrollbar-width: thin;
-    scrollbar-color: #888 #333;
-}
-
-.scrollable-container::-webkit-scrollbar {
-    width: 8px;
-}
-.scrollable-container::-webkit-scrollbar-track {
-    background: #333;
-}
-.scrollable-container::-webkit-scrollbar-thumb {
-    background-color: #888;
-}
-
-.toast {
-    position: fixed;
-    top: 0;
-    right: 0;
-    z-index: 1100;
-}
-
-.form-container {
-    animation: fadeIn 0.5s ease-in-out;
-}
-
 .form-control:focus {
     border-color: #CD5C5C; 
     box-shadow: 0 0 0 0.2rem rgba(255, 0, 0, 0.25);
-}
-
-.animated-fade-in {
-    opacity: 0;
-    transition: opacity 0.5s ease-in-out;
-}
-
-@keyframes fadeIn {
-    0% {
-        opacity: 0;
-    }
-    100% {
-        opacity: 1;
-    }
 }
 
 #logoutContainer {
@@ -190,7 +102,7 @@ body {
 }
 
 #logoutBtn a:hover {
-    background-color: #B94A4A;
+    background-color: #E68A89;
 }
 
 #logoutBtn a i.material-icons-outlined {
@@ -198,63 +110,51 @@ body {
     margin-left: 8px; 
 }
 
-.management-options {
-    text-align: center;
-    margin-top: 50px;
-}
-
-.management-options a {
-    margin: 10px;
-    padding: 10px 20px;
-    font-size: 20px;
-    display: inline-block; 
-}
-
 .center-content {
     display: flex;
-    justify-content: center; /* Align cards in a row */
-    align-items: start; /* Align to the top */
-    padding-top: 50px; /* Move closer to the top */
-    gap: 20px; /* Add some space between the cards */
+    justify-content: center; 
+    align-items: center; 
+    padding-top: 50px;
+    gap: 20px;
+    flex-wrap: nowrap; 
+    min-height: 80vh; 
 }
 
 .management-card {
     border: 1px solid #333;
     border-radius: 8px;
-    padding: 40px; /* More padding for larger size */
-    width: 40%; /* Increase width */
-    height: 400px; /* Increase height */
+    padding: 40px;
+    width: 40%;
+    height: 400px;
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: center; 
-    cursor: pointer; 
+    align-items: center;
+    cursor: pointer;
     background-color: #333;
     color: #fff;
     transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
     text-align: center;
-    margin: 0 20px; /* Ensure some space between the cards */
-    transform: scale(0.9); /* Start slightly smaller */
-    opacity: 0; /* Start fully transparent */
-    animation: scaleFadeIn 0.5s ease forwards; /* Apply the animation */
-    animation-delay: 0.2s; /* Start the animation with a slight delay */
+    margin: 0 20px;
+    animation: scaleFadeIn 0.5s ease forwards;
+    animation-delay: 0.2s;
+}
+
+.management-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.3), 0 0 15px #7D3C98;
+    border-color: #7D3C98;
+}
+
+.management-card * {
+    user-select: none;
 }
 
 @keyframes scaleFadeIn {
     to {
-        transform: scale(1); /* Scale to normal size */
-        opacity: 1; /* Fade in to full opacity */
+        transform: scale(1);
     }
-}
-
-.management-card:hover {
-    transform: translateY(-10px); /* Move up slightly on hover */
-    box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.3);
-    border-color: #7D3C98; /* Change border color on hover */
-    /* Animated hue glow */
-    box-shadow: 0 0 20px #9b59b6;
-    border-color: #9b59b6;
 }
 
 .card-title {
@@ -269,22 +169,6 @@ body {
     color: #ffffff;
 }
 
-.btn-primary {
-    padding: 10px 20px;
-    font-size: 1rem;
-    border-radius: 5px;
-    cursor: pointer;
-    color: white;
-    text-decoration: none; 
-    background-color: #007bff;
-    border-color: #007bff;
-}
-
-.btn-primary:hover {
-    background-color: #0056b3;
-    border-color: #0056b3;
-}
-
 @media (max-width: 768px) {
     .center-content {
         flex-direction: column;
@@ -293,10 +177,4 @@ body {
         width: 80%; 
         margin: 20px 0; 
     }
-}
-
-.disabled {
-    opacity: 0.5; /* Grays out the card */
-    pointer-events: none; /* Disables clicking */
-    cursor: default; /* Changes cursor to indicate non-interactive */
 }
