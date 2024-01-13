@@ -332,7 +332,7 @@ body {
 
 @keyframes flash {
     0%, 100% { opacity: 1; }
-    50% { opacity: 0.5; } /* Adjusted opacity to 0.5 instead of 0 */
+    50% { opacity: 0.2; } 
 }
 
 .flash {
