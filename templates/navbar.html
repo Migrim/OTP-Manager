@@ -2,24 +2,24 @@
 
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="navbar-nav mr-auto">
-        <a class="navbar-brand" href="{{ url_for('home') }}">Home</a> 
+        <a class="navbar-brand" href="{{ url_for('home') }}" style="hover_color: {{ text_color }};">Home</a> 
     </div>
     <div class="navbar-nav mr-auto">
-        <a class="navbar-brand" href="{{ url_for('add') }}">Add</a>
+        <a class="navbar-brand" href="{{ url_for('add') }}" style="hover_color: {{ text_color }};">Add</a> 
     </div>
     <div class="navbar-nav mr-auto">
-        <a class="navbar-brand" href="{{ url_for('view_logs') }}">Logs</a>
+        <a class="navbar-brand" href="{{ url_for('view_logs') }}" style="hover_color: {{ text_color }};">Logs</a> 
     </div>
     <div class="navbar-nav mr-auto">
-        <a class="navbar-brand" href="{{ url_for('admin.admin_settings') }}">Management</a>
+        <a class="navbar-brand" href="{{ url_for('admin.admin_settings') }}" style="hover_color: {{ text_color }};">Management</a> 
     </div>    
     <div class="navbar-nav mr-auto">
-        <a class="navbar-brand" href="{{ url_for('about') }}">About</a>
+        <a class="navbar-brand" href="{{ url_for('about') }}" style="hover_color: {{ text_color }};">About</a> 
     </div>
     <div class="navbar-nav mr-auto">
-        <a class="navbar-brand" href="{{ url_for('settings') }}">
+        <a class="navbar-brand icon-link" href="{{ url_for('settings') }}">
             <i class="material-icons-outlined">settings</i> 
-        </a>
+        </a>        
     </div>   
     {% with messages = get_flashed_messages() %}
         {% if messages %}
@@ -36,3 +36,37 @@
         </div>                    
     </div>            
 </nav>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var hoverColor = '{{ text_color }}';  
+        if (hoverColor === '#FFFFFF') {
+            hoverColor = '#CD5C5C'; 
+        }
+
+        var navbarLinks = document.querySelectorAll('.navbar .navbar-brand');
+        navbarLinks.forEach(function(link) {
+            link.onmouseover = function() { 
+
+                if (!this.parentElement.parentElement.id.includes('logoutContainer')) {
+                    this.style.color = hoverColor; 
+                    var icon = this.querySelector('.material-icons-outlined');
+                    if (icon) {
+                        icon.classList.add('spin-animation');
+                    }
+                }
+            };
+            link.onmouseout = function() { 
+
+                if (!this.parentElement.parentElement.id.includes('logoutContainer')) {
+                    this.style.color = ''; 
+                    var icon = this.querySelector('.material-icons-outlined');
+                    if (icon) {
+                        icon.classList.remove('spin-animation');
+                    }
+                }
+            };
+        });
+    });
+</script>
+

@@ -33,7 +33,7 @@
     justify-content: center; 
     padding: 4px 12px;
     font-size: 1.4rem; 
-    background-color: #CD5C5C;
+    background-color: #ff5252;
     color: #fff;
     text-decoration: none;
     border-radius: 5px;
@@ -43,7 +43,8 @@
 }
 
 #logoutBtn a:hover {
-    background-color: #E68A89;
+    background-color: #ff5d51;
+    color: #f1f1f1;
 }
 
 #logoutBtn a i.material-icons-outlined {
@@ -58,3 +59,19 @@
     z-index: 1050;
     max-width: 300px;
 }
+
+@keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+.spin-animation {
+    animation: spin 0.5s ease-in-out;
+}
+
+.icon-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+

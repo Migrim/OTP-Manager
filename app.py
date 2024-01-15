@@ -640,6 +640,49 @@ def get_user_alert_color(user_id):
         result = cursor.fetchone()
         return result[0] if result else 'alert-primary'  
 
+def nav():
+    user_id = session.get('user_id')
+    print(f"Current user ID: {user_id}")
+
+    if user_id is not None:
+        text_color = get_user_text_color(user_id)
+        print(f"User alert color: {text_color}")
+        return render_template('navbar.html', text_color=text_color)
+    else:
+        print("No current user")
+        return render_template('navbar.html', text_color='default-color')
+
+@app.context_processor
+def inject_user_text_color():
+    user_id = session.get('user_id')
+    if user_id:
+        text_color = get_user_text_color(user_id)
+    else:
+        text_color = 'default-color'
+    return {'text_color': text_color}
+
+def get_user_text_color(user_id):
+    """Fetch the user's text color from the database.
+
+    Args:
+        user_id (int): The ID of the user.
+
+    Returns:
+        str: The text color of the user. Returns a default color if not found.
+    """
+    try:
+        with sqlite3.connect("otp.db") as conn:
+            cursor = conn.cursor()
+            cursor.execute("SELECT text_color FROM users WHERE id = ?", (user_id,))
+            result = cursor.fetchone()
+            if result:
+                return result[0]  
+            else:
+                return "#FFFFFF"  
+    except sqlite3.Error as e:
+        print(f"Database error: {e}")
+        return "#FFFFFF" 
+
 @app.route('/', methods=['GET', 'POST'])
 @login_required
 def home():

@@ -11655,3 +11655,157 @@ NameError: name 'get_user_colors' is not defined
 2024-01-15 18:37:06,155 [INFO] Server started on port 5001.
 2024-01-15 18:43:26,717 [INFO] Fetched all users successfully.
 2024-01-15 18:44:07,886 [INFO] Fetched all users successfully.
+2024-01-15 18:57:32,489 [INFO] Server started on port 5001.
+2024-01-15 19:00:29,487 Redirecting to login: No user_id or session_token
+2024-01-15 19:03:10,572 [ERROR] An error occurred on the home page.
+Traceback (most recent call last):
+  File "c:\Users\Sebastian\Desktop\OTP-Manager\app.py", line 717, in home
+    return render_template('home.html', form=form, grouped_otp_codes=grouped_otp_codes, total_otp_count=total_otp_count, companies=companies, search_name=search_name, page=page, total_pages=total_pages, enable_pagination=current_user.enable_pagination,  alert_color=alert_color, text_color=text_color)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Sebastian\AppData\Local\Programs\Python\Python311\Lib\site-packages\flask\templating.py", line 152, in render_template
+    return _render(app, template, context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Sebastian\AppData\Local\Programs\Python\Python311\Lib\site-packages\flask\templating.py", line 133, in _render
+    rv = template.render(context)
+         ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Sebastian\AppData\Local\Programs\Python\Python311\Lib\site-packages\jinja2\environment.py", line 1301, in render
+    self.environment.handle_exception()
+  File "C:\Users\Sebastian\AppData\Local\Programs\Python\Python311\Lib\site-packages\jinja2\environment.py", line 936, in handle_exception
+    raise rewrite_traceback_stack(source=source)
+  File "c:\Users\Sebastian\Desktop\OTP-Manager\templates\home.html", line 4, in top-level template code
+    {% extends 'bootstrap/base.html' %}
+    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Sebastian\AppData\Local\Programs\Python\Python311\Lib\site-packages\flask_bootstrap\templates\bootstrap\base.html", line 1, in top-level template code
+    {% block doc -%}
+  File "C:\Users\Sebastian\AppData\Local\Programs\Python\Python311\Lib\site-packages\flask_bootstrap\templates\bootstrap\base.html", line 4, in block 'doc'
+    {%- block html %}
+  File "C:\Users\Sebastian\AppData\Local\Programs\Python\Python311\Lib\site-packages\flask_bootstrap\templates\bootstrap\base.html", line 20, in block 'html'
+    {% block body -%}
+  File "C:\Users\Sebastian\AppData\Local\Programs\Python\Python311\Lib\site-packages\flask_bootstrap\templates\bootstrap\base.html", line 23, in block 'body'
+    {% block content -%}
+  File "c:\Users\Sebastian\Desktop\OTP-Manager\templates\home.html", line 17, in block 'content'
+    {% include 'navbar.html' %}
+    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\Sebastian\Desktop\OTP-Manager\templates\navbar.html", line 11, in top-level template code
+    <a class="navbar-brand" href="{{ url_for('logs') }}" style="hover_color: {{ user_color }};">Logs</a>
+    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Sebastian\AppData\Local\Programs\Python\Python311\Lib\site-packages\flask\app.py", line 1071, in url_for
+    return self.handle_url_build_error(error, endpoint, values)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Sebastian\AppData\Local\Programs\Python\Python311\Lib\site-packages\flask\app.py", line 1060, in url_for
+    rv = url_adapter.build(  # type: ignore[union-attr]
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Sebastian\AppData\Local\Programs\Python\Python311\Lib\site-packages\werkzeug\routing\map.py", line 947, in build
+    raise BuildError(endpoint, values, method, self)
+werkzeug.routing.exceptions.BuildError: Could not build url for endpoint 'logs'. Did you mean 'login' instead?
+2024-01-15 19:04:02,824 Redirecting to login: No user_id or session_token
+2024-01-15 19:04:08,056 [INFO] User: admin Logged in!
+2024-01-15 19:04:27,011 [INFO] Server started on port 5001.
+2024-01-15 19:05:51,582 [INFO] Server started on port 5001.
+2024-01-15 19:11:29,756 [INFO] Server started on port 5001.
+2024-01-15 19:14:51,030 [INFO] Server started on port 5001.
+2024-01-15 19:18:26,346 [INFO] Server started on port 5001.
+2024-01-15 19:19:15,083 [INFO] Server started on port 5001.
+2024-01-15 19:21:25,733 [INFO] Server started on port 5001.
+2024-01-15 19:21:28,662 [ERROR] An error occurred on the home page.
+Traceback (most recent call last):
+  File "c:\Users\Sebastian\Desktop\OTP-Manager\app.py", line 731, in home
+    return render_template('home.html', form=form, grouped_otp_codes=grouped_otp_codes, total_otp_count=total_otp_count, companies=companies, search_name=search_name, page=page, total_pages=total_pages, enable_pagination=current_user.enable_pagination,  alert_color=alert_color, text_color=text_color)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Sebastian\AppData\Local\Programs\Python\Python311\Lib\site-packages\flask\templating.py", line 152, in render_template
+    return _render(app, template, context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Sebastian\AppData\Local\Programs\Python\Python311\Lib\site-packages\flask\templating.py", line 133, in _render
+    rv = template.render(context)
+         ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Sebastian\AppData\Local\Programs\Python\Python311\Lib\site-packages\jinja2\environment.py", line 1301, in render
+    self.environment.handle_exception()
+  File "C:\Users\Sebastian\AppData\Local\Programs\Python\Python311\Lib\site-packages\jinja2\environment.py", line 936, in handle_exception
+    raise rewrite_traceback_stack(source=source)
+  File "c:\Users\Sebastian\Desktop\OTP-Manager\templates\home.html", line 4, in top-level template code
+    {% extends 'bootstrap/base.html' %}
+    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Sebastian\AppData\Local\Programs\Python\Python311\Lib\site-packages\flask_bootstrap\templates\bootstrap\base.html", line 1, in top-level template code
+    {% block doc -%}
+  File "C:\Users\Sebastian\AppData\Local\Programs\Python\Python311\Lib\site-packages\flask_bootstrap\templates\bootstrap\base.html", line 4, in block 'doc'
+    {%- block html %}
+  File "C:\Users\Sebastian\AppData\Local\Programs\Python\Python311\Lib\site-packages\flask_bootstrap\templates\bootstrap\base.html", line 20, in block 'html'
+    {% block body -%}
+  File "C:\Users\Sebastian\AppData\Local\Programs\Python\Python311\Lib\site-packages\flask_bootstrap\templates\bootstrap\base.html", line 23, in block 'body'
+    {% block content -%}
+  File "c:\Users\Sebastian\Desktop\OTP-Manager\templates\home.html", line 17, in block 'content'
+    {% include 'navbar.html' %}
+    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\Sebastian\Desktop\OTP-Manager\templates\navbar.html", line 42, in top-level template code
+    var hoverColor = '{{ user_color[1] }}'; // Assuming this is the text color
+    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Sebastian\AppData\Local\Programs\Python\Python311\Lib\site-packages\jinja2\environment.py", line 466, in getitem
+    return obj[argument]
+           ~~~^^^^^^^^^^
+jinja2.exceptions.UndefinedError: 'user_color' is undefined
+2024-01-15 19:25:21,240 [INFO] Server started on port 5001.
+2024-01-15 19:25:23,425 [ERROR] An error occurred on the home page.
+Traceback (most recent call last):
+  File "c:\Users\Sebastian\Desktop\OTP-Manager\app.py", line 749, in home
+    return render_template('home.html', form=form, grouped_otp_codes=grouped_otp_codes, total_otp_count=total_otp_count, companies=companies, search_name=search_name, page=page, total_pages=total_pages, enable_pagination=current_user.enable_pagination,  alert_color=alert_color, text_color=text_color)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Sebastian\AppData\Local\Programs\Python\Python311\Lib\site-packages\flask\templating.py", line 152, in render_template
+    return _render(app, template, context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Sebastian\AppData\Local\Programs\Python\Python311\Lib\site-packages\flask\templating.py", line 133, in _render
+    rv = template.render(context)
+         ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Sebastian\AppData\Local\Programs\Python\Python311\Lib\site-packages\jinja2\environment.py", line 1301, in render
+    self.environment.handle_exception()
+  File "C:\Users\Sebastian\AppData\Local\Programs\Python\Python311\Lib\site-packages\jinja2\environment.py", line 936, in handle_exception
+    raise rewrite_traceback_stack(source=source)
+  File "c:\Users\Sebastian\Desktop\OTP-Manager\templates\home.html", line 4, in top-level template code
+    {% extends 'bootstrap/base.html' %}
+    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Sebastian\AppData\Local\Programs\Python\Python311\Lib\site-packages\flask_bootstrap\templates\bootstrap\base.html", line 1, in top-level template code
+    {% block doc -%}
+  File "C:\Users\Sebastian\AppData\Local\Programs\Python\Python311\Lib\site-packages\flask_bootstrap\templates\bootstrap\base.html", line 4, in block 'doc'
+    {%- block html %}
+  File "C:\Users\Sebastian\AppData\Local\Programs\Python\Python311\Lib\site-packages\flask_bootstrap\templates\bootstrap\base.html", line 20, in block 'html'
+    {% block body -%}
+  File "C:\Users\Sebastian\AppData\Local\Programs\Python\Python311\Lib\site-packages\flask_bootstrap\templates\bootstrap\base.html", line 23, in block 'body'
+    {% block content -%}
+  File "c:\Users\Sebastian\Desktop\OTP-Manager\templates\home.html", line 17, in block 'content'
+    {% include 'navbar.html' %}
+    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\Sebastian\Desktop\OTP-Manager\templates\navbar.html", line 42, in top-level template code
+    var hoverColor = '{{ user_color[1] }}'; // Assuming this is the text color
+    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Sebastian\AppData\Local\Programs\Python\Python311\Lib\site-packages\jinja2\environment.py", line 466, in getitem
+    return obj[argument]
+           ~~~^^^^^^^^^^
+jinja2.exceptions.UndefinedError: 'user_color' is undefined
+2024-01-15 19:26:43,513 [INFO] Server started on port 5001.
+2024-01-15 19:27:43,385 [INFO] Server started on port 5001.
+2024-01-15 19:33:06,359 [INFO] Server started on port 5001.
+2024-01-15 19:35:34,695 [INFO] Server started on port 5001.
+2024-01-15 19:35:45,987 [INFO] User ID 1 updated settings successfully.
+2024-01-15 19:37:22,136 [INFO] Server started on port 5001.
+2024-01-15 19:44:31,688 [INFO] Server started on port 5001.
+2024-01-15 19:46:00,180 [INFO] Server started on port 5001.
+2024-01-15 19:47:25,181 [INFO] Search initiated for query: 
+2024-01-15 19:47:25,181 [ERROR] Search operation failed: name 'fetch_all_secrets' is not defined
+Traceback (most recent call last):
+  File "c:\Users\Sebastian\Desktop\OTP-Manager\app.py", line 797, in search_otp
+    all_secrets = fetch_all_secrets()
+                  ^^^^^^^^^^^^^^^^^
+NameError: name 'fetch_all_secrets' is not defined
+2024-01-15 19:49:50,709 [INFO] Server started on port 5001.
+2024-01-15 19:50:16,582 [INFO] Server started on port 5001.
+2024-01-15 19:50:39,226 [INFO] User ID 1 updated settings successfully.
+2024-01-15 19:54:05,946 [INFO] User ID 1 updated settings successfully.
+2024-01-15 19:54:11,384 [INFO] User ID 1 updated settings successfully.
+2024-01-15 20:03:05,130 [INFO] User ID 1 updated settings successfully.
+2024-01-15 20:03:10,774 [INFO] User ID 1 updated settings successfully.
+2024-01-15 20:03:21,752 [INFO] Server started on port 5001.
+2024-01-15 20:04:30,660 [INFO] Server started on port 5001.
+2024-01-15 20:04:39,805 [INFO] User ID 1 updated settings successfully.
+2024-01-15 20:48:11,878 [INFO] User ID 1 successfully logged out.
+2024-01-15 20:48:16,686 [INFO] User: admin Logged in!
+2024-01-15 20:48:56,593 [INFO] User ID 1 successfully logged out.
+2024-01-15 20:49:04,294 [INFO] User: admin Logged in!
