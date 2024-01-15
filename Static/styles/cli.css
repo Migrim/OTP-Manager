@@ -1,0 +1,40 @@
+body {
+    background-color: #121212; 
+    color: #e0e0e0;          
+    font-family: Arial, sans-serif; 
+}
+
+a {
+    color: #bb86fc;          
+}
+
+form {
+    margin-top: 20px; 
+}
+
+input[type="text"] {
+    background-color: #2c2c2c; 
+    color: #e0e0e0;            
+    border: 1px solid #444;  
+    padding: 10px;            
+    width: 100%;              
+}
+
+input[type="submit"] {
+    background-color: #bb86fc; 
+    color: #121212;            
+    padding: 10px 15px;      
+    border: none;              
+    cursor: pointer;          
+}
+
+input[type="submit"]:hover {
+    background-color: #9a67ea;
+}
+
+pre {
+    background-color: #1f1f1f; 
+    padding: 15px;           
+    border-radius: 5px;        
+}
+

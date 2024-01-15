@@ -1,21 +1,7 @@
 body {
     background-color: #222;
     color: #fff;
-}
-
-.navbar {
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.1);
-}
-
-.navbar-dark .navbar-brand {
-    color: #f1f1f1;
-    font-size: 1.5rem;
-    margin-right: 20px;
-    transition: color 0.3s;
-}
-
-.navbar-dark .navbar-brand:hover {
-    color: #CD5C5C;
+    font-family: 'Roboto', sans-serif;
 }
 
 .center-content {
@@ -46,8 +32,8 @@ body {
     border-radius: 5px;
     background-color: #444;
     color: #fff;
-    border: 1px solid transparent; /* Ensure a border is present for transition */
-    box-shadow: 0 0 0 0 rgba(138, 43, 226, 0); /* Transparent shadow initially */
+    border: 1px solid transparent; 
+    box-shadow: 0 0 0 0 rgba(138, 43, 226, 0); 
     transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
@@ -57,27 +43,27 @@ body {
 
 .form-submit {
     margin-top: 20px;
-    margin-bottom: 20px; /* Added for symmetry */
-    margin-left: auto; /* Center align */
-    margin-right: auto; /* Center align */
-    display: block; /* Ensures that auto margins work for centering */
-    width: fit-content; /* Makes the button only as wide as its content */
-    background-color: #555; /* Gray background */
-    color: #ddd; /* Lighter text color for contrast */
-    border: 1px solid #666; /* Slightly darker border for depth */
-    padding: 10px 15px; /* Adjust padding (reduced horizontal padding) */
-    border-radius: 5px; /* Rounded corners */
-    transition: background-color 0.3s, color 0.3s, border-color 0.3s; /* Smooth transition for hover effect */
-    font-weight: bold; /* Optional: Makes the text bold */
-    text-transform: uppercase; /* Optional: Uppercase text */
-    cursor: pointer; /* Changes cursor to pointer on hover */
-    text-align: center; /* Center the text */
+    margin-bottom: 20px; 
+    margin-left: auto; 
+    margin-right: auto; 
+    display: block;
+    width: fit-content; 
+    background-color: #555;
+    color: #ddd; 
+    border: 1px solid #666; 
+    padding: 10px 15px; 
+    border-radius: 5px;
+    transition: background-color 0.3s, color 0.3s, border-color 0.3s; 
+    font-weight: bold; 
+    text-transform: uppercase; 
+    cursor: pointer; 
+    text-align: center;
 }
 
 .form-submit:hover, .form-submit:focus {
-    background-color: #666; /* Slightly darker on hover/focus */
-    color: #fff; /* Brighter text color on hover/focus */
-    border-color: #777; /* Slightly brighter border on hover/focus */
+    background-color: #666; 
+    color: #fff; 
+    border-color: #777; 
 }
 
 .text-danger {
@@ -92,8 +78,8 @@ body {
 .form-control:focus {
     border-color: rgba(138, 43, 226, 0.2);  
     box-shadow: 0 0 0 0.2rem rgba(138, 43, 226, 0.2); 
-    animation: circleHue 6s infinite; /* Animation as previously defined */
-    transition: box-shadow 0.3s ease; /* Transition for a smooth start */
+    animation: circleHue 6s infinite; 
+    transition: box-shadow 0.3s ease; 
 }
 
 .form-control:read-only:hover::after {
@@ -149,44 +135,6 @@ select.form-control option {
     width: 100%
 }
 
-#logoutContainer {
-    display: flex;
-    align-items: center;
-    justify-content: flex-end; 
-}
-
-#logoutBtn {
-    position: absolute;
-    right: -1px; 
-    top: 0.1px;
-    cursor: pointer;
-}
-
-#logoutBtn a {
-    margin-top: 5px;
-    display: flex;
-    align-items: center;
-    justify-content: center; 
-    padding: 4px 12px;
-    font-size: 1.4rem; 
-    background-color: #CD5C5C;
-    color: #fff;
-    text-decoration: none;
-    border-radius: 5px;
-    transition: background-color 0.3s;
-    width: 100px; 
-    height: 40px; 
-}
-
-#logoutBtn a:hover {
-    background-color: #B94A4A;
-}
-
-#logoutBtn a i.material-icons-outlined {
-    font-size: 18px; 
-    margin-left: 8px; 
-}
-
 @keyframes fadeInScale {
     0% {
         opacity: 0;
@@ -215,34 +163,34 @@ select.form-control option {
     background-color: #333; 
     color: #fff;
     border-radius: 10px; 
-    padding: 15px; /* Adjust as needed */
-    display: inline-block; /* Allows the content to define the width */
+    padding: 15px; 
+    display: inline-block;
 }
 
 .modal-header {
-    border-bottom: none; /* Remove the border if you want a cleaner look */
-    padding-bottom: 0; /* Remove padding to tighten the spacing */
-    display: flex; /* Ensure flex layout */
-    justify-content: space-between; /* Space between title and close button */
-    align-items: center; /* Align items center */
+    border-bottom: none; 
+    padding-bottom: 0; 
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center; 
 }
 
 .modal-title {
-    margin-bottom: 0; /* Remove margin for tighter fit */
+    margin-bottom: 0;
 }
 
 .modal-header .close {
     color: #aaa;
-    padding: 0; /* Reduce padding for tighter fit */
-    margin: 0 0 0 auto; /* Align to the right */
+    padding: 0; 
+    margin: 0 0 0 auto; 
 }
 
 .modal-dialog {
-    margin: 30vh auto; /* Centered horizontally and vertically */
-    max-width: none; /* Allows modal width to fit the content */
+    margin: 30vh auto;
+    max-width: none; 
 }
 
 .modal-body {
-    padding: 10px; /* Adjust padding for body */
-    overflow-y: auto; /* Keep as is for overflow content */
+    padding: 10px; 
+    overflow-y: auto; 
 }

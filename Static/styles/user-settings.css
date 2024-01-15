@@ -2,6 +2,7 @@ body {
     background-color: #222;
     color: #fff;
     font-size: 1rem; 
+    font-family: 'Roboto', sans-serif;
 }
 
 .btn {
@@ -266,67 +267,6 @@ body {
     .user-grid {
         grid-template-columns: 1fr; 
     }
-}
-
-.navbar {
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.1);
-}
-
-.navbar-dark .navbar-brand {
-    color: #f1f1f1;
-    font-size: 1.5rem;
-    margin-right: 20px;
-    transition: color 0.3s;
-}
-
-.navbar-dark .navbar-brand:hover {
-    color: #CD5C5C;
-}
-
-#logoutContainer {
-    display: flex;
-    align-items: center;
-    justify-content: flex-end; 
-}
-
-#logoutBtn {
-    position: absolute;
-    right: -1px; 
-    top: 0.1px;
-    cursor: pointer;
-}
-
-#logoutBtn a {
-    margin-top: 5px;
-    display: flex;
-    align-items: center;
-    justify-content: center; 
-    padding: 4px 12px;
-    font-size: 1.4rem; 
-    background-color: #CD5C5C;
-    color: #fff;
-    text-decoration: none;
-    border-radius: 5px;
-    transition: background-color 0.3s;
-    width: 100px; 
-    height: 40px; 
-}
-
-#logoutBtn a:hover {
-    background-color: #E68A89;
-}
-
-#logoutBtn a i.material-icons-outlined {
-    font-size: 18px; 
-    margin-left: 8px; 
-}
-
-.flash-messages {
-    position: fixed;
-    top: 70px; 
-    right: 20px;
-    z-index: 1050;
-    max-width: 300px;
 }
 
 .alert {

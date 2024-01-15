@@ -6,58 +6,15 @@
         {% block styles %}
         {{ super() }}
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
-        <link rel="stylesheet" href="navbar.css">
         <link rel="stylesheet" href="{{ url_for('static', filename='styles/styles.css') }}">
+        <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}">
+        <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
     {% endblock %}
 
 </head>
 <body>
-    {% block navbar %}
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <div class="navbar-nav mr-auto">
-            <a class="navbar-brand" href="{{ url_for('home') }}">Home</a> 
-        </div>
-        <div class="navbar-nav mr-auto">
-            <a class="navbar-brand" href="{{ url_for('add') }}">Add</a>
-        </div>
-        <div class="navbar-nav mr-auto">
-            <a class="navbar-brand" href="{{ url_for('view_logs') }}">Logs</a>
-        </div>
-        <div class="navbar-nav mr-auto">
-            <a class="navbar-brand" href="{{ url_for('admin.admin_settings') }}">Management</a>
-        </div>
-        <div class="navbar-nav mr-auto">
-            <a class="navbar-brand" href="{{ url_for('about') }}">About</a>
-        </div>
-        <div class="navbar-nav mr-auto">
-            <a class="navbar-brand" href="{{ url_for('settings') }}">
-                <i class="material-icons-outlined">settings</i>
-            </a>
-        </div>                
-        {% with messages = get_flashed_messages(with_categories=true) %}
-        {% for category, message in messages %}
-
-        {% endfor %}
-        {% endwith %}
-        
-        <div id="logoutContainer">
-            <div id="logoutBtn">
-                <a class="navbar-brand" href="{{ url_for('logout') }}">
-                    Logout
-                    <i class="material-icons-outlined">logout</i>
-                </a>
-            </div>
-            <div id="refreshBtn"> 
-                <button onclick="manuallyRefreshOtps()" class="ref-btn">
-                    Refresh
-                    <i class="material-icons-outlined">refresh</i>
-                </button>
-            </div>                      
-        </div>            
-    </nav>
-    {% endblock %}
-        
     {% block content %}
+    {% include 'navbar.html' %}
     <div class="container">
         {% if current_user.show_content_titles %}
         <h1 class="text-center text-white">One Time Passwords</h1>
@@ -264,7 +221,7 @@
                     var display = document.getElementById(elementId);
                     var exclamation = document.createElement('span');
                     exclamation.textContent = ' !';
-                    exclamation.style.color = '#cc5c5c'; 
+                    exclamation.style.color = 'alert_color'; 
 
                     function updateDisplay() {
                         var localTime = new Date();
@@ -274,15 +231,15 @@
 
                         seconds = seconds < 10 ? "0" + seconds : seconds;
 
-                        if (timer <= 5) {
+                        if (timer <= 9) {
                             display.textContent = "Remaining Time: " + seconds + "s - Expiring";
                             display.appendChild(exclamation);
 
                             var flashSpeed = 1;
-                            if (timer <= 4) flashSpeed = 0.8;
-                            if (timer <= 3) flashSpeed = 0.6;
-                            if (timer <= 2) flashSpeed = 0.4;
-                            if (timer <= 1) flashSpeed = 0.2;
+                            if (timer <= 8) flashSpeed = 0.8;
+                            if (timer <= 7) flashSpeed = 0.6;
+                            if (timer <= 6) flashSpeed = 0.4;
+                            if (timer <= 5) flashSpeed = 0.2;
 
                             exclamation.style.animation = `flash ${flashSpeed}s steps(1, end) infinite`;
                         } else {

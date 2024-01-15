@@ -6,6 +6,7 @@
     {{ super() }}
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
+    <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}">
     <style>
         body {
             font-family: 'Roboto', sans-serif;
@@ -268,52 +269,8 @@
     </style>
 {% endblock %}
 
-{% block navbar %}
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <div class="navbar-nav mr-auto">
-        <a class="navbar-brand" href="{{ url_for('home') }}">Home</a> 
-    </div>
-    <div class="navbar-nav mr-auto">
-        <a class="navbar-brand" href="{{ url_for('add') }}">Add</a>
-    </div>
-    <div class="navbar-nav mr-auto">
-        <a class="navbar-brand" href="{{ url_for('view_logs') }}">Logs</a>
-    </div>
-    <div class="navbar-nav mr-auto">
-        <a class="navbar-brand" href="{{ url_for('admin.admin_settings') }}">Management</a>
-    </div>    
-    <div class="navbar-nav mr-auto">
-        <a class="navbar-brand" href="{{ url_for('about') }}">About</a>
-    </div>
-    <div class="navbar-nav mr-auto">
-        <a class="navbar-brand" href="{{ url_for('settings') }}">
-            <i class="material-icons-outlined">settings</i> 
-        </a>
-    </div>   
-    
-    <div id="logoutContainer">
-        <div id="logoutBtn">
-            <a class="navbar-brand" href="{{ url_for('logout') }}">
-                Logout
-                <i class="material-icons-outlined">logout</i>
-            </a>
-        </div>                    
-    </div>            
-</nav>
-{% endblock %}
-
-{% with messages = get_flashed_messages() %}
-    {% if messages %}
-        <div class="alert alert-warning alert-dismissible fade show mb-0" role="alert">
-            {{ messages[0] }}
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
-        </div>
-    {% endif %}
-{% endwith %}
-
 {% block content %}
+{% include 'navbar.html' %}
 <div class="settings-container">
     <div class="d-flex justify-content-center">
         {% if current_user.show_content_titles %}

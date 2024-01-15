@@ -85,51 +85,65 @@ def load_user(user_id):
         return None
 
 def init_db():
-    with sqlite3.connect("otp.db") as db:
-        cursor = db.cursor()
-        cursor.execute("""
-            CREATE TABLE IF NOT EXISTS otp_secrets (
-                id INTEGER PRIMARY KEY,
-                name TEXT NOT NULL,
-                secret TEXT NOT NULL,
-                otp_type TEXT NOT NULL,
-                refresh_time INTEGER NOT NULL,
-                company_id INTEGER,
-                FOREIGN KEY (company_id) REFERENCES companies (id)
-            )
-        """)
-        cursor.execute("""
-            CREATE TABLE IF NOT EXISTS users (
-                id INTEGER PRIMARY KEY,
-                username TEXT NOT NULL UNIQUE,
-                password TEXT NOT NULL,
-                last_login_time TEXT,
-                session_token TEXT,
-                is_admin INTEGER DEFAULT 0,
-                enable_pagination INTEGER DEFAULT 0,
-                show_timer INTEGER DEFAULT 0,
-                show_otp_type INTEGER DEFAULT 1,
-                show_content_titles INTEGER DEFAULT 1
-                alert_color TEXT DEFAULT 'alert-primary'
-                text_color TEXT DEFAULT '#FFFFFF'
-            )
-        """)
-        cursor.execute("""
-            CREATE TABLE IF NOT EXISTS companies (
-                id INTEGER PRIMARY KEY,
-                name TEXT NOT NULL UNIQUE,
-                kundennummer TEXT
-            )
-        """)
-        cursor.execute("""
-            CREATE TABLE IF NOT EXISTS statistics (
-                id INTEGER PRIMARY KEY,
-                logins_today INTEGER NOT NULL,
-                times_refreshed INTEGER NOT NULL,
-                date TEXT NOT NULL
-            )
-        """)
-        db.commit()
+    try:
+        with sqlite3.connect("otp.db") as db:
+            cursor = db.cursor()
+
+            print("Creating otp_secrets table...")
+            cursor.execute("""
+                CREATE TABLE IF NOT EXISTS otp_secrets (
+                    id INTEGER PRIMARY KEY,
+                    name TEXT NOT NULL,
+                    secret TEXT NOT NULL,
+                    otp_type TEXT NOT NULL,
+                    refresh_time INTEGER NOT NULL,
+                    company_id INTEGER,
+                    FOREIGN KEY (company_id) REFERENCES companies (id)
+                )
+            """)
+
+            print("Creating users table...")
+            cursor.execute("""
+                CREATE TABLE IF NOT EXISTS users (
+                    id INTEGER PRIMARY KEY,
+                    username TEXT NOT NULL UNIQUE,
+                    password TEXT NOT NULL,
+                    last_login_time TEXT,
+                    session_token TEXT,
+                    is_admin INTEGER DEFAULT 0,
+                    enable_pagination INTEGER DEFAULT 0,
+                    show_timer INTEGER DEFAULT 0,
+                    show_otp_type INTEGER DEFAULT 1,
+                    show_content_titles INTEGER DEFAULT 1,
+                    alert_color TEXT DEFAULT 'alert-primary',
+                    text_color TEXT DEFAULT '#FFFFFF'
+                )
+            """)
+
+            print("Creating companies table...")
+            cursor.execute("""
+                CREATE TABLE IF NOT EXISTS companies (
+                    id INTEGER PRIMARY KEY,
+                    name TEXT NOT NULL UNIQUE,
+                    kundennummer TEXT
+                )
+            """)
+
+            print("Creating statistics table...")
+            cursor.execute("""
+                CREATE TABLE IF NOT EXISTS statistics (
+                    id INTEGER PRIMARY KEY,
+                    logins_today INTEGER NOT NULL,
+                    times_refreshed INTEGER NOT NULL,
+                    date TEXT NOT NULL
+                )
+            """)
+
+            db.commit()
+            print("Database initialized successfully.")
+
+    except sqlite3.Error as e:
+        print(f"An error occurred while initializing the database: {e}")
 
 import sqlite3
 
@@ -301,20 +315,30 @@ def register():
 def logout():
     user_id = session.pop('user_id', None)
     session_token = session.pop('session_token', None)
-    print(f"Logging out user ID {user_id}")
+    print(f"Attempting to log out user ID {user_id}")
+
+    if user_id is None:
+        print("No user ID found in session, redirecting to login.")
+    else:
+        print(f"Logging out user ID {user_id} with session token {session_token}")
 
     try:
         with sqlite3.connect("otp.db") as db:
+            print("Database connection established.")
             cursor = db.cursor()
             cursor.execute("UPDATE users SET session_token = NULL WHERE id = ?", (user_id,))
             db.commit()
+            print(f"Database updated for user ID {user_id}, session token cleared.")
         logging.info(f"User ID {user_id} successfully logged out.")
     except sqlite3.Error as e:
         logging.error(f"Error logging out User ID {user_id}: {e}")
+        print(f"Exception occurred: {e}")
 
     if is_restarting:
+        print("Application is restarting, redirecting to login.")
         return redirect(url_for('login'))
 
+    print("Redirecting to login page.")
     return redirect(url_for('login'))
 
 def login_required(f):
@@ -340,6 +364,16 @@ def login_required(f):
 
         return f(*args, **kwargs)
     return decorated_function
+
+@app.route('/cli', methods=['GET', 'POST'])
+@login_required
+def cli():
+    output = ""
+    if request.method == 'POST':
+        command = request.form['command']
+
+        output = f"Executed command: {command}"  
+    return render_template('cli.html', output=output)
 
 @app.route('/settings', methods=['GET', 'POST'])
 @login_required
