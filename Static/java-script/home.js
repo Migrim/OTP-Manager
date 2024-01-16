@@ -149,14 +149,20 @@ window.onload = function() {
     let spoilerElements = document.getElementsByClassName('spoiler');
     for (let i = 0; i < spoilerElements.length; i++) {
         let originalText = spoilerElements[i].innerText;
-        spoilerElements[i].setAttribute('data-original', originalText);
-        spoilerElements[i].innerText = '●'.repeat(originalText.length);
+        let maskedText = '●'.repeat(originalText.length);
+
+        spoilerElements[i].innerHTML = `
+            <span class="masked-text">${maskedText}</span>
+            <span class="original-text" style="opacity: 0;">${originalText}</span>`;
+
         spoilerElements[i].onmouseover = function() {
-            this.innerText = this.getAttribute('data-original');
-        }
+            this.querySelector('.original-text').style.opacity = 1;
+            this.querySelector('.masked-text').style.opacity = 0;
+        };
         spoilerElements[i].onmouseout = function() {
-            this.innerText = '●'.repeat(this.getAttribute('data-original').length);
-        }
+            this.querySelector('.original-text').style.opacity = 0;
+            this.querySelector('.masked-text').style.opacity = 1;
+        };
     }
 
     let progressBars = document.getElementsByClassName('progress-bar');
@@ -259,11 +265,11 @@ document.getElementById('searchInput').addEventListener('input', function() {
         secretField.value = secret;
     
         secretField.addEventListener('focus', function() {
-            this.type = 'text'; // Show the secret when focused
+            this.type = 'text';
         });
     
         secretField.addEventListener('blur', function() {
-            this.type = 'password'; // Hide the secret when not focused
+            this.type = 'password'; 
         });
 
         console.log("Setting company select value to: ", company);
