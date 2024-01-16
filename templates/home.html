@@ -131,23 +131,28 @@
                                 </button>
                             </div>
                             <div class="modal-body">
-
+                
                                 <form id="editOtpForm">
                                     <div class="form-group">
                                         <label for="otpName">Name</label>
-                                        <input type="text" class="form-control" id="editOtpName">
+                                        <input type="text" class="form-control" id="editOtpName" placeholder="Enter name" required>
                                     </div>
                                     <div class="form-group">
                                         <label for="otpSecret">Secret</label>
-                                        <input type="text" class="form-control" id="editOtpSecret">
-                                    </div>
+                                        <input type="text" class="form-control" id="editOtpSecret" placeholder="Enter secret" required>
+                                    </div>                                    
                                     <div class="form-group">
                                         <label for="otpCompany">Company</label>
-                                        <select class="form-control" id="editOtpCompany">
+                                        <select class="form-control" id="editOtpCompany" required>
+                                            <option value="">No change in Company!</option>
                                             {% for company in companies %}
                                                 <option value="{{ company['company_id'] }}">{{ company['name'] }}</option>
                                             {% endfor %}
-                                        </select>                                        
+                                        </select>
+                                        <div class="reminder-text">
+                                            <span class="material-icons-outlined">info</span>
+                                            Don't forget to select the right company if necessary!
+                                        </div>                                       
                                     </div>
                                 </form>
                             </div>

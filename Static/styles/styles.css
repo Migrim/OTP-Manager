@@ -241,17 +241,17 @@ body {
 }
 
 .flash-expiring {
-    color: #cc5c5c;
+    color: #ff5252;
     animation: flash 1s steps(1, end) infinite; 
 }
 
 .flash-expiring-faster {
-    color: #cc5c5c;
+    color: #ff5252;
     animation: flash 0.5s steps(1, end) infinite;
 }
 
 .flash-expiring-fastest {
-    color: #cc5c5c;
+    color: #ff5252;
     animation: flash 0.25s steps(1, end) infinite; 
 }
 
@@ -352,7 +352,7 @@ body {
 }
 
 #editModal .modal-content {
-    max-width: 500px; /* Adjusted for form width */
+    max-width: 300px; 
 }
 
 #editModal .form-group {
@@ -368,17 +368,17 @@ body {
 }
 
 #editModal .modal-header .close {
-    margin-left: auto; /* Pushes the close button to the right */
+    margin-left: auto; 
     color: #fff;
     font-size: 1.5em;
-    border: none; /* Removes any default border */
-    background: transparent; /* Ensures no background color */
+    border: none; 
+    background: transparent; 
 }
 
 #editModal .modal-header {
-    display: flex; /* Using Flexbox */
-    justify-content: space-between; /* Spreads out the title and close button */
-    align-items: center; /* Vertically centers the title and button */
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center; 
     border-bottom: 1px solid #444;
     border-radius: 15px 15px 0 0;
     padding: 10px 20px;
@@ -394,10 +394,10 @@ body {
 }
 
 #editModal .modal-title {
-    margin-bottom: 0; /* Remove any default margin */
-    flex-grow: 1; /* Allows the title to take up available space */
+    margin-bottom: 0; 
+    flex-grow: 1;
     font-size: 1.2em;
-    text-align: left; /* Aligns the title to the left */
+    text-align: left; 
 }
 
 #editModal .form-control:focus {
@@ -408,7 +408,7 @@ body {
 
 #editModal .modal-footer {
     display: flex;
-    justify-content: center; /* Centering the buttons */
+    justify-content: center;
 }
 
 #editModal .btn {
@@ -416,18 +416,78 @@ body {
 }
 
 #editModal .btn-primary {
-    background-color: #0062cc; /* Primary Button Color */
-    border-color: #005cbf;
+    background-color: #275cd5; 
+    border-color: #275cd5;
+}
+
+#editModal .btn-primary:hover {
+    background-color: #44abed; 
+    border-color: #44abed;
+    color: #222222;
 }
 
 #editModal .btn-secondary {
-    background-color: #6c757d; /* Secondary Button Color */
-    border-color: #6a6f77;
+    background-color: #ff5252; 
+    border-color: #ff5252;
 }
 
-/* Additional styles for responsive behavior */
+#editModal .btn-secondary:hover {
+    background-color: #ff5c51; 
+    border-color: #ff5c51;
+}
+
 @media (max-width: 768px) {
     #editModal .modal-content {
-        max-width: 90%; /* More screen width on smaller devices */
+        max-width: 90%; 
+    }
+}
+
+.reminder-text {
+    color: #ff5252;
+    margin-top: 8px;
+    text-align: center; 
+    display: flex; 
+    justify-content: center; 
+    align-items: center; 
+    padding: 5px; 
+    border-radius: 5px;
+    background: -webkit-linear-gradient(45deg, #EA8D8D, #A890FE); 
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    position: relative; 
+}
+
+.reminder-text::before {
+    content: '';
+    position: absolute;
+    top: -1px; 
+    left: -1px;
+    right: -1px;
+    bottom: -1px;
+    z-index: -1;
+    background: linear-gradient(45deg, #EA8D8D, #A890FE);
+    border-radius: 5px; 
+    pointer-events: none; 
+}
+
+
+.reminder-text .material-icons-outlined {
+    vertical-align: middle;
+    font-size: 18px;
+    animation: blink 2s infinite; 
+    margin-right: 5px;
+    margin-left: 5px;
+    background: -webkit-linear-gradient(45deg, #EA8D8D, #A890FE); 
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    display: inline-block; 
+}
+
+@keyframes blink {
+    0%, 100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.2;
     }
 }

@@ -254,8 +254,9 @@ document.getElementById('searchInput').addEventListener('input', function() {
     
         document.getElementById('editOtpName').value = name;
         document.getElementById('editOtpSecret').value = secret;
-        var companySelect = document.getElementById('editOtpCompany');
-        companySelect.value = company; 
+    
+
+        console.log("Setting company select value to: ", company);
     
         setTimeout(function() {
             $('#editModal').modal('show');

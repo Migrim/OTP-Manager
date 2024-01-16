@@ -11881,3 +11881,9 @@ sqlite3.OperationalError: no such column: alert_color
 2024-01-16 12:30:48,552 [INFO] User ID 11 updated settings successfully.
 2024-01-16 12:31:03,380 [INFO] User ID 11 updated settings successfully.
 2024-01-16 12:36:54,901 [INFO] Server started on port 5001.
+2024-01-16 14:32:45,133 [INFO] Server started on port 5001.
+2024-01-16 14:33:15,529 Redirecting to login: No user_id or session_token
+2024-01-16 14:33:23,092 [INFO] User: admin Logged in!
+2024-01-16 14:33:29,540 [INFO] User ID 1 updated settings successfully.
+2024-01-16 18:18:45,025 [INFO] Server started on port 5001.
+2024-01-16 19:20:24,587 [INFO] Server started on port 5001.
