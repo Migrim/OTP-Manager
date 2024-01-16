@@ -211,12 +211,21 @@ body {
 }
 
 .modal-header {
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
     border-bottom: 1px solid #444; 
     border-radius: 15px 15px 0 0; 
 }
 
 .modal-title {
+    color: #ff5252;
     font-size: 1.2em; 
+    margin-left: 10px;
+}
+.icon-report {
+    color: #ff5252; 
+    font-size: 24px; 
 }
 
 .modal-footer {
@@ -427,13 +436,13 @@ body {
 }
 
 #editModal .btn-secondary {
-    background-color: #ff5252; 
-    border-color: #ff5252;
+    background-color: #555555; 
+    border-color: #555555;
 }
 
 #editModal .btn-secondary:hover {
-    background-color: #ff5c51; 
-    border-color: #ff5c51;
+    background-color: #777777; 
+    border-color: #777777;
 }
 
 @media (max-width: 768px) {

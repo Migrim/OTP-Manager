@@ -255,6 +255,16 @@ document.getElementById('searchInput').addEventListener('input', function() {
         document.getElementById('editOtpName').value = name;
         document.getElementById('editOtpSecret').value = secret;
     
+        const secretField = document.getElementById('editOtpSecret');
+        secretField.value = secret;
+    
+        secretField.addEventListener('focus', function() {
+            this.type = 'text'; // Show the secret when focused
+        });
+    
+        secretField.addEventListener('blur', function() {
+            this.type = 'password'; // Hide the secret when not focused
+        });
 
         console.log("Setting company select value to: ", company);
     
