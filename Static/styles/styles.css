@@ -350,3 +350,84 @@ body {
 .btn-group {
     margin-top: 5px; 
 }
+
+#editModal .modal-content {
+    max-width: 500px; /* Adjusted for form width */
+}
+
+#editModal .form-group {
+    margin-bottom: 15px;
+    text-align: left;
+}
+
+#editModal .form-group label {
+    display: block;
+    margin-bottom: 5px;
+    color: #ccc;
+    font-size: 0.9em;
+}
+
+#editModal .modal-header .close {
+    margin-left: auto; /* Pushes the close button to the right */
+    color: #fff;
+    font-size: 1.5em;
+    border: none; /* Removes any default border */
+    background: transparent; /* Ensures no background color */
+}
+
+#editModal .modal-header {
+    display: flex; /* Using Flexbox */
+    justify-content: space-between; /* Spreads out the title and close button */
+    align-items: center; /* Vertically centers the title and button */
+    border-bottom: 1px solid #444;
+    border-radius: 15px 15px 0 0;
+    padding: 10px 20px;
+}
+
+#editModal .form-control {
+    background-color: #222;
+    border: 1px solid #444;
+    border-radius: 4px;
+    color: #fff;
+    padding: 8px 10px;
+    width: 100%;
+}
+
+#editModal .modal-title {
+    margin-bottom: 0; /* Remove any default margin */
+    flex-grow: 1; /* Allows the title to take up available space */
+    font-size: 1.2em;
+    text-align: left; /* Aligns the title to the left */
+}
+
+#editModal .form-control:focus {
+    outline: none;
+    border-color: #555;
+    box-shadow: 0 0 8px rgba(255, 255, 255, 0.1);
+}
+
+#editModal .modal-footer {
+    display: flex;
+    justify-content: center; /* Centering the buttons */
+}
+
+#editModal .btn {
+    margin: 0 10px;
+}
+
+#editModal .btn-primary {
+    background-color: #0062cc; /* Primary Button Color */
+    border-color: #005cbf;
+}
+
+#editModal .btn-secondary {
+    background-color: #6c757d; /* Secondary Button Color */
+    border-color: #6a6f77;
+}
+
+/* Additional styles for responsive behavior */
+@media (max-width: 768px) {
+    #editModal .modal-content {
+        max-width: 90%; /* More screen width on smaller devices */
+    }
+}

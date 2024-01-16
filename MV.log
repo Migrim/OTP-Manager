@@ -11809,3 +11809,75 @@ NameError: name 'fetch_all_secrets' is not defined
 2024-01-15 20:48:16,686 [INFO] User: admin Logged in!
 2024-01-15 20:48:56,593 [INFO] User ID 1 successfully logged out.
 2024-01-15 20:49:04,294 [INFO] User: admin Logged in!
+2024-01-16 08:05:47,781 [INFO] Server started on port 5001.
+2024-01-16 08:06:09,578 [INFO] User: admin Logged in!
+2024-01-16 08:07:42,930 [INFO] User ID 1 updated settings successfully.
+2024-01-16 08:09:41,562 [INFO] Fetched all users successfully.
+2024-01-16 08:15:53,360 [INFO] User ID 1 updated settings successfully.
+2024-01-16 08:19:22,040 [INFO] User ID 1 successfully logged out.
+2024-01-16 08:19:24,234 [INFO] User: admin Logged in!
+2024-01-16 08:23:41,342 [INFO] Fetched all users successfully.
+2024-01-16 08:27:50,596 [INFO] User ID 1 updated settings successfully.
+2024-01-16 08:28:13,849 [INFO] Server started on port 5001.
+2024-01-16 08:30:28,813 Redirecting to login: No user_id or session_token
+2024-01-16 08:30:32,415 [INFO] User: cum Logged in!
+2024-01-16 08:42:34,426 [INFO] Server started on port 5001.
+2024-01-16 08:55:12,417 [INFO] Server started on port 5001.
+2024-01-16 08:56:45,287 [ERROR] OTP with name kookokok not found.
+2024-01-16 08:56:46,237 [ERROR] OTP with name kookokok not found.
+2024-01-16 08:56:46,396 [ERROR] OTP with name kookokok not found.
+2024-01-16 08:56:46,543 [ERROR] OTP with name kookokok not found.
+2024-01-16 08:56:46,712 [ERROR] OTP with name kookokok not found.
+2024-01-16 08:56:46,929 [ERROR] OTP with name kookokok not found.
+2024-01-16 08:56:48,208 [ERROR] OTP with name kookokok not found.
+2024-01-16 08:56:49,304 [ERROR] OTP with name kookokok not found.
+2024-01-16 08:56:50,031 [ERROR] OTP with name kookokok not found.
+2024-01-16 08:56:50,796 [ERROR] OTP with name kookokok not found.
+2024-01-16 08:56:55,285 [ERROR] OTP with name kookokok not found.
+2024-01-16 09:03:30,796 [INFO] User ID 1 successfully logged out.
+2024-01-16 09:03:41,538 [INFO] User: admin Logged in!
+2024-01-16 10:24:14,289 [INFO] Server started on port 5001.
+2024-01-16 10:24:49,268 Redirecting to login: No user_id or session_token
+2024-01-16 10:31:31,227 [INFO] Server started on port 5001.
+2024-01-16 10:32:24,398 [INFO] Server started on port 5001.
+2024-01-16 10:44:48,299 [INFO] User ID 1 updated settings successfully.
+2024-01-16 10:45:12,045 [INFO] User ID 1 updated settings successfully.
+2024-01-16 10:45:18,190 [INFO] User ID 1 updated settings successfully.
+2024-01-16 10:48:47,107 [INFO] Server started on port 5001.
+2024-01-16 10:49:07,759 [INFO] User: Sebastian Logged in!
+2024-01-16 10:49:07,783 [ERROR] An error occurred on the home page.
+Traceback (most recent call last):
+  File "C:\Users\sjung\Documents\OTP-Manager\OTP-Manager-1\app.py", line 745, in home
+    alert_color, text_color = get_user_colors(current_user.id)
+  File "C:\Users\sjung\Documents\OTP-Manager\OTP-Manager-1\app.py", line 623, in get_user_colors
+    cursor.execute("SELECT alert_color, text_color FROM users WHERE id = ?", (user_id,))
+sqlite3.OperationalError: no such column: alert_color
+2024-01-16 10:51:32,705 [INFO] Server started on port 5001.
+2024-01-16 10:51:50,194 [INFO] User: Sebastian Logged in!
+2024-01-16 10:52:35,252 [INFO] Fetched all users successfully.
+2024-01-16 10:52:58,870 [INFO] Password reset page accessed for user_id: 5
+2024-01-16 10:53:02,174 [INFO] Password reset page accessed for user_id: 5
+2024-01-16 10:54:46,770 [INFO] Server started on port 5001.
+2024-01-16 10:54:52,737 [INFO] User: admin Logged in!
+2024-01-16 11:15:04,058 [INFO] Server started on port 5001.
+2024-01-16 11:28:38,903 [INFO] Server started on port 5001.
+2024-01-16 11:42:42,852 [INFO] Server started on port 5001.
+2024-01-16 11:43:33,732 [INFO] Server started on port 5001.
+2024-01-16 11:45:46,279 [INFO] Server started on port 5001.
+2024-01-16 11:46:44,433 [INFO] Server started on port 5001.
+2024-01-16 11:48:09,595 [INFO] Server started on port 5001.
+2024-01-16 12:18:33,582 [INFO] Server started on port 5001.
+2024-01-16 12:23:56,346 Redirecting to login: No user_id or session_token
+2024-01-16 12:24:00,780 [INFO] User: aa Logged in!
+2024-01-16 12:24:58,618 [INFO] User ID 1 updated settings successfully.
+2024-01-16 12:29:26,520 Redirecting to login: No user_id or session_token
+2024-01-16 12:29:38,018 [WARNING] Failed login attempt for user: Marcello
+2024-01-16 12:29:47,259 [WARNING] Failed login attempt for user: Opfa
+2024-01-16 12:29:47,955 [INFO] Fetched all users successfully.
+2024-01-16 12:30:09,254 [INFO] Fetched all users successfully.
+2024-01-16 12:30:13,454 [INFO] User: Memmooo Logged in!
+2024-01-16 12:30:16,560 [INFO] Fetched all users successfully.
+2024-01-16 12:30:31,116 [INFO] User ID 11 updated settings successfully.
+2024-01-16 12:30:48,552 [INFO] User ID 11 updated settings successfully.
+2024-01-16 12:31:03,380 [INFO] User ID 11 updated settings successfully.
+2024-01-16 12:36:54,901 [INFO] Server started on port 5001.

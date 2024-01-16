@@ -814,40 +814,37 @@ def search_otp():
 @login_required
 def edit(name):
     otp_secrets = load_from_db()
-    
     form = OTPForm()
     form.company.choices = [(company['company_id'], company['name']) for company in load_companies_from_db()]
-    
+
     for i, otp in enumerate(otp_secrets):
         if otp['name'] == name:
-            
             if request.method == 'POST':
-                if form.validate():
-                    logging.info(f"Form is valid. Updating OTP with name: {name}")
-                    otp_secrets[i]['name'] = form.name.data
-                    otp_secrets[i]['secret'] = form.secret.data
-                    otp_secrets[i]['otp_type'] = form.otp_type.data
-                    otp_secrets[i]['refresh_time'] = form.refresh_time.data
-                    otp_secrets[i]['company'] = form.company.data  
-
-                    save_to_db(otp_secrets)
-                    logging.info(f"OTP with name {name} successfully updated.")
-                    return redirect(url_for('home'))
-                else:
-                    logging.warning(f"Form validation failed for OTP with name: {name}")
-                    logging.error(form.errors)
+                if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
+                    data = request.json
+                    otp_secrets[i]['name'] = data['name']
+                    otp_secrets[i]['secret'] = data['secret']
+                    otp_secrets[i]['company'] = data['company']
+                    save_to_db(otp_secrets) 
+                
+                    return jsonify({
+                        'message': 'OTP updated successfully',
+                        'updated_data': {
+                            'name': data['name'],
+                            'secret': data['secret'],
+                            'company': data['company'],
+                        }
+                    })
+           
             else:
                 form.name.data = otp['name']
                 form.secret.data = otp['secret']
-                form.otp_type.data = otp['otp_type']
                 form.refresh_time.data = otp['refresh_time']
-                form.company.data = otp.get('company', "none")  
-                
+                form.company.data = otp.get('company', None)
                 return render_template('edit.html', form=form, name=name)
-    
-    flash('Secret Not Found')
-    logging.error(f"OTP with name {name} not found.")
-    return redirect(url_for('home'))
+
+            flash('Secret Not Found')
+            return redirect(url_for('home'))
 
 @app.route('/create_backup', methods=['GET'])
 @login_required
