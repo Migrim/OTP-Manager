@@ -10,18 +10,21 @@ from wtforms.validators import InputRequired, NumberRange
 from wtforms import StringField, SelectField, PasswordField
 from wtforms.validators import DataRequired
 from flask import jsonify
+from flask_bcrypt import Bcrypt
 from search import search_otp
 from generation import is_base32, generate_otp_code
 from werkzeug.security import generate_password_hash, check_password_hash
 from functools import wraps
 from datetime import datetime, timedelta
-from flask_login import LoginManager, UserMixin, current_user, login_user
+from flask_login import LoginManager, current_user, login_user
 from search import search_blueprint
+from flask_login import UserMixin
 from math import ceil
 from flask import send_file
 from collections import defaultdict
 from markupsafe import Markup
 from flask_cors import CORS
+import bcrypt
 import shutil
 import os
 import subprocess 
@@ -35,6 +38,7 @@ logging.basicConfig(filename='MV.log', level=logging.INFO, format='%(asctime)s [
 my_logger = logging.getLogger('MV_logger')
 
 app = Flask(__name__)
+bcrypt = Bcrypt(app)
 CORS(app)
 start_time = datetime.now()
 app.config['SECRET_KEY'] = 'your-secret-key'
@@ -68,21 +72,14 @@ broadcast_message = None
 
 @login_manager.user_loader
 def load_user(user_id):
-    with sqlite3.connect("otp.db") as db:
-        cursor = db.cursor()
-        cursor.execute("SELECT * FROM users WHERE id = ?", (user_id,))
-        user_data = cursor.fetchone()
-        if user_data:
-            user = UserMixin()
-            user.id = user_data[0]
-            user.username = user_data[1]
-            user.is_admin = bool(user_data[5])
-            user.enable_pagination = bool(user_data[6])
-            user.show_timer = bool(user_data[7])
-            user.show_otp_type = bool(user_data[8]) 
-            user.show_content_titles = bool(user_data[9])
-            return user
-        return None
+    with sqlite3.connect("otp.db") as conn:
+        cursor = conn.cursor()
+        cursor.execute("SELECT id, username, is_admin FROM users WHERE id = ?", (user_id,))
+        user_row = cursor.fetchone()
+
+    if user_row:
+        return User(id=user_row[0], username=user_row[1], is_admin=bool(user_row[2]))
+    return None
 
 def init_db():
     try:
@@ -227,6 +224,16 @@ class CompanyForm(FlaskForm):
     kundennummer = StringField('Kundennummer', validators=[DataRequired()], render_kw={"placeholder": "Enter Kundennummer"})
     submit_company = SubmitField('Add Company')
 
+class User(UserMixin):
+    def __init__(self, user_id, username, is_admin=False, enable_pagination=False, show_timer=False, show_otp_type=True, show_content_titles=True):
+        self.id = user_id
+        self.username = username
+        self.is_admin = is_admin
+        self.enable_pagination = enable_pagination
+        self.show_timer = show_timer
+        self.show_otp_type = show_otp_type
+        self.show_content_titles = show_content_titles
+
 def get_current_user():
     return current_user
 
@@ -300,7 +307,7 @@ def register():
     if request.method == 'POST':
         username = request.form.get('username')
         password = request.form.get('password')
-        hashed_password = generate_password_hash(password, method='sha256')
+        hashed_password = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt()).decode('utf-8')
 
         with sqlite3.connect("otp.db") as db:
             cursor = db.cursor()
@@ -499,38 +506,64 @@ def login():
         print(f"Attempting login for username: {username}")
         keep_logged_in = 'keep_logged_in' in request.form
 
-        with sqlite3.connect("otp.db") as db:
-            cursor = db.cursor()
-            cursor.execute("SELECT * FROM users WHERE username = ?", (username,))
-            user = cursor.fetchone()
-
-        if user and check_password_hash(user[2], password):
-            session_token = str(uuid.uuid4())
-            session['user_id'] = user[0]
-            session['session_token'] = session_token
-
-            session.permanent = keep_logged_in
-
-            my_logger.info(f"User: {username} Logged in!")
-
-            last_login_time = datetime.now().strftime('%d/%m/%Y %H:%M:%S')
+        try:
             with sqlite3.connect("otp.db") as db:
                 cursor = db.cursor()
-                cursor.execute("UPDATE users SET last_login_time = ?, session_token = ? WHERE id = ?", (last_login_time, session_token, user[0]))
-                db.commit()
+                cursor.execute("SELECT * FROM users WHERE username = ?", (username,))
+                user_record = cursor.fetchone()
 
-            user_obj = UserMixin()
-            user_obj.id = user[0]
-            user_obj.username = user[1]
-            login_user(user_obj)
+            if user_record:
+                stored_password = user_record[2]
+                user_id = user_record[0]
 
-            return redirect(url_for('home')) 
+                if stored_password.startswith('sha256$'):
+                    sha256_hash = stored_password.split('$')[2]
+                    if check_password_hash('sha256$' + sha256_hash, password):
+                        hashed_password = bcrypt.generate_password_hash(password).decode('utf-8')
+                        with sqlite3.connect("otp.db") as db:
+                            cursor = db.cursor()
+                            cursor.execute("UPDATE users SET password = ? WHERE id = ?", (hashed_password, user_id))
+                            db.commit()
+                        user_obj = User(user_id, username)
+                        login_user(user_obj, remember=keep_logged_in)
+                        return redirect(url_for('home'))
+                    else:
+                        flash('Invalid credentials!')
+                elif bcrypt.check_password_hash(stored_password, password):
+                    user_obj = User(user_id, username)
+                    login_user(user_obj, remember=keep_logged_in)
+                    return redirect(url_for('home'))
+                else:
+                    flash('Invalid credentials!')
+            else:
+                flash('User not found!')
 
-        else:
-            flash('Die Zugangsdaten konnten nicht validiert werden!')
-            my_logger.warning(f"Failed login attempt for user: {username}")
+        except Exception as e:
+            print(f"Error during login: {e}")
+            flash("An error occurred during login.")
 
     return render_template('login.html')
+
+def perform_login_actions(user, keep_logged_in):
+    session_token = str(uuid.uuid4())
+    session['user_id'] = user[0]
+    session['session_token'] = session_token
+    session.permanent = keep_logged_in
+
+    my_logger.info(f"User: {user[1]} Logged in!")
+
+    last_login_time = datetime.now().strftime('%d/%m/%Y %H:%M:%S')
+    with sqlite3.connect("otp.db") as db:
+        cursor = db.cursor()
+        cursor.execute("UPDATE users SET last_login_time = ?, session_token = ? WHERE id = ?", (last_login_time, session_token, user[0]))
+        db.commit()
+
+    user_obj = UserMixin()
+    user_obj.id = user[0]
+    user_obj.username = user[1]
+    login_user(user_obj)
+
+    return redirect(url_for('home'))
 
 @app.route('/profile')
 @login_required

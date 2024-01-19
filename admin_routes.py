@@ -6,9 +6,14 @@ from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SubmitField
 from wtforms.validators import DataRequired
 from flask import jsonify
+from flask_bcrypt import Bcrypt
+import bcrypt
 import sqlite3
 import logging
 from logging.handlers import RotatingFileHandler
+
+#app = Flask(__name__)
+#bcrypt = Bcrypt(app)
 
 logger = logging.getLogger('mv_admin_logger')
 logger.setLevel(logging.DEBUG)
@@ -64,7 +69,9 @@ def user_management():
     if user_form.validate_on_submit():
         username = user_form.username.data
         password = user_form.password.data
-        hashed_password = generate_password_hash(password, method='sha256')
+
+        # Hash the password using bcrypt
+        hashed_password = bcrypt.generate_password_hash(password).decode('utf-8')
         
         try:
             with sqlite3.connect("otp.db") as db:

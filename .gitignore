@@ -1,7 +1,5 @@
 flask_session/
 _pycache_/
-mv.log
-templates/otp.html
-MV.log
 mv_admin.log
 MV.log
+OTP-Manager-Hilfe.code-workspace
