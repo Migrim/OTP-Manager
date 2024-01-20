@@ -112,13 +112,13 @@
     });
 
     document.addEventListener("DOMContentLoaded", function() {
-        var flashMessage = document.querySelector(".flash-messages");
-        if (flashMessage) {
-            flashMessage.style.opacity = "1"; 
+        var flashMessages = document.querySelectorAll(".flash-message");
+        flashMessages.forEach(function(msg) {
+            msg.style.opacity = "1"; 
             setTimeout(function() {
-                flashMessage.style.opacity = "0"; 
-            }, 5000); 
-        }
+                msg.style.opacity = "0"; 
+            }, 7000); 
+        });
     });
 
     function showWhatsNewModal() {
@@ -219,6 +219,19 @@
             <li><strong>December 1, 2023:</strong> Performed database optimizations to enable faster query processing and improve the speed of data retrieval.</li>
         </ul>
     </div>
+</div>
+
+<div id="flash-messages-container">
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div class="flash-message flash-{{ category }}">
+                    <span class="material-icons-outlined flash-icon">{{ category|category_icon }}</span>
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
 </div>
 
 {% endif %}

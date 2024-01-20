@@ -74,11 +74,19 @@ broadcast_message = None
 def load_user(user_id):
     with sqlite3.connect("otp.db") as conn:
         cursor = conn.cursor()
-        cursor.execute("SELECT id, username, is_admin FROM users WHERE id = ?", (user_id,))
+        cursor.execute("SELECT * FROM users WHERE id = ?", (user_id,))
         user_row = cursor.fetchone()
 
     if user_row:
-        return User(user_id=user_row[0], username=user_row[1], is_admin=bool(user_row[2]))
+        return User(
+            user_id=user_row[0], 
+            username=user_row[1], 
+            is_admin=bool(user_row[5]),
+            enable_pagination=bool(user_row[6]),
+            show_timer=bool(user_row[7]),
+            show_otp_type=bool(user_row[8]),
+            show_content_titles=bool(user_row[9])
+        )
     return None
 
 def init_db():
@@ -496,6 +504,7 @@ def get_last_login_time_from_db():
 def login():
     print("Accessing /login route")
     if 'user_id' in session:
+        flash("You are already logged in.", "info")
         print("User is already logged in, redirecting to home")
         return redirect(url_for('home'))
 
@@ -529,10 +538,11 @@ def login():
                             db.commit()
                         user_obj = User(user_id, username)
                         login_user(user_obj, remember=keep_logged_in)
+                        flash("Login successful!", "success")
                         return redirect(url_for('home'))
                     else:
                         print("Invalid SHA256 credentials")
-                        flash('Invalid credentials!')
+                        flash('Invalid credentials!', 'warning')
                 elif bcrypt.check_password_hash(stored_password, password):
                     print("Password matched with bcrypt")
                     user_obj = User(user_id, username, is_admin=bool(user_record[5]))  
@@ -547,18 +557,19 @@ def login():
                         cursor.execute("UPDATE users SET session_token = ? WHERE id = ?", (session_token, user_id))
                         db.commit()
 
+                    flash("Login successful!", "success")
                     print(f"User {username} logged in, redirecting to home.")
                     return redirect(url_for('home'))
                 else:
                     print("Invalid bcrypt credentials")
-                    flash('Invalid credentials!')
+                    flash('Invalid credentials!', 'warning')
             else:
                 print("No user found with provided username")
-                flash('User not found!')
+                flash('User not found!', 'error')
 
         except Exception as e:
             print(f"Error during login: {e}")
-            flash("An error occurred during login.")
+            flash("An error occurred during login. Please try again later.", 'error')
 
     return render_template('login.html')
 
@@ -582,6 +593,18 @@ def perform_login_actions(user, keep_logged_in):
     login_user(user_obj)
 
     return redirect(url_for('home'))
+
+@app.template_filter('category_icon')
+def category_icon_filter(category):
+    icons = {
+        'info': 'info',
+        'success': 'check_circle',
+        'warning': 'warning',
+        'error': 'error'
+    }
+    return icons.get(category, 'info')  
+
+app.jinja_env.filters['category_icon'] = category_icon_filter
 
 @app.route('/profile')
 @login_required

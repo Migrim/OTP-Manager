@@ -11913,3 +11913,28 @@ sqlite3.OperationalError: no such column: alert_color
 2024-01-20 01:46:41,842 Redirecting to login: No user_id or session_token
 2024-01-20 01:46:55,023 Redirecting to login: No user_id or session_token
 2024-01-20 01:50:34,963 [INFO] Server started on port 5001.
+2024-01-20 01:52:05,331 [INFO] User ID 1 updated settings successfully.
+2024-01-20 01:52:38,329 [INFO] User ID 1 updated settings successfully.
+2024-01-20 01:52:45,927 [INFO] Server started on port 5001.
+2024-01-20 01:52:53,722 [INFO] User ID 1 updated settings successfully.
+2024-01-20 01:52:55,598 [INFO] User ID 1 updated settings successfully.
+2024-01-20 01:52:55,746 [INFO] User ID 1 updated settings successfully.
+2024-01-20 01:52:55,869 [INFO] User ID 1 updated settings successfully.
+2024-01-20 01:55:26,582 [INFO] Server started on port 5001.
+2024-01-20 01:55:39,687 [INFO] User ID 1 updated settings successfully.
+2024-01-20 02:49:58,694 [INFO] Fetched all users successfully.
+2024-01-20 02:52:36,715 [INFO] Server started on port 5001.
+2024-01-20 02:52:41,501 [INFO] User ID 1 updated settings successfully.
+2024-01-20 02:52:43,033 [INFO] User ID 1 successfully logged out.
+2024-01-20 02:52:43,137 Redirecting to login: No user_id or session_token
+2024-01-20 02:52:56,722 [INFO] User ID 1 updated settings successfully.
+2024-01-20 02:53:28,748 [INFO] User ID 1 updated settings successfully.
+2024-01-20 02:53:34,943 [INFO] User ID 1 updated settings successfully.
+2024-01-20 02:53:38,211 [INFO] User ID 1 successfully logged out.
+2024-01-20 02:56:11,589 [INFO] Server started on port 5001.
+2024-01-20 02:56:18,908 Redirecting to login: No user_id or session_token
+2024-01-20 02:56:42,212 [INFO] User ID 1 successfully logged out.
+2024-01-20 02:58:49,911 [INFO] Server started on port 5001.
+2024-01-20 03:00:44,332 [INFO] User ID 1 successfully logged out.
+2024-01-20 03:01:49,493 [INFO] Fetched all users successfully.
+2024-01-20 03:02:31,223 [INFO] User ID 1 successfully logged out.
