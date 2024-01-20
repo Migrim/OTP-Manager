@@ -11967,3 +11967,18 @@ Traceback (most recent call last):
   File "c:\Users\Sebastian\Desktop\OTP-Manager\templates\home.html", line 187, in template
     {% endblock %}
 jinja2.exceptions.TemplateSyntaxError: Unexpected end of template. Jinja was looking for the following tags: 'endblock'. The innermost block that needs to be closed is 'block'.
+2024-01-20 03:27:37,669 [INFO] Server started on port 5001.
+2024-01-20 11:16:00,733 [INFO] Server started on port 5001.
+2024-01-20 11:18:31,525 [INFO] User ID 1 successfully logged out.
+2024-01-20 12:35:49,565 [INFO] Server started on port 5001.
+2024-01-20 12:36:23,160 [INFO] Secret with name ttttt was successfully deleted.
+2024-01-20 12:37:21,969 [INFO] User ID 1 successfully logged out.
+2024-01-20 12:44:23,531 [INFO] User ID 1 successfully logged out.
+2024-01-20 12:53:03,021 [INFO] Server started on port 5001.
+2024-01-20 12:56:23,316 [INFO] Server started on port 5001.
+2024-01-20 12:56:28,651 Redirecting to login: No user_id or session_token
+2024-01-20 12:57:04,995 [INFO] User ID 1 successfully logged out.
+2024-01-20 13:18:05,127 [INFO] Server started on port 5001.
+2024-01-20 13:18:10,338 Redirecting to login: No user_id or session_token
+2024-01-20 13:28:49,309 [INFO] Server started on port 5001.
+2024-01-20 17:59:51,947 [INFO] Server started on port 5001.

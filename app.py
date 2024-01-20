@@ -789,8 +789,11 @@ def home():
 
         if selected_company:
             logging.info(f'Filtering by company: {selected_company}')
-            print(f"Filtering by company: {selected_company}")            
             otp_secrets = [otp for otp in otp_secrets if otp['company'] == selected_company]
+            if not otp_secrets:
+                flash(f'No secrets found for company: {selected_company}', 'info')
+            else:
+                flash(f'Secrets filtered by company: {selected_company}', 'info')
 
         for otp in otp_secrets:
             otp_code = generate_otp_code(otp)
@@ -820,11 +823,20 @@ def home():
         alert_color, text_color = get_user_colors(current_user.id)
 
         search_name = request.args.get('name')
+
         if search_name:
             logging.info(f'Filtering by name: {search_name}')
-            print(f"Filtering by company name")            
+            found = False
             for k, v in list(grouped_otp_codes.items()): 
-                grouped_otp_codes[k] = [x for x in v if search_name.lower() in x['name'].lower()]
+                matched_secrets = [x for x in v if search_name.lower() in x['name'].lower()]
+                grouped_otp_codes[k] = matched_secrets
+                if matched_secrets:
+                    found = True
+
+            if not found:
+                flash(f'No secrets found matching name: {search_name}', 'info')
+            else:
+                flash(f'Secrets filtered by name: {search_name}', 'info')
 
         return render_template('home.html', form=form, grouped_otp_codes=grouped_otp_codes, total_otp_count=total_otp_count, companies=companies, search_name=search_name, page=page, total_pages=total_pages, enable_pagination=current_user.enable_pagination,  alert_color=alert_color, text_color=text_color)
 
@@ -1129,6 +1141,7 @@ def delete(name):
     otp_secrets = load_from_db()
     otp_secrets = [otp for otp in otp_secrets if 'name' in otp and otp['name'] != name]
     save_to_db(otp_secrets)
+    flash(f'Successfully deleted secret with name: {name}', 'success')
     return redirect(url_for('home'))
 
 @app.route('/delete_user/<int:user_id>', methods=['GET'])

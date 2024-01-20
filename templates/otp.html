@@ -4,67 +4,28 @@
     {{ super() }}
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
     <link rel="stylesheet" href="{{ url_for('static', filename='styles/otp_results.css') }}">
-{% endblock %}
-
-{% block navbar %}
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <div class="navbar-nav mr-auto">
-        <a class="navbar-brand" href="{{ url_for('home') }}">Home</a> 
-    </div>
-    <div class="navbar-nav mr-auto">
-        <a class="navbar-brand" href="{{ url_for('add') }}">Add</a>
-    </div>
-    <div class="navbar-nav mr-auto">
-        <a class="navbar-brand" href="{{ url_for('view_logs') }}">Logs</a>
-    </div>
-    <div class="navbar-nav mr-auto">
-        <a class="navbar-brand" href="{{ url_for('admin.admin_settings') }}">Settings</a>
-    </div>
-    <div class="navbar-nav mr-auto">
-        <a class="navbar-brand" href="{{ url_for('about') }}">About</a>
-    </div>        
-    {% with messages = get_flashed_messages() %}
-        {% if messages %}
-            <div class="navbar-nav ml-auto">
-                <div class="alert alert-warning alert-dismissible fade show mb-0" role="alert">
-                    {{ messages[0] }}
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-            </div>
-        {% endif %}
-    {% endwith %}
-    
-    <div id="logoutContainer">
-        <div id="logoutBtn">
-            <a class="navbar-brand" href="{{ url_for('logout') }}">
-                Logout
-                <i class="material-icons-outlined">logout</i>
-            </a>
-        </div>                     
-    </div>            
-</nav>
+    <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}">
 {% endblock %}
 
 {% block content %}
+{% include 'navbar.html' %}
 <script>
     function updateCountdown() {
-        const countdownElement = document.getElementById("countdown");
+      //  const countdownElement = document.getElementById("countdown");
         const otpCodeElements = document.querySelectorAll('[id^="otp_code_"]');
         const currentDateTime = new Date();
         const secondsUntilNextInterval = 30 - (currentDateTime.getSeconds() % 30);
 
-        countdownElement.textContent = `OTP Expires in ${secondsUntilNextInterval} seconds`;
-        countdownElement.classList.add('animated-countdown');
+      //  countdownElement.textContent = `OTP Expires in ${secondsUntilNextInterval} seconds`;
+      //  countdownElement.classList.add('animated-countdown');
 
         if (secondsUntilNextInterval <= 5) {
             otpCodeElements.forEach((element) => {
-                element.classList.add('fade-to-red');
+                element.classList.add('blink-text');
             });
         } else {
             otpCodeElements.forEach((element) => {
-                element.classList.remove('fade-to-red');
+                element.classList.remove('blink-text');
             });
         }
 
@@ -111,37 +72,41 @@
         }, millisTillNextInterval);
     }
 
-    function startCountdown(element, duration) {
-        if (countdownIntervals.has(element.id)) {
-            clearInterval(countdownIntervals.get(element.id));
+    function startCountdown(elementId, duration) {
+        let remainingTimeElement = document.getElementById(`remaining_time_${elementId}`);
+        if (!remainingTimeElement) {
+            console.error(`No remaining time element found for ID remaining_time_${elementId}`);
+            return;
         }
 
-        const intervalId = setInterval(() => {
-            let current_time = new Date().getSeconds();
-            let remaining = duration - (current_time % duration);
+        if (window.countdownIntervals && window.countdownIntervals[elementId]) {
+            clearInterval(window.countdownIntervals[elementId]);
+        } else {
+            window.countdownIntervals = {};
+        }
 
-            if (remaining === 2) {
-                element.textContent = "fetching...";
-            } else if (remaining === 1) {
-                let otpName = element.id.replace('progressBar', '');
-                let otpCodeElement = document.getElementById(`otp_code_${otpName}`);
-                if (otpCodeElement) {
-                    otpCodeElement.classList.add('flash');
-                    setTimeout(() => otpCodeElement.classList.remove('flash'), 3000);
-                }
-            } else {
-                element.textContent = remaining + "s";
-            }
+        let countdownUpdate = () => {
+            let current_time = new Date();
+            let seconds = current_time.getSeconds();
+            let remaining = duration - seconds % duration;
+            remainingTimeElement.textContent = `${remaining}s`;
 
-            element.style.width = `${(remaining / duration * 100)}%`;
-
-            if (remaining <= 1) {
-                clearInterval(countdownIntervals.get(element.id));
+            if (remaining <= 0) {
+                clearInterval(intervalId);
                 manuallyRefreshOtps();
             }
-        }, 1000);
+        };
 
-        countdownIntervals.set(element.id, intervalId);
+        countdownUpdate();
+        window.countdownIntervals[elementId] = setInterval(countdownUpdate, 1000);
+    }
+
+    function initializeCountdownsForOtpCodes() {
+        let otpCodeElements = document.querySelectorAll('[id^="otp_code_"]');
+        otpCodeElements.forEach((otpElement) => {
+            let elementId = otpElement.id.split('_')[2]; 
+            startCountdown(elementId, 30); 
+        });
     }
 
     function debounce(func, wait) {
@@ -187,6 +152,7 @@
         }, 500);
 
         animateTableRows();
+        initializeCountdownsForOtpCodes();
     };
 
     document.getElementById('searchInput').addEventListener('input', function() {
@@ -274,22 +240,22 @@
 
     function showToast() {
         let toast = document.getElementById('toast');
-        toast.style.opacity = '1'; // Make toast visible
+        toast.style.opacity = '1';
         toast.style.display = 'block';
 
         setTimeout(() => {
-            toast.style.opacity = '0'; // Begin to fade out after 3 seconds
+            toast.style.opacity = '0';
         }, 3000);
 
         setTimeout(() => {
-            toast.style.display = 'none'; // Hide after fade out completes
-        }, 3500); // Slightly longer than fade-out duration for smooth transition
+            toast.style.display = 'none'; 
+        }, 3500); 
     }
 </script>
 
 <div class="container">
     <h1>OTP Secrets</h1>
-    <div class="countdown-timer" id="countdown">Calculating OTP Expiry...</div>
+    <!-- <div class="countdown-timer" id="countdown">Calculating OTP Expiry...</div> -->
 
     <div id="toast" class="toast" style="display:none;">Copied to clipboard!</div>
 
@@ -302,7 +268,7 @@
                 <th>Type</th>
                 <th>OTP Code</th>
                 <th>Company</th>
-                <th>Kundennummer</th>
+                <th>Expiry Time</th>
             </tr>
         </thead>
         <tbody>
@@ -311,12 +277,12 @@
                     <td>{{ secret.name }}</td>
                     <td class="secretField" onmouseover="revealSecret(this)" onmouseout="hideSecret(this)">
                         <span class="hiddenSecret">{{ secret.secret }}</span>
-                        <span class="maskedSecret">*</span>
+                        <span class="maskedSecret">●●●●●●●●●●●●●●●●</span>
                     </td>                    
                     <td>{{ secret.otp_type }}</td>
                     <td id="otp_code_{{ secret.name }}" class="otp-code" onclick="copyToClipboard(this)"></td>
                     <td>{{ secret.company }}</td>
-                    <td>{{ secret.company_kundennummer }}</td>
+                    <td id="remaining_time_{{ secret.name }}"></td> 
                 </tr>
             {% endfor %}
         </tbody>

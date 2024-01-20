@@ -20,8 +20,11 @@ body {
 
 table {
     width: 100%;
-    border-collapse: collapse;
+    border-collapse: separate; 
+    border-spacing: 0; 
     margin-top: 20px;
+    border-radius: 10px; 
+    overflow: hidden; 
 }
 
 th, td {
@@ -32,21 +35,39 @@ th, td {
     transition: box-shadow 0.3s;
 }
 
+th:first-child {
+    border-top-left-radius: 10px;
+    border-left: 1px solid #444;
+}
+
+th:last-child {
+    border-top-right-radius: 10px;
+    border-right: 1px solid #444;
+}
+
+tbody tr:last-child td:first-child {
+    border-bottom-left-radius: 10px;
+}
+
+tbody tr:last-child td:last-child {
+    border-bottom-right-radius: 10px;
+}
+
 th:hover, td:hover {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 th {
-    background-color: #333;
+    background-color: #222;
     color: #fff;
 }
 
 tr:nth-child(even) {
-    background-color: #444;
+    background-color: #333;
 }
 
 tr:nth-child(odd) {
-    background-color: #555;
+    background-color: #272727;
 }
 
 h1 {
@@ -101,8 +122,9 @@ h1 {
 }
 
 .table-wrapper {
-    max-height: 500px;
+    max-height: 1000px;
     overflow-y: auto;
+    margin-bottom: 20px;
 }
 
 .back-to-home {
@@ -167,9 +189,10 @@ tbody tr.slide-down {
 }
 
 .otp-code:hover {
-    background-color: #333; /*# grey background */
     cursor: pointer;
-    transition: background-color 0.3s ease; /* Fade-in effect for background */
+    text-decoration: underline; 
+    transition: text-decoration 0.3s ease;
+    color: #ff5252;
 }
 
 .toast {
@@ -185,4 +208,31 @@ tbody tr.slide-down {
     box-shadow: 0 2px 5px rgba(0,0,0,0.2);
     opacity: 0; /* Initially invisible */
     transition: opacity 0.5s ease; /* Fade-in and fade-out effect */
+}
+
+table th:nth-child(3), table td:nth-child(3),
+table th:nth-child(6), table td:nth-child(6),
+table th:nth-child(2), table td:nth-child(2),
+table th:nth-child(4), table td:nth-child(4) {
+    text-align: center;
+}
+
+table th:nth-child(1),
+table th:nth-child(5) {
+    text-align: center;
+}
+
+table td:nth-child(1),
+table td:nth-child(5) {
+    text-align: left;
+}
+
+@keyframes blink {
+    0% { opacity: 1; }
+    50% { opacity: 0.5; }
+    100% { opacity: 1; }
+  }
+
+.blink-text {
+    animation: blink 1s linear infinite;
 }
