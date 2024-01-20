@@ -135,6 +135,16 @@ function startTimer(elementId, duration) {
     loop();
 }
 
+document.addEventListener("DOMContentLoaded", function() {
+    var flashMessages = document.querySelectorAll(".flash-message");
+    flashMessages.forEach(function(msg) {
+        msg.style.opacity = "1"; 
+        setTimeout(function() {
+            msg.style.opacity = "0"; 
+        }, 7000);
+    });
+});
+
 document.addEventListener('DOMContentLoaded', function() {
     var elements = document.querySelectorAll('[id^="timer"]');
     elements.forEach(function(element) {

@@ -194,3 +194,6 @@ select.form-control option {
     padding: 10px; 
     overflow-y: auto; 
 }
+.modal-content .modal-header .modal-title {
+    color: #fff; 
+}

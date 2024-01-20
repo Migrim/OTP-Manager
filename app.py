@@ -781,6 +781,7 @@ def home():
             otp_secrets.append(new_secret)
             save_to_db(otp_secrets)
             logging.info(f'New OTP secret added for {new_secret["name"]}.')
+            flash(f'New OTP secret "{new_secret["name"]}" added successfully!', 'success')
             return redirect(url_for('home'))
         
         companies = load_companies_from_db()
@@ -808,7 +809,7 @@ def home():
         total_otp_count = len(otp_secrets)
 
         if not otp_codes and selected_company:
-            flash(f"No matching secrets for company: {selected_company}")
+                flash(f"No matching secrets for company: {selected_company}", 'info')
 
         total_pages = ceil(len(otp_codes) / items_per_page) if current_user.enable_pagination else 1
         
@@ -829,7 +830,7 @@ def home():
 
     except Exception as e:
         logging.error('An error occurred on the home page.', exc_info=True)
-        flash('An unexpected error occurred.')
+        flash('An unexpected error occurred. Please try again later.', 'danger')
         print(f"An unknown error occurred at the home page") 
         return render_template('home.html', alert_color=alert_color)
 
