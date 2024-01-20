@@ -78,7 +78,7 @@ def load_user(user_id):
         user_row = cursor.fetchone()
 
     if user_row:
-        return User(id=user_row[0], username=user_row[1], is_admin=bool(user_row[2]))
+        return User(user_id=user_row[0], username=user_row[1], is_admin=bool(user_row[2]))
     return None
 
 def init_db():
@@ -356,7 +356,6 @@ def login_required(f):
 
         if not user_id or not session_token:
             app.logger.info("Redirecting to login: No user_id or session_token")
-            print(f"Redirecting to login: No user_id or session_token: {user_id}")
             return redirect(url_for('login'))
         
         with sqlite3.connect("otp.db") as db:
@@ -364,10 +363,10 @@ def login_required(f):
             cursor.execute("SELECT session_token FROM users WHERE id = ?", (user_id,))
             db_session_token = cursor.fetchone()
 
-        if not db_session_token or session_token != db_session_token[0]:
-            session.pop('user_id', None)
-            session.pop('session_token', None)
-            return redirect(url_for('login'))
+            if not db_session_token or session_token != db_session_token[0]:
+                session.pop('user_id', None)
+                session.pop('session_token', None)
+                return redirect(url_for('login'))
 
         return f(*args, **kwargs)
     return decorated_function
@@ -511,14 +510,18 @@ def login():
                 cursor = db.cursor()
                 cursor.execute("SELECT * FROM users WHERE username = ?", (username,))
                 user_record = cursor.fetchone()
+                print(f"User record found: {user_record}")
 
             if user_record:
                 stored_password = user_record[2]
                 user_id = user_record[0]
+                print(f"Stored password for user: {stored_password}")
 
                 if stored_password.startswith('sha256$'):
+                    print("Checking SHA256 hashed password")
                     sha256_hash = stored_password.split('$')[2]
                     if check_password_hash('sha256$' + sha256_hash, password):
+                        print("SHA256 password matched, updating to bcrypt")
                         hashed_password = bcrypt.generate_password_hash(password).decode('utf-8')
                         with sqlite3.connect("otp.db") as db:
                             cursor = db.cursor()
@@ -528,14 +531,29 @@ def login():
                         login_user(user_obj, remember=keep_logged_in)
                         return redirect(url_for('home'))
                     else:
+                        print("Invalid SHA256 credentials")
                         flash('Invalid credentials!')
                 elif bcrypt.check_password_hash(stored_password, password):
-                    user_obj = User(user_id, username)
+                    print("Password matched with bcrypt")
+                    user_obj = User(user_id, username, is_admin=bool(user_record[5]))  
                     login_user(user_obj, remember=keep_logged_in)
+
+                    session_token = str(uuid.uuid4())
+                    session['user_id'] = user_id
+                    session['session_token'] = session_token
+
+                    with sqlite3.connect("otp.db") as db:
+                        cursor = db.cursor()
+                        cursor.execute("UPDATE users SET session_token = ? WHERE id = ?", (session_token, user_id))
+                        db.commit()
+
+                    print(f"User {username} logged in, redirecting to home.")
                     return redirect(url_for('home'))
                 else:
+                    print("Invalid bcrypt credentials")
                     flash('Invalid credentials!')
             else:
+                print("No user found with provided username")
                 flash('User not found!')
 
         except Exception as e:

@@ -11887,3 +11887,29 @@ sqlite3.OperationalError: no such column: alert_color
 2024-01-16 14:33:29,540 [INFO] User ID 1 updated settings successfully.
 2024-01-16 18:18:45,025 [INFO] Server started on port 5001.
 2024-01-16 19:20:24,587 [INFO] Server started on port 5001.
+2024-01-20 01:28:41,186 [INFO] Server started on port 5001.
+2024-01-20 01:28:51,268 Redirecting to login: No user_id or session_token
+2024-01-20 01:28:54,311 Redirecting to login: No user_id or session_token
+2024-01-20 01:31:29,832 [INFO] Server started on port 5001.
+2024-01-20 01:31:41,546 Redirecting to login: No user_id or session_token
+2024-01-20 01:31:45,578 Redirecting to login: No user_id or session_token
+2024-01-20 01:31:53,881 Redirecting to login: No user_id or session_token
+2024-01-20 01:32:04,024 [INFO] Server started on port 5001.
+2024-01-20 01:32:07,650 Redirecting to login: No user_id or session_token
+2024-01-20 01:38:06,304 [INFO] Server started on port 5001.
+2024-01-20 01:38:13,445 Redirecting to login: No user_id or session_token
+2024-01-20 01:38:20,393 Redirecting to login: No user_id or session_token
+2024-01-20 01:38:28,147 Redirecting to login: No user_id or session_token
+2024-01-20 01:38:35,471 Redirecting to login: No user_id or session_token
+2024-01-20 01:39:53,908 [INFO] Server started on port 5001.
+2024-01-20 01:39:59,181 Redirecting to login: No user_id or session_token
+2024-01-20 01:40:03,530 Redirecting to login: No user_id or session_token
+2024-01-20 01:40:07,623 Redirecting to login: No user_id or session_token
+2024-01-20 01:42:05,443 [INFO] Server started on port 5001.
+2024-01-20 01:42:11,269 Redirecting to login: No user_id or session_token
+2024-01-20 01:44:29,545 [INFO] Server started on port 5001.
+2024-01-20 01:44:34,479 Redirecting to login: No user_id or session_token
+2024-01-20 01:46:37,174 [INFO] Server started on port 5001.
+2024-01-20 01:46:41,842 Redirecting to login: No user_id or session_token
+2024-01-20 01:46:55,023 Redirecting to login: No user_id or session_token
+2024-01-20 01:50:34,963 [INFO] Server started on port 5001.
