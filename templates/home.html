@@ -164,19 +164,6 @@
                     </div>
                 </div>                
 
-                <div id="flash-messages-container">
-                    {% with messages = get_flashed_messages(with_categories=true) %}
-                        {% if messages %}
-                            {% for category, message in messages %}
-                                <div class="flash-message flash-{{ category }}">
-                                    <span class="material-icons-outlined flash-icon">{{ category|category_icon }}</span>
-                                    {{ message }}
-                                </div>
-                            {% endfor %}
-                        {% endif %}
-                    {% endwith %}
-                </div>
-
                 <div id="toast" class="toast">Copied to clipboard</div>
                 <div class="copyright">Indev Build - January 24 - Not for Production Use
                 </div>

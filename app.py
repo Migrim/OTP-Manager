@@ -22,8 +22,12 @@ from flask_login import UserMixin
 from math import ceil
 from flask import send_file
 from collections import defaultdict
+from subprocess import Popen, PIPE
 from markupsafe import Markup
 from flask_cors import CORS
+import time
+import requests
+import requests
 import bcrypt
 import shutil
 import os
@@ -69,6 +73,7 @@ handler.setFormatter(formatter)
 
 is_restarting = False
 broadcast_message = None
+slow_requests_counter = 0
 
 @login_manager.user_loader
 def load_user(user_id):
@@ -270,6 +275,44 @@ def check_server_status():
 @app.route('/restarting')
 def restarting():
     return render_template('restarting.html')
+
+def is_internet_available():
+    """Check if the internet is available."""
+    try:
+        response = requests.get('http://www.google.com', timeout=5)
+        return response.status_code == 200
+    except requests.ConnectionError:
+        return False
+
+def check_server_capacity(f):
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        global slow_requests_counter
+
+        if not is_internet_available():
+            flash("Internet connection is not available.", "error")
+            return f(*args, **kwargs)  
+
+        start_time = time.time()
+        response = f(*args, **kwargs)
+        end_time = time.time()
+        response_time = end_time - start_time
+
+        initial_threshold = 1.0
+        adjusted_threshold = initial_threshold + 0.1 * slow_requests_counter
+
+        if response_time > adjusted_threshold:
+            slow_requests_counter += 1
+            flash("The server is currently experiencing high load and may be slow.", "warning")
+            logging.warning(f"Slow response detected for {f.__name__}: {response_time:.2f}s")
+        else:
+            slow_requests_counter = max(0, slow_requests_counter - 1)
+
+        logging.info(f"Response time for {f.__name__}: {response_time:.2f}s")
+
+        return response
+
+    return decorated_function
 
 def update_statistics(logins=0, refreshed=0):
     today = datetime.now().strftime('%Y-%m-%d')
@@ -501,6 +544,7 @@ def get_last_login_time_from_db():
     return None
 
 @app.route('/login', methods=['GET', 'POST'])
+@check_server_capacity
 def login():
     print("Accessing /login route")
     if 'user_id' in session:
@@ -547,6 +591,12 @@ def login():
                     print("Password matched with bcrypt")
                     user_obj = User(user_id, username, is_admin=bool(user_record[5]))  
                     login_user(user_obj, remember=keep_logged_in)
+
+                    if keep_logged_in:
+                        session.permanent = True
+                        print("session.permanent set to True")  
+                    else:
+                        print("session.permanent not set (remains False)")
 
                     session_token = str(uuid.uuid4())
                     session['user_id'] = user_id
@@ -759,6 +809,7 @@ def get_user_text_color(user_id):
 
 @app.route('/', methods=['GET', 'POST'])
 @login_required
+@check_server_capacity
 def home():
     form = OTPForm()
     otp_secrets = session.get('filtered_secrets', load_from_db())
@@ -1232,10 +1283,33 @@ def add():
 
     return render_template('add.html', form=form)
 
+def is_fallback_server_running():
+    try:
+        response = requests.get('http://localhost:5000/status')
+        if response.status_code == 200:
+            return True
+    except requests.ConnectionError:
+        return False
+    return False
+
+def shutdown_fallback_server():
+    try:
+        response = requests.post('http://localhost:5000/shutdown')
+        if response.status_code == 200:
+            print("Fallback server has been shut down.")
+        else:
+            print("Failed to shut down the fallback server. Status code:", response.status_code)
+    except requests.RequestException as e:
+        print("An error occurred while trying to shut down the fallback server:", e)
+
 if __name__ == '__main__':
+    if is_fallback_server_running():
+        print("Fallback server is running. Attempting to shut it down...")
+        shutdown_fallback_server()
+
     port = 5001 
-    logging.info(f"Server started on port {port}.")
+    logging.info(f"Server starting on port {port}...")
     try:
         app.run(debug=True, port=port, host='0.0.0.0', use_reloader=False)
     except KeyboardInterrupt:
-        logging.info("Server stopped.")
+        logging.info("Server stopped by user.")

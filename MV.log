@@ -11982,3 +11982,215 @@ jinja2.exceptions.TemplateSyntaxError: Unexpected end of template. Jinja was loo
 2024-01-20 13:18:10,338 Redirecting to login: No user_id or session_token
 2024-01-20 13:28:49,309 [INFO] Server started on port 5001.
 2024-01-20 17:59:51,947 [INFO] Server started on port 5001.
+2024-01-20 19:16:48,085 Redirecting to login: No user_id or session_token
+2024-01-20 19:25:13,276 [INFO] Server started on port 5001.
+2024-01-20 19:27:53,231 [INFO] Server started on port 5001.
+2024-01-20 19:27:54,227 [ERROR] message handler error
+Traceback (most recent call last):
+  File "C:\Users\Sebastian\AppData\Local\Programs\Python\Python311\Lib\site-packages\flask_socketio\__init__.py", line 823, in _handle_event
+    ret = handler(auth)
+          ^^^^^^^^^^^^^
+TypeError: test_connect() takes 0 positional arguments but 1 was given
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\Sebastian\AppData\Local\Programs\Python\Python311\Lib\site-packages\engineio\server.py", line 431, in run_handler
+    return self.handlers[event](*args)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Sebastian\AppData\Local\Programs\Python\Python311\Lib\site-packages\socketio\server.py", line 642, in _handle_eio_message
+    self._handle_connect(eio_sid, pkt.namespace, pkt.data)
+  File "C:\Users\Sebastian\AppData\Local\Programs\Python\Python311\Lib\site-packages\socketio\server.py", line 532, in _handle_connect
+    success = self._trigger_event(
+              ^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Sebastian\AppData\Local\Programs\Python\Python311\Lib\site-packages\socketio\server.py", line 609, in _trigger_event
+    return self.handlers[namespace][event](*args)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Sebastian\AppData\Local\Programs\Python\Python311\Lib\site-packages\flask_socketio\__init__.py", line 282, in _handler
+    return self._handle_event(handler, message, namespace, sid,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Sebastian\AppData\Local\Programs\Python\Python311\Lib\site-packages\flask_socketio\__init__.py", line 825, in _handle_event
+    ret = handler()
+          ^^^^^^^^^
+  File "c:\Users\Sebastian\Desktop\OTP-Manager\app.py", line 411, in test_connect
+    with thread_lock:
+         ^^^^^^^^^^^
+NameError: name 'thread_lock' is not defined
+2024-01-20 19:28:21,949 [INFO] Server started on port 5001.
+2024-01-21 14:24:59,193 [INFO] Server started on port 5001.
+2024-01-21 14:33:53,113 [INFO] Server restart initiated.
+2024-01-21 14:34:11,849 [INFO] Server started on port 5001.
+2024-01-21 14:56:47,337 [INFO] Server started on port 5001.
+2024-01-21 14:56:54,340 [INFO] Server restart initiated.
+2024-01-21 14:57:07,824 [INFO] Server started on port 5001.
+2024-01-21 14:57:35,751 [INFO] Server started on port 5001.
+2024-01-21 14:57:42,694 [INFO] Server restart initiated.
+2024-01-21 14:57:56,770 [INFO] Server started on port 5001.
+2024-01-21 17:59:25,846 [INFO] Server started on port 5001.
+2024-01-21 17:59:32,502 [INFO] Server restart initiated.
+2024-01-21 17:59:46,847 [INFO] Server started on port 5001.
+2024-01-21 18:01:42,248 [INFO] Server started on port 5001.
+2024-01-21 18:01:48,337 [INFO] Server restart initiated.
+2024-01-21 18:02:01,912 [INFO] Server started on port 5001.
+2024-01-21 18:03:46,493 [INFO] Server started on port 5001.
+2024-01-21 18:04:00,624 [INFO] Server restart initiated.
+2024-01-21 18:04:14,787 [INFO] Server started on port 5001.
+2024-01-21 18:04:47,531 [INFO] Server restart initiated.
+2024-01-21 18:05:01,807 [INFO] Server started on port 5001.
+2024-01-21 18:05:58,428 [INFO] Server started on port 5001.
+2024-01-21 18:08:36,901 [INFO] Server started on port 5001.
+2024-01-21 18:08:42,266 [INFO] Server restart initiated.
+2024-01-21 18:08:55,837 [INFO] Server started on port 5001.
+2024-01-21 18:09:35,344 [INFO] Server restart initiated.
+2024-01-21 18:09:48,791 [INFO] Server started on port 5001.
+2024-01-21 18:12:06,853 [INFO] Server started on port 5001.
+2024-01-21 18:12:20,630 [INFO] Server restart initiated.
+2024-01-21 18:12:34,986 [INFO] Server started on port 5001.
+2024-01-21 18:42:50,233 [INFO] Server started on port 5001.
+2024-01-21 18:42:59,782 [INFO] Server restart initiated.
+2024-01-21 18:43:13,835 [INFO] Server started on port 5001.
+2024-01-21 18:45:37,721 [INFO] Server started on port 5001.
+2024-01-21 18:45:46,778 [INFO] Server restart initiated.
+2024-01-21 18:46:06,316 [INFO] Server started on port 5001.
+2024-01-21 18:46:17,994 [INFO] Server restart initiated.
+2024-01-21 18:46:31,832 [INFO] Server started on port 5001.
+2024-01-21 18:49:52,133 [INFO] Server starting on port 5001...
+2024-01-21 18:49:53,489 [INFO] Server restart initiated.
+2024-01-21 18:50:11,919 [INFO] Server starting on port 5001...
+2024-01-21 18:51:23,184 [INFO] Server starting on port 5001...
+2024-01-21 18:51:41,620 [INFO] Server starting on port 5001...
+2024-01-21 18:59:48,016 [INFO] Server starting on port 5001...
+2024-01-21 19:00:09,214 [INFO] Server restart initiated.
+2024-01-21 19:00:26,940 [INFO] Server starting on port 5001...
+2024-01-21 19:04:43,256 [INFO] Server starting on port 5001...
+2024-01-21 19:04:49,632 [INFO] Server restart initiated.
+2024-01-21 19:05:06,917 [INFO] Server starting on port 5001...
+2024-01-21 19:14:07,935 [INFO] Server starting on port 5001...
+2024-01-21 19:14:43,628 [INFO] Server restart initiated.
+2024-01-21 19:15:01,942 [INFO] Server starting on port 5001...
+2024-01-21 19:20:56,353 [INFO] Server starting on port 5001...
+2024-01-21 19:21:00,528 [INFO] Server restart initiated.
+2024-01-21 19:22:02,099 [INFO] Server starting on port 5001...
+2024-01-21 19:22:05,458 [INFO] Server restart initiated.
+2024-01-21 19:22:22,931 [INFO] Server starting on port 5001...
+2024-01-21 19:24:07,584 [INFO] Server starting on port 5001...
+2024-01-22 22:05:11,631 [INFO] Server starting on port 5001...
+2024-01-22 22:05:30,897 Redirecting to login: No user_id or session_token
+2024-01-22 22:07:20,328 [INFO] User ID 1 successfully logged out.
+2024-01-22 22:08:10,313 [INFO] User ID 1 successfully logged out.
+2024-01-22 22:08:28,388 [INFO] User ID 1 successfully logged out.
+2024-01-22 22:08:47,406 [INFO] User ID 1 successfully logged out.
+2024-01-22 22:21:32,091 [INFO] Server starting on port 5001...
+2024-01-22 22:21:36,780 [INFO] User ID 1 successfully logged out.
+2024-01-22 22:22:19,808 [INFO] User ID 1 successfully logged out.
+2024-01-22 22:23:36,293 [INFO] Server starting on port 5001...
+2024-01-22 22:23:37,223 [INFO] User ID 1 successfully logged out.
+2024-01-22 22:24:11,651 [INFO] User ID 1 successfully logged out.
+2024-01-22 22:41:20,502 [INFO] User ID 1 successfully logged out.
+2024-01-22 22:41:28,547 [INFO] Server starting on port 5001...
+2024-01-22 22:41:48,940 [INFO] Server starting on port 5001...
+2024-01-22 22:43:54,180 [INFO] Server starting on port 5001...
+2024-01-22 22:43:55,146 [INFO] Response time for home: 0.02s
+2024-01-22 22:44:03,373 [INFO] Response time for home: 0.00s
+2024-01-22 22:44:05,049 [INFO] Response time for home: 0.00s
+2024-01-22 22:44:08,133 [INFO] User ID 1 successfully logged out.
+2024-01-22 22:44:08,152 [INFO] Response time for login: 0.00s
+2024-01-22 22:44:10,541 [INFO] Response time for login: 0.23s
+2024-01-22 22:44:10,558 [INFO] Response time for home: 0.00s
+2024-01-22 22:45:37,617 [INFO] Server starting on port 5001...
+2024-01-22 22:45:38,756 [INFO] Response time for home: 0.03s
+2024-01-22 22:45:41,676 [INFO] User ID 1 successfully logged out.
+2024-01-22 22:45:41,696 [INFO] Response time for login: 0.01s
+2024-01-22 22:45:43,612 [INFO] Response time for login: 0.23s
+2024-01-22 22:45:43,629 [INFO] Response time for home: 0.00s
+2024-01-22 22:46:01,992 [INFO] User ID 1 successfully logged out.
+2024-01-22 22:46:02,007 [INFO] Response time for login: 0.00s
+2024-01-22 22:46:05,558 [INFO] Response time for login: 0.23s
+2024-01-22 22:46:05,579 [INFO] Response time for home: 0.01s
+2024-01-22 22:46:51,401 [INFO] User ID 1 successfully logged out.
+2024-01-22 22:46:51,414 [INFO] Response time for login: 0.00s
+2024-01-22 22:46:54,137 [INFO] Response time for login: 0.22s
+2024-01-22 22:46:54,155 [INFO] Response time for home: 0.00s
+2024-01-22 22:48:52,122 [INFO] Server starting on port 5001...
+2024-01-22 22:48:53,019 [INFO] User ID 1 successfully logged out.
+2024-01-22 22:48:53,046 [INFO] Response time for login: 0.01s
+2024-01-22 22:48:56,114 [INFO] Response time for login: 0.23s
+2024-01-22 22:48:56,150 [INFO] Response time for home: 0.02s
+2024-01-22 22:50:13,147 [INFO] User ID 1 successfully logged out.
+2024-01-22 22:50:13,164 [INFO] Response time for login: 0.00s
+2024-01-22 22:50:15,019 [INFO] Response time for login: 0.22s
+2024-01-22 22:50:15,037 [INFO] Response time for home: 0.00s
+2024-01-22 22:50:33,207 [INFO] User ID 1 successfully logged out.
+2024-01-22 22:50:33,225 [INFO] Response time for login: 0.00s
+2024-01-22 22:50:35,203 [INFO] Response time for login: 0.22s
+2024-01-22 22:50:35,219 [INFO] Response time for home: 0.00s
+2024-01-22 22:50:41,304 [INFO] User ID 1 successfully logged out.
+2024-01-22 22:50:41,319 [INFO] Response time for login: 0.00s
+2024-01-22 22:50:43,417 [INFO] Response time for login: 0.22s
+2024-01-22 22:50:43,433 [INFO] Response time for home: 0.00s
+2024-01-22 22:50:51,507 [INFO] User ID 1 successfully logged out.
+2024-01-22 22:50:51,525 [INFO] Response time for login: 0.00s
+2024-01-22 22:50:55,853 [INFO] Response time for login: 0.23s
+2024-01-22 22:50:55,872 [INFO] Response time for home: 0.01s
+2024-01-22 22:51:32,205 [INFO] User ID 1 successfully logged out.
+2024-01-22 22:51:32,224 [INFO] Response time for login: 0.00s
+2024-01-22 22:51:34,853 [INFO] Response time for login: 0.23s
+2024-01-22 22:51:34,872 [INFO] Response time for home: 0.01s
+2024-01-22 22:51:59,593 [INFO] User ID 1 successfully logged out.
+2024-01-22 22:51:59,614 [INFO] Response time for login: 0.00s
+2024-01-22 22:52:02,585 [INFO] Response time for login: 0.22s
+2024-01-22 22:52:02,604 [INFO] Response time for home: 0.00s
+2024-01-22 22:52:10,319 [INFO] User ID 1 successfully logged out.
+2024-01-22 22:52:10,336 [INFO] Response time for login: 0.00s
+2024-01-22 22:52:12,058 [INFO] Response time for login: 0.22s
+2024-01-22 22:52:12,077 [INFO] Response time for home: 0.00s
+2024-01-22 22:52:39,421 [INFO] User ID 1 successfully logged out.
+2024-01-22 22:52:39,439 [INFO] Response time for login: 0.00s
+2024-01-22 22:52:41,520 [INFO] Response time for login: 0.22s
+2024-01-22 22:52:41,539 [INFO] Response time for home: 0.00s
+2024-01-22 22:52:53,670 [INFO] User ID 1 successfully logged out.
+2024-01-22 22:52:53,691 [INFO] Response time for login: 0.00s
+2024-01-22 22:52:55,453 [INFO] Response time for login: 0.22s
+2024-01-22 22:52:55,471 [INFO] Response time for home: 0.00s
+2024-01-22 22:53:51,471 [INFO] Response time for home: 0.00s
+2024-01-22 22:55:00,824 [INFO] Server starting on port 5001...
+2024-01-22 22:55:02,187 [INFO] User ID 1 successfully logged out.
+2024-01-22 22:55:02,326 [INFO] Response time for login: 0.01s
+2024-01-22 22:55:05,341 [INFO] Response time for login: 0.23s
+2024-01-22 22:55:05,474 [INFO] Response time for home: 0.02s
+2024-01-22 22:55:27,518 [INFO] Response time for home: 0.00s
+2024-01-22 22:57:17,523 [INFO] Fetched all users successfully.
+2024-01-22 23:03:56,416 [INFO] Server starting on port 5001...
+2024-01-22 23:03:58,993 [INFO] Fetched all users successfully.
+2024-01-22 23:04:03,060 [INFO] Password reset page accessed for user_id: 4
+2024-01-22 23:06:35,913 [INFO] Fetched all users successfully.
+2024-01-22 23:08:05,289 [INFO] Fetched all users successfully.
+2024-01-22 23:09:00,251 [INFO] Server starting on port 5001...
+2024-01-22 23:09:01,346 [INFO] Fetched all users successfully.
+2024-01-22 23:10:21,927 [INFO] Fetched all users successfully.
+2024-01-22 23:10:33,462 [INFO] Server starting on port 5001...
+2024-01-22 23:10:36,526 [INFO] Response time for home: 0.02s
+2024-01-22 23:10:39,036 [INFO] Fetched all users successfully.
+2024-01-22 23:11:53,546 [INFO] Server starting on port 5001...
+2024-01-22 23:11:55,111 [INFO] Response time for home: 0.02s
+2024-01-22 23:11:56,529 [INFO] Fetched all users successfully.
+2024-01-22 23:12:04,096 [INFO] Fetched all users successfully.
+2024-01-22 23:12:06,323 [INFO] User ID 1 successfully logged out.
+2024-01-22 23:12:06,466 [INFO] Response time for login: 0.01s
+2024-01-22 23:12:15,418 [INFO] Response time for login: 0.00s
+2024-01-22 23:12:27,660 [INFO] Response time for login: 0.22s
+2024-01-22 23:12:27,771 [INFO] Response time for home: 0.00s
+2024-01-22 23:12:30,904 [INFO] Fetched all users successfully.
+2024-01-22 23:16:23,189 [INFO] Server starting on port 5001...
+2024-01-22 23:16:26,233 [INFO] Fetched all users successfully.
+2024-01-22 23:16:31,269 [INFO] Fetched all users successfully.
+2024-01-22 23:16:39,026 [INFO] Fetched all users successfully.
+2024-01-22 23:18:19,436 [INFO] User ID 1 successfully logged out.
+2024-01-22 23:18:19,560 [INFO] Response time for login: 0.01s
+2024-01-22 23:18:23,772 [INFO] Response time for login: 0.23s
+2024-01-22 23:18:23,884 [INFO] Response time for home: 0.01s
+2024-01-22 23:18:42,691 [INFO] User ID 5 successfully logged out.
+2024-01-22 23:18:42,806 [INFO] Response time for login: 0.00s
+2024-01-22 23:18:45,940 [INFO] Response time for login: 0.23s
+2024-01-22 23:18:46,047 [INFO] Response time for home: 0.00s
+2024-01-22 23:18:48,586 [INFO] Fetched all users successfully.

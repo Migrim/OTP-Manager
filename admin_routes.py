@@ -1,5 +1,5 @@
 import flask
-from flask import Blueprint, render_template, flash, redirect, url_for, request, logging
+from flask import Blueprint, Flask, render_template, flash, redirect, url_for, request, logging
 from flask_login import login_required, current_user, LoginManager
 from werkzeug.security import generate_password_hash
 from flask_wtf import FlaskForm
@@ -12,8 +12,8 @@ import sqlite3
 import logging
 from logging.handlers import RotatingFileHandler
 
-#app = Flask(__name__)
-#bcrypt = Bcrypt(app)
+app = Flask(__name__)
+bcrypt = Bcrypt(app)
 
 logger = logging.getLogger('mv_admin_logger')
 logger.setLevel(logging.DEBUG)
@@ -61,6 +61,22 @@ def load_companies_from_db():
     except sqlite3.Error as e:
         return []
 
+@admin_bp.route('/admin/reset_password', methods=['POST'])
+@login_required
+def reset_password():
+    user_id = request.form.get('user_id')
+    new_password = request.form.get('new_password')
+    hashed_password = bcrypt.generate_password_hash(new_password).decode('utf-8')
+    
+    try:
+        with sqlite3.connect("otp.db") as db:
+            cursor = db.cursor()
+            cursor.execute("UPDATE users SET password = ? WHERE id = ?", (hashed_password, user_id))
+            db.commit()
+        return jsonify({'success': True})
+    except sqlite3.Error as e:
+        return jsonify({'success': False, 'message': str(e)})
+
 @admin_bp.route('/user_management', methods=['GET', 'POST'])
 @login_required
 def user_management():
@@ -70,7 +86,6 @@ def user_management():
         username = user_form.username.data
         password = user_form.password.data
 
-        # Hash the password using bcrypt
         hashed_password = bcrypt.generate_password_hash(password).decode('utf-8')
         
         try:

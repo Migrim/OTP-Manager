@@ -37,7 +37,7 @@
     background-color: #ff5252;
     color: #fff;
     text-decoration: none;
-    border-radius: 5px;
+    border-radius: 10px;
     transition: background-color 0.3s;
     width: 100px; 
     height: 40px; 
@@ -76,3 +76,71 @@
     justify-content: center;
 }
 
+@keyframes blink {
+    0% { opacity: 1; }
+    50% { opacity: 0; }
+    100% { opacity: 1; }
+}
+
+.blink-animation {
+    animation: blink 1s linear infinite;
+}
+
+#flash-messages-container {
+    position: fixed;
+    top: 70px;
+    right: 20px;
+    z-index: 1000;
+}
+
+.flash-message {
+    position: relative;
+    padding: 10px 20px;
+    padding-right: 30px;
+    margin-bottom: 10px;
+    border: 1px solid transparent;
+    border-radius: 10px;
+    color: #fff;
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+}
+
+.flash-info {
+    background-color: #007bff;
+    border-color: #007bff;
+}
+
+.flash-success {
+    background-color: #59b259;
+    border-color: #59b259;
+}
+
+.flash-warning {
+    background-color: #f39c12;
+    border-color: #f39c12;
+}
+
+.flash-error {
+    background-color: #ff5252;
+    border-color: #ff5252;
+}
+
+.flash-message .flash-icon {
+    vertical-align: middle;
+    margin-right: 10px;
+}
+
+.flash-close-btn {
+    position: absolute;
+    top: 5px; /* Adjust as necessary */
+    right: 10px; /* Adjust as necessary */
+    font-size: 20px;
+    font-weight: bold;
+    color: #ffffff;
+    cursor: pointer;
+    transition: color 0.2s;
+}
+
+.flash-close-btn:hover {
+    color: #000000;
+}

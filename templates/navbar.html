@@ -37,6 +37,20 @@
     </div>            
 </nav>
 
+<div id="flash-messages-container">
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div class="flash-message flash-{{ category }}">
+                    <span class="material-icons-outlined flash-icon">{{ category|category_icon }}</span>
+                    {{ message }}
+                    <span class="flash-close-btn">&times;</span>
+                </div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+</div>
+
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         var hoverColor = '{{ text_color }}';  
@@ -44,25 +58,42 @@
             hoverColor = '#CD5C5C'; 
         }
 
+        var closeButtons = document.querySelectorAll('.flash-close-btn');
+        closeButtons.forEach(function(btn) {
+            btn.onclick = function() {
+                var flashMessage = this.parentElement;
+                flashMessage.style.opacity = '0';
+                setTimeout(function() {
+                    flashMessage.remove();
+                }, 300);
+            };
+        });
+
         var navbarLinks = document.querySelectorAll('.navbar .navbar-brand');
         navbarLinks.forEach(function(link) {
             link.onmouseover = function() { 
-
-                if (!this.parentElement.parentElement.id.includes('logoutContainer')) {
+                var icon = this.querySelector('.material-icons-outlined');
+                if (this.parentElement.parentElement.id.includes('logoutContainer')) {
+                    if (icon) {
+                        icon.classList.add('blink-animation');
+                    }
+                } else {
                     this.style.color = hoverColor; 
-                    var icon = this.querySelector('.material-icons-outlined');
                     if (icon) {
                         icon.classList.add('spin-animation');
                     }
                 }
             };
             link.onmouseout = function() { 
-
+                var icon = this.querySelector('.material-icons-outlined');
                 if (!this.parentElement.parentElement.id.includes('logoutContainer')) {
                     this.style.color = ''; 
-                    var icon = this.querySelector('.material-icons-outlined');
                     if (icon) {
-                        icon.classList.remove('spin-animation');
+                        icon.classList.remove('spin-animation', 'blink-animation');
+                    }
+                } else {
+                    if (icon) {
+                        icon.classList.remove('blink-animation');
                     }
                 }
             };
