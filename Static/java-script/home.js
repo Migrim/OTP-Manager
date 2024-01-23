@@ -2,11 +2,16 @@ const countdownIntervals = new Map();
 
 async function updateOtpCodes(otpCodes) {
     otpCodes.forEach(otp => {
-        let otpCodeElement = document.getElementById(`otp_code_${otp.name}`);
+        let currentOtpCodeElement = document.getElementById(`current_otp_code_${otp.name}`);
+        let nextOtpCodeElement = document.getElementById(`next_otp_code_${otp.name}`);
         let progressBar = document.getElementById(`progressBar${otp.name}`);
 
-        if (otpCodeElement) {
-            otpCodeElement.textContent = otp.otp_code;
+        if (currentOtpCodeElement) {
+            currentOtpCodeElement.textContent = otp.current_otp;
+        }
+
+        if (nextOtpCodeElement) {
+            nextOtpCodeElement.textContent = otp.next_otp;
         }
 
         if (progressBar) {
@@ -41,36 +46,38 @@ function startAutoRefresh() {
 }
 
 function startCountdown(element, duration) {
-    element.textContent = "calculating expiry..."; 
-
     if (countdownIntervals.has(element.id)) {
         clearInterval(countdownIntervals.get(element.id));
     }
 
+    const updateInterval = 50;
+    let endTime = calculateNextEndTime(duration);
+
+    function calculateNextEndTime(duration) {
+        const currentTime = new Date();
+        const secondsPastInterval = currentTime.getSeconds() % duration;
+        const millisTillNextInterval = ((duration - secondsPastInterval) % duration) * 1000 - currentTime.getMilliseconds();
+        return currentTime.getTime() + millisTillNextInterval;
+    }
+
+    function resetProgressBar() {
+        element.style.width = '100%';
+        endTime = calculateNextEndTime(duration);
+    }
+
     const intervalId = setInterval(() => {
-        let current_time = new Date().getSeconds();
-        let remaining = duration - (current_time % duration);
+        const currentTime = new Date().getTime();
+        const remainingTime = Math.max(endTime - currentTime, 0);
+        const remainingSeconds = Math.ceil(remainingTime / 1000);
 
-        if (remaining === 0) {
-            element.textContent = "expiering...";
-        } else if (remaining === 1) {
-            let otpName = element.id.replace('progressBar', '');
-            let otpCodeElement = document.getElementById(`otp_code_${otpName}`);
-            if (otpCodeElement) {
-                otpCodeElement.classList.add('flash');
-                setTimeout(() => otpCodeElement.classList.remove('flash'), 3000);
-            }
-        } else {
-            element.textContent = remaining + "s";
-        }
+        element.textContent = remainingSeconds > 0 ? remainingSeconds + "s" : "fetching...";
+        element.style.width = `${(remainingTime / (duration * 1000)) * 100}%`;
 
-        element.style.width = `${(remaining / duration * 100)}%`;
-
-        if (remaining <= 1) {
-            clearInterval(countdownIntervals.get(element.id));
+        if (remainingTime <= 0) {
+            resetProgressBar();
             manuallyRefreshOtps();
         }
-    }, 1000);
+    }, updateInterval);
 
     countdownIntervals.set(element.id, intervalId);
 }

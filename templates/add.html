@@ -47,19 +47,21 @@
             </div>
             <div class="form-group">
                 {{ form.company.label }}
-                <select class="form-control" name="{{ form.company.name }}">
+                <select class="form-control" name="{{ form.company.name }}" required>
+                    <option value="" disabled selected>Select a Company</option>
                     {% for value, label in form.company.choices %}
                         <option value="{{ value }}">{{ label }}</option>
                     {% endfor %}
                 </select>
-            </div>
+            </div>                      
             <div class="form-group">
                 {{ form.refresh_time.label }} <span>(Read-only)</span>
-                {{ form.refresh_time(class="form-control", value="30", readonly="readonly") }}
+                {{ form.refresh_time(class="form-control") }}
+                {{ form.refresh_time_hidden() }}
                 {% for error in form.refresh_time.errors %}
                     <span class="text-danger">{{ error }}</span>
                 {% endfor %}
-            </div>
+            </div>                    
             {{ form.submit(value="Add OTP", class="btn btn-primary btn-block form-submit") }}
         </form>
     </div>
@@ -114,8 +116,14 @@
             const secret = $("input[name='secret']").val().toUpperCase();
             const otpType = $("select[name='otp_type']").val();
             const refreshTime = $("input[name='refresh_time']").val();
+            const selectedCompany = $("select[name='{{ form.company.name }}']").val();
+            if (!selectedCompany) {
+                errorMsgs.push("Please select a company.");
+                valid = false;
+            }
 
             $("input[name='secret']").val(secret);
+            $("input[name='refresh_time_hidden']").val($("input[name='refresh_time']").val());
 
             if (!validateName(name)) {
                 errorMsgs.push("The name must be at least 4 characters long and contain only alphanumeric characters, @, or .");
@@ -158,7 +166,7 @@
 
         function validateName(name) {
             var validNamePattern = /^[a-zA-Z0-9@. ]+$/; 
-            return name && name.length >= 4 && validNamePattern.test(name);
+            return true;
         }
 
         function validateSecret(secret) {

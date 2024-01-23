@@ -30,15 +30,15 @@ body {
 
 .form-control {
     border-radius: 5px;
-    background-color: #444;
-    color: #fff;
-    border: 1px solid transparent; 
+    background: rgba(255, 255, 255, 0.1);
+    color: #f1f1f1;
+    border: 1px solid #757575;
     box-shadow: 0 0 0 0 rgba(138, 43, 226, 0); 
     transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
 .form-control::-webkit-select-placeholder {
-    color: #aaa;
+    color: #9B9B9B;
 }
 
 .form-submit {

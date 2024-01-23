@@ -1,7 +1,7 @@
 from flask import Flask, render_template, request, redirect, url_for, flash, session, make_response
 from flask_bootstrap import Bootstrap
 from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField, RadioField
+from wtforms import StringField, SubmitField, RadioField, HiddenField
 from wtforms.validators import DataRequired, Length 
 from pyotp import totp, hotp
 from flask_session import Session
@@ -25,6 +25,7 @@ from collections import defaultdict
 from subprocess import Popen, PIPE
 from markupsafe import Markup
 from flask_cors import CORS
+import pyotp
 import time
 import requests
 import requests
@@ -223,7 +224,8 @@ class OTPForm(FlaskForm):
     name = StringField('Name', validators=[InputRequired(), Length(max=25, message="Der Name darf nicht länger als 25 Zeichen sein.")])
     secret = StringField('Secret', validators=[InputRequired()])
     otp_type = SelectField('OTP Type', validators=[InputRequired()], choices=[('totp', 'TOTP'), ('hotp', 'HOTP')])
-    refresh_time = IntegerField('Refresh Time', validators=[InputRequired(), NumberRange(min=1, message="Nur Zahlen sind erlaubt.")], default=30)
+    refresh_time = IntegerField('Refresh Time', default=30, render_kw={"disabled": "disabled"})
+    refresh_time_hidden = HiddenField(default=30)
     company = SelectField('Company', validators=[InputRequired()], choices=[])
     submit = SubmitField('Submit')
 
@@ -488,17 +490,31 @@ def refresh_codes_v2():
     otp_codes = []
 
     for otp in otp_secrets:
-        otp_code = generate_otp_code(otp)
-        if otp_code is None:
-            flash('Invalid OTP secret')
+        current_otp_code, next_otp_code = generate_current_and_next_otp(otp)
+        if current_otp_code is None:
+            flash('Invalid OTP-Secret!', 'error')
             print(f"Invalid OTP secret was attempted to be loaded in the OTP-List")
             continue
         otp_codes.append({
             'name': otp['name'],
-            'otp_code': otp_code['otp_code']
+            'current_otp': current_otp_code,
+            'next_otp': next_otp_code
         })
 
     return jsonify({"otp_codes": otp_codes})
+
+def generate_current_and_next_otp(otp):
+    try:
+        if otp['otp_type'] == 'totp':
+            totp_maker = pyotp.TOTP(otp['secret'])
+            current_otp = totp_maker.now()
+            next_otp = totp_maker.at(datetime.now() + timedelta(seconds=otp['refresh_time']))
+        else:
+            return None, None
+        return current_otp, next_otp
+    except Exception as e:
+        print(f"Error generating OTP: {e}")
+        return None, None
 
 @app.route('/reset/<int:user_id>', methods=['GET', 'POST'])
 @login_required
@@ -570,24 +586,16 @@ def login():
                 user_id = user_record[0]
                 print(f"Stored password for user: {stored_password}")
 
-                if stored_password.startswith('sha256$'):
-                    print("Checking SHA256 hashed password")
-                    sha256_hash = stored_password.split('$')[2]
-                    if check_password_hash('sha256$' + sha256_hash, password):
-                        print("SHA256 password matched, updating to bcrypt")
-                        hashed_password = bcrypt.generate_password_hash(password).decode('utf-8')
-                        with sqlite3.connect("otp.db") as db:
-                            cursor = db.cursor()
-                            cursor.execute("UPDATE users SET password = ? WHERE id = ?", (hashed_password, user_id))
-                            db.commit()
-                        user_obj = User(user_id, username)
-                        login_user(user_obj, remember=keep_logged_in)
-                        flash("Login successful!", "success")
-                        return redirect(url_for('home'))
-                    else:
-                        print("Invalid SHA256 credentials")
-                        flash('Invalid credentials!', 'warning')
-                elif bcrypt.check_password_hash(stored_password, password):
+                if is_cleartext(stored_password):
+                    print("Cleartext password found, hashing it")
+                    hashed_password = bcrypt.generate_password_hash(stored_password).decode('utf-8')
+                    with sqlite3.connect("otp.db") as db:
+                        cursor = db.cursor()
+                        cursor.execute("UPDATE users SET password = ? WHERE id = ?", (hashed_password, user_id))
+                        db.commit()
+                    stored_password = hashed_password
+
+                if bcrypt.check_password_hash(stored_password, password):
                     print("Password matched with bcrypt")
                     user_obj = User(user_id, username, is_admin=bool(user_record[5]))  
                     login_user(user_obj, remember=keep_logged_in)
@@ -622,6 +630,15 @@ def login():
             flash("An error occurred during login. Please try again later.", 'error')
 
     return render_template('login.html')
+
+def is_cleartext(password):
+    if not password.startswith(('$2b$', '$2a$', '$2y$')):
+        return True
+
+    if len(password) != 60:
+        return True
+
+    return False
 
 def perform_login_actions(user, keep_logged_in):
     session_token = str(uuid.uuid4())
@@ -735,10 +752,10 @@ def get_otp_v2(name):
 
     for otp_secret in otp_secrets:
         if otp_secret.get('name', 'Unnamed') == name:
-            otp_code = generate_otp_code(otp_secret)
-            if otp_code is None:
+            current_otp, next_otp = generate_current_and_next_otp(otp_secret)
+            if current_otp is None or next_otp is None:
                 return 'Invalid OTP secret', 400
-            return render_template('otp.html', otp=otp_secret, otp_code=otp_code['otp_code'])
+            return render_template('otp.html', otp=otp_secret, current_otp=current_otp, next_otp=next_otp)
     return 'Secret Not Found', 404
 
 def get_user_colors(user_id):
@@ -847,14 +864,15 @@ def home():
                 flash(f'Secrets filtered by company: {selected_company}', 'info')
 
         for otp in otp_secrets:
-            otp_code = generate_otp_code(otp)
-            if otp_code is None:
+            current_otp, next_otp = generate_current_and_next_otp(otp)
+            if current_otp is None or next_otp is None:
                 logging.warning(f'Invalid OTP secret for {otp["name"]}.')
                 print(f"Invalid OTP secret: check logs!")   
                 flash('Invalid OTP secret')
                 continue
-            otp_code['company'] = otp.get('company', 'Unknown')
-            otp_codes.append(otp_code)
+            otp['current_otp'] = current_otp
+            otp['next_otp'] = next_otp
+            otp_codes.append(otp)
 
         grouped_otp_codes = defaultdict(list)
         for otp_code in otp_codes:
@@ -1229,7 +1247,7 @@ def add():
         company_id = form.company.data
 
         if not re.match(r'^[a-zA-Z0-9@. ]+$', name):
-            flash('Invalid characters in name. Only alphanumeric characters, "@", ".", and spaces are allowed.')
+            flash('Invalid characters in name. Only alphanumeric characters, "@", ".", and spaces are allowed.', 'warning')
             return redirect(url_for('add'))
 
         if otp_type not in ['totp', 'hotp']:
@@ -1255,7 +1273,7 @@ def add():
 
         suspicious_pattern = re.compile(r'(--|;|--|;|/\*|\*/|char|nchar|varchar|nvarchar|alter|begin|cast|create|cursor|declare|delete|drop|end|exec|execute|fetch|insert|kill|open|select|sys|sysobjects|syscolumns|table|update)', re.IGNORECASE)
         if suspicious_pattern.search(name) or suspicious_pattern.search(secret):
-            flash('Suspicious patterns detected in input fields.')
+            flash('Suspicious patterns detected in input fields.', 'error')
             return redirect(url_for('add'))
 
         selected_company_name = next((company['name'] for company in companies_from_db if company['company_id'] == company_id), 'N/A')
@@ -1278,7 +1296,7 @@ def add():
         save_to_db(existing_otp_secrets)
         save_companies_to_db(companies_from_db)
 
-        flash(f"New OTP secret '{name}' added successfully.")
+        flash(f"New OTP secret '{name}' added successfully.", 'info')
         return redirect(url_for('home'))
 
     return render_template('add.html', form=form)

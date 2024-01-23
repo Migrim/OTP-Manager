@@ -48,7 +48,7 @@
                             {% if current_user.show_otp_type %}
                             OTP type: {{ otp.otp_type }} <br>
                             {% endif %}
-                            OTP code: <span class="otp-code" id="otp_code_{{ otp.name }}" onclick="copyToClipboard(this)">{{ otp.otp_code }}</span>
+                            OTP code: <span class="otp-code" id="current_otp_code_{{ otp.name }}" onclick="copyToClipboard(this)">{{ otp.current_otp }}</span>
                             {% if current_user.show_timer %}
                                 <div id="timer{{ otp.name }}" data-refresh-time="{{ otp.refresh_time }}">30s</div>
                             {% else %}

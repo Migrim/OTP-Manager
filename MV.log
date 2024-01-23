@@ -12194,3 +12194,98 @@ NameError: name 'thread_lock' is not defined
 2024-01-22 23:18:45,940 [INFO] Response time for login: 0.23s
 2024-01-22 23:18:46,047 [INFO] Response time for home: 0.00s
 2024-01-22 23:18:48,586 [INFO] Fetched all users successfully.
+2024-01-22 23:18:56,588 [INFO] Fetched all users successfully.
+2024-01-22 23:18:58,993 [INFO] User ID 1 successfully logged out.
+2024-01-22 23:18:59,121 [INFO] Response time for login: 0.00s
+2024-01-22 23:19:05,478 [INFO] Response time for login: 0.22s
+2024-01-22 23:19:21,599 [INFO] Response time for login: 0.23s
+2024-01-22 23:19:21,715 [INFO] Response time for home: 0.01s
+2024-01-23 18:20:59,583 [INFO] Server starting on port 5001...
+2024-01-23 18:21:05,384 [INFO] Response time for home: 0.02s
+2024-01-23 18:32:11,402 [INFO] User ID 1 successfully logged out.
+2024-01-23 18:32:11,546 [INFO] Response time for login: 0.00s
+2024-01-23 18:32:15,783 [INFO] Response time for login: 0.00s
+2024-01-23 18:32:27,296 [INFO] Response time for login: 0.00s
+2024-01-23 18:32:36,359 [INFO] Server starting on port 5001...
+2024-01-23 18:32:44,774 [INFO] Response time for login: 0.45s
+2024-01-23 18:32:44,921 [INFO] Response time for home: 0.02s
+2024-01-23 18:33:00,266 [INFO] User ID 5 successfully logged out.
+2024-01-23 18:33:00,385 [INFO] Response time for login: 0.01s
+2024-01-23 18:33:06,604 [INFO] Response time for login: 0.23s
+2024-01-23 18:33:06,724 [INFO] Response time for home: 0.00s
+2024-01-23 18:35:58,305 [INFO] Response time for home: 0.01s
+2024-01-23 18:39:14,619 [INFO] Server starting on port 5001...
+2024-01-23 18:39:29,198 [INFO] Response time for home: 0.02s
+2024-01-23 18:40:00,203 [INFO] Server starting on port 5001...
+2024-01-23 18:42:59,761 [INFO] Response time for home: 0.02s
+2024-01-23 18:43:21,186 [INFO] User ID 5 updated settings successfully.
+2024-01-23 18:43:22,268 [INFO] Response time for home: 0.00s
+2024-01-23 18:43:38,999 [INFO] Response time for home: 0.00s
+2024-01-23 18:43:47,256 [INFO] User ID 5 successfully logged out.
+2024-01-23 18:43:47,376 [INFO] Response time for login: 0.00s
+2024-01-23 18:43:51,469 [INFO] Response time for login: 0.22s
+2024-01-23 18:43:51,581 [INFO] Response time for home: 0.00s
+2024-01-23 18:44:28,268 [INFO] Response time for home: 0.00s
+2024-01-23 18:46:09,432 [INFO] Server starting on port 5001...
+2024-01-23 18:46:10,441 [INFO] User ID 1 successfully logged out.
+2024-01-23 18:46:10,566 [INFO] Response time for login: 0.01s
+2024-01-23 18:46:19,795 [INFO] Response time for login: 0.23s
+2024-01-23 18:46:19,936 [INFO] Response time for home: 0.02s
+2024-01-23 18:46:43,155 [INFO] Server starting on port 5001...
+2024-01-23 18:46:44,206 [INFO] Response time for home: 0.02s
+2024-01-23 18:47:04,154 [INFO] Server starting on port 5001...
+2024-01-23 18:47:15,040 Redirecting to login: No user_id or session_token
+2024-01-23 18:47:15,157 [INFO] Response time for login: 0.00s
+2024-01-23 18:47:21,942 [INFO] Response time for login: 0.22s
+2024-01-23 18:47:22,072 [INFO] Response time for home: 0.01s
+2024-01-23 18:47:25,109 [INFO] Response time for home: 0.00s
+2024-01-23 18:47:27,827 [INFO] Response time for home: 0.00s
+2024-01-23 18:47:53,134 Redirecting to login: No user_id or session_token
+2024-01-23 18:47:53,244 [INFO] Response time for login: 0.00s
+2024-01-23 18:48:00,154 Redirecting to login: No user_id or session_token
+2024-01-23 18:48:00,306 [INFO] Response time for login: 0.00s
+2024-01-23 18:48:29,078 Redirecting to login: No user_id or session_token
+2024-01-23 18:48:29,209 [INFO] Response time for login: 0.00s
+2024-01-23 18:48:30,005 Redirecting to login: No user_id or session_token
+2024-01-23 18:48:30,077 Redirecting to login: No user_id or session_token
+2024-01-23 18:48:30,118 [INFO] Response time for login: 0.00s
+2024-01-23 18:48:30,191 [INFO] Response time for login: 0.00s
+2024-01-23 18:48:32,211 [INFO] Response time for login: 0.23s
+2024-01-23 18:48:32,343 [INFO] Response time for home: 0.00s
+2024-01-23 18:49:08,606 [INFO] Response time for home: 0.01s
+2024-01-23 18:49:11,912 [INFO] Response time for home: 0.00s
+2024-01-23 21:05:21,923 [INFO] User ID 1 successfully logged out.
+2024-01-23 21:05:22,065 [INFO] Response time for login: 0.00s
+2024-01-23 21:05:24,741 [INFO] Response time for login: 0.23s
+2024-01-23 21:05:24,850 [INFO] Response time for home: 0.00s
+2024-01-23 21:15:46,712 [INFO] Response time for home: 0.00s
+2024-01-23 21:18:10,747 [INFO] Response time for home: 0.00s
+2024-01-23 22:18:22,005 [INFO] Response time for home: 0.00s
+2024-01-23 22:21:42,515 [INFO] Server starting on port 5001...
+2024-01-23 22:22:01,273 [INFO] Response time for home: 0.04s
+2024-01-23 22:22:01,740 [INFO] Response time for home: 0.01s
+2024-01-23 22:22:54,582 [INFO] Server starting on port 5001...
+2024-01-23 22:23:48,381 [INFO] Server starting on port 5001...
+2024-01-23 22:23:50,177 [INFO] Response time for home: 0.02s
+2024-01-23 22:28:23,257 [INFO] Server starting on port 5001...
+2024-01-23 22:28:30,708 [INFO] Response time for home: 0.03s
+2024-01-23 22:28:33,006 [INFO] Response time for home: 0.00s
+2024-01-23 22:34:23,506 [INFO] Response time for home: 0.02s
+2024-01-23 22:34:40,939 [INFO] Response time for home: 0.01s
+2024-01-23 22:34:42,296 [INFO] Response time for home: 0.00s
+2024-01-23 22:34:43,450 [INFO] Response time for home: 0.00s
+2024-01-23 22:38:24,223 [INFO] Response time for home: 0.00s
+2024-01-23 22:38:33,741 [INFO] User ID 1 updated settings successfully.
+2024-01-23 22:38:35,193 [INFO] Response time for home: 0.01s
+2024-01-23 22:39:43,911 [INFO] Response time for home: 0.00s
+2024-01-23 22:39:54,222 [INFO] Response time for home: 0.01s
+2024-01-23 22:39:56,801 [INFO] Response time for home: 0.01s
+2024-01-23 22:41:17,171 [INFO] Response time for home: 0.00s
+2024-01-23 22:41:41,970 [INFO] Response time for home: 0.01s
+2024-01-23 22:46:18,283 [INFO] Response time for home: 0.01s
+2024-01-23 22:50:00,779 [INFO] Response time for home: 0.07s
+2024-01-23 22:52:05,829 [INFO] Response time for home: 0.01s
+2024-01-23 22:57:44,533 [INFO] Response time for home: 0.00s
+2024-01-23 23:01:28,887 [INFO] Server starting on port 5001...
+2024-01-23 23:01:31,002 [INFO] Response time for home: 0.02s
+2024-01-23 23:01:47,446 [INFO] Response time for home: 0.00s
