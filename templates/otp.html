@@ -35,16 +35,9 @@
     async function updateOtpCodes(otpCodes) {
         otpCodes.forEach(otp => {
             let otpCodeElement = document.getElementById(`otp_code_${otp.name}`);
-            let progressBar = document.getElementById(`progressBar${otp.name}`);
 
             if (otpCodeElement) {
-                otpCodeElement.textContent = otp.otp_code;
-            }
-
-            if (progressBar) {
-                progressBar.style.width = '100%';
-                let duration = parseInt(progressBar.getAttribute('data-refresh-time'));
-                startCountdown(progressBar, duration);
+                otpCodeElement.textContent = otp.current_otp; // Use current_otp instead of otp_code
             }
         });
     }
