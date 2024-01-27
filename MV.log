@@ -12295,3 +12295,20 @@ NameError: name 'thread_lock' is not defined
 2024-01-23 23:18:26,881 [INFO] Response time for home: 0.00s
 2024-01-23 23:18:39,856 [INFO] Response time for home: 0.00s
 2024-01-23 23:18:47,066 [INFO] Response time for home: 0.01s
+2024-01-24 18:52:13,347 [INFO] Server starting on port 5001...
+2024-01-24 18:52:14,566 [INFO] Response time for home: 0.05s
+2024-01-24 18:55:02,449 [INFO] Response time for home: 0.00s
+2024-01-24 18:55:44,860 [INFO] Response time for home: 0.01s
+2024-01-24 18:55:46,195 [INFO] User ID 1 successfully logged out.
+2024-01-24 18:55:46,329 [INFO] Response time for login: 0.03s
+2024-01-24 18:55:48,335 [INFO] Response time for login: 0.22s
+2024-01-24 18:55:48,456 [INFO] Response time for home: 0.00s
+2024-01-27 02:26:07,087 [INFO] Server starting on port 5001...
+2024-01-27 02:26:08,121 [INFO] Response time for home: 0.05s
+2024-01-27 02:26:11,277 [INFO] Response time for home: 0.00s
+2024-01-27 02:26:18,560 [INFO] Response time for home: 0.00s
+2024-01-27 02:33:19,170 [INFO] Response time for home: 0.00s
+2024-01-27 02:33:23,484 [INFO] Response time for home: 0.01s
+2024-01-27 02:33:45,520 [INFO] Response time for home: 0.00s
+2024-01-27 02:34:04,051 [INFO] Response time for home: 0.01s
+2024-01-27 02:34:08,149 [INFO] Response time for home: 0.00s
