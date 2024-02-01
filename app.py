@@ -612,10 +612,11 @@ def login():
 
                     with sqlite3.connect("otp.db") as db:
                         cursor = db.cursor()
+                        cursor.execute("UPDATE statistics SET logins_today = logins_today + 1")
                         cursor.execute("UPDATE users SET session_token = ? WHERE id = ?", (session_token, user_id))
                         db.commit()
 
-                    flash("Login successful!", "success")
+                    flash("Identity verified!", "auth")
                     print(f"User {username} logged in, redirecting to home.")
                     return redirect(url_for('home'))
                 else:
@@ -667,7 +668,8 @@ def category_icon_filter(category):
         'info': 'info',
         'success': 'check_circle',
         'warning': 'warning',
-        'error': 'error'
+        'error': 'error',
+        'auth': 'fingerprint'
     }
     return icons.get(category, 'info')  
 

@@ -106,8 +106,8 @@
 }
 
 .flash-info {
-    background-color: #007bff;
-    border-color: #007bff;
+    background-color: #7852ff;
+    border-color: #7852ff;
 }
 
 .flash-success {
@@ -123,6 +123,11 @@
 .flash-error {
     background-color: #ff5252;
     border-color: #ff5252;
+}
+
+.flash-auth {
+    background-color: #7852ff;
+    border-color: #7852ff;
 }
 
 .flash-message .flash-icon {
