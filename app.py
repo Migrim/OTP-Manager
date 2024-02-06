@@ -1248,10 +1248,6 @@ def add():
         refresh_time = form.refresh_time.data
         company_id = form.company.data
 
-        if not re.match(r'^[a-zA-Z0-9@. ]+$', name):
-            flash('Invalid characters in name. Only alphanumeric characters, "@", ".", and spaces are allowed.', 'warning')
-            return redirect(url_for('add'))
-
         if otp_type not in ['totp', 'hotp']:
             flash('Invalid OTP type. Choose either TOTP or HOTP.')
             return redirect(url_for('add'))
@@ -1271,11 +1267,6 @@ def add():
         valid_base32 = re.fullmatch('[A-Z2-7=]{16,}', secret, re.IGNORECASE)
         if not valid_base32 or len(secret) % 8 != 0:
             flash('Secret must be a valid base32 string with a length that is a multiple of 8 characters.')
-            return redirect(url_for('add'))
-
-        suspicious_pattern = re.compile(r'(--|;|--|;|/\*|\*/|char|nchar|varchar|nvarchar|alter|begin|cast|create|cursor|declare|delete|drop|end|exec|execute|fetch|insert|kill|open|select|sys|sysobjects|syscolumns|table|update)', re.IGNORECASE)
-        if suspicious_pattern.search(name) or suspicious_pattern.search(secret):
-            flash('Suspicious patterns detected in input fields.', 'error')
             return redirect(url_for('add'))
 
         selected_company_name = next((company['name'] for company in companies_from_db if company['company_id'] == company_id), 'N/A')

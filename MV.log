@@ -12696,3 +12696,30 @@ NameError: name 'thread_lock' is not defined
 2024-01-31 23:26:50,020 [INFO] Response time for home: 0.02s
 2024-01-31 23:30:11,710 [INFO] User ID 1 updated settings successfully.
 2024-01-31 23:30:13,079 [INFO] Response time for home: 0.00s
+2024-02-01 19:39:47,943 [INFO] Server starting on port 5001...
+2024-02-01 19:39:51,808 [INFO] Response time for login: 0.01s
+2024-02-01 19:39:56,524 [INFO] Response time for login: 0.27s
+2024-02-01 19:39:56,786 [INFO] Response time for home: 0.03s
+2024-02-01 19:40:06,640 [INFO] Response time for home: 0.01s
+2024-02-01 19:40:11,442 [INFO] Response time for home: 0.01s
+2024-02-01 19:40:17,915 [INFO] User ID 1 updated settings successfully.
+2024-02-01 19:40:20,009 [INFO] Response time for home: 0.01s
+2024-02-01 19:40:29,713 [INFO] User ID 1 successfully logged out.
+2024-02-01 19:40:29,942 [INFO] Response time for login: 0.00s
+2024-02-01 19:40:33,418 [INFO] Response time for login: 0.27s
+2024-02-01 19:40:33,655 [INFO] Response time for home: 0.01s
+2024-02-06 16:54:49,498 [INFO] Server starting on port 5001...
+2024-02-06 16:54:54,392 [INFO] Response time for home: 0.05s
+2024-02-06 16:59:25,114 [INFO] Response time for home: 0.01s
+2024-02-06 17:00:40,546 [INFO] Server starting on port 5001...
+2024-02-06 17:00:44,540 [INFO] Response time for home: 0.05s
+2024-02-06 17:00:59,528 [INFO] Response time for home: 0.01s
+2024-02-06 17:01:17,414 [INFO] Response time for home: 0.01s
+2024-02-06 17:02:57,042 [INFO] Response time for home: 0.01s
+2024-02-06 17:05:57,048 [INFO] Server starting on port 5001...
+2024-02-06 17:08:11,929 [INFO] Response time for home: 0.04s
+2024-02-06 17:12:40,440 [INFO] Response time for home: 0.01s
+2024-02-06 17:22:13,391 [INFO] Response time for home: 0.01s
+2024-02-06 17:22:24,278 [INFO] Response time for home: 0.01s
+2024-02-06 17:26:41,267 [INFO] Response time for home: 0.01s
+2024-02-06 17:29:38,113 [INFO] Response time for home: 0.04s

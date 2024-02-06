@@ -38,8 +38,8 @@
             </div>
             <div class="form-group form-group-with-icon">
                 {{ form.secret.label }} 
-                {{ form.secret(class="form-control", placeholder="Enter a 16-character secret", title="Enter a secure secret, exactly 16 characters") }}
-                <span class="validation-icon" id="secretCheck"><i class="material-icons-outlined">check_small</i></span>
+                {{ form.secret(class="form-control", placeholder="Enter exactly 16 characters", title="Enter a secure secret, exactly 16 characters", maxlength="16") }} <!-- Updated -->
+                <span class="validation-icon" id="secretCheck" style="display: none;"><i class="material-icons-outlined">check_small</i></span> <!-- Hide by default -->
             </div>
             <div class="form-group"> 
                 {{ form.otp_type.label(class="form-check-label") }} <span>  (Only TOTP is supported)</span>
@@ -103,100 +103,90 @@
 {% block scripts %}
 {{ super() }}
 <script>
-    $(document).ready(function() {
-        $("input[name='secret']").on('blur', function() {
-            $(this).val($(this).val().toUpperCase());
-        });
-
-        $("form").submit(function(e) {
-            let valid = true;
-            let errorMsgs = [];
-
-            const name = $("input[name='name']").val();
-            const secret = $("input[name='secret']").val().toUpperCase();
-            const otpType = $("select[name='otp_type']").val();
-            const refreshTime = $("input[name='refresh_time']").val();
-            const selectedCompany = $("select[name='{{ form.company.name }}']").val();
-            if (!selectedCompany) {
-                errorMsgs.push("Please select a company.");
-                valid = false;
-            }
-
-            $("input[name='secret']").val(secret);
-            $("input[name='refresh_time_hidden']").val($("input[name='refresh_time']").val());
-
-            if (!validateName(name)) {
-                errorMsgs.push("The name must be at least 4 characters long and contain only alphanumeric characters, @, or .");
-                valid = false;
-            }
-
-            if (!validateSecret(secret)) {
-                errorMsgs.push("Secret must be at least 16 characters long and consist of uppercase letters A-Z, numbers 2-7, or the '=' character.");
-                valid = false;
-            }
-
-            if (!/^[A-Z2-7=]{16,}$/.test(secret)) {
-                errorMsgs.push("Secret must be at least 16 characters long and in all uppercase letters.");
-                valid = false;
-            }
-
-            if (!["totp", "hotp"].includes(otpType.toLowerCase())) {
-                errorMsgs.push("Invalid OTP type selected. Only TOTP is supported at this moment.");
-                valid = false;
-            }
-
-            if (!Number.isInteger(parseInt(refreshTime)) || parseInt(refreshTime) <= 0) {
-                errorMsgs.push("Refresh time must be a positive integer number.");
-                valid = false;
-            }
-
-            const suspiciousPattern = /(--|;|--|;|\/\*|\*\/|char|nchar|varchar|nvarchar|alter|begin|cast|create|cursor|declare|delete|drop|end|exec|execute|fetch|insert|kill|open|select|sys|sysobjects|syscolumns|table|update)/i;
-            if (suspiciousPattern.test(name) || suspiciousPattern.test(secret)) {
-                errorMsgs.push("Your input contains suspicious patterns. Please remove any special SQL or programming keywords.");
-                valid = false;
-            }
-
-            if (!valid) {
-                e.preventDefault();
-                let errorMessageHtml = errorMsgs.join("<br/>");
-                $('#errorModalText').html(errorMessageHtml);
-                $('#errorModal').modal('show');
-            }
-        });
-
-        function validateName(name) {
-            var validNamePattern = /^[a-zA-Z0-9@. ]+$/; 
-            return true;
-        }
-
-        function validateSecret(secret) {
-            return secret && /^[A-Z2-7=]{16,}$/.test(secret); // RegEx for uppercase letters, numbers 2-7, or '='
-        }
-
-        function updateValidationStatus(isValid, elementID) {
-            if (isValid) {
-                $(`#${elementID}`).html('<i class="material-icons-outlined" style="color:green;">check_small</i>');
-            } else {
-                $(`#${elementID}`).html('');
-            }
-        }
-
-        $("input[name='name']").on("input", function() {
-            if ($(this).val().length >= 5) {
-                $("#nameCheck").show();
-            } else {
-                $("#nameCheck").hide();
-            }
-        });
-
-        $("input[name='secret']").on('input', function() {
-            this.value = this.value.toUpperCase();
-            if ($(this).val().length == 16) {
-                $("#secretCheck").show();
-            } else {
-                $("#secretCheck").hide();
-            }
-        });
+$(document).ready(function() {
+    $("input[name='secret']").on('blur', function() {
+        $(this).val($(this).val().toUpperCase());
     });
+
+    function validateSecret(secret) {
+        const isValidLength = secret.length >= 16;
+        const isValidFormat = /^[A-Z2-7=]{16,}$/.test(secret);
+        return isValidLength && isValidFormat;
+    }
+
+    function updateValidationStatus(isValid, elementID) {
+        if (isValid) {
+            $(`#${elementID}`).show();
+            $(`#${elementID}`).prev('.form-control').removeClass('is-invalid');
+        } else {
+            $(`#${elementID}`).hide();
+            $(`#${elementID}`).prev('.form-control').addClass('is-invalid');
+        }
+    }
+
+    $("form").submit(function(e) {
+        let valid = true;
+        let errorMsgs = [];
+
+        // Force uppercase to ensure consistency
+        const name = $("input[name='name']").val();
+        const secret = $("input[name='secret']").val().toUpperCase();
+        const otpType = $("select[name='otp_type']").val();
+        const refreshTime = $("input[name='refresh_time']").val();
+        const selectedCompany = $("select[name='{{ form.company.name }}']").val();
+
+        $("input[name='secret']").val(secret);
+
+        if (!selectedCompany) {
+            errorMsgs.push("Please select a company.");
+            valid = false;
+        }
+
+        if (name.length < 4) {
+            $("input[name='name']").addClass('is-invalid');
+            errorMsgs.push("The name must be at least 4 characters long.");
+            valid = false;
+        } else {
+            $("input[name='name']").removeClass('is-invalid');
+        }
+
+        if (!validateSecret(secret)) {
+            $("input[name='secret']").addClass('is-invalid');
+            errorMsgs.push("Secret must be exactly 16 characters long and consist of uppercase letters A-Z, numbers 2-7, or the '=' character.");
+            valid = false;
+        } else {
+            $("input[name='secret']").removeClass('is-invalid');
+        }
+
+        if (!["totp", "hotp"].includes(otpType.toLowerCase())) {
+            errorMsgs.push("Invalid OTP type selected. Only TOTP is supported at this moment.");
+            valid = false;
+        }
+
+        if (!Number.isInteger(parseInt(refreshTime)) || parseInt(refreshTime) <= 0) {
+            errorMsgs.push("Refresh time must be a positive integer number.");
+            valid = false;
+        }
+
+        if (!valid) {
+            e.preventDefault();
+            let errorMessageHtml = errorMsgs.join("<br/>");
+            $('#errorModalText').html(errorMessageHtml);
+            $('#errorModal').modal('show');
+        }
+    });
+
+    $("input[name='secret']").on('input', function() {
+        this.value = this.value.toUpperCase(); // Ensure uppercase for consistency
+
+        const isValidSecret = validateSecret($(this).val());
+        updateValidationStatus(isValidSecret, 'secretCheck');
+    });
+
+    $("input[name='name']").on("input", function() {
+        const isValidName = $(this).val().length >= 4;
+        updateValidationStatus(isValidName, 'nameCheck');
+    });
+});
 </script>
 {% endblock %}

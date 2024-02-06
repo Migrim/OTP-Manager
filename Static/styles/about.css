@@ -41,6 +41,36 @@ body {
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
+.stats-container h2 {
+    font-weight: 600;
+    margin-bottom: 20px;
+    color: #EFEFEF; 
+}
+
+.stats li {
+    font-size: 16px;
+    margin-bottom: 10px;
+    list-style-type: none; /* Remove default list styling */
+    padding-left: 0; /* Adjust padding */
+    display: flex;
+    align-items: center; /* Align icons with text */
+}
+
+.stats li:before {
+    content: attr(data-icon);
+    font-family: 'Material Icons Outlined';
+    display: inline-block;
+    font-size: 20px;
+    margin-right: 10px;
+    color: #4CAF50; /* Icon color */
+}
+
+.stats li:hover {
+    background-color: #333; /* Slight background change on hover */
+    cursor: pointer; /* Change cursor to indicate interactivity */
+    transition: background-color 0.3s ease-in-out; /* Smooth transition */
+}
+
 .footer {
     margin-top: 50px;
     font-size: 14px;
