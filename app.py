@@ -7,6 +7,7 @@ from pyotp import totp, hotp
 from flask_session import Session
 from wtforms import IntegerField
 from wtforms.validators import InputRequired, NumberRange
+from wtforms.validators import Email, Optional
 from wtforms import StringField, SelectField, PasswordField
 from wtforms.validators import DataRequired
 from flask import jsonify
@@ -105,6 +106,7 @@ def init_db():
                 CREATE TABLE IF NOT EXISTS otp_secrets (
                     id INTEGER PRIMARY KEY,
                     name TEXT NOT NULL,
+                    email TEXT DEFAULT 'none',
                     secret TEXT NOT NULL,
                     otp_type TEXT NOT NULL,
                     refresh_time INTEGER NOT NULL,
@@ -165,10 +167,11 @@ def save_to_db(otp_secrets):
     cursor.execute("DELETE FROM otp_secrets")
 
     for otp_secret in otp_secrets:
+        email = otp_secret.get('email', "none")
         cursor.execute("""
-        INSERT INTO otp_secrets (name, secret, otp_type, refresh_time, company_id)
-        VALUES (?, ?, ?, ?, ?)
-        """, (otp_secret['name'], otp_secret['secret'], otp_secret['otp_type'], otp_secret['refresh_time'], otp_secret['company_id']))
+        INSERT INTO otp_secrets (name, email, secret, otp_type, refresh_time, company_id)
+        VALUES (?, ?, ?, ?, ?, ?)
+        """, (otp_secret['name'], email, otp_secret['secret'], otp_secret['otp_type'], otp_secret['refresh_time'], otp_secret['company_id']))
 
     conn.commit()
     conn.close()
@@ -222,6 +225,7 @@ def load_companies_from_db():
 
 class OTPForm(FlaskForm):
     name = StringField('Name', validators=[InputRequired(), Length(max=25, message="Der Name darf nicht länger als 25 Zeichen sein.")])
+    email = StringField('Email', validators=[Optional(), Email(message='Invalid email address.')])
     secret = StringField('Secret', validators=[InputRequired()])
     otp_type = SelectField('OTP Type', validators=[InputRequired()], choices=[('totp', 'TOTP'), ('hotp', 'HOTP')])
     refresh_time = IntegerField('Refresh Time', default=30, render_kw={"disabled": "disabled"})
@@ -1243,6 +1247,7 @@ def add():
 
     if form.validate_on_submit():
         name = form.name.data.strip()
+        email = form.email.data.strip() or "none"
         secret = form.secret.data.strip().upper()
         otp_type = form.otp_type.data.lower().strip()
         refresh_time = form.refresh_time.data
@@ -1278,6 +1283,7 @@ def add():
 
         new_otp_secret = {
             'name': name,
+            'email': email,
             'secret': secret,
             'otp_type': otp_type,
             'refresh_time': refresh_time,

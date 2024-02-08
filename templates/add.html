@@ -37,6 +37,13 @@
                 {% endfor %}
             </div>
             <div class="form-group form-group-with-icon">
+                {{ form.email.label }} 
+                {{ form.email(class="form-control", placeholder="Optional email address") }}
+                {% for error in form.email.errors %}
+                    <span class="text-danger">{{ error }}</span>
+                {% endfor %}
+            </div>            
+            <div class="form-group form-group-with-icon">
                 {{ form.secret.label }} 
                 {{ form.secret(class="form-control", placeholder="Enter exactly 16 characters", title="Enter a secure secret, exactly 16 characters", maxlength="16") }} <!-- Updated -->
                 <span class="validation-icon" id="secretCheck" style="display: none;"><i class="material-icons-outlined">check_small</i></span> <!-- Hide by default -->
