@@ -1,6 +1,10 @@
 .navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.1);
     background-color: #1f1f1f;
+    height: 50px;
 }
 
 .navbar-dark .navbar-brand {
@@ -169,4 +173,53 @@
 
 .flash-close-btn:hover {
     color: #000000;
+}
+
+.right-align-items {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end; 
+    flex-grow: 1;
+}
+
+#ntpStatusDot {
+    height: 12px;
+    width: 12px;
+    background-color: #ff5252; 
+    border-radius: 50%;
+    margin-right: 160px; 
+}
+
+.ntp-connected {
+    background-color: #4CAF50 !important; 
+}
+
+.ntp-disconnected {
+    background-color: #ff5252 !important; /* Red for disconnected */
+    animation: blink 0.5s linear infinite; /* Apply the blink animation */
+}
+
+@keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.2; }
+}
+
+.spinner {
+    border: 4px solid rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    border-top-color: #fff;
+    width: 12px;
+    height: 12px;
+    -webkit-animation: spin 1s ease-in-out infinite;
+    animation: spin 1s ease-in-out infinite;
+}
+
+@-webkit-keyframes spin {
+    0% { -webkit-transform: rotate(0deg); }
+    100% { -webkit-transform: rotate(360deg); }
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
 }

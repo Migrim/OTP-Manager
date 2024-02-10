@@ -289,11 +289,37 @@ def is_internet_available():
     try:
         response = requests.get('http://www.google.com', timeout=5)
         return response.status_code == 200
-    except requests.ConnectionError:
+    except requests.ConnectionError as e:
+        logging.error(f"Connection error: {e}")
+        return False
+    except requests.Timeout as e:
+        logging.error(f"Timeout error: {e}")
+        return False
+    except Exception as e:  # Catch-all for any other requests-related exceptions
+        logging.error(f"Unexpected error when checking internet connectivity: {e}")
         return False
 
-def check_server_time():
+#def check_server_time():
     """Check the server's time against an NTP server."""
+    try:
+        ntp_client = ntplib.NTPClient()
+        response = ntp_client.request('pool.ntp.org', version=3)  # Specifying NTP version for compatibility
+        ntp_time = response.tx_time
+        local_time = time.time()
+        offset = local_time - ntp_time
+
+        allowable_offset = 1  # seconds
+
+        if abs(offset) > allowable_offset:
+            flash("Warning: The server's time may be out of sync.", "warning")
+    except Exception as e:
+        flash(f"Unable to check server time: {e}", "error") 
+
+def check_ntp_sync():
+    """Check if the server's time is in sync with an NTP server."""
+    if not is_internet_available():
+        return False 
+
     try:
         ntp_client = ntplib.NTPClient()
         response = ntp_client.request('pool.ntp.org')
@@ -301,12 +327,16 @@ def check_server_time():
         local_time = time.time()
         offset = local_time - ntp_time
 
-        allowable_offset = 1
+        allowable_offset = 1  
 
-        if abs(offset) > allowable_offset:
-            flash("Warning: The server's time may be out of sync.", "warning")
+        return abs(offset) <= allowable_offset
     except Exception as e:
-        flash("Unable to check server time.", "error")
+        return False  
+
+@app.route('/ntp_status')
+def ntp_status():
+    is_ntp_synced = check_ntp_sync()  
+    return jsonify({"status": "connected" if is_ntp_synced else "disconnected"})
 
 def check_server_capacity(f):
     @wraps(f)
@@ -317,7 +347,7 @@ def check_server_capacity(f):
             flash("Internet connection is not available.", "error")
             return f(*args, **kwargs)
 
-        check_server_time()
+#        check_server_time()
 
         start_time = time.time()
         response = f(*args, **kwargs)
