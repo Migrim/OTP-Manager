@@ -679,20 +679,6 @@ def category_icon_filter(category):
 
 app.jinja_env.filters['category_icon'] = category_icon_filter
 
-@app.route('/profile')
-@login_required
-def profile():
-    last_login_time = get_last_login_time_from_db()
-    print("Profile function executed.")
-    if current_user.is_authenticated:
-        print("User is authenticated.")
-        logging.info(f"{current_user.username} is authenticated")
-        return make_response(render_template('profile.html', username=current_user.username, last_login_time=last_login_time))
-    else:
-        print("User is not authenticated.")  
-        logging.error(f"{current_user} could not be authenticated!")
-        return make_response(redirect(url_for('login')))
-
 @app.route('/about')
 @login_required
 def about():

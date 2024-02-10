@@ -16,3 +16,35 @@
 2024-02-08 16:38:41,720 [INFO] Server starting on port 5001...
 2024-02-08 16:44:09,909 [INFO] Server starting on port 5001...
 2024-02-08 16:44:19,192 [INFO] Response time for home: 0.06s
+2024-02-09 13:06:32,291 [INFO] Response time for home: 0.02s
+2024-02-09 13:07:16,352 [INFO] Server starting on port 5001...
+2024-02-09 13:16:12,692 [INFO] Response time for home: 0.04s
+2024-02-09 13:16:55,025 [INFO] Response time for home: 0.01s
+2024-02-09 13:17:52,119 [INFO] admin is authenticated
+2024-02-09 13:18:52,898 [INFO] Response time for home: 0.02s
+2024-02-09 13:19:47,411 [INFO] Response time for home: 0.02s
+2024-02-09 13:28:13,774 [INFO] User ID 1 successfully logged out.
+2024-02-09 13:28:14,754 [INFO] Response time for login: 0.01s
+2024-02-09 13:28:18,591 [INFO] Response time for login: 0.28s
+2024-02-09 13:28:19,352 [INFO] Response time for home: 0.01s
+2024-02-09 13:28:59,919 [INFO] Fetched all users successfully.
+2024-02-09 13:28:59,919 [INFO] Fetched all users successfully.
+2024-02-09 13:29:24,072 [INFO] Response time for home: 0.01s
+2024-02-09 13:29:53,100 [INFO] Response time for home: 0.01s
+2024-02-09 13:30:51,738 [INFO] Backup created at backups/otpbcp-09.02.24-13:30.db
+2024-02-09 13:31:11,798 [INFO] Response time for home: 0.02s
+2024-02-09 13:33:32,159 [INFO] User ID 1 successfully logged out.
+2024-02-09 13:33:34,125 [INFO] Response time for login: 0.00s
+2024-02-09 13:35:05,301 [INFO] Response time for login: 0.28s
+2024-02-09 13:35:06,496 [INFO] Response time for home: 0.02s
+2024-02-10 13:50:12,191 [INFO] Response time for home: 0.02s
+2024-02-10 13:51:39,593 [INFO] Response time for home: 0.01s
+2024-02-10 13:52:10,905 [INFO] Response time for home: 0.01s
+2024-02-10 13:52:27,001 [INFO] User ID 1 updated settings successfully.
+2024-02-10 13:52:29,693 [INFO] Response time for home: 0.01s
+2024-02-10 13:53:06,120 [INFO] User ID 1 successfully logged out.
+2024-02-10 13:53:06,266 [INFO] Response time for login: 0.00s
+2024-02-10 13:54:22,160 [INFO] Response time for home: 0.02s
+2024-02-10 13:54:28,829 [INFO] Response time for home: 0.02s
+2024-02-10 13:54:31,614 [INFO] Response time for home: 0.02s
+2024-02-10 13:55:15,837 [INFO] Response time for home: 0.01s
