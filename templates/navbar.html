@@ -69,6 +69,17 @@
             };
         });
 
+        var flashMessages = document.querySelectorAll('.flash-message');
+        flashMessages.forEach(function(message) {
+            setTimeout(function() {
+                message.style.transition = "opacity 0.5s ease-in-out"; 
+                message.style.opacity = '0';
+                setTimeout(function() {
+                    message.remove();
+                }, 500); 
+            }, 5000); 
+        });
+
         var navbarLinks = document.querySelectorAll('.navbar .navbar-brand');
         navbarLinks.forEach(function(link) {
             link.onmouseover = function() { 

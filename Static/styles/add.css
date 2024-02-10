@@ -97,6 +97,10 @@ body {
     }
 }
 
+.clickable-icon {
+    cursor: pointer;
+}
+
 .form-control:read-only:hover::after {
     content: "Read Only";
     position: absolute;

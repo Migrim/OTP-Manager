@@ -95,15 +95,35 @@
 
 .flash-message {
     position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     padding: 10px 20px;
-    padding-right: 30px;
     margin-bottom: 10px;
     border: 1px solid transparent;
     border-radius: 10px;
     color: #fff;
+    /* Initial state before the animation starts */
     opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.3s ease-in-out;
+    /* Animation */
+    animation: fadeInSlideUp 0.5s ease forwards;
     transition: opacity 0.3s ease-in-out;
 }
+
+/* Define the keyframes for the fadeInSlideUp animation */
+@keyframes fadeInSlideUp {
+    0% {
+        opacity: 0;
+        transform: translateY(20px); /* Start below the final position */
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0); /* End at the final position */
+    }
+}
+
 
 .flash-info {
     background-color: #7852ff;
@@ -136,14 +156,15 @@
 }
 
 .flash-close-btn {
-    position: absolute;
-    top: 5px; /* Adjust as necessary */
-    right: 10px; /* Adjust as necessary */
+    margin-left: 10px; /* Gives space between the message and the close button */
+    cursor: pointer;
+    background: none;
+    border: none;
+    color: #ffffff;
     font-size: 20px;
     font-weight: bold;
-    color: #ffffff;
-    cursor: pointer;
     transition: color 0.2s;
+    outline: none;
 }
 
 .flash-close-btn:hover {

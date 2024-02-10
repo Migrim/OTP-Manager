@@ -26,7 +26,9 @@ from collections import defaultdict
 from subprocess import Popen, PIPE
 from markupsafe import Markup
 from flask_cors import CORS
+from time import ctime
 import pyotp
+import ntplib
 import time
 import requests
 import requests
@@ -290,6 +292,22 @@ def is_internet_available():
     except requests.ConnectionError:
         return False
 
+def check_server_time():
+    """Check the server's time against an NTP server."""
+    try:
+        ntp_client = ntplib.NTPClient()
+        response = ntp_client.request('pool.ntp.org')
+        ntp_time = response.tx_time
+        local_time = time.time()
+        offset = local_time - ntp_time
+
+        allowable_offset = 1
+
+        if abs(offset) > allowable_offset:
+            flash("Warning: The server's time may be out of sync.", "warning")
+    except Exception as e:
+        flash("Unable to check server time.", "error")
+
 def check_server_capacity(f):
     @wraps(f)
     def decorated_function(*args, **kwargs):
@@ -297,7 +315,9 @@ def check_server_capacity(f):
 
         if not is_internet_available():
             flash("Internet connection is not available.", "error")
-            return f(*args, **kwargs)  
+            return f(*args, **kwargs)
+
+        check_server_time()
 
         start_time = time.time()
         response = f(*args, **kwargs)

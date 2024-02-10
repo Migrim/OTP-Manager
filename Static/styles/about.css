@@ -38,7 +38,16 @@ body {
     background-color: #333; 
     color: #fff; 
     border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out, border 0.3s ease-in-out, opacity 0.3s ease-in-out, background-color 0.3s ease-in-out;
+}
+
+.stats-container:hover,
+.settings-container:hover,
+.license-container:hover,
+.backup-container:hover {
+    transform: scale(1.03);
+    transition: transform 0.3s ease-in-out;
 }
 
 .stats-container h2 {
@@ -50,25 +59,41 @@ body {
 .stats li {
     font-size: 16px;
     margin-bottom: 10px;
-    list-style-type: none; /* Remove default list styling */
-    padding-left: 0; /* Adjust padding */
+    list-style-type: none; 
+    padding-left: 0;
     display: flex;
-    align-items: center; /* Align icons with text */
+    align-items: center;
+    gap: 7px;
 }
 
 .stats li:before {
+    width: 30px;
+    text-align: center;
     content: attr(data-icon);
     font-family: 'Material Icons Outlined';
     display: inline-block;
     font-size: 20px;
     margin-right: 10px;
-    color: #4CAF50; /* Icon color */
+    color: #7852ff; 
+}
+
+.stats li span.label {
+    width: 150px; 
+    display: inline-block;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.stats li span.value {
+    flex-grow: 1;
+    text-align: right;
 }
 
 .stats li:hover {
-    background-color: #333; /* Slight background change on hover */
-    cursor: pointer; /* Change cursor to indicate interactivity */
-    transition: background-color 0.3s ease-in-out; /* Smooth transition */
+    background-color: #333; 
+    cursor: pointer; 
+    transition: background-color 0.3s ease-in-out; 
 }
 
 .footer {

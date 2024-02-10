@@ -48,3 +48,177 @@
 2024-02-10 13:54:28,829 [INFO] Response time for home: 0.02s
 2024-02-10 13:54:31,614 [INFO] Response time for home: 0.02s
 2024-02-10 13:55:15,837 [INFO] Response time for home: 0.01s
+2024-02-10 15:05:09,636 [INFO] Server starting on port 5001...
+2024-02-10 15:05:10,635 Redirecting to login: No user_id or session_token
+2024-02-10 15:05:10,787 [INFO] Response time for login: 0.03s
+2024-02-10 15:05:36,624 [INFO] Response time for login: 0.24s
+2024-02-10 15:05:36,776 [INFO] Response time for home: 0.04s
+2024-02-10 15:14:31,550 [INFO] Response time for home: 0.01s
+2024-02-10 16:10:59,296 [INFO] Response time for home: 0.01s
+2024-02-10 16:15:57,724 [INFO] Response time for home: 0.00s
+2024-02-10 16:16:03,732 [INFO] Response time for home: 0.00s
+2024-02-10 16:18:44,627 [INFO] Response time for home: 0.01s
+2024-02-10 16:18:45,274 [INFO] User ID 1 successfully logged out.
+2024-02-10 16:18:45,412 [INFO] Response time for login: 0.00s
+2024-02-10 16:18:49,403 [INFO] Response time for login: 0.23s
+2024-02-10 16:18:49,538 [INFO] Response time for home: 0.01s
+2024-02-10 16:19:03,815 [INFO] User ID 1 successfully logged out.
+2024-02-10 16:19:04,028 [INFO] Response time for login: 0.00s
+2024-02-10 16:19:06,435 [INFO] Response time for login: 0.23s
+2024-02-10 16:19:06,557 [INFO] Response time for home: 0.00s
+2024-02-10 16:20:04,764 [INFO] User ID 1 successfully logged out.
+2024-02-10 16:20:04,897 [INFO] Response time for login: 0.00s
+2024-02-10 16:20:07,055 [INFO] Response time for login: 0.23s
+2024-02-10 16:20:07,184 [INFO] Response time for home: 0.00s
+2024-02-10 16:20:23,231 [INFO] User ID 1 successfully logged out.
+2024-02-10 16:20:23,356 [INFO] Response time for login: 0.00s
+2024-02-10 16:20:25,519 [INFO] Response time for login: 0.23s
+2024-02-10 16:20:25,643 [INFO] Response time for home: 0.00s
+2024-02-10 16:21:48,207 [INFO] User ID 1 successfully logged out.
+2024-02-10 16:21:48,425 [INFO] Response time for login: 0.00s
+2024-02-10 16:21:50,521 [INFO] Response time for login: 0.23s
+2024-02-10 16:21:50,646 [INFO] Response time for home: 0.00s
+2024-02-10 16:22:20,237 [INFO] User ID 1 successfully logged out.
+2024-02-10 16:22:20,655 [INFO] Response time for login: 0.00s
+2024-02-10 16:22:22,573 [INFO] Response time for login: 0.22s
+2024-02-10 16:22:22,701 [INFO] Response time for home: 0.00s
+2024-02-10 16:22:26,958 [INFO] Response time for home: 0.00s
+2024-02-10 16:22:28,076 [INFO] User ID 1 successfully logged out.
+2024-02-10 16:22:28,195 [INFO] Response time for login: 0.00s
+2024-02-10 16:23:52,402 [INFO] Response time for login: 0.22s
+2024-02-10 16:23:52,519 [INFO] Response time for home: 0.00s
+2024-02-10 16:24:08,894 [INFO] User ID 1 successfully logged out.
+2024-02-10 16:24:09,002 [INFO] Response time for login: 0.00s
+2024-02-10 16:24:11,428 [INFO] Response time for login: 0.22s
+2024-02-10 16:24:11,551 [INFO] Response time for home: 0.00s
+2024-02-10 16:24:40,407 [INFO] User ID 1 successfully logged out.
+2024-02-10 16:24:40,523 [INFO] Response time for login: 0.00s
+2024-02-10 16:24:42,479 [INFO] Response time for login: 0.22s
+2024-02-10 16:24:42,609 [INFO] Response time for home: 0.00s
+2024-02-10 16:24:59,515 [INFO] User ID 1 successfully logged out.
+2024-02-10 16:24:59,632 [INFO] Response time for login: 0.00s
+2024-02-10 16:25:03,001 [INFO] Response time for login: 0.23s
+2024-02-10 16:25:03,117 [INFO] Response time for home: 0.00s
+2024-02-10 16:25:34,945 [INFO] User ID 1 successfully logged out.
+2024-02-10 16:25:35,060 [INFO] Response time for login: 0.00s
+2024-02-10 16:25:37,001 [INFO] Response time for login: 0.22s
+2024-02-10 16:25:37,144 [INFO] Response time for home: 0.01s
+2024-02-10 16:26:30,819 [INFO] User ID 1 successfully logged out.
+2024-02-10 16:26:30,960 [INFO] Response time for login: 0.00s
+2024-02-10 16:26:32,914 [INFO] Response time for login: 0.22s
+2024-02-10 16:26:33,040 [INFO] Response time for home: 0.00s
+2024-02-10 16:26:38,433 [INFO] User ID 1 successfully logged out.
+2024-02-10 16:26:38,838 [INFO] Response time for login: 0.00s
+2024-02-10 16:26:41,044 [INFO] Response time for login: 0.23s
+2024-02-10 16:26:41,173 [INFO] Response time for home: 0.00s
+2024-02-10 16:27:36,678 [INFO] User ID 1 successfully logged out.
+2024-02-10 16:27:36,813 [INFO] Response time for login: 0.00s
+2024-02-10 16:27:39,290 [INFO] Response time for login: 0.22s
+2024-02-10 16:27:39,411 [INFO] Response time for home: 0.00s
+2024-02-10 16:28:05,642 [INFO] User ID 1 successfully logged out.
+2024-02-10 16:28:05,775 [INFO] Response time for login: 0.00s
+2024-02-10 16:28:07,797 [INFO] Response time for login: 0.22s
+2024-02-10 16:28:07,924 [INFO] Response time for home: 0.01s
+2024-02-10 16:28:16,565 [INFO] User ID 1 successfully logged out.
+2024-02-10 16:28:16,689 [INFO] Response time for login: 0.00s
+2024-02-10 16:28:18,577 [INFO] Response time for login: 0.23s
+2024-02-10 16:28:18,702 [INFO] Response time for home: 0.00s
+2024-02-10 16:29:18,847 [INFO] User ID 1 successfully logged out.
+2024-02-10 16:29:18,961 [INFO] Response time for login: 0.00s
+2024-02-10 16:29:21,636 [INFO] Response time for login: 0.23s
+2024-02-10 16:29:21,778 [INFO] Response time for home: 0.01s
+2024-02-10 16:29:23,311 [INFO] Response time for home: 0.00s
+2024-02-10 16:29:38,774 [INFO] Response time for home: 0.00s
+2024-02-10 16:30:55,329 [INFO] Response time for home: 0.00s
+2024-02-10 16:32:19,320 [INFO] Response time for home: 0.01s
+2024-02-10 16:32:21,615 [INFO] User ID 1 successfully logged out.
+2024-02-10 16:32:21,744 [INFO] Response time for login: 0.00s
+2024-02-10 16:32:23,862 [INFO] Response time for login: 0.23s
+2024-02-10 16:32:23,977 [INFO] Response time for home: 0.00s
+2024-02-10 16:32:49,272 [INFO] Response time for home: 0.01s
+2024-02-10 16:32:53,082 [INFO] User ID 1 successfully logged out.
+2024-02-10 16:32:53,200 [INFO] Response time for login: 0.00s
+2024-02-10 16:32:55,719 [INFO] Response time for login: 0.22s
+2024-02-10 16:32:55,854 [INFO] Response time for home: 0.00s
+2024-02-10 16:32:58,524 [INFO] User ID 5 successfully logged out.
+2024-02-10 16:32:58,697 [INFO] Response time for login: 0.00s
+2024-02-10 16:33:01,866 [INFO] Response time for login: 0.00s
+2024-02-10 16:33:08,617 [INFO] Response time for login: 0.22s
+2024-02-10 16:33:08,738 [INFO] Response time for home: 0.01s
+2024-02-10 16:33:25,003 [INFO] User ID 5 successfully logged out.
+2024-02-10 16:33:25,209 [INFO] Response time for login: 0.00s
+2024-02-10 16:33:27,441 [INFO] Response time for login: 0.22s
+2024-02-10 16:33:27,556 [INFO] Response time for home: 0.01s
+2024-02-10 16:35:37,245 [INFO] Response time for home: 0.01s
+2024-02-10 16:35:38,534 [INFO] User ID 1 successfully logged out.
+2024-02-10 16:35:38,656 [INFO] Response time for login: 0.00s
+2024-02-10 16:35:40,932 [INFO] Response time for login: 0.23s
+2024-02-10 16:35:41,045 [INFO] Response time for home: 0.01s
+2024-02-10 16:36:18,026 [INFO] User ID 5 successfully logged out.
+2024-02-10 16:36:18,487 [INFO] User ID None successfully logged out.
+2024-02-10 16:36:18,688 [INFO] Response time for login: 0.00s
+2024-02-10 16:36:21,699 [INFO] Response time for login: 0.22s
+2024-02-10 16:36:22,123 [INFO] Response time for home: 0.01s
+2024-02-10 16:37:52,595 [INFO] User ID 5 successfully logged out.
+2024-02-10 16:37:53,130 [INFO] Response time for login: 0.00s
+2024-02-10 16:37:55,995 [INFO] Response time for login: 0.23s
+2024-02-10 16:37:56,130 [INFO] Response time for home: 0.01s
+2024-02-10 16:38:17,102 [INFO] Server starting on port 5001...
+2024-02-10 16:38:19,040 [INFO] Response time for home: 0.04s
+2024-02-10 16:38:27,070 [INFO] User ID 5 successfully logged out.
+2024-02-10 16:38:27,326 [INFO] Response time for login: 0.03s
+2024-02-10 16:38:29,596 [INFO] Response time for login: 0.23s
+2024-02-10 16:38:29,715 [INFO] Response time for home: 0.01s
+2024-02-10 16:40:32,807 [INFO] User ID 1 successfully logged out.
+2024-02-10 16:40:32,953 [INFO] Response time for login: 0.00s
+2024-02-10 16:40:35,199 [INFO] Response time for login: 0.23s
+2024-02-10 16:40:35,329 [INFO] Response time for home: 0.01s
+2024-02-10 16:41:35,091 [INFO] Response time for home: 0.01s
+2024-02-10 16:41:35,764 [INFO] User ID 1 successfully logged out.
+2024-02-10 16:41:35,882 [INFO] Response time for login: 0.00s
+2024-02-10 16:41:38,639 [INFO] Response time for login: 0.23s
+2024-02-10 16:41:38,755 [INFO] Response time for home: 0.00s
+2024-02-10 16:42:06,918 [INFO] User ID 1 successfully logged out.
+2024-02-10 16:42:07,048 [INFO] Response time for login: 0.00s
+2024-02-10 16:42:09,273 [INFO] Response time for login: 0.23s
+2024-02-10 16:42:09,400 [INFO] Response time for home: 0.01s
+2024-02-10 16:54:16,387 [INFO] User ID 1 successfully logged out.
+2024-02-10 16:54:16,522 [INFO] Response time for login: 0.00s
+2024-02-10 16:54:19,229 [INFO] Response time for login: 0.23s
+2024-02-10 16:54:19,375 [INFO] Response time for home: 0.01s
+2024-02-10 17:05:47,886 [INFO] User ID 1 successfully logged out.
+2024-02-10 17:05:48,017 [INFO] Response time for login: 0.00s
+2024-02-10 17:05:50,056 [INFO] Response time for login: 0.23s
+2024-02-10 17:05:50,188 [INFO] Response time for home: 0.00s
+2024-02-10 17:10:28,342 [INFO] Response time for home: 0.00s
+2024-02-10 17:16:47,323 [INFO] Server starting on port 5001...
+2024-02-10 17:16:48,702 [INFO] Response time for home: 0.02s
+2024-02-10 17:16:49,545 [INFO] User ID 1 successfully logged out.
+2024-02-10 17:16:49,684 [INFO] Response time for login: 0.01s
+2024-02-10 17:16:51,948 [INFO] Response time for login: 0.23s
+2024-02-10 17:16:52,090 [INFO] Response time for home: 0.00s
+2024-02-10 17:17:24,211 [INFO] Server starting on port 5001...
+2024-02-10 17:17:25,277 [INFO] Response time for home: 0.02s
+2024-02-10 17:17:38,586 [INFO] User ID 1 successfully logged out.
+2024-02-10 17:17:38,738 [INFO] Response time for login: 0.01s
+2024-02-10 17:17:41,308 [INFO] Response time for login: 0.23s
+2024-02-10 17:17:41,456 [INFO] Response time for home: 0.00s
+2024-02-10 17:17:55,975 [INFO] Server starting on port 5001...
+2024-02-10 17:17:57,089 [INFO] User ID 1 successfully logged out.
+2024-02-10 17:17:57,246 [INFO] Response time for login: 0.01s
+2024-02-10 17:17:59,568 [INFO] Response time for login: 0.22s
+2024-02-10 17:17:59,730 [INFO] Response time for home: 0.02s
+2024-02-10 17:18:01,875 [INFO] Response time for home: 0.01s
+2024-02-10 17:18:03,319 [INFO] Response time for home: 0.00s
+2024-02-10 17:18:04,047 [INFO] Response time for home: 0.00s
+2024-02-10 17:18:04,685 [INFO] Response time for home: 0.01s
+2024-02-10 17:18:05,186 [INFO] Response time for home: 0.00s
+2024-02-10 17:18:05,813 [INFO] Response time for home: 0.01s
+2024-02-10 17:18:06,293 [INFO] Response time for home: 0.00s
+2024-02-10 17:18:06,816 [INFO] Response time for home: 0.00s
+2024-02-10 17:18:07,781 [INFO] Response time for home: 0.01s
+2024-02-10 17:18:08,316 [INFO] Response time for home: 0.00s
+2024-02-10 17:18:08,746 [INFO] Response time for home: 0.01s
+2024-02-10 17:18:09,227 [INFO] Response time for home: 0.01s
+2024-02-10 17:18:09,812 [INFO] Response time for home: 0.01s
+2024-02-10 17:18:10,049 [INFO] Response time for home: 0.00s

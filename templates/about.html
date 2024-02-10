@@ -21,29 +21,15 @@
             <section class="stats-container">
                 <h2 class="text-center">Stats</h2>
                 <ul class="stats">
-                    <li id="stored_otps"></li>
-                    <li id="logins_today"></li>
-                    <li id="times_refreshed"></li>
-                    <li id="uptime"></li>
-                    <li id="last_user_login_time"></li>
-                    <li id="current_server_time"></li>
-                </ul>
+                    <li id="stored_otps" data-icon="vpn_key"><span class="label">Stored OTPs:</span><span class="value">37</span></li>
+                    <li id="logins_today" data-icon="login"><span class="label">Logins Today:</span><span class="value">31</span></li>
+                    <li id="times_refreshed" data-icon="refresh"><span class="label">Times Refreshed:</span><span class="value">3286</span></li>
+                    <li id="uptime" data-icon="schedule"><span class="label">Server Uptime:</span><span class="value">0 Days 0h:17m:21s</span></li>
+                    <li id="last_user_login_time" data-icon="access_time"><span class="label">Last User Login Time:</span><span class="value">19/01/2024 12:23:52</span></li>
+                    <li id="current_server_time" data-icon="update"><span class="label">Current Server Time:</span><span class="value">10/02/2024 16:55:34</span></li>
+                </ul>                
             </section>
-        </div>
-
-<!--             {% if is_admin %}
-            <section class="backup-container mt-5 text-center">
-                <h2 class="text-center">Database Backup</h2>
-                <button id="createBackup" onclick="createBackup()">Create Backup</button>
-                <input type="file" id="loadBackup" style="display: none;" onchange="loadBackup(event)">
-                <button onclick="document.getElementById('loadBackup').click()">Load Backup from File</button>
-                <select id="olderBackups">
-
-                </select>
-                <button onclick="loadSelectedBackup()">Load Selected Backup</button>
-            </section>
-            {% endif %} -->
-
+        </div>        
             <div class="col-md-6">
                 <section class="settings-container">
                     <h2 class="text-center">Recent Stats:</h2>

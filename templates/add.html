@@ -123,8 +123,8 @@ $(document).ready(function() {
     }
 
     function validateEmail(email) {
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        return emailRegex.test(email) || email === "";
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[A-Za-z]{2,}$/;
+        return email === "" || emailRegex.test(email);
     }
 
     function updateValidationStatus(isValid, elementID) {
