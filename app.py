@@ -27,6 +27,7 @@ from subprocess import Popen, PIPE
 from markupsafe import Markup
 from flask_cors import CORS
 from time import ctime
+from threading import Lock
 import pyotp
 import ntplib
 import time
@@ -76,6 +77,7 @@ formatter = logging.Formatter('%(asctime)s %(message)s')
 handler.setFormatter(formatter)
 
 is_restarting = False
+restart_lock = Lock()
 broadcast_message = None
 slow_requests_counter = 0
 
@@ -282,6 +284,7 @@ def check_server_status():
 
 @app.route('/restarting')
 def restarting():
+    restart_server()
     return render_template('restarting.html')
 
 def is_internet_available():
@@ -330,11 +333,9 @@ def internet_status():
             return jsonify({"status": "connected"})
         else:
             print("Internet connection status: Disconnected (non-200 response)")  
-            flash("Internet connection check failed (non-200 response).", "error")
             return jsonify({"status": "disconnected"})
     except requests.RequestException as e:
         print(f"Internet connection status: Disconnected (exception caught) - {e}")  
-        flash(f"Internet connection check failed (exception caught) - {e}", "error")
         return jsonify({"status": "disconnected"})
     
 def check_server_capacity(f):
@@ -1217,26 +1218,26 @@ def check_for_broadcast_message():
 
 def restart_server():
     global is_restarting
-    try:
-        logging.info("Server restart initiated.")
-        is_restarting = True 
-        broadcast_message = 'Server is restarting, you will be redirected.'
-
-        with app.app_context():
-            flash(broadcast_message)
-
+    with restart_lock:
+        if is_restarting:
+            logging.info("Server restart already in progress.")
+            return
         is_restarting = True
 
-        shutdown_function = request.environ.get('werkzeug.server.shutdown')
-        if shutdown_function is not None:
-            shutdown_function()
+    logging.info("Server restart initiated.")
+    
+    with app.app_context():
+        flash('Server is restarting, you will be redirected.')
 
-        subprocess.Popen(["python", "static/script/reboot.py"])
+    current_dir = os.path.dirname(os.path.abspath(__file__))
+    reboot_script_path = os.path.join(current_dir, 'static', 'script', 'reboot.py')
 
-    except Exception as e:
-        is_restarting = False  
-        logging.error(f"Failed to restart server: {e}")
-        is_restarting = False
+    subprocess.Popen(["python", reboot_script_path], shell=True)
+
+    time.sleep(1)
+
+    logging.info("Main server is shutting down.")
+    os.kill(os.getpid(), signal.SIGINT)  
 
 @app.route('/delete_secret/<name>', methods=['POST'])
 @login_required
@@ -1343,30 +1344,7 @@ def add():
 
     return render_template('add.html', form=form)
 
-def is_fallback_server_running():
-    try:
-        response = requests.get('http://localhost:5000/status')
-        if response.status_code == 200:
-            return True
-    except requests.ConnectionError:
-        return False
-    return False
-
-def shutdown_fallback_server():
-    try:
-        response = requests.post('http://localhost:5000/shutdown')
-        if response.status_code == 200:
-            print("Fallback server has been shut down.")
-        else:
-            print("Failed to shut down the fallback server. Status code:", response.status_code)
-    except requests.RequestException as e:
-        print("An error occurred while trying to shut down the fallback server:", e)
-
 if __name__ == '__main__':
-    if is_fallback_server_running():
-        print("Fallback server is running. Attempting to shut it down...")
-        shutdown_fallback_server()
-
     port = 5001 
     logging.info(f"Server starting on port {port}...")
     try:

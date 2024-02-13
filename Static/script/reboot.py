@@ -1,36 +1,15 @@
 import os
 import time
+import threading
+import sys
 import subprocess
 import psutil
 import requests
-from flask import Flask
-import threading
-import sys
+from flask import Flask, make_response
 from werkzeug.serving import make_server
 
 app = Flask(__name__)
-
 server_thread = None
-
-@app.route('/', defaults={'path': ''})
-@app.route('/<path:path>')
-def catch_all(path):
-    print(f"Received request for: {path}")
-    return "The server is restarting. Please try again in a few moments."
-
-@app.route('/shutdown', methods=['POST'])
-def shutdown():
-    global server_thread
-    print("Received shutdown request.")
-    if server_thread is not None:
-        print("Shutting down the server thread.")
-        server_thread.shutdown()
-        server_thread.join() 
-        print("Server thread successfully shut down.")
-        return "Server is shutting down...", 200
-    else:
-        print("No server thread to shut down.")
-        return "Server not running.", 404
 
 class ServerThread(threading.Thread):
     def __init__(self, app):
@@ -47,6 +26,45 @@ class ServerThread(threading.Thread):
     def shutdown(self):
         print("Initiating server thread shutdown.")
         self.srv.shutdown()
+
+@app.route('/', defaults={'path': ''})
+@app.route('/<path:path>')
+def catch_all(path):
+    print(f"Received request for: {path}")
+    redirect_html = """
+    <html>
+        <head>
+            <meta http-equiv="refresh" content="10;url=http://localhost:5000/" />
+        </head>
+        <body>
+            <p>The server is restarting. You will be redirected to the main application in a few moments. If you are not redirected, <a href="http://localhost:5000/">click here</a>.</p>
+        </body>
+    </html>
+    """
+    return make_response(redirect_html, 200)
+
+@app.route('/shutdown', methods=['POST'])
+def shutdown():
+    global server_thread
+    print("Received shutdown request.")
+    if server_thread is not None:
+        print("Shutting down the server thread.")
+        server_thread.shutdown()
+        server_thread.join() 
+        print("Server thread successfully shut down.")
+        return "Server is shutting down...", 200
+    else:
+        print("No server thread to shut down.")
+        return "Server not running.", 404
+
+def auto_shutdown():
+    global server_thread
+    if server_thread is not None:
+        print("Auto shutdown initiated.")
+        server_thread.shutdown()
+        server_thread.join()
+        print("Server automatically shut down after timeout.")
+        sys.exit("Server automatically exited after timeout.")
 
 def is_main_server_online(url):
     print(f"Checking if the main server is online at: {url}")
@@ -99,13 +117,32 @@ def run_reboot_procedure():
     while not is_main_server_online(main_server_url):
         time.sleep(2)
 
-if server_thread is not None:
-    server_thread.shutdown()
-    server_thread.join()
-    
-    # Exit the script
-    print("Reboot procedure complete. Exiting script.")
-    sys.exit()
+def restart_main_server():
+    print("Restarting 'app.py'.")
+    app_file_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..', 'app.py'))
+    subprocess.Popen(["python", app_file_path], shell=True)
+
+def wait_for_main_server_to_start(timeout=60):
+    start_time = time.time()
+    while time.time() - start_time < timeout:
+        if is_main_server_online("http://localhost:5001"):
+            print("Main server is now online.")
+            return True
+        else:
+            print("Waiting for the main server to become online...")
+            time.sleep(2)
+    return False
 
 if __name__ == '__main__':
-    run_reboot_procedure()
+    print("Waiting for 1 second before starting.")
+    time.sleep(1) 
+
+    restart_main_server()
+    if wait_for_main_server_to_start():
+        server_thread = ServerThread(app)
+        server_thread.start()
+#        print("Fallback server running. Will shut down in 20 seconds.")
+#        threading.Timer(20, auto_shutdown).start()
+    else:
+        print("Failed to start the main server within the expected time. Exiting fallback server.")
+        sys.exit("Exiting due to main server start failure.")
