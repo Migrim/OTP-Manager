@@ -425,3 +425,67 @@
 2024-02-13 14:39:15,745 [INFO] Fetched all users successfully.
 2024-02-13 14:39:15,745 [INFO] Fetched all users successfully.
 2024-02-13 14:39:23,415 [INFO] Response time for home: 0.01s
+2024-02-13 14:43:18,133 [INFO] Response time for home: 0.00s
+2024-02-13 14:43:25,282 [INFO] Fetched all users successfully.
+2024-02-13 14:43:25,282 [INFO] Fetched all users successfully.
+2024-02-13 14:43:30,759 [INFO] Fetched all users successfully.
+2024-02-13 14:43:30,759 [INFO] Fetched all users successfully.
+2024-02-13 14:43:34,980 [INFO] User ID 1 successfully logged out.
+2024-02-13 14:43:35,156 [INFO] Response time for login: 0.02s
+2024-02-13 14:43:39,795 [INFO] Response time for login: 0.22s
+2024-02-13 14:43:44,969 [INFO] Response time for login: 0.23s
+2024-02-13 14:43:45,143 [INFO] Response time for home: 0.00s
+2024-02-13 14:43:48,570 [INFO] User ID 5 successfully logged out.
+2024-02-13 14:43:48,745 [INFO] Response time for login: 0.00s
+2024-02-13 14:43:50,975 [INFO] Response time for login: 0.23s
+2024-02-13 14:43:51,151 [INFO] Response time for home: 0.00s
+2024-02-13 14:44:29,885 [INFO] User ID 1 successfully logged out.
+2024-02-13 14:44:30,184 [INFO] Response time for login: 0.00s
+2024-02-13 14:44:32,628 [INFO] Response time for login: 0.22s
+2024-02-13 14:44:32,816 [INFO] Response time for home: 0.01s
+2024-02-13 14:44:51,937 [INFO] User ID 5 successfully logged out.
+2024-02-13 14:44:52,086 [INFO] Response time for login: 0.00s
+2024-02-13 14:44:54,118 [INFO] Response time for login: 0.22s
+2024-02-13 14:44:54,297 [INFO] Response time for home: 0.01s
+2024-02-13 14:49:27,016 [INFO] Response time for home: 0.01s
+2024-02-13 14:49:37,526 [INFO] Response time for home: 0.01s
+2024-02-13 14:49:50,568 [INFO] Response time for home: 0.00s
+2024-02-13 14:49:58,219 [INFO] Response time for home: 0.01s
+2024-02-13 14:50:00,912 [INFO] Response time for home: 0.01s
+2024-02-13 14:50:07,525 [INFO] Response time for home: 0.01s
+2024-02-13 14:50:15,691 [INFO] Response time for home: 0.01s
+2024-02-13 14:53:27,763 [INFO] Server starting on port 5001...
+2024-02-13 14:53:29,230 [INFO] Response time for home: 0.03s
+2024-02-13 14:53:38,211 [INFO] Response time for home: 0.00s
+2024-02-13 17:12:19,104 [INFO] Response time for home: 0.00s
+2024-02-13 17:24:53,369 [INFO] Response time for home: 0.01s
+2024-02-13 17:28:00,904 [INFO] Response time for home: 0.01s
+2024-02-13 17:28:43,982 [INFO] Response time for home: 0.01s
+2024-02-13 17:29:37,414 [INFO] Response time for home: 0.01s
+2024-02-13 17:30:03,512 [INFO] Response time for home: 0.01s
+2024-02-13 17:31:52,369 [INFO] Server starting on port 5001...
+2024-02-13 17:31:53,559 [INFO] Response time for home: 0.02s
+2024-02-13 17:32:10,051 [INFO] Response time for home: 0.00s
+2024-02-13 17:34:19,408 [INFO] Server starting on port 5001...
+2024-02-13 17:34:21,406 [INFO] Response time for home: 0.02s
+2024-02-13 17:34:33,408 [INFO] Response time for home: 0.00s
+2024-02-13 17:35:16,794 [INFO] Server starting on port 5001...
+2024-02-13 17:35:27,233 [INFO] Response time for home: 0.02s
+2024-02-13 17:35:48,603 [INFO] Response time for home: 0.00s
+2024-02-13 17:36:17,125 [INFO] Server starting on port 5001...
+2024-02-13 17:36:19,962 [INFO] Response time for home: 0.02s
+2024-02-13 17:36:41,878 [INFO] Response time for home: 0.01s
+2024-02-13 17:38:01,240 [INFO] Response time for home: 0.00s
+2024-02-13 17:38:03,707 [INFO] Response time for home: 0.00s
+2024-02-13 17:38:13,243 [INFO] Response time for home: 0.01s
+2024-02-13 17:39:52,644 [INFO] Response time for home: 0.01s
+2024-02-13 17:40:09,589 [INFO] Server starting on port 5001...
+2024-02-13 17:40:10,793 [INFO] Response time for home: 0.02s
+2024-02-13 17:40:28,289 [INFO] Response time for home: 0.00s
+2024-02-13 17:40:32,086 [INFO] Response time for home: 0.01s
+2024-02-13 17:41:16,332 [INFO] Server starting on port 5001...
+2024-02-13 17:41:17,656 [INFO] Response time for home: 0.03s
+2024-02-13 17:41:42,426 [INFO] Response time for home: 0.01s
+2024-02-13 17:41:43,753 [INFO] Response time for home: 0.00s
+2024-02-13 17:41:52,123 [INFO] Response time for home: 0.00s
+2024-02-13 17:45:01,114 [INFO] Response time for home: 0.01s

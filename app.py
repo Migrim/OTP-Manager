@@ -322,6 +322,21 @@ def ntp_status():
     is_ntp_synced = check_ntp_sync()  
     return jsonify({"status": "connected" if is_ntp_synced else "disconnected"})
 
+@app.route('/internet_status')
+def internet_status():
+    try:
+        response = requests.get('http://www.google.com', timeout=5)
+        if response.status_code == 200:
+            return jsonify({"status": "connected"})
+        else:
+            print("Internet connection status: Disconnected (non-200 response)")  
+            flash("Internet connection check failed (non-200 response).", "error")
+            return jsonify({"status": "disconnected"})
+    except requests.RequestException as e:
+        print(f"Internet connection status: Disconnected (exception caught) - {e}")  
+        flash(f"Internet connection check failed (exception caught) - {e}", "error")
+        return jsonify({"status": "disconnected"})
+    
 def check_server_capacity(f):
     @wraps(f)
     def decorated_function(*args, **kwargs):
@@ -993,38 +1008,48 @@ def search_otp():
 @app.route('/edit/<name>', methods=['GET', 'POST'])
 @login_required
 def edit(name):
+    print(f"Starting to edit OTP with name: {name}")  
     otp_secrets = load_from_db()
     form = OTPForm()
     form.company.choices = [(company['company_id'], company['name']) for company in load_companies_from_db()]
 
+    secret_found = False
     for i, otp in enumerate(otp_secrets):
         if otp['name'] == name:
+            secret_found = True
+            print(f"Editing OTP named {name}")  
             if request.method == 'POST':
                 if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
                     data = request.json
                     otp_secrets[i]['name'] = data['name']
                     otp_secrets[i]['secret'] = data['secret']
                     otp_secrets[i]['company'] = data['company']
-                    save_to_db(otp_secrets) 
-                
+                    save_to_db(otp_secrets)
+                    print(f"OTP named {name} updated successfully via AJAX.")  
+                    flash('OTP updated successfully via AJAX.', 'success')
                     return jsonify({
-                        'message': 'OTP updated successfully',
+                        'message': 'OTP updated successfully via AJAX.',
                         'updated_data': {
                             'name': data['name'],
                             'secret': data['secret'],
                             'company': data['company'],
                         }
                     })
-           
-            else:
-                form.name.data = otp['name']
-                form.secret.data = otp['secret']
-                form.refresh_time.data = otp['refresh_time']
-                form.company.data = otp.get('company', None)
-                return render_template('edit.html', form=form, name=name)
+                else:
+                    otp_secrets[i]['name'] = form.name.data
+                    otp_secrets[i]['secret'] = form.secret.data
+                    otp_secrets[i]['company'] = form.company.data
+                    save_to_db(otp_secrets)
+                    flash('OTP updated successfully through form submission.', 'success')
+                    print(f"OTP named {name} updated successfully via form submission.")  
+                    return redirect(url_for('home'))
 
-            flash('Secret Not Found')
-            return redirect(url_for('home'))
+    if not secret_found:
+        flash('Secret Not Found. Unable to edit.', 'error')
+        print(f"Secret named {name} not found. Unable to edit.") 
+    else:
+        flash('OTP edit action completed.', 'info')  
+    return redirect(url_for('home'))
 
 @app.route('/create_backup', methods=['GET'])
 @login_required

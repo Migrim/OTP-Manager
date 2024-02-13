@@ -223,3 +223,12 @@
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
 }
+
+#ntpStatusDot.spinner {
+    transition: opacity 0.5s ease-out;
+    opacity: 1;
+}
+
+#ntpStatusDot.spinner.fade-out {
+    opacity: 0;
+}

@@ -115,30 +115,68 @@
         const statusDot = document.getElementById('ntpStatusDot');
         statusDot.className = 'spinner';
 
-        function updateNtpStatus() {
-            fetch('/ntp_status')
+        function updateDotAppearanceFromStorage() {
+            const status = localStorage.getItem('internetStatus');
+            const lastChecked = localStorage.getItem('lastChecked');
+            if(status && lastChecked) {
+                const tooltipText = `Internet Status: ${status} (Last checked: ${lastChecked})`;
+                statusDot.setAttribute('title', tooltipText);
+                
+                if(status === 'Connected') {
+                    statusDot.classList.remove('ntp-disconnected', 'spinner');
+                    statusDot.classList.add('ntp-connected');
+                } else {
+                    statusDot.classList.remove('ntp-connected', 'spinner');
+                    statusDot.classList.add('ntp-disconnected');
+                }
+            } else {
+                // Default to disconnected if no status is stored yet
+                statusDot.classList.add('ntp-disconnected');
+            }
+        }
+
+        updateDotAppearanceFromStorage();
+
+        function updateInternetStatus() {
+            const now = new Date();
+            const timeString = now.toLocaleTimeString();
+
+            fetch('/internet_status')
                 .then(response => response.json())
                 .then(data => {
-                    statusDot.classList.remove('spinner');
-                    let tooltipText = "NTP Status: Disconnected"; 
+                    let connectionStatus = "Disconnected"; 
                     if(data.status === 'connected') {
+                        connectionStatus = "Connected";
+                        statusDot.classList.remove('ntp-disconnected');
                         statusDot.classList.add('ntp-connected');
-                        tooltipText = "NTP Status: Connected";
                     } else {
+                        statusDot.classList.remove('ntp-connected');
                         statusDot.classList.add('ntp-disconnected');
-                        tooltipText = "NTP Status: Disconnected";
                     }
-                    statusDot.setAttribute('title', tooltipText); 
+
+                    const tooltipText = `Internet Status: ${connectionStatus} (Last checked: ${timeString})`;
+                    statusDot.setAttribute('title', tooltipText);
+
+                    // Save the status and last checked time in localStorage
+                    localStorage.setItem('internetStatus', connectionStatus);
+                    localStorage.setItem('lastChecked', timeString);
                 })
                 .catch(error => {
-                    console.error('Error fetching NTP status:', error);
-                    statusDot.classList.remove('spinner');
+                    console.error('Error fetching Internet status:', error);
                     statusDot.classList.add('ntp-disconnected');
-                    statusDot.setAttribute('title', "Error fetching NTP status");
+                    const tooltipText = `Error fetching Internet status (Last checked: ${timeString})`;
+                    statusDot.setAttribute('title', tooltipText);
+
+                    // Save the failed status in localStorage
+                    localStorage.setItem('internetStatus', 'Disconnected');
+                    localStorage.setItem('lastChecked', timeString);
                 });
         }
 
-        setInterval(updateNtpStatus, 10000);
+        // Set an interval for updating the status
+        setInterval(updateInternetStatus, 10000); // Update every 10 seconds
+
+        // Immediately check the status on page load
+        updateInternetStatus();
     });
 </script>
-
