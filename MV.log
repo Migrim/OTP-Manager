@@ -316,3 +316,112 @@
 2024-02-10 20:42:10,114 [INFO] Response time for login: 0.02s
 2024-02-10 20:42:13,837 [INFO] Response time for login: 0.27s
 2024-02-10 20:42:14,297 [INFO] Response time for home: 0.01s
+2024-02-10 21:10:05,541 [INFO] Server starting on port 5001...
+2024-02-10 21:10:14,377 [INFO] Response time for login: 0.04s
+2024-02-10 21:10:26,896 [INFO] Response time for login: 0.23s
+2024-02-10 21:10:27,377 [INFO] Response time for home: 0.03s
+2024-02-10 21:10:44,926 [INFO] User ID 1 successfully logged out.
+2024-02-10 21:10:45,046 [INFO] Response time for login: 0.00s
+2024-02-10 01:11:06,588 [INFO] Response time for login: 0.23s
+2024-02-10 01:11:06,727 [INFO] Response time for home: 0.01s
+2024-02-10 01:11:30,646 [INFO] Server starting on port 5001...
+2024-02-10 01:11:34,098 [INFO] Response time for home: 0.02s
+2024-02-10 01:11:35,654 [INFO] Response time for home: 0.00s
+2024-02-10 01:11:56,974 [INFO] Response time for home: 0.00s
+2024-02-10 21:12:42,766 [INFO] Response time for home: 0.01s
+2024-02-10 21:12:58,545 [INFO] Response time for home: 0.01s
+2024-02-13 13:38:52,469 [INFO] Server starting on port 5001...
+2024-02-13 13:39:24,404 [INFO] Response time for home: 0.05s
+2024-02-13 13:53:12,945 [INFO] Fetched all users successfully.
+2024-02-13 13:53:12,945 [INFO] Fetched all users successfully.
+2024-02-13 13:54:55,854 [INFO] Fetched all users successfully.
+2024-02-13 13:54:55,854 [INFO] Fetched all users successfully.
+2024-02-13 13:55:03,683 [INFO] Fetched all users successfully.
+2024-02-13 13:55:03,683 [INFO] Fetched all users successfully.
+2024-02-13 13:55:23,978 [INFO] Fetched all users successfully.
+2024-02-13 13:55:23,978 [INFO] Fetched all users successfully.
+2024-02-13 13:55:39,810 [INFO] Fetched all users successfully.
+2024-02-13 13:55:39,810 [INFO] Fetched all users successfully.
+2024-02-13 13:55:46,502 [INFO] Fetched all users successfully.
+2024-02-13 13:55:46,502 [INFO] Fetched all users successfully.
+2024-02-13 13:55:54,198 [INFO] Fetched all users successfully.
+2024-02-13 13:55:54,198 [INFO] Fetched all users successfully.
+2024-02-13 13:56:00,469 [INFO] Fetched all users successfully.
+2024-02-13 13:56:00,469 [INFO] Fetched all users successfully.
+2024-02-13 13:56:04,938 [INFO] Fetched all users successfully.
+2024-02-13 13:56:04,938 [INFO] Fetched all users successfully.
+2024-02-13 13:56:08,046 [INFO] Response time for home: 0.01s
+2024-02-13 13:56:12,521 [INFO] Fetched all users successfully.
+2024-02-13 13:56:12,521 [INFO] Fetched all users successfully.
+2024-02-13 13:56:15,329 [INFO] Fetched all users successfully.
+2024-02-13 13:56:15,329 [INFO] Fetched all users successfully.
+2024-02-13 13:56:23,141 [INFO] Fetched all users successfully.
+2024-02-13 13:56:23,141 [INFO] Fetched all users successfully.
+2024-02-13 13:56:42,303 [INFO] Fetched all users successfully.
+2024-02-13 13:56:42,303 [INFO] Fetched all users successfully.
+2024-02-13 13:59:24,892 [INFO] Fetched all users successfully.
+2024-02-13 13:59:24,892 [INFO] Fetched all users successfully.
+2024-02-13 14:02:00,589 [INFO] Fetched all users successfully.
+2024-02-13 14:02:00,589 [INFO] Fetched all users successfully.
+2024-02-13 14:02:39,469 [INFO] Fetched all users successfully.
+2024-02-13 14:02:39,469 [INFO] Fetched all users successfully.
+2024-02-13 14:03:16,047 [INFO] Fetched all users successfully.
+2024-02-13 14:03:16,047 [INFO] Fetched all users successfully.
+2024-02-13 14:03:26,750 [INFO] Fetched all users successfully.
+2024-02-13 14:03:26,750 [INFO] Fetched all users successfully.
+2024-02-13 14:03:55,827 [INFO] Fetched all users successfully.
+2024-02-13 14:03:55,827 [INFO] Fetched all users successfully.
+2024-02-13 14:03:57,428 [INFO] Fetched all users successfully.
+2024-02-13 14:03:57,428 [INFO] Fetched all users successfully.
+2024-02-13 14:04:03,761 [INFO] Fetched all users successfully.
+2024-02-13 14:04:03,761 [INFO] Fetched all users successfully.
+2024-02-13 14:04:36,861 [INFO] Fetched all users successfully.
+2024-02-13 14:04:36,861 [INFO] Fetched all users successfully.
+2024-02-13 14:04:45,860 [INFO] Fetched all users successfully.
+2024-02-13 14:04:45,860 [INFO] Fetched all users successfully.
+2024-02-13 14:04:59,607 [INFO] Fetched all users successfully.
+2024-02-13 14:04:59,607 [INFO] Fetched all users successfully.
+2024-02-13 14:05:12,878 [INFO] Fetched all users successfully.
+2024-02-13 14:05:12,878 [INFO] Fetched all users successfully.
+2024-02-13 14:06:04,359 [INFO] Fetched all users successfully.
+2024-02-13 14:06:04,359 [INFO] Fetched all users successfully.
+2024-02-13 14:08:15,656 [INFO] Fetched all users successfully.
+2024-02-13 14:08:15,656 [INFO] Fetched all users successfully.
+2024-02-13 14:08:34,776 [INFO] Fetched all users successfully.
+2024-02-13 14:08:34,776 [INFO] Fetched all users successfully.
+2024-02-13 14:08:51,467 [INFO] Fetched all users successfully.
+2024-02-13 14:08:51,467 [INFO] Fetched all users successfully.
+2024-02-13 14:08:59,511 [INFO] Fetched all users successfully.
+2024-02-13 14:08:59,511 [INFO] Fetched all users successfully.
+2024-02-13 14:09:01,829 [INFO] Fetched all users successfully.
+2024-02-13 14:09:01,829 [INFO] Fetched all users successfully.
+2024-02-13 14:09:10,766 [INFO] Fetched all users successfully.
+2024-02-13 14:09:10,766 [INFO] Fetched all users successfully.
+2024-02-13 14:09:29,854 [INFO] Fetched all users successfully.
+2024-02-13 14:09:29,854 [INFO] Fetched all users successfully.
+2024-02-13 14:09:32,563 [INFO] Fetched all users successfully.
+2024-02-13 14:09:32,563 [INFO] Fetched all users successfully.
+2024-02-13 14:09:42,930 [INFO] Fetched all users successfully.
+2024-02-13 14:09:42,930 [INFO] Fetched all users successfully.
+2024-02-13 14:11:09,645 [INFO] Fetched all users successfully.
+2024-02-13 14:11:09,645 [INFO] Fetched all users successfully.
+2024-02-13 14:11:37,049 [INFO] Fetched all users successfully.
+2024-02-13 14:11:37,049 [INFO] Fetched all users successfully.
+2024-02-13 14:12:19,590 [INFO] Fetched all users successfully.
+2024-02-13 14:12:19,590 [INFO] Fetched all users successfully.
+2024-02-13 14:12:30,669 [INFO] Fetched all users successfully.
+2024-02-13 14:12:30,669 [INFO] Fetched all users successfully.
+2024-02-13 14:12:40,593 [INFO] Fetched all users successfully.
+2024-02-13 14:12:40,593 [INFO] Fetched all users successfully.
+2024-02-13 14:12:54,788 [INFO] Fetched all users successfully.
+2024-02-13 14:12:54,788 [INFO] Fetched all users successfully.
+2024-02-13 14:17:56,318 [INFO] Fetched all users successfully.
+2024-02-13 14:17:56,318 [INFO] Fetched all users successfully.
+2024-02-13 14:22:34,635 [INFO] Fetched all users successfully.
+2024-02-13 14:22:34,635 [INFO] Fetched all users successfully.
+2024-02-13 14:24:14,191 [INFO] Fetched all users successfully.
+2024-02-13 14:24:14,191 [INFO] Fetched all users successfully.
+2024-02-13 14:24:27,816 [INFO] Response time for home: 0.00s
+2024-02-13 14:39:15,745 [INFO] Fetched all users successfully.
+2024-02-13 14:39:15,745 [INFO] Fetched all users successfully.
+2024-02-13 14:39:23,415 [INFO] Response time for home: 0.01s

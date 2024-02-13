@@ -43,14 +43,6 @@
     </div>
 </div>
 
-<div class="container">
-    <div class="floating-add-user-button">
-        <button type="button" class="btn btn-add" data-toggle="modal" data-target="#addUserModal">
-            Add a new user
-        </button>
-    </div>
-</div>
-
         <div class="modal fade" id="addUserModal" tabindex="-1" role="dialog" aria-labelledby="addUserModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
@@ -80,8 +72,17 @@
             </div>
         </div>
 
-        <div class="user-list">
-            <h2>Existing Users</h2>
+        <div class="company-list container">
+            <div class="row justify-content-between align-items-center mb-3">
+                <div class="col-md-8 col-lg-9">
+                    <h2>Existing Users</h2>
+                </div>
+                <div class="col-md-4 col-lg-3 text-right">
+                    <button type="button" class="btn btn-add" data-toggle="modal" data-target="#addUserModal">
+                        Add a new user
+                    </button>
+                </div>
+            </div>
             <div class="user-grid">
                 {% for user in users %}
                 <div class="user-card">

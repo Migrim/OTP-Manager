@@ -90,13 +90,6 @@ body {
     margin: 0;
 }
 
-.floating-add-user-button {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    z-index: 1000;
-}
-
 .form-control {
     background-color: #444444;
     color: #f8f9fa;
@@ -137,6 +130,24 @@ body {
     border-color: #44abed;
 }
 
+.btn-close-custom {
+    background-color: #355bcd; 
+    color: #fff;
+}
+
+.btn-close-custom:hover {
+    background-color: #44abed; 
+}
+
+.btn-delete-custom {
+    background-color: #ff5252; 
+    color: #fff;
+}
+
+.btn-delete-custom:hover {
+    background-color: #ff5d51; 
+}
+
 .modal-dialog {
     max-width: 400px;
     margin: 1.75rem auto;
@@ -146,7 +157,6 @@ body {
     background-color: #333;
     color: #f8f9fa;
     border-radius: 15px;
-
 }
 
 .modal-header {
@@ -154,6 +164,7 @@ body {
     align-items: center; 
     justify-content: space-between; 
     padding: 10px 15px; 
+    border-bottom: none;
 }
 
 .modal-title {
@@ -174,13 +185,6 @@ body {
     cursor: pointer;
 }
 
-.modal-body {
-    padding: 20px;
-    padding-bottom: 30px;
-    text-align: center;
-    font-size: 1.2rem;
-}
-
 .close:hover {
     color: #ccc;
 }
@@ -189,8 +193,7 @@ body {
     padding-top: 20px;
     padding: 20px;
     text-align: center; 
-    font-size: 1.2rem; 
-    box-shadow: 0 20px 25px rgba(0, 0, 0, 0.5); 
+    font-size: 1.5rem; 
 }
 
 .close:hover {
@@ -240,7 +243,6 @@ body {
 
 .modal-footer .btn {
     padding: 5px 15px;
-    background-color: #555;
     border: none;
     color: #fff;
     border-radius: 5px;
@@ -314,4 +316,19 @@ body {
     font-size: 1.5rem; 
     color: #f8f9fa; 
     margin-bottom: .5rem; 
+}
+.row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.float-right {
+    float: right;
+}
+
+@media (max-width: 991px) {
+    .float-right {
+        float: none;
+    }
 }

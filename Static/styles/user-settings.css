@@ -75,7 +75,6 @@ body {
     border-radius: 5px; 
 }
 
-
 .user-actions {
     display: flex;
     justify-content: space-around;
@@ -107,8 +106,13 @@ body {
 }
 
 .btn-danger {
-    background-color: #a94442;
-    border-color: #a94442;
+    background-color: #ff5252;
+    border-color: #ff5252;
+}
+
+.btn-danger:hover {
+    background-color: #ff5d51;
+    border-color: #ff5d51;
 }
 
 .btn-secondary {
@@ -123,7 +127,7 @@ body {
 }
 
 .modal-dialog {
-    max-width: 400px;
+    max-width: 300px;
     margin: 1.75rem auto;
 }
 
@@ -138,13 +142,14 @@ body {
     display: flex; 
     align-items: center; 
     justify-content: space-between; 
-    padding: 10px 15px; 
+    padding: 5px 10px; 
+    border-bottom: none; /* This removes the line under the modal title */
 }
 
 .modal-title {
     margin-bottom: 0;
     font-size: 18px;
-    line-height: 1.5; 
+    line-height: 1.4; 
     font-weight: bold;
     flex-grow: 1; 
 }
@@ -157,14 +162,6 @@ body {
     border: 0;
     background: none; 
     cursor: pointer;
-}
-
-.modal-body {
-    padding: 20px;
-    padding-bottom: 30px; 
-    text-align: center;
-    font-size: 1.2rem;
-    box-shadow: 0 20px 25px rgba(0, 0, 0, 0.5); 
 }
 
 .close:hover {
@@ -183,12 +180,12 @@ body {
 }
 
 #deleteConfirmationInput {
-    background-color: #484e53; /* Darker background for the input */
-    color: #fff; /* White text for input */
-    border: 1px solid #6c757d; /* Border to make the input stand out */
-    margin-top: 10px; /* Space between text and input field */
-    width: 100%; /* Full width of the modal */
-    box-sizing: border-box; /* Ensures padding doesn't affect width */
+    background-color: #444444; 
+    color: #fff; 
+    margin-top: 5px;
+    padding: 5px;
+    width: 100%; 
+    font-size: 1.2rem;
 }
 
 .btn-primary {
@@ -235,13 +232,25 @@ body {
 
 .modal-footer {
     display: flex;
-    justify-content: flex-end; /* Aligns buttons to the right */
-    padding: 10px 20px; /* Adjust padding as needed */
+    justify-content: flex-end; 
+    padding: 5px 10px; 
+    border-top: none;
 }
 
-.add-user-button {
-    text-align: center;
-    margin-bottom: 20px;
+.row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.float-right {
+    float: right;
+}
+
+@media (max-width: 991px) {
+    .float-right {
+        float: none;
+    }
 }
 
 @media (max-width: 1200px) {
