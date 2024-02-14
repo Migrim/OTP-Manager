@@ -66,7 +66,7 @@
         function drawMatrix() {
             ctx.fillStyle = "rgba(0, 0, 0, 0.04)"; 
             ctx.fillRect(0, 0, c.width, c.height);
-            ctx.fillStyle = "#00BCE3"; 
+            ctx.fillStyle = "#ff5252"; 
             ctx.font = font_size + "px arial";
 
             for(var i = 0; i < drops.length; i++) {
@@ -120,6 +120,20 @@
             }, 7000); 
         });
     });
+
+    function togglePasswordVisibility() {
+        var passwordInput = document.getElementById('passwordInput');
+        var togglePasswordIcon = document.querySelector('.toggle-password');
+        if (passwordInput.type === 'password') {
+            passwordInput.type = 'text';
+            togglePasswordIcon.textContent = 'visibility';
+            passwordInput.classList.add("visible");
+        } else {
+            passwordInput.type = 'password';
+            togglePasswordIcon.textContent = 'visibility_off';
+            passwordInput.classList.remove("visible");
+        }
+    }
 
     function showWhatsNewModal() {
         document.getElementById('whatsNewModal').style.display = 'block';
@@ -181,14 +195,14 @@
                 <input class="input" required="" type="text" name="username" placeholder="Username" value="{{ username or '' }}" autocomplete="username">
                 <label class="label"></label>
             </div>
-            <div class="wave-group">
-                <input class="input" required="" type="password" name="password" placeholder="Password" autocomplete="current-password">
-                <label class="label"></label>
-            </div>        
-            <div class="form-group form-check">
-                <input type="checkbox" class="form-check-input" name="keep_logged_in" id="keep_logged_in">
+            <div class="wave-group password-container">
+                <input class="input" required="" type="password" name="password" placeholder="Password" autocomplete="current-password" id="passwordInput">
+                <span class="material-icons-outlined toggle-password" onclick="togglePasswordVisibility()">visibility_off</span>
+            </div>                        
+            <div class="form-group form-check cl-checkbox">
+                <input type="checkbox" class="form-check-input" name="keep_logged_in" id="keep_logged_in" style="display: none;">
                 <label class="form-check-label" for="keep_logged_in">Keep me logged in</label>
-            </div>
+            </div>            
 
             <input type="submit" value="Login" class="btn btn-primary btn-block form-submit">
         </form>

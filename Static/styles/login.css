@@ -80,11 +80,6 @@ a:hover {
     color: #ffffff;
 }
 
-.form-control:focus {
-    border-color: #555;
-    box-shadow: none;
-}
-
 .form-submit {
     border-radius: 8px;
     margin-top: 20px;
@@ -176,10 +171,26 @@ a:hover {
 }
 
 .wave-group {
-    width: 100%; 
-    display: flex; 
-    justify-content: center; 
-    margin-bottom: 10px;
+    position: relative; /* Ensure the icon is positioned relative to the password input field */
+    width: calc(100% - 20px); /* Adjust width as necessary */
+    max-width: 220px; /* Match the input field max-width */
+    margin: auto;
+    margin-bottom: 10px; /* Center the container */
+}
+
+.password-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.toggle-password {
+    position: absolute;
+    right: 10px; /* Position the icon inside the right edge of the input field */
+    top: 50%; /* Center the icon vertically */
+    transform: translateY(-50%); /* Ensure the icon is centered with respect to its height */
+    color: rgba(255, 255, 255, 0.7);
+    cursor: pointer;
 }
 
 .input {
@@ -194,45 +205,110 @@ a:hover {
     box-shadow: 0px 0px 20px -18px;
     background: #3a3a3a; 
     color: #ffffff;
+    padding-right: 40px;
 }
 
 .input:hover {
-    border: 2px solid lightgrey;
+    border: 2px solid #f8bbd0;
     box-shadow: 0px 0px 20px -17px;
 }
 
+.input:focus {
+    border-color: rgba(97, 73, 28, 0.2);  
+    box-shadow: 0 0 0 0.2rem rgba(138, 43, 226, 0.2); 
+    animation: subtleScale 0.5s ease-out forwards;
+    transition: box-shadow 0.3s ease; 
+}
+
+@keyframes subtleScale {
+    0% {
+        transform: scale(1);
+    }
+    100% {
+        transform: scale(1.02);
+        border-color: #f8bbd0; /* Soft pink */
+    }
+}
+
+@keyframes fadeInPassword {
+    from { opacity: 0.5; }
+    to { opacity: 1; }
+}
+
+.input.visible {
+    animation: fadeInPassword 0.5s ease forwards;
+    animation: subtleScale 0.5s ease-out forwards;
+}
+
 .form-check {
-    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     margin-top: 15px;
-    margin-bottom: 15px
+    margin-bottom: 15px;
+    width: 100%; /* Ensure it spans the full width of its parent */
 }
 
 .cl-checkbox {
-    position: relative;
-    display: inline-block;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
-.cl-checkbox > input {
-    appearance: none;
-    -moz-appearance: none;
-    -webkit-appearance: none;
-    z-index: -1;
-    position: absolute;
-    left: -10px;
-    top: -8px;
-    display: block;
-    margin: 0;
-    border-radius: 50%;
-    width: 40px;
-    height: 40px;
-    background-color: rgba(0, 0, 0, 0.6);
-    box-shadow: none;
-    outline: none;
-    opacity: 0;
-    transform: scale(1);
-    pointer-events: none;
-    transition: opacity 0.3s, transform 0.2s;
+.cl-checkbox input[type="checkbox"] {
+    display: none; /* Hide the default checkbox */
 }
+
+.cl-checkbox label {
+    position: relative;
+    padding-left: 25px;
+    cursor: pointer;
+    display: inline-block;
+    color: #ffffff; /* Adjust as needed */
+}
+
+.cl-checkbox label::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 20px; /* Checkbox width */
+    height: 20px; /* Checkbox height */
+    background: #3a3a3a; /* Background color */
+    border-radius: 5px; /* Rounded corners */
+    transition: background 0.3s, border 0.3s; /* Smooth transition */
+}
+
+.cl-checkbox label::after {
+    content: '';
+    position: absolute;
+    left: 7px; /* Centered horizontally */
+    top: 4px; /* Adjusted for vertical centering */
+    width: 6px; /* Checkmark width */
+    height: 9px; /* Checkmark height */
+    border: solid #f8bbd0; /* Checkmark color */
+    border-width: 0 2px 2px 0; /* Thinner checkmark */
+    transform: rotate(45deg);
+    display: none;
+}
+
+/* Display checkmark when checkbox is checked */
+.cl-checkbox input[type="checkbox"]:checked + label::after {
+    animation: fadeInCheckmark 0.5s ease-in-out forwards;
+    display: block;
+}
+
+@keyframes fadeInCheckmark {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+/* Modify background and add border on hover */
+.cl-checkbox label:hover::before {
+    background: #4d4d4d; /* Slightly brighter background */
+    border: 1px solid #f8bbd0; /* Tiny white border */
+}
+
+
 
 #matrixEffect {
     position: fixed;
