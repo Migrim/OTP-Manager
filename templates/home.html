@@ -9,6 +9,7 @@
         <link rel="stylesheet" href="{{ url_for('static', filename='styles/styles.css') }}">
         <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}">
         <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Noto+Color+Emoji&display=swap" rel="stylesheet">
     {% endblock %}
 
 </head>
@@ -32,7 +33,7 @@
             </select>            
         </form>
 
-        <div id="noSecretsFound" class="no-secrets text-center" style="display: none;">No secrets found :3</div>
+        <div id="noSecretsFound" class="no-secrets text-center" style="display: none;">No secrets found 😇</div>
 
         <div class="row">
             {% for company, otp_list in grouped_otp_codes.items() %}

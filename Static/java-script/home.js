@@ -1,4 +1,5 @@
 const countdownIntervals = new Map();
+const emojiList = ['😇', '😊', '🧐', '🫠', '🚫', '💀','✨','🥺'];
 
 async function updateOtpCodes(otpCodes) {
     otpCodes.forEach(otp => {
@@ -29,6 +30,15 @@ async function manuallyRefreshOtps() {
         updateOtpCodes(data.otp_codes);
     } catch (error) {
         console.error('Fetch error:', error);
+    }
+}
+
+function updateNoSecretsMessage() {
+    const noSecretsElement = document.getElementById('noSecretsFound');
+    if (noSecretsElement) {
+        const randomEmoji = emojiList[Math.floor(Math.random() * emojiList.length)];
+        noSecretsElement.innerHTML = `No secrets found ${randomEmoji}`;
+        noSecretsElement.style.display = 'block'; // Make sure to display the message
     }
 }
 
@@ -234,6 +244,7 @@ document.getElementById('searchInput').addEventListener('input', function() {
 
         if (displayed === 0) {
             document.getElementById('noSecretsFound').style.display = 'block';
+            updateNoSecretsMessage();
         } else {
             document.getElementById('noSecretsFound').style.display = 'none';
         }

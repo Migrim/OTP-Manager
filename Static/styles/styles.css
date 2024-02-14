@@ -341,6 +341,7 @@ body {
 }
 
 .no-secrets {
+    font-family: 'Noto Color Emoji', sans-serif;
     display: inline-block; 
     margin-top: 20px; 
     font-size: 2rem; 
