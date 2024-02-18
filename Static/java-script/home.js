@@ -1,5 +1,5 @@
 const countdownIntervals = new Map();
-const emojiList = ['😇', '😊', '🧐', '🫠', '🚫', '💀','✨','🥺'];
+const emojiList = ['😇', '😇', '🧐', '🫠', '🚫', '💀','✨','🥺'];
 
 async function updateOtpCodes(otpCodes) {
     otpCodes.forEach(otp => {

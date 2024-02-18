@@ -2147,3 +2147,82 @@ und. Main server did not shut down.
 2024-02-14 02:01:02,265 [INFO] Response time for home: 0.02s
 2024-02-14 02:01:12,194 [INFO] User ID 1 successfully logged out.
 2024-02-14 02:01:12,333 [INFO] Response time for login: 0.00s
+2024-02-14 11:56:59,435 [INFO] Server starting on port 5001...
+2024-02-14 11:57:01,561 [INFO] Response time for login: 0.04s
+2024-02-14 11:57:31,717 [INFO] Response time for login: 0.24s
+2024-02-14 11:57:31,911 [INFO] Response time for home: 0.04s
+2024-02-14 11:58:21,316 [INFO] Response time for home: 0.01s
+2024-02-14 11:58:39,798 [INFO] Response time for home: 0.00s
+2024-02-14 11:58:46,771 [INFO] Response time for home: 0.00s
+2024-02-14 12:04:08,116 [INFO] Response time for home: 0.00s
+2024-02-14 12:04:15,047 [INFO] Secret with name kjbv was successfully deleted.
+2024-02-14 12:04:15,215 [INFO] Response time for home: 0.01s
+2024-02-14 12:04:28,870 [INFO] Response time for home: 0.01s
+2024-02-14 12:06:53,478 [INFO] User ID 1 updated settings successfully.
+2024-02-14 12:06:54,633 [INFO] Response time for home: 0.00s
+2024-02-14 12:07:54,612 [INFO] Response time for home: 0.01s
+2024-02-14 12:09:10,469 [INFO] Response time for home: 0.01s
+2024-02-14 12:19:23,670 [INFO] Response time for home: 0.01s
+2024-02-14 12:21:52,513 [INFO] Response time for home: 0.01s
+2024-02-14 12:22:08,703 [INFO] Response time for home: 0.01s
+2024-02-14 12:22:13,349 [INFO] Response time for home: 0.00s
+2024-02-14 12:22:19,627 [INFO] Response time for home: 0.00s
+2024-02-14 14:12:58,670 [INFO] Response time for home: 0.00s
+2024-02-14 14:13:07,481 [INFO] User ID 1 successfully logged out.
+2024-02-14 14:13:07,604 [INFO] Response time for login: 0.00s
+2024-02-14 22:10:45,651 [INFO] Server starting on port 5001...
+2024-02-14 22:10:50,247 Redirecting to login: No user_id or session_token
+2024-02-14 22:10:50,420 [INFO] Response time for login: 0.05s
+2024-02-16 21:08:58,838 [INFO] Server starting on port 5001...
+2024-02-16 21:09:04,019 Redirecting to login: No user_id or session_token
+2024-02-16 21:09:04,176 [INFO] Response time for login: 0.03s
+2024-02-16 22:01:11,438 [INFO] Response time for login: 0.24s
+2024-02-16 22:01:11,597 [INFO] Response time for home: 0.04s
+2024-02-16 23:55:53,806 [INFO] Response time for home: 0.01s
+2024-02-16 23:58:43,121 [INFO] Response time for home: 0.01s
+2024-02-18 23:33:43,640 [INFO] Server starting on port 5001...
+2024-02-18 23:34:02,140 [INFO] Server starting on port 5001...
+2024-02-18 23:34:04,418 [INFO] Response time for home: 0.05s
+2024-02-18 23:34:07,869 [INFO] User ID 1 successfully logged out.
+2024-02-18 23:34:08,015 [INFO] Response time for login: 0.03s
+2024-02-18 23:34:18,090 [INFO] Response time for login: 0.23s
+2024-02-18 23:34:18,236 [INFO] Response time for home: 0.01s
+2024-02-18 23:34:29,600 [INFO] Response time for home: 0.01s
+2024-02-18 23:34:33,480 [INFO] Server restart initiated.
+2024-02-18 23:34:33,495 [INFO] Server restart already in progress.
+2024-02-18 23:34:33,550 [INFO] Server restart already in progress.
+2024-02-18 23:34:34,488 [INFO] Main server is shutting down.
+2024-02-18 23:34:35,294 [INFO] Server starting on port 5001...
+2024-02-18 23:34:36,718 [INFO] Response time for home: 0.02s
+2024-02-18 23:34:36,727 [INFO] Response time for home: 0.00s
+2024-02-18 23:34:36,952 Redirecting to login: No user_id or session_token
+2024-02-18 23:34:39,098 [INFO] Response time for login: 0.00s
+2024-02-18 23:34:42,305 [INFO] Fetched all users successfully.
+2024-02-18 23:34:42,305 [INFO] Fetched all users successfully.
+2024-02-18 23:34:44,254 [INFO] Fetched all users successfully.
+2024-02-18 23:34:44,254 [INFO] Fetched all users successfully.
+2024-02-18 23:34:46,448 [INFO] Fetched all users successfully.
+2024-02-18 23:34:46,448 [INFO] Fetched all users successfully.
+2024-02-18 23:34:47,772 [INFO] User ID 1 successfully logged out.
+2024-02-18 23:34:47,890 [INFO] Response time for login: 0.00s
+2024-02-18 23:34:50,553 [INFO] Response time for login: 0.23s
+2024-02-18 23:34:50,675 [INFO] Response time for home: 0.00s
+2024-02-18 23:35:35,901 [INFO] Response time for home: 0.01s
+2024-02-18 23:36:15,025 [INFO] User ID 5 successfully logged out.
+2024-02-18 23:36:15,320 [INFO] Response time for login: 0.00s
+2024-02-18 23:36:18,413 [INFO] Response time for login: 0.23s
+2024-02-18 23:36:18,532 [INFO] Response time for home: 0.00s
+2024-02-18 23:36:24,957 [INFO] Response time for home: 0.01s
+2024-02-18 23:37:03,463 [INFO] Response time for home: 0.00s
+2024-02-18 23:37:13,013 [INFO] Response time for home: 0.01s
+2024-02-18 23:37:20,228 [INFO] User ID 1 updated settings successfully.
+2024-02-18 23:37:21,349 [INFO] Response time for home: 0.01s
+2024-02-18 23:37:41,282 [INFO] User ID 1 updated settings successfully.
+2024-02-18 23:37:42,109 [INFO] Response time for home: 0.01s
+2024-02-18 23:37:54,504 [INFO] Response time for home: 0.00s
+2024-02-18 23:39:50,644 [INFO] Fetched all users successfully.
+2024-02-18 23:39:50,644 [INFO] Fetched all users successfully.
+2024-02-18 23:40:07,248 [INFO] Fetched all users successfully.
+2024-02-18 23:40:07,248 [INFO] Fetched all users successfully.
+2024-02-18 23:40:31,080 [INFO] Response time for home: 0.01s
+2024-02-18 23:40:52,283 [INFO] Response time for home: 0.01s
