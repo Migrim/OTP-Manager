@@ -80,6 +80,21 @@ def reset_password():
 @admin_bp.route('/user_management', methods=['GET', 'POST'])
 @login_required
 def user_management():
+    is_admin = False
+    try:
+        with sqlite3.connect("otp.db") as db:
+            cursor = db.cursor()
+            cursor.execute("SELECT is_admin FROM users WHERE id = ?", (current_user.id,))
+            is_admin = cursor.fetchone()[0]
+    except sqlite3.Error as e:
+        flash('Failed to fetch user admin status.', 'error')
+        logger.error(f"Error fetching user admin status: {e}")
+        return redirect(url_for('home'))  
+
+    if not is_admin:
+        flash('You do not have permission to view this page.', 'error')
+        return redirect(url_for('home'))  
+
     user_form = UserForm()
 
     if user_form.validate_on_submit():
@@ -129,7 +144,7 @@ def company_management():
                 cursor = db.cursor()
                 cursor.execute("INSERT INTO companies (name, kundennummer) VALUES (?, ?)", (company_name, kundennummer))
                 db.commit()
-            flash(f"New company {company_name} with Kundennummer {kundennummer} added.")
+            flash(f"New company {company_name} with Kundennummer {kundennummer} added.", "success")
         except sqlite3.Error as e:
             flash('Failed to add new company.')
             logger.error(f"Error inserting new company: {e}")
@@ -148,7 +163,6 @@ def edit_company(company_id):
             try:
                 with sqlite3.connect("otp.db") as db:
                     cursor = db.cursor()
-                    # Update company details in the database
                     cursor.execute("UPDATE companies SET name = ?, kundennummer = ? WHERE id = ?",
                                    (company_form.name.data, company_form.kundennummer.data, company_id))
                     db.commit()
@@ -282,22 +296,21 @@ def add_search_terms(company_id):
 
     return redirect(url_for('admin.admin_settings'))
 
-
 @admin_bp.route('/delete_company/<int:company_id>', methods=['POST'])
 @login_required
 def delete_company(company_id):
-    if current_user.username != "admin": 
+    if current_user.username != "admin":
         flash("Only the admin can delete companies.")
-        return redirect(url_for('admin.admin_settings'))
+        return redirect(url_for('admin.company_management'))
 
     try:
         with sqlite3.connect("otp.db") as db:
             cursor = db.cursor()
-            cursor.execute("DELETE FROM companies WHERE company_id = ?", (company_id,))
+            cursor.execute("DELETE FROM companies WHERE id = ?", (company_id,))  # Ensure column name matches your DB schema
             db.commit()
-        flash('Company deleted!')
-        logger.warning(f"Company Deleted!")
+        flash('Company deleted successfully!')
     except sqlite3.Error as e:
-        flash('Insufficient Rights!.')
-
+        flash('Failed to delete company.')
+        logger.error(f"Error deleting company with id {company_id}: {e}")
     return redirect(url_for('admin.company_management'))
+

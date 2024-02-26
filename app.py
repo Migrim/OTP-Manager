@@ -1156,7 +1156,7 @@ def shutdown_server():
 @login_required
 def server_settings():
     if not current_user.is_admin:
-        flash('Access denied: Admins only.')
+        flash("You do not have permission to view this page", 'error')
         return redirect(url_for('home'))
 
     current_time = datetime.now()

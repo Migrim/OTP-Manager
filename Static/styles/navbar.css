@@ -2,8 +2,8 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.1);
-    background-color: #1f1f1f;
+    box-shadow: 0 8px 16px 0 rgba(29, 29, 29, 0.4); /* Adjusted shadow */
+    background-color: #1d1d1d;
     height: 50px;
 }
 
@@ -22,6 +22,7 @@
     display: flex;
     align-items: center;
     justify-content: flex-end; 
+    height: 100%; 
 }
 
 #logoutBtn {
@@ -32,19 +33,19 @@
 }
 
 #logoutBtn a {
-    margin-top: 5px;
+    margin-top: 3px;
     display: flex;
     align-items: center;
-    justify-content: center; 
+    justify-content: center;
     padding: 4px 12px;
-    font-size: 1.4rem; 
+    font-size: 1.4rem;
     background-color: #ff5252;
-    color: #fff;
+    color: #fff; 
     text-decoration: none;
     border-radius: 10px;
     transition: background-color 0.3s;
-    width: 100px; 
-    height: 40px; 
+    width: 100px;
+    height: 40px;
 }
 
 #logoutBtn a:hover {
@@ -67,7 +68,7 @@
 
 @keyframes spin {
     from { transform: rotate(0deg); }
-    to { transform: rotate(360deg); }
+    to { transform: rotate(180deg); }
 }
 
 .spin-animation {
@@ -87,6 +88,9 @@
 }
 
 .blink-animation {
+    animation: blink 1s linear infinite;
+}
+.blink {
     animation: blink 1s linear infinite;
 }
 
@@ -231,4 +235,57 @@
 
 #ntpStatusDot.spinner.fade-out {
     opacity: 0;
+}
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-content {
+    visibility: hidden; /* Initially hidden */
+    opacity: 0; /* Start fully transparent */
+    position: absolute;
+    background-color: #1d1d1d; /* Dark mode background */
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+    border-radius: 0 0 10px 10px; /* Rounded only at the bottom corners */
+    top: 50px; /* Adjust this value to control spacing to the top */
+    transition: opacity 0.3s ease, visibility 0.3s ease; /* Smooth transition for fade-in and visibility */
+}
+
+.dropdown-content.show {
+    visibility: visible; /* Make it visible */
+    opacity: 1; /* Fully opaque */
+}
+
+.dropdown-content a {
+    color: #f1f1f1; /* Light text color for dark mode */
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+.dropdown:hover .dropbtn {
+    background-color: #3e8e41;
+}
+
+.dropdown .navbar-brand {
+    display: flex; /* Ensures the text and icon align nicely */
+    align-items: center; /* Center align items vertically */
+}
+
+.material-icons-outlined.expand-icon {
+    display: inline-flex; /* Centers the icon vertically and allows for rotation */
+    transition: transform 0.3s ease; 
+}
+
+.rotate-icon {
+    transform: rotate(180deg);
+    transition: transform 0.5s ease;
 }

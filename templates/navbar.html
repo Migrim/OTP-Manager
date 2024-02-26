@@ -10,8 +10,16 @@
     <div class="navbar-nav mr-auto">
         <a class="navbar-brand" href="{{ url_for('view_logs') }}" style="hover_color: {{ text_color }};">Logs</a> 
     </div>
-    <div class="navbar-nav mr-auto">
-        <a class="navbar-brand" href="{{ url_for('admin.admin_settings') }}" style="hover_color: {{ text_color }};">Management</a> 
+    <div class="navbar-nav mr-auto dropdown">
+        <a class="navbar-brand">
+            Management
+            <span class="material-icons-outlined expand-icon">expand_more</span>
+        </a>        
+        <div class="dropdown-content">
+            <a href="{{ url_for('admin.company_management') }}">Company Settings</a>
+            <a href="{{ url_for('admin.user_management') }}">User Settings</a>
+            <a href="{{ url_for('server_settings') }}">Server Settings</a>
+        </div>
     </div>    
     <div class="navbar-nav mr-auto">
         <a class="navbar-brand" href="{{ url_for('about') }}" style="hover_color: {{ text_color }};">About</a> 
@@ -27,7 +35,7 @@
         {% endif %}
     {% endwith %}
     
-    <div class="right-align-items"> <!-- New container for aligning items to the right -->
+    <div class="right-align-items"> 
         <span id="ntpStatusDot" class="ntp-disconnected"></span>
         <div id="logoutContainer">
             <div id="logoutBtn">
@@ -55,128 +63,174 @@
 </div>
 
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        var hoverColor = '{{ text_color }}';  
-        if (hoverColor === '#FFFFFF') {
-            hoverColor = '#CD5C5C'; 
+document.addEventListener('DOMContentLoaded', function() {
+    var hoverColor = '{{ text_color }}';  
+    if (hoverColor === '#FFFFFF') {
+        hoverColor = '#CD5C5C'; 
+    }
+
+    var logoutIcon = document.querySelector('#logoutBtn .material-icons-outlined');
+
+    document.getElementById('logoutBtn').addEventListener('mouseover', function() {
+        logoutIcon.classList.add('blink');
+    });
+
+    document.getElementById('logoutBtn').addEventListener('mouseout', function() {
+        logoutIcon.classList.remove('blink');
+    });
+
+    var dropdownLinks = document.querySelectorAll('.dropdown-content a');
+    dropdownLinks.forEach(function(link) {
+        link.addEventListener('mouseover', function() {
+            this.style.color = hoverColor; 
+        });
+        link.addEventListener('mouseout', function() {
+            this.style.color = ''; 
+        });
+    });
+
+    var managementLink = document.querySelector('.dropdown .navbar-brand');
+    var expandIcon = managementLink.querySelector('.expand-icon');
+
+    managementLink.addEventListener('mouseover', function() {
+        expandIcon.classList.add('rotate-icon'); 
+    });
+
+    managementLink.addEventListener('mouseout', function() {
+        if (!document.querySelector('.dropdown-content:hover')) {
+            expandIcon.classList.remove('rotate-icon'); 
         }
+    });
 
-        var closeButtons = document.querySelectorAll('.flash-close-btn');
-        closeButtons.forEach(function(btn) {
-            btn.onclick = function() {
-                var flashMessage = this.parentElement;
-                flashMessage.style.opacity = '0';
-                setTimeout(function() {
-                    flashMessage.remove();
-                }, 300);
-            };
-        });
+    var dropdownContent = document.querySelector('.dropdown-content');
+    dropdownContent.addEventListener('mouseover', function() {
+        expandIcon.classList.add('rotate-icon');
+    });
 
-        var flashMessages = document.querySelectorAll('.flash-message');
-        flashMessages.forEach(function(message) {
+    dropdownContent.addEventListener('mouseout', function() {
+        if (!managementLink.querySelector(':hover')) {
+            expandIcon.classList.remove('rotate-icon');
+        }
+    });
+
+    var dropdown = document.querySelector('.dropdown');
+    var dropdownContent = document.querySelector('.dropdown-content');
+
+    dropdown.addEventListener('mouseover', function() {
+        dropdownContent.classList.add('show'); 
+    });
+
+    dropdown.addEventListener('mouseout', function() {
+        dropdownContent.classList.remove('show');
+    });
+
+    var closeButtons = document.querySelectorAll('.flash-close-btn');
+    closeButtons.forEach(function(btn) {
+        btn.onclick = function() {
+            var flashMessage = this.parentElement;
+            flashMessage.style.opacity = '0';
             setTimeout(function() {
-                message.style.transition = "opacity 0.5s ease-in-out"; 
-                message.style.opacity = '0';
-                setTimeout(function() {
-                    message.remove();
-                }, 500); 
-            }, 5000); 
-        });
+                flashMessage.remove();
+            }, 300);
+        };
+    });
 
-        var navbarLinks = document.querySelectorAll('.navbar .navbar-brand');
-        navbarLinks.forEach(function(link) {
-            link.onmouseover = function() { 
-                var icon = this.querySelector('.material-icons-outlined');
-                if (this.parentElement.parentElement.id.includes('logoutContainer')) {
-                    if (icon) {
-                        icon.classList.add('blink-animation');
-                    }
-                } else {
-                    this.style.color = hoverColor; 
-                    if (icon) {
-                        icon.classList.add('spin-animation');
-                    }
-                }
-            };
-            link.onmouseout = function() { 
-                var icon = this.querySelector('.material-icons-outlined');
-                if (!this.parentElement.parentElement.id.includes('logoutContainer')) {
-                    this.style.color = ''; 
-                    if (icon) {
-                        icon.classList.remove('spin-animation', 'blink-animation');
-                    }
-                } else {
-                    if (icon) {
-                        icon.classList.remove('blink-animation');
-                    }
-                }
-            };
-        });
-        const statusDot = document.getElementById('ntpStatusDot');
-        statusDot.className = 'spinner';
+    var flashMessages = document.querySelectorAll('.flash-message');
+    flashMessages.forEach(function(message) {
+        setTimeout(function() {
+            message.style.transition = "opacity 0.5s ease-in-out"; 
+            message.style.opacity = '0';
+            setTimeout(function() {
+                message.remove();
+            }, 500); 
+        }, 5000); 
+    });
 
-        function updateDotAppearanceFromStorage() {
-            const status = localStorage.getItem('internetStatus');
-            const lastChecked = localStorage.getItem('lastChecked');
-            if(status && lastChecked) {
-                const tooltipText = `Internet Status: ${status} (Last checked: ${lastChecked})`;
-                statusDot.setAttribute('title', tooltipText);
-                
-                if(status === 'Connected') {
-                    statusDot.classList.remove('ntp-disconnected', 'spinner');
-                    statusDot.classList.add('ntp-connected');
-                } else {
-                    statusDot.classList.remove('ntp-connected', 'spinner');
-                    statusDot.classList.add('ntp-disconnected');
+    var navbarLinks = document.querySelectorAll('.navbar .navbar-brand:not(#logoutBtn a)');
+    navbarLinks.forEach(function(link) {
+        link.onmouseover = function() {
+            if (!this.closest('#logoutContainer')) {
+                this.style.color = hoverColor;
+                var icon = this.querySelector('.material-icons-outlined');
+                if (icon && icon.textContent === 'settings') {
+                    icon.classList.add('spin-animation');
+                    icon.style.color = hoverColor;
                 }
+            }
+        };
+        link.onmouseout = function() {
+            if (!this.closest('#logoutContainer')) {
+                this.style.color = ''; 
+                var icon = this.querySelector('.material-icons-outlined');
+                if (icon) {
+                    icon.classList.remove('spin-animation');
+                    icon.style.color = ''; 
+                }
+            }
+        };
+    });
+
+    const statusDot = document.getElementById('ntpStatusDot');
+    statusDot.className = 'spinner';
+
+    function updateDotAppearanceFromStorage() {
+        const status = localStorage.getItem('internetStatus');
+        const lastChecked = localStorage.getItem('lastChecked');
+        if(status && lastChecked) {
+            const tooltipText = `Internet Status: ${status} (Last checked: ${lastChecked})`;
+            statusDot.setAttribute('title', tooltipText);
+            
+            if(status === 'Connected') {
+                statusDot.classList.remove('ntp-disconnected', 'spinner');
+                statusDot.classList.add('ntp-connected');
             } else {
-                // Default to disconnected if no status is stored yet
+                statusDot.classList.remove('ntp-connected', 'spinner');
                 statusDot.classList.add('ntp-disconnected');
             }
+        } else {
+            statusDot.classList.add('ntp-disconnected');
         }
+    }
 
-        updateDotAppearanceFromStorage();
+    updateDotAppearanceFromStorage();
 
-        function updateInternetStatus() {
-            const now = new Date();
-            const timeString = now.toLocaleTimeString();
+    function updateInternetStatus() {
+        const now = new Date();
+        const timeString = now.toLocaleTimeString();
 
-            fetch('/internet_status')
-                .then(response => response.json())
-                .then(data => {
-                    let connectionStatus = "Disconnected"; 
-                    if(data.status === 'connected') {
-                        connectionStatus = "Connected";
-                        statusDot.classList.remove('ntp-disconnected');
-                        statusDot.classList.add('ntp-connected');
-                    } else {
-                        statusDot.classList.remove('ntp-connected');
-                        statusDot.classList.add('ntp-disconnected');
-                    }
-
-                    const tooltipText = `Internet Status: ${connectionStatus} (Last checked: ${timeString})`;
-                    statusDot.setAttribute('title', tooltipText);
-
-                    // Save the status and last checked time in localStorage
-                    localStorage.setItem('internetStatus', connectionStatus);
-                    localStorage.setItem('lastChecked', timeString);
-                })
-                .catch(error => {
-                    console.error('Error fetching Internet status:', error);
+        fetch('/internet_status')
+            .then(response => response.json())
+            .then(data => {
+                let connectionStatus = "Disconnected"; 
+                if(data.status === 'connected') {
+                    connectionStatus = "Connected";
+                    statusDot.classList.remove('ntp-disconnected');
+                    statusDot.classList.add('ntp-connected');
+                } else {
+                    statusDot.classList.remove('ntp-connected');
                     statusDot.classList.add('ntp-disconnected');
-                    const tooltipText = `Error fetching Internet status (Last checked: ${timeString})`;
-                    statusDot.setAttribute('title', tooltipText);
+                }
 
-                    // Save the failed status in localStorage
-                    localStorage.setItem('internetStatus', 'Disconnected');
-                    localStorage.setItem('lastChecked', timeString);
-                });
-        }
+                const tooltipText = `Internet Status: ${connectionStatus} (Last checked: ${timeString})`;
+                statusDot.setAttribute('title', tooltipText);
 
-        // Set an interval for updating the status
-        setInterval(updateInternetStatus, 10000); // Update every 10 seconds
+                localStorage.setItem('internetStatus', connectionStatus);
+                localStorage.setItem('lastChecked', timeString);
+            })
+            .catch(error => {
+                console.error('Error fetching Internet status:', error);
+                statusDot.classList.add('ntp-disconnected');
+                const tooltipText = `Error fetching Internet status (Last checked: ${timeString})`;
+                statusDot.setAttribute('title', tooltipText);
 
-        // Immediately check the status on page load
-        updateInternetStatus();
-    });
+                localStorage.setItem('internetStatus', 'Disconnected');
+                localStorage.setItem('lastChecked', timeString);
+            });
+    }
+
+    setInterval(updateInternetStatus, 10000); // Update every 10 seconds
+
+    updateInternetStatus();
+});
+
 </script>

@@ -65,7 +65,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-close-custom" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-delete-custom" id="confirmDeleteButton">Delete</button>
+                <button type="button" class="btn btn-delete-custom" id="confirmDeleteButton" data-company-id="{{ company_id }}">Delete</button>
             </div>
         </div>
     </div>
@@ -115,8 +115,8 @@
     <div class="company-grid">
         {% for company in companies %}
         <div class="company-card">
-            <div class="company-info">
-                {{ company.name }} 
+            <div class="company-info" title="{{ company.name }}">
+                {{ company.name }}
             </div>
             <div class="company-actions">
                 {% if is_admin %}
@@ -124,9 +124,12 @@
                     <span class="material-symbols-outlined">delete_forever</span>
                 </button>
                 {% endif %}
-                <button class="btn btn-secondary edit-company-btn" data-company-id="{{ company.company_id }}">
+                <button class="btn btn-secondary edit-company-btn" 
+                        data-company-id="{{ company.company_id }}"
+                        data-name="{{ company.name }}"
+                        data-kundennummer="{{ company.kundennummer }}">
                     <span class="material-symbols-outlined">edit</span>
-                </button>                              
+                </button>                    
             </div>
         </div>
         {% endfor %}        
@@ -153,12 +156,39 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    confirmDeleteCompanyButton.addEventListener('click', function() {
-        var form = document.createElement('form');
-        form.method = 'POST';
-        form.action = '/admin/delete_company/' + companyIdToDelete;
-        document.body.appendChild(form);
-        form.submit();
+    var deleteCompanyButtons = document.querySelectorAll('.delete-company-btn');
+    var confirmDeleteButton = document.getElementById('confirmDeleteButton');
+    var companyIdToDelete = null; // This variable will hold the ID of the company to delete
+
+    deleteCompanyButtons.forEach(function(button) {
+        button.addEventListener('click', function() {
+            companyIdToDelete = button.getAttribute('data-company-id'); // Set the company ID to delete
+            $('#confirmDeleteCompanyModal').modal('show');
+        });
+    });
+
+    confirmDeleteButton.addEventListener('click', function() {
+        if (!companyIdToDelete) {
+            console.error('No company ID set for deletion.');
+            return;
+        }
+
+        fetch('/admin/delete_company/' + companyIdToDelete, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                // Ensure CSRF token is passed if required by your framework
+            },
+            body: JSON.stringify({}) // Pass any necessary data in the request body
+        }).then(response => {
+            if (response.ok) {
+                // Handle successful deletion (e.g., redirect or refresh the page)
+                window.location.href = '/admin/company_management'; // Redirect after delete
+            } else {
+                // Handle failure (e.g., display an error message)
+                alert('Failed to delete the company.');
+            }
+        });
     });
 
     var editButtons = document.querySelectorAll('.edit-company-btn');

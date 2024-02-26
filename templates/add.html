@@ -5,7 +5,7 @@
     {% block styles %}
     {{ super() }}
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
-    <link rel="stylesheet" href="{{ url_for('static', filename='styles/add.css') }}">
+    <link rel="stylesheet" href=".{{ url_for('static', filename='styles/add.css') }}">
     <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}">
     <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
 {% endblock %}
