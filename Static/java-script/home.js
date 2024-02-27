@@ -272,15 +272,73 @@ document.getElementById('searchInput').addEventListener('input', function() {
         }
     });
 
-    function copyToClipboard(element) {
-        let text = element.textContent;
-        navigator.clipboard.writeText(text).then(() => {
-            showToast();
-        }).catch(err => {
-            console.error('Fehler beim Kopieren: ', err);
-        });
+    async function copyOTP() {
+        try {
+            const response = await fetch('/get_otp');
+            if (!response.ok) {
+                throw new Error('Failed to fetch OTP');
+            }
+            const data = await response.json();
+            if (navigator.clipboard) {
+                await navigator.clipboard.writeText(data.otpCode);
+                // Aufruf der clear_otp Route, um die JSON-Datei zu leeren
+                const clearResponse = await fetch('/clear_otp', { method: 'POST' });
+                const clearResult = await clearResponse.json();
+                if (!clearResponse.ok || !clearResult.success) {
+                    throw new Error(clearResult.message || 'Failed to clear OTP');
+                }
+            } else {
+                console.error('Clipboard API not available');
+            }
+        } catch (error) {
+            console.error('Error copying OTP:', error);
+        }
+    }    
+    
+    async function saveAndCopyOTP(otpName) {
+        try {
+            const saveResponse = await fetch('/copy_otp', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ otpName: otpName }),
+            });
+            const saveResult = await saveResponse.json();
+            if (!saveResponse.ok || !saveResult.success) {
+                throw new Error(saveResult.message || 'Failed to save OTP');
+            }
+    
+            await copyOTP();
+        } catch (error) {
+            console.error('Error saving or copying OTP:', error);
+        }
     }
     
+    function copyTextToClipboard(text) {
+        const textArea = document.createElement("textarea");
+        textArea.value = text;
+    
+        // Make the textarea out of viewport
+        textArea.style.position = "fixed";
+        textArea.style.left = "-999999px";
+        textArea.style.top = "-999999px";
+    
+        document.body.appendChild(textArea);
+        textArea.focus();
+        textArea.select();
+    
+        try {
+            const successful = document.execCommand('copy');
+            const msg = successful ? 'successful' : 'unsuccessful';
+            console.log('Fallback: Copying text command was ' + msg);
+        } catch (err) {
+            console.error('Fallback: Oops, unable to copy', err);
+        }
+    
+        document.body.removeChild(textArea);
+    }    
+
     let originalOtpName;
 
     function openEditModal(name, secret, company) {

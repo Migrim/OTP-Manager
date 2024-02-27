@@ -42,6 +42,7 @@ import logging
 import re
 import uuid
 import signal
+import json
 
 logging.basicConfig(filename='MV.log', level=logging.INFO, format='%(asctime)s [%(levelname)s] %(message)s')
 my_logger = logging.getLogger('MV_logger')
@@ -80,6 +81,7 @@ is_restarting = False
 restart_lock = Lock()
 broadcast_message = None
 slow_requests_counter = 0
+flash_messages = []
 
 @login_manager.user_loader
 def load_user(user_id):
@@ -367,6 +369,19 @@ def check_server_capacity(f):
         return response
 
     return decorated_function
+
+@app.route('/get_flash_messages')
+def get_flash_messages():
+    messages = session.get('_flashes', [])
+    session.pop('_flashes', None)  # Clear the flashed messages after retrieving them
+    categorized_messages = [{'category': category, 'message': message} for category, message in messages]
+    return jsonify(categorized_messages)
+
+# Example route to create a flash message
+@app.route('/test_flash')
+def test_flash():
+    flash("Systemweiter Test der Server Nachrichten", "warning")
+    return "Flash message added!"
 
 def update_statistics(logins=0, refreshed=0):
     today = datetime.now().strftime('%Y-%m-%d')
@@ -954,6 +969,67 @@ def home():
         flash('An unexpected error occurred. Please try again later.', 'danger')
         print(f"An unknown error occurred at the home page") 
         return render_template('home.html', alert_color=alert_color)
+
+@app.route('/copy_otp', methods=['POST'])
+@login_required  
+def copy_otp():
+    try:
+        data = request.get_json()
+        print("Received data for /copy_otp:", data)
+
+        if not data or 'otpName' not in data:
+            flash("Invalid request. Please try again.", "error")
+            return redirect(url_for('home'))
+
+        otp_name = data['otpName']
+        otp_secrets = load_from_db()  
+        otp_code = None
+
+        for otp in otp_secrets:
+            if otp['name'] == otp_name:
+                otp_code, _ = generate_current_and_next_otp(otp)
+                print(f"Generated OTP for {otp_name}: {otp_code}")
+                break
+
+        if otp_code:
+            with open('otp_code.json', 'w') as json_file:
+                json.dump({'otpName': otp_name, 'otpCode': otp_code}, json_file)
+            flash(f"OTP for {otp_name} copied successfully.", "info")
+            print(f"OTP for {otp_name} saved to file.")
+            return jsonify(success=True)
+        else:
+            flash(f"No OTP found for {otp_name}.", "error")
+            print(f"No OTP match found for: {otp_name}")
+            return jsonify(success=False, message=f'No OTP found for "{otp_name}".')
+
+    except Exception as e:
+        flash("An unexpected error occurred. Please try again.", "error")
+        print(f"An error occurred in /copy_otp: {e}")
+        return jsonify(success=False, message="An unexpected error occurred.")
+
+@app.route('/get_otp', methods=['GET'])
+@login_required 
+def get_otp():
+    try:
+        with open('otp_code.json', 'r') as json_file:
+            otp_data = json.load(json_file)
+        print("OTP data fetched successfully.")
+        return jsonify(otp_data)
+    except FileNotFoundError:
+        flash("OTP not found. Please generate an OTP first.", "error")
+        print("Attempted to fetch OTP data, but file not found.")
+        return jsonify({'message': 'OTP not found'}), 404
+
+@app.route('/clear_otp', methods=['POST'])
+@login_required
+def clear_otp():
+    try:
+        with open('otp_code.json', 'w') as json_file:
+            json.dump({}, json_file)
+        return jsonify(success=True)
+    except Exception as e:
+        print(f"An error occurred in /clear_otp: {e}")
+        return jsonify(success=False, message="An unexpected error occurred.")
 
 @app.route('/get_logs', methods=['GET'])
 @login_required
