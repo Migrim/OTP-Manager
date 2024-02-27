@@ -1100,7 +1100,7 @@ def edit(name):
                     data = request.json
                     otp_secrets[i]['name'] = data['name']
                     otp_secrets[i]['secret'] = data['secret']
-                    otp_secrets[i]['company'] = data['company']
+                    otp_secrets[i]['company_id'] = data['company']  # Change here to 'company_id'
                     save_to_db(otp_secrets)
                     print(f"OTP named {name} updated successfully via AJAX.")  
                     flash('OTP updated successfully via AJAX.', 'success')
@@ -1115,7 +1115,7 @@ def edit(name):
                 else:
                     otp_secrets[i]['name'] = form.name.data
                     otp_secrets[i]['secret'] = form.secret.data
-                    otp_secrets[i]['company'] = form.company.data
+                    otp_secrets[i]['company_id'] = form.company.data  
                     save_to_db(otp_secrets)
                     flash('OTP updated successfully through form submission.', 'success')
                     print(f"OTP named {name} updated successfully via form submission.")  
