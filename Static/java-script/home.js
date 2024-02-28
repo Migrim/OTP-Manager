@@ -438,19 +438,19 @@ document.getElementById('searchInput').addEventListener('input', function() {
             let now = new Date();
             let hour = now.getHours();
             if (hour < 12) {
-                return "Good morning ☀️";
+                return "☀️ Good morning";
             } else if (hour < 18) {
-                return "Good afternoon 🌞";
+                return "🌞 Good afternoon";
             } else if (hour < 24) {
-                return "Good evening 🌙";
+                return "🌙 Good evening";
             } else {
-                return "Good night 🌚";
+                return "🌚 Good night";
             }
         }
     
         let greeting = getGreeting();
         let searchPrompt = "Type here to search for otps";
-        let placeholderText = `${greeting}, ${username}! ${searchPrompt}`;
+        let placeholderText = `${greeting} ${username}! ${searchPrompt}`;
         let input = document.getElementById("searchInput");
         input.setAttribute("placeholder", placeholderText);
     

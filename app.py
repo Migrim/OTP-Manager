@@ -373,15 +373,9 @@ def check_server_capacity(f):
 @app.route('/get_flash_messages')
 def get_flash_messages():
     messages = session.get('_flashes', [])
-    session.pop('_flashes', None)  # Clear the flashed messages after retrieving them
+    session.pop('_flashes', None)  
     categorized_messages = [{'category': category, 'message': message} for category, message in messages]
     return jsonify(categorized_messages)
-
-# Example route to create a flash message
-@app.route('/test_flash')
-def test_flash():
-    flash("Systemweiter Test der Server Nachrichten", "warning")
-    return "Flash message added!"
 
 def update_statistics(logins=0, refreshed=0):
     today = datetime.now().strftime('%Y-%m-%d')
@@ -1104,7 +1098,7 @@ def edit(name):
                     otp_secrets[i]['company_id'] = data['company']  # Change here to 'company_id'
                     save_to_db(otp_secrets)
                     print(f"OTP named {name} updated successfully via AJAX.")  
-                    flash('OTP updated successfully via AJAX.', 'success')
+                    flash('OTP updated successfully updated.', 'success')
                     return jsonify({
                         'message': 'OTP updated successfully via AJAX.',
                         'updated_data': {

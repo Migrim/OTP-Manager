@@ -2346,3 +2346,55 @@ UnboundLocalError: cannot access local variable 'current_user' where it is not a
 2024-02-28 16:22:35,896 [INFO] Response time for home: 0.00s
 2024-02-28 16:25:19,737 [INFO] Response time for home: 0.01s
 2024-02-28 16:25:21,255 [INFO] Response time for home: 0.00s
+2024-02-28 16:25:49,735 [INFO] Server starting on port 5001...
+2024-02-28 16:25:51,094 [INFO] Response time for home: 0.02s
+2024-02-28 16:25:54,816 [INFO] Response time for home: 0.00s
+2024-02-28 16:26:08,801 [INFO] Response time for home: 0.00s
+2024-02-28 16:27:25,530 [INFO] Response time for home: 0.00s
+2024-02-28 16:27:26,552 [INFO] Response time for home: 0.01s
+2024-02-28 16:28:47,336 [INFO] Response time for home: 0.00s
+2024-02-28 16:29:18,378 [INFO] Response time for home: 0.00s
+2024-02-28 16:30:05,823 [INFO] Response time for home: 0.00s
+2024-02-28 16:30:07,001 [INFO] Response time for home: 0.01s
+2024-02-28 16:30:09,630 [INFO] Response time for home: 0.00s
+2024-02-28 16:30:13,567 [WARNING] Non-admin user attempted to list backups.
+2024-02-28 16:30:20,969 [INFO] User ID 2 updated settings successfully.
+2024-02-28 16:30:22,175 [INFO] Response time for home: 0.00s
+2024-02-28 16:31:33,616 [INFO] Response time for home: 0.02s
+2024-02-28 16:31:41,995 [WARNING] Non-admin user attempted to list backups.
+2024-02-28 16:31:43,898 [INFO] Response time for home: 0.00s
+2024-02-28 16:31:50,684 [INFO] Response time for home: 0.00s
+2024-02-28 16:31:53,397 [INFO] Response time for home: 0.00s
+2024-02-28 16:31:55,424 [WARNING] Non-admin user attempted to list backups.
+2024-02-28 16:39:19,176 [WARNING] Non-admin user attempted to list backups.
+2024-02-28 16:39:30,099 [INFO] Response time for home: 0.00s
+2024-02-28 16:41:19,718 [INFO] Server starting on port 5001...
+2024-02-28 16:43:25,885 [INFO] Server starting on port 5001...
+2024-02-28 16:45:47,815 [INFO] Server starting on port 5001...
+2024-02-28 16:48:44,050 [INFO] Server starting on port 5001...
+2024-02-28 16:49:01,582 [INFO] Response time for home: 0.02s
+2024-02-28 16:49:07,727 [INFO] Response time for home: 0.00s
+2024-02-28 16:49:08,934 [INFO] User ID 2 successfully logged out.
+2024-02-28 16:49:09,056 [INFO] Response time for login: 0.01s
+2024-02-28 16:49:16,013 [INFO] Response time for login: 0.22s
+2024-02-28 16:49:16,127 [INFO] Response time for home: 0.00s
+2024-02-28 16:52:51,568 [INFO] Server starting on port 5001...
+2024-02-28 17:09:29,157 [INFO] User ID 1 successfully logged out.
+2024-02-28 17:09:29,284 [INFO] Response time for login: 0.01s
+2024-02-28 17:09:34,410 [INFO] Response time for login: 0.25s
+2024-02-28 17:09:42,479 [INFO] Response time for login: 0.23s
+2024-02-28 17:09:42,613 [INFO] Response time for home: 0.02s
+2024-02-28 22:46:14,594 [INFO] Response time for home: 0.01s
+2024-02-28 22:46:15,730 [INFO] Response time for home: 0.00s
+2024-02-28 22:46:59,592 [INFO] Response time for home: 0.00s
+2024-02-28 22:48:11,042 [INFO] Response time for home: 0.00s
+2024-02-28 22:48:43,538 [INFO] Response time for home: 0.00s
+2024-02-28 22:48:44,488 [INFO] Response time for home: 0.01s
+2024-02-28 22:48:46,827 [INFO] Response time for home: 0.00s
+2024-02-28 22:48:55,187 [INFO] Response time for home: 0.00s
+2024-02-28 22:49:01,808 [INFO] User ID 2 successfully logged out.
+2024-02-28 22:49:01,921 [INFO] Response time for login: 0.00s
+2024-02-28 22:49:04,217 [INFO] Response time for login: 0.23s
+2024-02-28 22:49:04,335 [INFO] Response time for home: 0.00s
+2024-02-28 22:51:01,011 [INFO] Server starting on port 5001...
+2024-02-28 22:51:03,402 [INFO] Response time for home: 0.05s
