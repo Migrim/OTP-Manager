@@ -2226,3 +2226,123 @@ und. Main server did not shut down.
 2024-02-18 23:40:07,248 [INFO] Fetched all users successfully.
 2024-02-18 23:40:31,080 [INFO] Response time for home: 0.01s
 2024-02-18 23:40:52,283 [INFO] Response time for home: 0.01s
+2024-02-27 15:51:16,947 [INFO] Server starting on port 5001...
+2024-02-27 15:51:19,773 Redirecting to login: No user_id or session_token
+2024-02-27 15:51:19,955 [INFO] Response time for login: 0.04s
+2024-02-27 15:51:23,109 [INFO] Response time for login: 0.23s
+2024-02-27 15:51:23,282 [INFO] Response time for home: 0.04s
+2024-02-27 15:53:07,648 [INFO] Response time for home: 0.01s
+2024-02-27 15:53:22,711 [INFO] Response time for home: 0.00s
+2024-02-27 15:53:31,872 [INFO] Response time for home: 0.01s
+2024-02-27 15:53:47,940 [INFO] Response time for home: 0.00s
+2024-02-27 16:01:30,826 [INFO] Server starting on port 5001...
+2024-02-27 16:01:41,654 [INFO] Response time for home: 0.02s
+2024-02-27 16:01:50,057 [INFO] Response time for home: 0.00s
+2024-02-27 16:01:59,630 [INFO] Response time for home: 0.01s
+2024-02-27 16:05:21,594 [INFO] Response time for home: 0.02s
+2024-02-27 16:05:39,808 [INFO] Response time for home: 0.00s
+2024-02-27 16:05:43,281 [INFO] Response time for home: 0.00s
+2024-02-27 16:06:11,397 [INFO] Response time for home: 0.02s
+2024-02-27 16:06:15,302 [INFO] Response time for home: 0.00s
+2024-02-27 16:06:21,335 [INFO] Response time for home: 0.01s
+2024-02-27 16:06:25,072 [INFO] Response time for home: 0.00s
+2024-02-27 16:06:31,749 [INFO] Response time for home: 0.00s
+2024-02-27 16:06:33,867 [INFO] Response time for home: 0.00s
+2024-02-27 16:06:38,810 [INFO] Response time for home: 0.00s
+2024-02-27 16:06:42,868 [INFO] Response time for home: 0.01s
+2024-02-27 16:06:46,364 [INFO] Response time for home: 0.00s
+2024-02-27 16:06:48,133 [INFO] Response time for home: 0.00s
+2024-02-27 16:06:54,489 [INFO] Secret with name joodk was successfully deleted.
+2024-02-27 16:06:54,622 [INFO] Response time for home: 0.01s
+2024-02-27 16:07:06,275 [INFO] Response time for home: 0.01s
+2024-02-27 16:09:51,510 [INFO] Response time for home: 0.02s
+2024-02-27 16:09:53,170 [INFO] Response time for home: 0.00s
+2024-02-27 16:09:55,579 [INFO] Response time for home: 0.00s
+2024-02-27 16:10:34,079 [INFO] Response time for home: 0.01s
+2024-02-27 16:11:54,506 [INFO] Response time for home: 0.00s
+2024-02-27 16:15:48,576 [INFO] Response time for home: 0.00s
+2024-02-27 16:16:14,479 [INFO] Response time for home: 0.01s
+2024-02-27 16:16:28,826 [INFO] Response time for home: 0.00s
+2024-02-27 16:17:18,216 [INFO] Response time for home: 0.00s
+2024-02-27 16:18:18,473 [INFO] Response time for home: 0.00s
+2024-02-27 16:18:53,796 [INFO] User ID 1 updated settings successfully.
+2024-02-27 16:18:54,578 [INFO] Response time for home: 0.00s
+2024-02-27 16:18:58,531 [INFO] User ID 1 updated settings successfully.
+2024-02-27 16:18:59,558 [INFO] Response time for home: 0.00s
+2024-02-27 16:19:11,762 [INFO] User ID 1 updated settings successfully.
+2024-02-27 16:19:12,987 [INFO] Response time for home: 0.01s
+2024-02-27 16:19:33,224 [INFO] Server restart initiated.
+2024-02-27 16:19:33,284 [INFO] Server restart already in progress.
+2024-02-27 16:19:33,316 [INFO] Server restart already in progress.
+2024-02-27 16:19:34,230 [INFO] Main server is shutting down.
+2024-02-27 16:19:34,892 [INFO] Server starting on port 5001...
+2024-02-27 16:19:36,217 [INFO] Response time for home: 0.03s
+2024-02-27 16:19:36,582 Redirecting to login: No user_id or session_token
+2024-02-27 16:19:38,724 [INFO] Response time for login: 0.00s
+2024-02-27 16:23:37,150 [INFO] Response time for home: 0.01s
+2024-02-27 16:28:19,465 [INFO] Response time for home: 0.00s
+2024-02-27 16:28:22,039 [INFO] Response time for home: 0.00s
+2024-02-27 16:28:23,384 [INFO] Response time for home: 0.00s
+2024-02-27 16:30:52,247 [INFO] Response time for home: 0.01s
+2024-02-27 16:30:54,703 [INFO] Response time for home: 0.00s
+2024-02-27 16:32:49,498 [INFO] Response time for home: 0.00s
+2024-02-27 16:34:58,470 [INFO] Response time for home: 0.01s
+2024-02-27 16:35:24,739 [INFO] Response time for home: 0.01s
+2024-02-27 16:35:33,739 [INFO] Response time for home: 0.00s
+2024-02-27 16:35:35,047 [INFO] Response time for home: 0.00s
+2024-02-27 16:35:54,439 [INFO] Response time for home: 0.01s
+2024-02-27 16:36:43,750 [INFO] Response time for home: 0.00s
+2024-02-27 16:37:25,004 [INFO] Response time for home: 0.00s
+2024-02-27 22:20:48,516 [INFO] Response time for home: 0.00s
+2024-02-27 22:20:58,530 [INFO] Response time for home: 0.01s
+2024-02-27 22:23:12,829 [INFO] Response time for home: 0.00s
+2024-02-27 22:23:15,030 [INFO] Response time for home: 0.00s
+2024-02-27 22:38:59,872 [INFO] Response time for home: 0.00s
+2024-02-27 22:39:21,445 [INFO] Response time for home: 0.00s
+2024-02-27 22:39:29,836 [INFO] Response time for home: 0.00s
+2024-02-27 22:39:44,094 [INFO] Response time for home: 0.01s
+2024-02-27 22:40:30,196 [INFO] Response time for home: 0.00s
+2024-02-27 22:40:33,042 [INFO] Response time for home: 0.00s
+2024-02-27 22:40:42,540 [INFO] Response time for home: 0.01s
+2024-02-27 22:40:44,050 [INFO] Response time for home: 0.00s
+2024-02-27 22:40:49,998 [INFO] Response time for home: 0.00s
+2024-02-27 22:41:00,896 [INFO] Response time for home: 0.01s
+2024-02-27 23:17:16,076 [INFO] Response time for home: 0.00s
+2024-02-27 23:17:18,187 [INFO] Response time for home: 0.01s
+2024-02-28 16:08:31,384 [INFO] Server starting on port 5001...
+2024-02-28 16:08:35,359 [INFO] Response time for home: 0.05s
+2024-02-28 16:18:56,932 [INFO] Response time for home: 0.03s
+2024-02-28 16:19:00,663 [INFO] Response time for home: 0.01s
+2024-02-28 16:19:04,346 [INFO] Response time for home: 0.00s
+2024-02-28 16:19:05,541 [INFO] User ID 1 successfully logged out.
+2024-02-28 16:19:05,676 [INFO] Response time for login: 0.03s
+2024-02-28 16:19:11,789 [INFO] Server starting on port 5001...
+2024-02-28 16:19:15,206 [INFO] Response time for login: 0.22s
+2024-02-28 16:19:48,046 [INFO] Server starting on port 5001...
+2024-02-28 16:19:49,166 [ERROR] An error occurred on the home page.
+Traceback (most recent call last):
+  File "c:\Users\Sebastian\Desktop\OTP-Manager\app.py", line 939, in home
+    total_pages = ceil(len(otp_codes) / items_per_page) if current_user.enable_pagination else 1
+                                                           ^^^^^^^^^^^^
+UnboundLocalError: cannot access local variable 'current_user' where it is not associated with a value
+2024-02-28 16:20:17,419 [INFO] Server starting on port 5001...
+2024-02-28 16:20:18,895 [INFO] Response time for home: 0.02s
+2024-02-28 16:20:32,180 [INFO] Fetched all users successfully.
+2024-02-28 16:20:32,180 [INFO] Fetched all users successfully.
+2024-02-28 16:20:39,555 [INFO] Fetched all users successfully.
+2024-02-28 16:20:39,555 [INFO] Fetched all users successfully.
+2024-02-28 16:20:40,687 [INFO] User ID 1 successfully logged out.
+2024-02-28 16:20:40,808 [INFO] Response time for login: 0.01s
+2024-02-28 16:20:46,751 [INFO] Response time for login: 0.45s
+2024-02-28 16:20:46,874 [INFO] Response time for home: 0.01s
+2024-02-28 16:20:59,161 [INFO] User ID 2 updated settings successfully.
+2024-02-28 16:20:59,938 [INFO] Response time for home: 0.00s
+2024-02-28 16:21:14,728 [INFO] Response time for home: 0.00s
+2024-02-28 16:21:16,869 [INFO] Response time for home: 0.01s
+2024-02-28 16:21:18,835 [INFO] Response time for home: 0.01s
+2024-02-28 16:21:27,390 [INFO] Response time for home: 0.00s
+2024-02-28 16:22:06,320 [INFO] Response time for home: 0.00s
+2024-02-28 16:22:21,388 [INFO] Response time for home: 0.01s
+2024-02-28 16:22:35,896 [INFO] Response time for home: 0.00s
+2024-02-28 16:25:19,737 [INFO] Response time for home: 0.01s
+2024-02-28 16:25:21,255 [INFO] Response time for home: 0.00s

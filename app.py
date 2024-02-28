@@ -886,6 +886,7 @@ def home():
     form = OTPForm()
     otp_secrets = session.get('filtered_secrets', load_from_db())
     otp_codes = []
+    current_user = get_current_user()
 
     items_per_page = 0 if not current_user.enable_pagination else 9
 
@@ -962,7 +963,7 @@ def home():
             else:
                 flash(f'Secrets filtered by name: {search_name}', 'info')
 
-        return render_template('home.html', form=form, grouped_otp_codes=grouped_otp_codes, total_otp_count=total_otp_count, companies=companies, search_name=search_name, page=page, total_pages=total_pages, enable_pagination=current_user.enable_pagination,  alert_color=alert_color, text_color=text_color)
+        return render_template('home.html', form=form, grouped_otp_codes=grouped_otp_codes, total_otp_count=total_otp_count, companies=companies, search_name=search_name, page=page, total_pages=total_pages, enable_pagination=current_user.enable_pagination,  alert_color=alert_color, text_color=text_color, username=current_user.username)
 
     except Exception as e:
         logging.error('An error occurred on the home page.', exc_info=True)

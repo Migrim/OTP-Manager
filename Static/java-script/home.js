@@ -92,6 +92,10 @@ function startCountdown(element, duration) {
     countdownIntervals.set(element.id, intervalId);
 }
 
+document.addEventListener('DOMContentLoaded', (event) => {
+    document.getElementById('searchInput').value = '';
+});
+
 function debounce(func, wait, immediate) {
     let timeout;
     return function() {
@@ -430,29 +434,40 @@ document.getElementById('searchInput').addEventListener('input', function() {
     });
 
     document.addEventListener("DOMContentLoaded", function() {
-        let placeholders = [
-        "Search for One-Time Passwords",
-        "Press Enter to Display All Results",
-        "Type a Company Name to Search Directly",
-        "Keine Ahnung was ich hier einfügen soll..",
-        "Use Keywords to Narrow Down Results",
-        "Python Python Python; Bim Bim Bam Bam, hehehaha",
-        "Enter the Name of the OTP for Immediate Retrieval"
-        ];
-
-        let randomIndex = Math.floor(Math.random() * placeholders.length);
-        let selectedPlaceholder = placeholders[randomIndex];
-
-        let placeholderText = Array.from(selectedPlaceholder);
-        let input = document.getElementById("searchInput");
-
-        let i = 0;
-        let placeholderInterval = setInterval(function(){
-            if(i < placeholderText.length){
-            input.setAttribute("placeholder", input.getAttribute("placeholder") + placeholderText[i]);
-            i++;
+        function getGreeting() {
+            let now = new Date();
+            let hour = now.getHours();
+            if (hour < 12) {
+                return "Good morning ☀️";
+            } else if (hour < 18) {
+                return "Good afternoon 🌞";
+            } else if (hour < 24) {
+                return "Good evening 🌙";
             } else {
-            clearInterval(placeholderInterval);
+                return "Good night 🌚";
             }
-        }, 100);
+        }
+    
+        let greeting = getGreeting();
+        let searchPrompt = "Type here to search for otps";
+        let placeholderText = `${greeting}, ${username}! ${searchPrompt}`;
+        let input = document.getElementById("searchInput");
+        input.setAttribute("placeholder", placeholderText);
+    
+        function updateClock() {
+            let currentTime = getCurrentTime(); 
+            input.setAttribute("placeholder", `${placeholderText} - ${currentTime}`);
+            setTimeout(updateClock, 1000);
+        }
+    
+        function getCurrentTime() {
+            let now = new Date();
+            let hours = now.getHours().toString().padStart(2, '0');
+            let minutes = now.getMinutes().toString().padStart(2, '0');
+            let seconds = now.getSeconds().toString().padStart(2, '0');
+            return `${hours}:${minutes}:${seconds}`;
+        }
+    
+        updateClock(); 
     });
+    

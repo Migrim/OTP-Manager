@@ -13,6 +13,13 @@ body {
     margin-bottom: 20px;
 }
 
+#clockDisplay {
+    margin-left: auto; /* Pushes the clock to the far right */
+    padding: 10px;
+    color: #fff;
+    font-size: 17px;
+}
+
 .custom-dropdown {
     margin-left: 20px;
     padding: 10px;
@@ -397,7 +404,7 @@ body {
 #editModal .form-control {
     background-color: #222;
     border: 1px solid #444;
-    border-radius: 4px;
+    border-radius: 8px;
     color: #fff;
     padding: 8px 10px;
     width: 100%;
@@ -439,11 +446,13 @@ body {
 #editModal .btn-secondary {
     background-color: #555555; 
     border-color: #555555;
+    color: #ffffff;
 }
 
 #editModal .btn-secondary:hover {
     background-color: #777777; 
     border-color: #777777;
+    color: #ffffff;
 }
 
 @media (max-width: 768px) {

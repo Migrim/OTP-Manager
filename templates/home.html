@@ -15,6 +15,9 @@
 </head>
 <body>
     {% block content %}
+    <script>
+        var username = "{{ username }}"; 
+    </script>
     {% include 'navbar.html' %}
     <div class="container">
         {% if current_user.show_content_titles %}
