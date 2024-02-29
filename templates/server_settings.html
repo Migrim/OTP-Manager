@@ -1,16 +1,20 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Server Settings Dashboard</title>
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href=".{{ url_for('static', filename='styles/dashboard.css') }}">  
-    <link rel="icon" href=".{{ url_for('static', filename='favicon.ico') }}">
-</head>
-<body>
+{% extends 'bootstrap/base.html' %}
+
+{% block title %}
+Server Settings Dashboard
+{% endblock %}
+
+{% block styles %}
+{{ super() }}
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
+<link rel="stylesheet" href="{{ url_for('static', filename='styles/dashboard.css') }}">
+<link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}">
+{% endblock %}
+
+{% block content %}
+{% include 'navbar.html' %}
 
 <div class="dashboard-container">
     <header>
@@ -24,27 +28,28 @@
                 <form method="post">
                 <div class="input-group">
                     <label for="server_port">Change Port:</label>
-                    <input type="number" id="server_port" name="server_port" min="1024" max="65535" value="{{ current_port }}" oninput="this.value = this.value.replace(/[^0-9]/g, '').replace(/(\..*)\./g, '$1');" required>
+                    <input type="number" id="server_port" name="server_port" min="1024" max="65535" value="{{ current_port }}" required>
                 </div>
                 <div class="input-group">
                     <label>Server Control:</label>
                     <button type="submit" name="server_action" value="restart"><span class="material-icons">refresh</span> Restart</button>
                     <button type="submit" name="server_action" value="stop"><span class="material-icons">stop</span> Stop</button>
                 </div>
-            </form>
-        </div>
-
-    <div class="vertical-divider"></div>
-
-        <div class="settings-column">
-            <div class="input-group">
-                <label>Uptime:</label>
-                <div id="uptime">{{ uptime }}</div>
+                </form>
             </div>
-            <div class="input-group">
-                <label>Server Time:</label>
-                <div id="serverTime">{{ server_time }}</div>
-            </div>        
+
+            <div class="vertical-divider"></div>
+
+            <div class="settings-column">
+                <div class="input-group">
+                    <label>Uptime:</label>
+                    <div id="uptime">{{ uptime }}</div>
+                </div>
+                <div class="input-group">
+                    <label>Server Time:</label>
+                    <div id="serverTime">{{ server_time }}</div>
+                </div>        
+            </div>
         </div>
     </section>
 
@@ -54,8 +59,8 @@
             <button type="button"><span class="material-icons">backup</span> Create Backup</button>
             <button type="button"><span class="material-icons">restore</span> Restore Backup</button>
         </div>
-        <hr class="separator"> <!-- Separator line -->
-        <div class="backup-list-container"> <!-- Container for the backups -->
+        <hr class="separator">
+        <div class="backup-list-container">
             <ul id="backupList">
                 <!-- Backups will be listed here -->
             </ul>
@@ -219,3 +224,4 @@ document.addEventListener('DOMContentLoaded', function() {
 
 </body>
 </html>
+{% endblock content %}
