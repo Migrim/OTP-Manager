@@ -2398,3 +2398,95 @@ UnboundLocalError: cannot access local variable 'current_user' where it is not a
 2024-02-28 22:49:04,335 [INFO] Response time for home: 0.00s
 2024-02-28 22:51:01,011 [INFO] Server starting on port 5001...
 2024-02-28 22:51:03,402 [INFO] Response time for home: 0.05s
+2024-02-29 08:11:18,496 [INFO] Server starting on port 5001...
+2024-02-29 08:11:21,086 [INFO] Response time for login: 0.04s
+2024-02-29 08:11:23,780 [INFO] Response time for login: 0.22s
+2024-02-29 08:11:24,075 [INFO] Response time for home: 0.06s
+2024-02-29 08:18:17,703 [ERROR] Timeout error: HTTPConnectionPool(host='www.google.com', port=80): Read timed out. (read timeout=5)
+2024-02-29 08:28:34,812 [INFO] Server starting on port 5001...
+2024-02-29 08:36:49,025 [INFO] Server starting on port 5001...
+2024-02-29 08:47:18,775 [INFO] Server starting on port 5001...
+2024-02-29 08:47:42,171 [INFO] Server starting on port 5001...
+2024-02-29 08:48:18,977 [INFO] Server starting on port 5001...
+2024-02-29 08:48:21,055 [INFO] Response time for home: 0.06s
+2024-02-29 08:51:45,707 [INFO] User ID 1 successfully logged out.
+2024-02-29 08:51:45,922 [INFO] Response time for login: 0.01s
+2024-02-29 08:51:54,302 [INFO] Response time for login: 0.22s
+2024-02-29 08:51:54,474 [INFO] Response time for home: 0.02s
+2024-02-29 08:57:34,569 [INFO] Response time for home: 0.03s
+2024-02-29 09:03:57,671 [INFO] Response time for home: 0.00s
+2024-02-29 09:05:41,679 [INFO] Response time for home: 0.06s
+2024-02-29 09:05:55,675 [INFO] Response time for home: 0.00s
+2024-02-29 09:06:18,647 [INFO] Response time for home: 0.03s
+2024-02-29 09:06:24,866 [INFO] Response time for home: 0.01s
+2024-02-29 09:09:33,796 [INFO] Server starting on port 5001...
+2024-02-29 09:10:12,009 [WARNING] Non-admin user attempted to list backups.
+2024-02-29 09:13:24,434 [INFO] Response time for home: 0.03s
+2024-02-29 09:14:03,610 [INFO] Response time for home: 0.00s
+2024-02-29 09:14:12,836 [INFO] User ID 2 successfully logged out.
+2024-02-29 09:14:13,204 [INFO] Response time for login: 0.03s
+2024-02-29 09:14:15,865 [INFO] Response time for login: 0.21s
+2024-02-29 09:14:16,304 [INFO] Response time for home: 0.00s
+2024-02-29 09:16:53,959 [INFO] Response time for home: 0.04s
+2024-02-29 09:16:56,643 [INFO] Response time for home: 0.00s
+2024-02-29 09:17:27,033 [INFO] Response time for home: 0.00s
+2024-02-29 09:17:29,950 [INFO] Response time for home: 0.00s
+2024-02-29 09:17:38,129 [INFO] Server starting on port 5001...
+2024-02-29 09:17:40,834 [INFO] Response time for home: 0.03s
+2024-02-29 09:17:49,337 [INFO] Server restart initiated.
+2024-02-29 09:17:49,368 [INFO] Server restart already in progress.
+2024-02-29 09:17:49,415 [INFO] Server restart already in progress.
+2024-02-29 09:17:50,357 [INFO] Main server is shutting down.
+2024-02-29 09:17:51,297 [INFO] Server starting on port 5001...
+2024-02-29 09:17:52,270 [INFO] Response time for home: 0.03s
+2024-02-29 09:17:52,882 Redirecting to login: No user_id or session_token
+2024-02-29 09:17:55,062 [INFO] Response time for login: 0.02s
+2024-02-29 09:52:48,162 [INFO] Server starting on port 5001...
+2024-02-29 09:52:52,326 [INFO] Response time for home: 0.05s
+2024-02-29 09:52:54,867 [INFO] Response time for home: 0.00s
+2024-02-29 09:53:10,069 [INFO] Response time for home: 0.00s
+2024-02-29 09:53:11,967 [INFO] User ID 1 successfully logged out.
+2024-02-29 09:53:12,123 [INFO] Response time for login: 0.00s
+2024-02-29 09:53:17,613 [INFO] Response time for login: 0.22s
+2024-02-29 09:53:17,770 [INFO] Response time for home: 0.02s
+2024-02-29 09:53:21,058 [INFO] User ID 2 successfully logged out.
+2024-02-29 09:53:21,205 [INFO] Response time for login: 0.00s
+2024-02-29 09:53:25,142 [INFO] Response time for login: 0.20s
+2024-02-29 09:53:25,331 [INFO] Response time for home: 0.02s
+2024-02-29 09:53:48,435 [INFO] User ID 5 successfully logged out.
+2024-02-29 09:53:48,624 [INFO] Response time for login: 0.00s
+2024-02-29 09:53:51,839 [INFO] Response time for login: 0.22s
+2024-02-29 09:53:52,058 [INFO] Response time for home: 0.02s
+2024-02-29 09:55:25,904 Redirecting to login: No user_id or session_token
+2024-02-29 09:55:26,103 [INFO] Response time for login: 0.00s
+2024-02-29 09:55:57,660 [INFO] Server starting on port 5001...
+2024-02-29 09:56:39,423 [INFO] Server starting on port 5001...
+2024-02-29 09:56:41,226 [INFO] Response time for home: 0.04s
+2024-02-29 09:57:15,331 [INFO] Response time for home: 0.01s
+2024-02-29 09:57:44,460 [INFO] Response time for home: 0.01s
+2024-02-29 09:58:43,303 [INFO] Server starting on port 5001...
+2024-02-29 09:58:45,907 [INFO] Response time for home: 0.03s
+2024-02-29 09:58:53,694 [INFO] Secret with name Memmo  was successfully deleted.
+2024-02-29 09:58:53,953 [INFO] Response time for home: 0.01s
+2024-02-29 09:59:11,087 [INFO] Response time for home: 0.01s
+2024-02-29 09:59:41,168 [INFO] Secret with name Ben GmbH was successfully deleted.
+2024-02-29 09:59:41,384 [INFO] Response time for home: 0.01s
+2024-02-29 09:59:46,128 [INFO] Secret with name Keine Ahnung was successfully deleted.
+2024-02-29 09:59:46,593 [INFO] Response time for home: 0.01s
+2024-02-29 09:59:59,318 [ERROR] Error deleting company with id 1: no such column: id
+2024-02-29 09:59:59,318 [ERROR] Error deleting company with id 1: no such column: id
+2024-02-29 10:00:02,561 [ERROR] Error deleting company with id 1: no such column: id
+2024-02-29 10:00:02,561 [ERROR] Error deleting company with id 1: no such column: id
+2024-02-29 10:00:12,590 [INFO] Response time for home: 0.01s
+2024-02-29 10:00:29,744 [INFO] Response time for home: 0.01s
+2024-02-29 10:01:27,883 [INFO] Response time for home: 0.01s
+2024-02-29 10:01:49,146 [INFO] Server starting on port 5001...
+2024-02-29 10:01:51,508 [INFO] Response time for home: 0.03s
+2024-02-29 10:07:35,555 [INFO] Server starting on port 5001...
+2024-02-29 10:07:42,086 [INFO] Response time for home: 0.03s
+2024-02-29 10:19:07,772 [INFO] Server starting on port 5001...
+2024-02-29 10:19:10,788 [INFO] Response time for home: 0.03s
+2024-02-29 10:19:16,471 [INFO] Response time for home: 0.01s
+2024-02-29 10:27:31,932 [INFO] Server starting on port 5001...
+2024-02-29 10:27:34,055 [INFO] Response time for home: 0.03s
+2024-02-29 10:27:35,672 [INFO] Response time for home: 0.01s

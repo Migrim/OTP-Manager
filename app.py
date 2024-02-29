@@ -83,7 +83,7 @@ broadcast_message = None
 slow_requests_counter = 0
 flash_messages = []
 
-@login_manager.user_loader
+@app.login_manager.user_loader
 def load_user(user_id):
     with sqlite3.connect("otp.db") as conn:
         cursor = conn.cursor()
@@ -98,7 +98,8 @@ def load_user(user_id):
             enable_pagination=bool(user_row[6]),
             show_timer=bool(user_row[7]),
             show_otp_type=bool(user_row[8]),
-            show_content_titles=bool(user_row[9])
+            show_content_titles=bool(user_row[9]),
+            show_emails=bool(user_row[11])  
         )
     return None
 
@@ -135,7 +136,8 @@ def init_db():
                     show_otp_type INTEGER DEFAULT 1,
                     show_content_titles INTEGER DEFAULT 1,
                     alert_color TEXT DEFAULT 'alert-primary',
-                    text_color TEXT DEFAULT '#FFFFFF'
+                    text_color TEXT DEFAULT '#FFFFFF',
+                    show_emails INTEGER DEFAULT 0
                 )
             """)
 
@@ -203,6 +205,7 @@ def load_from_db():
         cursor.execute("""
             SELECT 
                 otp_secrets.name, 
+                otp_secrets.email, 
                 otp_secrets.secret, 
                 otp_secrets.otp_type, 
                 otp_secrets.refresh_time, 
@@ -214,11 +217,12 @@ def load_from_db():
         return [
             {
                 'name': row[0], 
-                'secret': row[1], 
-                'otp_type': row[2], 
-                'refresh_time': row[3], 
-                'company_id': row[4], 
-                'company': row[5] if row[5] else 'Unbekannt'
+                'email': row[1],  
+                'secret': row[2], 
+                'otp_type': row[3], 
+                'refresh_time': row[4], 
+                'company_id': row[5], 
+                'company': row[6] if row[6] else 'Unbekannt'
             } 
             for row in cursor.fetchall()
         ]
@@ -250,7 +254,7 @@ class CompanyForm(FlaskForm):
     submit_company = SubmitField('Add Company')
 
 class User(UserMixin):
-    def __init__(self, user_id, username, is_admin=False, enable_pagination=False, show_timer=False, show_otp_type=True, show_content_titles=True):
+    def __init__(self, user_id, username, is_admin=False, enable_pagination=False, show_timer=False, show_otp_type=True, show_content_titles=True, show_emails=False):  # Add show_emails here
         self.id = user_id
         self.username = username
         self.is_admin = is_admin
@@ -258,6 +262,7 @@ class User(UserMixin):
         self.show_timer = show_timer
         self.show_otp_type = show_otp_type
         self.show_content_titles = show_content_titles
+        self.show_emails = show_emails 
 
 def get_current_user():
     return current_user
@@ -902,7 +907,7 @@ def home():
             flash(f'New OTP secret "{new_secret["name"]}" added successfully!', 'success')
             return redirect(url_for('home'))
         
-        companies = load_companies_from_db()
+        companies = sorted(load_companies_from_db(), key=lambda x: x['name'])
         selected_company = request.args.get('company')
 
         if selected_company:
@@ -927,6 +932,12 @@ def home():
         grouped_otp_codes = defaultdict(list)
         for otp_code in otp_codes:
             grouped_otp_codes[otp_code['company']].append(otp_code)
+
+        # Ensure "Unknown" or "N/A" is always at the top
+        unknown_group = grouped_otp_codes.pop('N/A', None) or grouped_otp_codes.pop('Unknown', None)
+        grouped_otp_codes = dict(sorted(grouped_otp_codes.items(), key=lambda x: x[0]))
+        if unknown_group:
+            grouped_otp_codes = {'N/A': unknown_group, **grouped_otp_codes}
 
         total_otp_count = len(otp_secrets)
 
@@ -1095,7 +1106,7 @@ def edit(name):
                     data = request.json
                     otp_secrets[i]['name'] = data['name']
                     otp_secrets[i]['secret'] = data['secret']
-                    otp_secrets[i]['company_id'] = data['company']  # Change here to 'company_id'
+                    otp_secrets[i]['company_id'] = data['company'] 
                     save_to_db(otp_secrets)
                     print(f"OTP named {name} updated successfully via AJAX.")  
                     flash('OTP updated successfully updated.', 'success')
