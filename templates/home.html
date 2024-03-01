@@ -46,14 +46,18 @@
                 {% for otp in otp_list %}
                     <div class="col-md-4">
                         <div class="alert mt-3 position-relative" style="background-color: {{ alert_color | default('#ff0000', true) }}; color: {{ text_color | default('#000000', true) }};">
+                            {% if show_company %}  
                             Firma: {{ otp.company }} <br>
+                            {% endif %}
                             Name: <span style="text-decoration: underline;">{{ otp.name }}</span> <br>
                             <p>Secret: <span class="spoiler">{{otp.secret}}</span></p>
                             {% if current_user.show_otp_type %}
                             OTP type: {{ otp.otp_type }} <br>
                             {% endif %}
                             OTP code: <span class="otp-code" id="current_otp_code_{{ otp.name }}" onclick="copyToClipboard(this)">{{ otp.current_otp }}</span> <br>
-                            E-Mail: {{ otp.email }} <br>                   
+                            {% if show_emails %}
+                            E-Mail: {{ otp.email }} <br>      
+                            {% endif %}            
                             {% if current_user.show_timer %}
                                 <div id="timer{{ otp.name }}" data-refresh-time="{{ otp.refresh_time }}">30s</div>
                             {% else %}
@@ -166,7 +170,7 @@
                 </div>                
 
                 <div id="toast" class="toast">Copied to clipboard</div>
-                <div class="copyright">Development Version - © February 24. Not for production.</div>
+                <div class="copyright">Development Version - © March 24. Not for production.</div>
                 </div>
 
                 <script src="{{ url_for('static', filename='java-script/home.js') }}"></script>

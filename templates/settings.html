@@ -300,6 +300,13 @@
             </label>
             <span class="setting-description">Show Content Titles</span>
         </div>    
+        <div class="form-item">
+            <label class="toggle-switch">
+                <input type="checkbox" id="showEmails" name="show_emails" {% if current_user.show_emails %}checked{% endif %}>
+                <span class="slider"></span>
+            </label>
+            <span class="setting-description">Show Emails</span>
+        </div>        
 
         <div class="form-item">
             <label>OTP-Color</label>

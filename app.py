@@ -99,7 +99,8 @@ def load_user(user_id):
             show_timer=bool(user_row[7]),
             show_otp_type=bool(user_row[8]),
             show_content_titles=bool(user_row[9]),
-            show_emails=bool(user_row[11])  
+            show_emails=bool(user_row[11]),  
+            show_company=bool(user_row[12])  
         )
     return None
 
@@ -137,7 +138,8 @@ def init_db():
                     show_content_titles INTEGER DEFAULT 1,
                     alert_color TEXT DEFAULT 'alert-primary',
                     text_color TEXT DEFAULT '#FFFFFF',
-                    show_emails INTEGER DEFAULT 0
+                    show_emails INTEGER DEFAULT 0,
+                    show_company INTEGER DEFAULT 0
                 )
             """)
 
@@ -254,7 +256,7 @@ class CompanyForm(FlaskForm):
     submit_company = SubmitField('Add Company')
 
 class User(UserMixin):
-    def __init__(self, user_id, username, is_admin=False, enable_pagination=False, show_timer=False, show_otp_type=True, show_content_titles=True, show_emails=False):  # Add show_emails here
+    def __init__(self, user_id, username, is_admin=False, enable_pagination=False, show_timer=False, show_otp_type=True, show_content_titles=True, show_emails=0, show_company=False):  
         self.id = user_id
         self.username = username
         self.is_admin = is_admin
@@ -262,10 +264,30 @@ class User(UserMixin):
         self.show_timer = show_timer
         self.show_otp_type = show_otp_type
         self.show_content_titles = show_content_titles
-        self.show_emails = show_emails 
+        self.show_emails = bool(show_emails)
+        self.show_company = bool(show_company)
 
 def get_current_user():
-    return current_user
+    user_id = session.get('user_id') 
+    if not user_id:
+        return None  
+
+    with sqlite3.connect("otp.db") as db:
+        db.row_factory = sqlite3.Row 
+        cursor = db.cursor()
+        cursor.execute("SELECT * FROM users WHERE id = ?", (user_id,))
+        user_row = cursor.fetchone()
+
+    if user_row:
+        # Explicitly convert integer values from the database to booleans
+        show_emails = user_row["show_emails"] == 1
+        show_company = user_row["show_company"] == 1
+        return User(user_id=user_row["id"], username=user_row["username"], 
+                    is_admin=bool(user_row["is_admin"]), enable_pagination=bool(user_row["enable_pagination"]), 
+                    show_timer=bool(user_row["show_timer"]), show_otp_type=bool(user_row["show_otp_type"]), 
+                    show_content_titles=bool(user_row["show_content_titles"]), show_emails=show_emails, show_company=show_company)
+    else:
+        return None
 
 def get_all_users():
     with sqlite3.connect("otp.db") as db:
@@ -512,6 +534,8 @@ def settings():
         show_otp_type = 1 if data.get('show_otp_type') == 'on' else 0
         show_content_titles = 1 if data.get('show_content_titles') == 'on' else 0
         alert_color = data.get('alert_color')
+        show_emails = 1 if data.get('show_emails') == 'on' else 0
+        show_company = 1 if data.get('show_company') == 'on' else 0
 
         if alert_color in {'#292d26', '#3e4637'}:
             text_color = '#c4b550'
@@ -525,28 +549,32 @@ def settings():
             with sqlite3.connect("otp.db") as db:
                 cursor = db.cursor()
                 cursor.execute(
-                    "UPDATE users SET show_timer = ?, show_otp_type = ?, show_content_titles = ?, alert_color = ?, text_color = ? WHERE id = ?",
-                    (show_timer, show_otp_type, show_content_titles, alert_color, text_color, user_id)
+                    "UPDATE users SET show_timer = ?, show_otp_type = ?, show_content_titles = ?, alert_color = ?, text_color = ?, show_emails = ?, show_company = ? WHERE id = ?",
+                    (show_timer, show_otp_type, show_content_titles, alert_color, text_color, show_emails, show_company, user_id)
                 )
                 db.commit()
 
-            current_user.show_content_titles = show_content_titles
             current_user.show_timer = show_timer
             current_user.show_otp_type = show_otp_type
+            current_user.show_content_titles = show_content_titles
+            current_user.show_emails = show_emails
+            current_user.show_company = show_company
             current_user.alert_color = alert_color
             current_user.text_color = text_color
 
+            current_user.show_emails = True if show_emails == 1 else False
+
             logging.info(f'User ID {user_id} updated settings successfully.')
-            print(f"User ID {user_id} updated settings successfully.")
             return jsonify({'success': True, 'message': 'Settings updated successfully'})
         except sqlite3.Error as e:
             logging.error(f'Error updating settings for User ID {user_id}: {e}')
-            print(f"Error updating settings for User ID {user_id}: {e}")
             return jsonify({'success': False, 'message': 'An error occurred while updating settings.'}), 500
-    
+
+    print(f"Show emails: {current_user.show_emails}")
+    print(f"show company: {current_user.show_company}")
     alert_color = getattr(current_user, 'alert_color', '#333333')  
     text_color = getattr(current_user, 'text_color', '#FFFFFF') 
-    return render_template('settings.html', show_timer=current_user.show_timer, show_otp_type=current_user.show_otp_type, alert_color=alert_color)
+    return render_template('settings.html', show_timer=current_user.show_timer, show_otp_type=current_user.show_otp_type, alert_color=alert_color, show_emails=current_user.show_emails, show_company=current_user.show_company)
 
 @app.route('/refresh_codes_v2')
 @login_required
@@ -933,7 +961,6 @@ def home():
         for otp_code in otp_codes:
             grouped_otp_codes[otp_code['company']].append(otp_code)
 
-        # Ensure "Unknown" or "N/A" is always at the top
         unknown_group = grouped_otp_codes.pop('N/A', None) or grouped_otp_codes.pop('Unknown', None)
         grouped_otp_codes = dict(sorted(grouped_otp_codes.items(), key=lambda x: x[0]))
         if unknown_group:
@@ -968,7 +995,9 @@ def home():
             else:
                 flash(f'Secrets filtered by name: {search_name}', 'info')
 
-        return render_template('home.html', form=form, grouped_otp_codes=grouped_otp_codes, total_otp_count=total_otp_count, companies=companies, search_name=search_name, page=page, total_pages=total_pages, enable_pagination=current_user.enable_pagination,  alert_color=alert_color, text_color=text_color, username=current_user.username)
+        show_emails = current_user.show_emails
+        show_company = current_user.show_company
+        return render_template('home.html', form=form, grouped_otp_codes=grouped_otp_codes, total_otp_count=total_otp_count, companies=companies, search_name=search_name, page=page, total_pages=total_pages, enable_pagination=current_user.enable_pagination,  alert_color=alert_color, text_color=text_color, username=current_user.username, show_emails=show_emails, show_company=show_company)
 
     except Exception as e:
         logging.error('An error occurred on the home page.', exc_info=True)
