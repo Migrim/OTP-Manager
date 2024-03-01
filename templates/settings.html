@@ -272,13 +272,19 @@
 {% block content %}
 {% include 'navbar.html' %}
 <div class="settings-container">
-    <div class="d-flex justify-content-center">
-        {% if current_user.show_content_titles %}
-        <h1>User Settings</h1>
-        {% endif %}
-    </div>
+    <h1 class="text-center">User Settings</h1>
 
-    <form method="post" class="form-container"> 
+    <form method="post" class="form-container">
+        <h2>General Settings</h2>
+        <div class="form-item">
+            <label class="toggle-switch">
+                <input type="checkbox" id="showContentTitles" name="show_content_titles" {% if current_user.show_content_titles %}checked{% endif %}>
+                <span class="slider"></span>
+            </label>
+            <span class="setting-description">Show Content Titles</span>
+        </div>
+
+        <h2>OTP Container Settings</h2>
         <div class="form-item">
             <label class="toggle-switch">
                 <input type="checkbox" id="showTimer" name="show_timer" {% if current_user.show_timer %}checked{% endif %}>
@@ -295,19 +301,13 @@
         </div>
         <div class="form-item">
             <label class="toggle-switch">
-                <input type="checkbox" id="showContentTitles" name="show_content_titles" {% if current_user.show_content_titles %}checked{% endif %}>
-                <span class="slider"></span>
-            </label>
-            <span class="setting-description">Show Content Titles</span>
-        </div>    
-        <div class="form-item">
-            <label class="toggle-switch">
                 <input type="checkbox" id="showEmails" name="show_emails" {% if current_user.show_emails %}checked{% endif %}>
                 <span class="slider"></span>
             </label>
             <span class="setting-description">Show Emails</span>
-        </div>        
+        </div>
 
+        <h2>Theme Settings</h2>
         <div class="form-item">
             <label>OTP-Color</label>
             <div id="colorPalette">
@@ -325,9 +325,8 @@
                 <div class="colorSwatch" data-color="#1b2e4b" style="background-color: #1b2e4b;"></div>
             </div>
             <input type="hidden" id="alertColor" name="alert_color" value="{{ alert_color }}">
-        </div>        
-        
-    
+        </div>
+
         <div class="d-flex justify-content-center">
             <button type="submit" class="btn btn-primary">Save</button>
         </div>

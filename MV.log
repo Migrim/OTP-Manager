@@ -2676,3 +2676,16 @@ UnboundLocalError: local variable 'show_company' referenced before assignment
 2024-03-01 09:55:47,295 [INFO] Response time for home: 0.01s
 2024-03-01 09:55:51,591 [INFO] User ID 2 updated settings successfully.
 2024-03-01 09:55:53,013 [INFO] Response time for home: 0.01s
+2024-03-01 09:59:37,595 [INFO] Server starting on port 5001...
+2024-03-01 09:59:40,698 [INFO] Response time for home: 0.03s
+2024-03-01 09:59:45,742 [INFO] User ID 2 updated settings successfully.
+2024-03-01 09:59:47,312 [INFO] Response time for home: 0.01s
+2024-03-01 09:59:51,690 [INFO] User ID 2 updated settings successfully.
+2024-03-01 09:59:53,246 [INFO] Response time for home: 0.00s
+2024-03-01 09:59:58,426 [INFO] Response time for home: 0.01s
+2024-03-01 10:04:05,181 [INFO] Response time for home: 0.00s
+2024-03-01 10:07:39,099 [INFO] Server starting on port 5001...
+2024-03-01 10:07:46,300 [INFO] Response time for home: 0.02s
+2024-03-01 10:08:02,046 [INFO] Response time for home: 0.00s
+2024-03-01 10:08:42,214 [INFO] Server starting on port 5001...
+2024-03-01 10:09:24,803 [INFO] Server starting on port 5001...

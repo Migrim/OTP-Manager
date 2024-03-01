@@ -279,7 +279,6 @@ def get_current_user():
         user_row = cursor.fetchone()
 
     if user_row:
-        # Explicitly convert integer values from the database to booleans
         show_emails = user_row["show_emails"] == 1
         show_company = user_row["show_company"] == 1
         return User(user_id=user_row["id"], username=user_row["username"], 
@@ -564,16 +563,13 @@ def settings():
 
             current_user.show_emails = True if show_emails == 1 else False
 
-            logging.info(f'User ID {user_id} updated settings successfully.')
-            return jsonify({'success': True, 'message': 'Settings updated successfully'})
+            flash('Settings updated successfully', 'success')
         except sqlite3.Error as e:
-            logging.error(f'Error updating settings for User ID {user_id}: {e}')
-            return jsonify({'success': False, 'message': 'An error occurred while updating settings.'}), 500
+            flash('An error occurred while updating settings.', 'danger')
 
-    print(f"Show emails: {current_user.show_emails}")
-    print(f"show company: {current_user.show_company}")
     alert_color = getattr(current_user, 'alert_color', '#333333')  
     text_color = getattr(current_user, 'text_color', '#FFFFFF') 
+    flash('Settigs loaded', 'auth')
     return render_template('settings.html', show_timer=current_user.show_timer, show_otp_type=current_user.show_otp_type, alert_color=alert_color, show_emails=current_user.show_emails, show_company=current_user.show_company)
 
 @app.route('/refresh_codes_v2')
