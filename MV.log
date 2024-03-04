@@ -2689,3 +2689,9 @@ UnboundLocalError: local variable 'show_company' referenced before assignment
 2024-03-01 10:08:02,046 [INFO] Response time for home: 0.00s
 2024-03-01 10:08:42,214 [INFO] Server starting on port 5001...
 2024-03-01 10:09:24,803 [INFO] Server starting on port 5001...
+2024-03-04 00:55:28,457 [INFO] Server starting on port 5001...
+2024-03-04 00:55:44,190 [INFO] Response time for home: 0.06s
+2024-03-04 00:55:52,810 [INFO] Response time for home: 0.00s
+2024-03-04 00:56:37,412 [INFO] Response time for home: 0.02s
+2024-03-04 00:58:59,791 [INFO] Response time for home: 0.00s
+2024-03-04 01:03:35,535 [INFO] Response time for home: 0.01s

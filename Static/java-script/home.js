@@ -437,14 +437,14 @@ document.getElementById('searchInput').addEventListener('input', function() {
         function getGreeting() {
             let now = new Date();
             let hour = now.getHours();
-            if (hour < 12) {
-                return "☀️ Good morning";
+            if (hour < 4) {
+                return "🌜 Good night";
+            } else if (hour < 12) {
+                return "☕ Good morning";
             } else if (hour < 18) {
                 return "🌞 Good afternoon";
-            } else if (hour < 24) {
-                return "🌙 Good evening";
             } else {
-                return "🌚 Good night";
+                return "🌒 Good evening";
             }
         }
     
