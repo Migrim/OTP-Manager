@@ -2,40 +2,42 @@ const countdownIntervals = new Map();
 const emojiList = ['😇', '😇', '🧐', '🫠', '🚫', '💀','✨','🥺'];
 
 async function updateOtpCodes(otpCodes) {
-    otpCodes.forEach(otp => {
+    otpCodes.forEach(async (otp) => {
         let currentOtpCodeElement = document.getElementById(`current_otp_code_${otp.name}`);
-        let progressBar = document.getElementById(`progressBar${otp.name}`);
 
         if (currentOtpCodeElement && otp.current_otp) {
-            // Split the new OTP code into individual digits
             const newDigits = otp.current_otp.split('');
 
-            // Find all digit spans within the current OTP code element
-            const digitElements = currentOtpCodeElement.querySelectorAll('.digit');
-
-            // Update each digit one by one with the flip animation
-            digitElements.forEach((digitElement, index) => {
-                // Apply the flip animation with a delay based on the digit position
-                setTimeout(() => {
-                    digitElement.classList.add('flip');
-
-                    // Listener to update the digit text once the flip animation ends
-                    digitElement.addEventListener('animationend', function() {
-                        this.textContent = newDigits[index] || ''; // Update to new digit
-                        this.classList.remove('flip'); // Reset animation for next update
-                    }, { once: true });
-                }, index * 100); // Delay increases with each digit for sequential animation
-            });
-        }
-
-        if (progressBar) {
-            progressBar.style.width = '100%';
-            let duration = parseInt(progressBar.getAttribute('data-refresh-time'), 10);
-            startCountdown(progressBar, duration);
+            for (let index = 0; index < newDigits.length; index++) {
+                // Assuming each digit element has a class 'digit'
+                let digitElement = currentOtpCodeElement.querySelectorAll('.digit')[index];
+                
+                // Simulate the rolling effect
+                await simulateRolling(digitElement, newDigits[index]);
+            }
         }
     });
 }
 
+async function simulateRolling(digitElement, finalDigit) {
+    return new Promise((resolve) => {
+        // Define the sequence of numbers to "roll" through
+        const sequence = [...Array(10).keys()]; // [0, 1, 2, ..., 9]
+        let currentIteration = 0;
+        const maxIterations = 20; // Adjust as needed for speed/duration
+
+        const intervalId = setInterval(() => {
+            digitElement.textContent = sequence[currentIteration % sequence.length];
+            currentIteration++;
+
+            if (currentIteration >= maxIterations) {
+                clearInterval(intervalId);
+                digitElement.textContent = finalDigit; 
+                resolve(); 
+            }
+        }, 10); 
+    });
+}
 
 async function manuallyRefreshOtps() {
     try {

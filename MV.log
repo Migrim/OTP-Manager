@@ -2768,3 +2768,17 @@ UnboundLocalError: local variable 'show_company' referenced before assignment
 2024-03-20 14:24:36,149 [INFO] Server restart already in progress.
 2024-03-20 14:24:36,168 [INFO] Server restart already in progress.
 2024-03-20 14:24:37,080 [INFO] Main server is shutting down.
+2024-03-20 14:24:37,779 [INFO] Server starting on port 5001...
+2024-03-20 14:24:38,312 [INFO] Response time for home: 0.03s
+2024-03-20 14:24:38,504 [INFO] Response time for home: 0.00s
+2024-03-20 14:24:39,424 Redirecting to login: No user_id or session_token
+2024-03-20 14:24:41,765 [INFO] Response time for login: 0.01s
+2024-03-20 14:26:21,071 [INFO] Response time for home: 0.01s
+2024-03-20 14:26:24,196 [INFO] Response time for home: 0.00s
+2024-03-20 14:26:29,081 [INFO] Response time for home: 0.00s
+2024-03-20 14:26:37,437 [INFO] Response time for home: 0.01s
+2024-03-20 14:26:59,607 [INFO] Response time for home: 0.01s
+2024-03-20 14:29:55,492 [INFO] Response time for home: 0.01s
+2024-03-20 14:33:49,832 [INFO] Response time for home: 0.01s
+2024-03-20 14:33:59,528 [INFO] Response time for home: 0.00s
+2024-03-20 14:34:32,942 [INFO] Response time for home: 0.01s
