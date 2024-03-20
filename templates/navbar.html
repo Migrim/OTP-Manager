@@ -79,6 +79,22 @@ document.addEventListener('DOMContentLoaded', function() {
         logoutIcon.classList.remove('blink');
     });
 
+    const elementsToMakeNonDraggable = document.querySelectorAll('.navbar-brand, .icon-link i');
+
+    elementsToMakeNonDraggable.forEach(el => {
+        el.setAttribute('draggable', 'false'); // Set the draggable attribute to false
+        el.addEventListener('dragstart', function(e) {
+            e.preventDefault(); // Prevent the dragstart action
+        });
+    });
+
+    const logoutBtn = document.getElementById('logoutBtn').querySelector('a');
+    if (logoutBtn) {
+        logoutBtn.addEventListener('dragstart', function(e) {
+            e.preventDefault();
+        });
+    }
+
     var dropdownLinks = document.querySelectorAll('.dropdown-content a');
     dropdownLinks.forEach(function(link) {
         link.addEventListener('mouseover', function() {

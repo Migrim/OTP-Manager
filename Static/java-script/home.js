@@ -4,24 +4,38 @@ const emojiList = ['😇', '😇', '🧐', '🫠', '🚫', '💀','✨','🥺'];
 async function updateOtpCodes(otpCodes) {
     otpCodes.forEach(otp => {
         let currentOtpCodeElement = document.getElementById(`current_otp_code_${otp.name}`);
-        let nextOtpCodeElement = document.getElementById(`next_otp_code_${otp.name}`);
         let progressBar = document.getElementById(`progressBar${otp.name}`);
 
-        if (currentOtpCodeElement) {
-            currentOtpCodeElement.textContent = otp.current_otp;
-        }
+        if (currentOtpCodeElement && otp.current_otp) {
+            // Split the new OTP code into individual digits
+            const newDigits = otp.current_otp.split('');
 
-        if (nextOtpCodeElement) {
-            nextOtpCodeElement.textContent = otp.next_otp;
+            // Find all digit spans within the current OTP code element
+            const digitElements = currentOtpCodeElement.querySelectorAll('.digit');
+
+            // Update each digit one by one with the flip animation
+            digitElements.forEach((digitElement, index) => {
+                // Apply the flip animation with a delay based on the digit position
+                setTimeout(() => {
+                    digitElement.classList.add('flip');
+
+                    // Listener to update the digit text once the flip animation ends
+                    digitElement.addEventListener('animationend', function() {
+                        this.textContent = newDigits[index] || ''; // Update to new digit
+                        this.classList.remove('flip'); // Reset animation for next update
+                    }, { once: true });
+                }, index * 100); // Delay increases with each digit for sequential animation
+            });
         }
 
         if (progressBar) {
             progressBar.style.width = '100%';
-            let duration = parseInt(progressBar.getAttribute('data-refresh-time'));
+            let duration = parseInt(progressBar.getAttribute('data-refresh-time'), 10);
             startCountdown(progressBar, duration);
         }
     });
 }
+
 
 async function manuallyRefreshOtps() {
     try {

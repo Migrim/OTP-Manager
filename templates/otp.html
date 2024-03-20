@@ -72,6 +72,12 @@
             return;
         }
 
+        let warningSignElement = document.createElement('i');
+        warningSignElement.className = 'material-icons-outlined warning-sign';
+        warningSignElement.textContent = 'warning'; // The icon text for the warning icon in Google Material Icons
+        warningSignElement.style.display = 'none'; // Initially hide the warning sign
+        remainingTimeElement.parentNode.insertBefore(warningSignElement, remainingTimeElement.nextSibling); // Insert it right after the remainingTimeElement
+
         if (window.countdownIntervals && window.countdownIntervals[elementId]) {
             clearInterval(window.countdownIntervals[elementId]);
         } else {
@@ -84,8 +90,14 @@
             let remaining = duration - seconds % duration;
             remainingTimeElement.textContent = `${remaining}s`;
 
+            if (remaining <= 10) {
+                remainingTimeElement.classList.add('warning-time'); // Add class to show warning
+            } else {
+                remainingTimeElement.classList.remove('warning-time'); // Remove class to hide warning
+            }
+
             if (remaining <= 0) {
-                clearInterval(intervalId);
+                clearInterval(window.countdownIntervals[elementId]);
                 manuallyRefreshOtps();
             }
         };
@@ -93,7 +105,6 @@
         countdownUpdate();
         window.countdownIntervals[elementId] = setInterval(countdownUpdate, 1000);
     }
-
     function initializeCountdownsForOtpCodes() {
         let otpCodeElements = document.querySelectorAll('[id^="otp_code_"]');
         otpCodeElements.forEach((otpElement) => {
@@ -186,11 +197,17 @@
     function animateTableRows() {
         const rows = document.querySelectorAll('tbody tr');
         let delay = 0;
-        rows.forEach((row) => {
+        const baseDelay = 100; 
+        const delayDecrementFactor = rows.length > 10 ? 5 : 1; // Increase the decrement factor for more than 10 rows
+        const delayDecrement = (baseDelay / Math.max(rows.length, 1)) * delayDecrementFactor; // Ensure rows.length is never 0 to avoid division by zero
+        let currentDelayIncrement = baseDelay - delayDecrement;
+
+        rows.forEach((row, index) => {
             setTimeout(() => {
                 row.classList.add('slide-down');
             }, delay);
-            delay += 100;
+
+            delay += Math.max(currentDelayIncrement, 5); 
         });
     }
 
@@ -253,32 +270,34 @@
     <div id="toast" class="toast" style="display:none;">Copied to clipboard!</div>
 
     <div class="table-wrapper">
-    <table>
-        <thead>
-            <tr>
-                <th>Name</th>
-                <th>Secret</th>
-                <th>Type</th>
-                <th>OTP Code</th>
-                <th>Company</th>
-                <th>Expiry Time</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for secret in matched_secrets %}
+        <table>
+            <thead>
                 <tr>
-                    <td>{{ secret.name }}</td>
-                    <td class="secretField" onmouseover="revealSecret(this)" onmouseout="hideSecret(this)">
-                        <span class="hiddenSecret">{{ secret.secret }}</span>
-                        <span class="maskedSecret">●●●●●●●●●●●●●●●●</span>
-                    </td>                    
-                    <td>{{ secret.otp_type }}</td>
-                    <td id="otp_code_{{ secret.name }}" class="otp-code" onclick="copyToClipboard(this)"></td>
-                    <td>{{ secret.company }}</td>
-                    <td id="remaining_time_{{ secret.name }}"></td> 
+                    <th>Name</th>
+                    <th>Secret</th>
+                    <th>Type</th>
+                    <th>OTP Code</th>
+                    <th>Company</th>
+                    <th>Email</th> <!-- New Email Column -->
+                    <th>Expiry Time</th>
                 </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+                {% for secret in matched_secrets %}
+                    <tr>
+                        <td>{{ secret.name }}</td>
+                        <td class="secretField" onmouseover="revealSecret(this)" onmouseout="hideSecret(this)">
+                            <span class="hiddenSecret">{{ secret.secret }}</span>
+                            <span class="maskedSecret">●●●●●●●●●●●●●●●●</span>
+                        </td>                    
+                        <td>{{ secret.otp_type }}</td>
+                        <td id="otp_code_{{ secret.name }}" class="otp-code" onclick="copyToClipboard(this)">{{ secret.otp_code }}</td>
+                        <td>{{ secret.company }}</td>
+                        <td>{{ secret.email }}</td> <!-- Display Email Here -->
+                        <td id="remaining_time_{{ secret.name }}"></td> 
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>        
 </div>
 {% endblock %}

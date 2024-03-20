@@ -3,6 +3,16 @@ body {
     color: #fff;
 }
 
+.container {
+    width: 90%; 
+    max-width: none;
+    padding: 0 20px; 
+    margin: 0 auto; 
+    display: flex; 
+    flex-direction: column; 
+    height: 100%; 
+}
+
 .navbar {
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.1);
 }
@@ -122,8 +132,8 @@ h1 {
 }
 
 .table-wrapper {
-    max-height: 1000px;
-    overflow-y: auto;
+    flex-grow: 1; 
+    overflow: auto;
     margin-bottom: 20px;
 }
 
@@ -198,22 +208,23 @@ tbody tr.slide-down {
 .toast {
     position: fixed;
     bottom: 20px;
-    right: 20px; /* Positioning to the bottom right */
+    right: 20px; 
     padding: 10px 20px;
     border: 1px solid #333;
-    background-color: #201e1e; /* Dark background for better readability */
-    color: #fff; /* White text for contrast */
+    background-color: #201e1e; 
+    color: #fff; 
     z-index: 1000;
     border-radius: 5px;
     box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-    opacity: 0; /* Initially invisible */
-    transition: opacity 0.5s ease; /* Fade-in and fade-out effect */
+    opacity: 0; 
+    transition: opacity 0.5s ease; 
 }
 
-table th:nth-child(3), table td:nth-child(3),
-table th:nth-child(6), table td:nth-child(6),
 table th:nth-child(2), table td:nth-child(2),
-table th:nth-child(4), table td:nth-child(4) {
+table th:nth-child(3), table td:nth-child(3),
+table th:nth-child(4), table td:nth-child(4),
+table th:nth-child(6), table td:nth-child(6),
+table th:nth-child(7), table td:nth-child(7) {
     text-align: center;
 }
 
@@ -227,12 +238,37 @@ table td:nth-child(5) {
     text-align: left;
 }
 
-@keyframes blink {
-    0% { opacity: 1; }
-    50% { opacity: 0.5; }
-    100% { opacity: 1; }
-  }
+@keyframes color-shift {
+    0% { color: rgb(255, 255, 255); }
+    50% { color: rgb(255, 137, 137); }
+    100% { color: rgb(255, 255, 255); }
+}
 
-.blink-text {
-    animation: blink 1s linear infinite;
+.warning-time {
+    position: relative; 
+}
+
+.warning-time::before {
+    content: 'warning';
+    font-family: 'Material Icons Outlined';
+    color: #ffeb3b;
+    animation: flash-warning 1s steps(1, start) infinite; 
+    font-size: 20px;
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+@keyframes flash-warning {
+    0%, 49.9% { opacity: 1; }
+    50%, 100% { opacity: 0; }
+}
+
+.warning-sign {
+    color: #ffeb3b; /* Warning icon color */
+    animation: flash-warning 1s infinite; /* Apply flashing animation */
+    font-size: 24px; /* Adjust size as needed */
+    vertical-align: middle; /* Align with the timer text */
+    margin-right: 5px;
 }

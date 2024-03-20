@@ -1,4 +1,4 @@
-from flask import Flask, request, render_template, json
+from flask import Flask, request, render_template, json, flash, get_flashed_messages
 import base64
 from pyotp import totp, hotp
 from flask import Blueprint, redirect, url_for
@@ -19,7 +19,8 @@ def load_from_db():
                 otp_secrets.refresh_time, 
                 otp_secrets.company_id, 
                 companies.name AS company_name,
-                companies.kundennummer AS company_kundennummer
+                companies.kundennummer AS company_kundennummer,
+                otp_secrets.email AS email
             FROM otp_secrets
             LEFT JOIN companies ON otp_secrets.company_id = companies.company_id
         """)
@@ -31,7 +32,8 @@ def load_from_db():
                 'refresh_time': row[3], 
                 'company_id': row[4], 
                 'company': row[5] if row[5] else 'Unbekannt',
-                'company_kundennummer': row[6]
+                'company_kundennummer': row[6],
+                'email': row[7]  
             } 
             for row in cursor.fetchall()
         ]
@@ -53,6 +55,12 @@ def get_companies_list():
     otp_secrets = load_from_db()
     companies = {otp['company'] for otp in otp_secrets if 'company' in otp}
     return companies
+
+@app.route('/flash-copied', methods=['POST'])
+def flash_copied():
+    data = request.get_json()
+    flash(data['message'])
+    return '', 200
 
 @search_blueprint.route('/search_otp', methods=['GET'])
 def search_otp():

@@ -54,7 +54,15 @@
                             {% if current_user.show_otp_type %}
                             OTP type: {{ otp.otp_type }} <br>
                             {% endif %}
-                            OTP code: <span class="otp-code" id="current_otp_code_{{ otp.name }}" onclick="copyToClipboard(this)">{{ otp.current_otp }}</span> <br>
+                            OTP code: <span class="otp-code" id="current_otp_code_{{ otp.name }}" onclick="copyToClipboard(this)">
+                                <span class="digit">#</span>
+                                <span class="digit">#</span>
+                                <span class="digit">#</span>
+                                <span class="digit">#</span>
+                                <span class="digit">#</span>
+                                <span class="digit">#</span>
+                            </span>       
+                            <br>                     
                             {% if show_emails %}
                             E-Mail: {{ otp.email }} <br>      
                             {% endif %}            

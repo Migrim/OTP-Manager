@@ -532,3 +532,25 @@ body {
     opacity: 0;
     pointer-events: none; 
 }
+
+@keyframes flipInY {
+    0% {
+        transform: perspective(400px) rotateX(90deg);
+        opacity: 0;
+    }
+    100% {
+        transform: perspective(400px) rotateX(0deg);
+        opacity: 1;
+    }
+}
+
+.flip {
+    backface-visibility: hidden;
+    animation: flipInY 0.5s ease-out; 
+}
+
+.otp-code .digit {
+    display: inline-block;
+    margin-right: -4px; 
+    transform: perspective(1px) translateZ(0); 
+}

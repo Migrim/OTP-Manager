@@ -199,13 +199,13 @@
 }
 
 .ntp-disconnected {
-    background-color: #ff5252 !important; /* Red for disconnected */
-    animation: blink 0.5s linear infinite; /* Apply the blink animation */
+    background-color: #ff5252 !important; 
+    animation: blink 1s steps(1, start) infinite; 
 }
 
 @keyframes blink {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0.2; }
+    0%, 49.9% { opacity: 1; }
+    50%, 100% { opacity: 0; }
 }
 
 .spinner {
