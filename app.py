@@ -551,6 +551,7 @@ def settings():
                     "UPDATE users SET show_timer = ?, show_otp_type = ?, show_content_titles = ?, alert_color = ?, text_color = ?, show_emails = ?, show_company = ? WHERE id = ?",
                     (show_timer, show_otp_type, show_content_titles, alert_color, text_color, show_emails, show_company, user_id)
                 )
+                flash('Settings updated successfully', 'success')
                 db.commit()
 
             current_user.show_timer = show_timer
@@ -1025,7 +1026,7 @@ def copy_otp():
         if otp_code:
             with open('otp_code.json', 'w') as json_file:
                 json.dump({'otpName': otp_name, 'otpCode': otp_code}, json_file)
-            flash(f"OTP for {otp_name} copied successfully.", "info")
+            flash(f"OTP for '{otp_name}' copied to the clipboard.", "info")
             print(f"OTP for {otp_name} saved to file.")
             return jsonify(success=True)
         else:

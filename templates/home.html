@@ -64,8 +64,15 @@
                             </span>       
                             <br>                     
                             {% if show_emails %}
-                            E-Mail: {{ otp.email }} <br>      
-                            {% endif %}            
+                            <div class="email-tooltip">
+                                E-Mail: 
+                                {% if otp.email|length > 30 %}
+                                <span title="{{ otp.email }}">{{ otp.email[:27] }}...</span>
+                                {% else %}
+                                <span>{{ otp.email }}</span>
+                                {% endif %}
+                            </div>      
+                            {% endif %}                                                          
                             {% if current_user.show_timer %}
                                 <div id="timer{{ otp.name }}" data-refresh-time="{{ otp.refresh_time }}">30s</div>
                             {% else %}
@@ -161,7 +168,7 @@
                                     <div class="form-group">
                                         <label for="otpCompany">Company</label>
                                         <select class="form-control" id="editOtpCompany" required>
-                                            <option value="">No change in Company!</option>
+                                            <option value="">Select a Company!</option>
                                             {% for company in companies %}
                                                 <option value="{{ company['company_id'] }}">{{ company['name'] }}</option>
                                             {% endfor %}

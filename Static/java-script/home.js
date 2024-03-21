@@ -9,10 +9,7 @@ async function updateOtpCodes(otpCodes) {
             const newDigits = otp.current_otp.split('');
 
             for (let index = 0; index < newDigits.length; index++) {
-                // Assuming each digit element has a class 'digit'
                 let digitElement = currentOtpCodeElement.querySelectorAll('.digit')[index];
-                
-                // Simulate the rolling effect
                 await simulateRolling(digitElement, newDigits[index]);
             }
         }
@@ -21,12 +18,12 @@ async function updateOtpCodes(otpCodes) {
 
 async function simulateRolling(digitElement, finalDigit) {
     return new Promise((resolve) => {
-        // Define the sequence of numbers to "roll" through
-        const sequence = [...Array(10).keys()]; // [0, 1, 2, ..., 9]
+        const sequence = [...Array(10).keys()]; 
         let currentIteration = 0;
-        const maxIterations = 20; // Adjust as needed for speed/duration
+        const maxIterations = 15; 
 
         const intervalId = setInterval(() => {
+
             digitElement.textContent = sequence[currentIteration % sequence.length];
             currentIteration++;
 
@@ -54,7 +51,7 @@ function updateNoSecretsMessage() {
     if (noSecretsElement) {
         const randomEmoji = emojiList[Math.floor(Math.random() * emojiList.length)];
         noSecretsElement.innerHTML = `No secrets found ${randomEmoji}`;
-        noSecretsElement.style.display = 'block'; // Make sure to display the message
+        noSecretsElement.style.display = 'block'; 
     }
 }
 
@@ -300,20 +297,26 @@ document.getElementById('searchInput').addEventListener('input', function() {
             }
             const data = await response.json();
             if (navigator.clipboard) {
-                await navigator.clipboard.writeText(data.otpCode);
-                // Aufruf der clear_otp Route, um die JSON-Datei zu leeren
-                const clearResponse = await fetch('/clear_otp', { method: 'POST' });
-                const clearResult = await clearResponse.json();
-                if (!clearResponse.ok || !clearResult.success) {
-                    throw new Error(clearResult.message || 'Failed to clear OTP');
+                try {
+                    await navigator.clipboard.writeText(data.otpCode);
+                } catch (err) {
+                    console.error('Clipboard API failed, trying fallback:', err);
+                    copyTextToClipboard(data.otpCode); // Using fallback method
                 }
             } else {
-                console.error('Clipboard API not available');
+                console.error('Clipboard API not available, using fallback.');
+                copyTextToClipboard(data.otpCode); // Using fallback method
+            }
+            const clearResponse = await fetch('/clear_otp', { method: 'POST' });
+            const clearResult = await clearResponse.json();
+            if (!clearResponse.ok || !clearResult.success) {
+                throw new Error(clearResult.message || 'Failed to clear OTP');
             }
         } catch (error) {
             console.error('Error copying OTP:', error);
         }
-    }    
+    }
+    
     
     async function saveAndCopyOTP(otpName) {
         try {
@@ -339,7 +342,6 @@ document.getElementById('searchInput').addEventListener('input', function() {
         const textArea = document.createElement("textarea");
         textArea.value = text;
     
-        // Make the textarea out of viewport
         textArea.style.position = "fixed";
         textArea.style.left = "-999999px";
         textArea.style.top = "-999999px";

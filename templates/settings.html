@@ -14,9 +14,9 @@
             color: #FFF;
             margin: 0;
             padding: 0;
-            height: 100vh; 
-            max-height: 100vh; 
-            overflow: hidden;
+            height: 70vh; 
+            max-height: 70vh; 
+            overflow: auto;
         }
 
         .navbar {
@@ -36,11 +36,9 @@
 
         @keyframes scaleFadeIn {
             0% {
-                opacity: 0;
                 transform: scale(0.95);
             }
             100% {
-                opacity: 1;
                 transform: scale(1);
             }
         }
@@ -49,12 +47,11 @@
             padding: 30px;
             margin: auto;
             width: 50%;
-            background-color: #252526;
-            border: 1px solid #dee2e6;
+            background-color: #333333;
             border-radius: 20px;
             animation: scaleFadeIn 0.8s ease-in-out;
-            max-height: calc(100vh - 60px); 
-            overflow: hidden;
+            max-height: calc(150vh - 60px - 20px); 
+            overflow: auto;
         }
 
         .d-flex {
@@ -100,7 +97,7 @@
             height: 100%;
             background-color: #ccc;
             border-radius: 28px;
-            transition: all 0.4s ease;
+            transition: background-color 0.4s cubic-bezier(0.68, -0.55, 0.27, 1.55);
         }
 
         .slider:before {
@@ -112,16 +109,17 @@
             height: 24px;
             background-color: white;
             border-radius: 50%;
-            transition: all 0.4s ease;
+            transition: transform 0.4s cubic-bezier(0.68, -0.55, 0.27, 1.55);
         }
 
         input[type="checkbox"]:checked + .slider {
-            background-color: #46278E;
+            background-color: #7852ff;
         }
 
         input[type="checkbox"]:checked + .slider:before {
             transform: translateX(32px);
         }
+
 
         .navbar {
             box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.1);
@@ -252,20 +250,39 @@
         }
 
         @media screen and (max-width: 768px) {
-            .settings-container {
-                width: 90%;
-            }
-
-            .form-item {
-                flex-direction: column;
-                align-items: flex-start;
-            }
-
-            .setting-description {
-                margin-left: 0;
-                margin-top: 10px;
-            }
+        .settings-container {
+            width: 80%; /* Adjust the width on smaller screens */
+            padding: 20px; /* Reduce padding for more space */
+            overflow-y: auto; /* Allow vertical scrolling */
         }
+
+        .form-container {
+            width: 100%; /* Ensure the form uses full container width */
+        }
+
+        .form-item {
+            flex-direction: column; /* Stack form items vertically */
+            align-items: flex-start; /* Align items to the start */
+        }
+
+        .toggle-switch + .setting-description {
+            margin-top: 10px; /* Add space between switch and its description */
+            margin-left: 0; /* Reset left margin */
+        }
+
+        h1, h2 {
+            font-size: 1.2rem; /* Adjust heading sizes for better readability */
+        }
+
+        .form-item label, .settings-container button {
+            font-size: 0.9rem; /* Adjust font size for smaller elements */
+        }
+    }
+    @media screen and (max-width: 480px) {
+        .settings-container {
+            width: 95%; /* Use almost full width for very small screens */
+        }
+    }
     </style>
 {% endblock %}
 

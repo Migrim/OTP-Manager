@@ -1,11 +1,20 @@
-{% extends 'bootstrap/base.html' %}
-{% block title %} OTP List {% endblock %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% extends 'bootstrap/base.html' %}
+    {% block title %}
+        {% if search_query %}
+            {{ total_results }} results for "{{ search_query }}" - OTP List
+        {% else %}
+            OTP List
+        {% endif %}
+    {% endblock %}
     {% block styles %}
     {{ super() }}
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
     <link rel="stylesheet" href="{{ url_for('static', filename='styles/otp_results.css') }}">
     <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}">
-{% endblock %}
+    {% endblock %}
 
 {% block content %}
 {% include 'navbar.html' %}
@@ -264,7 +273,11 @@
 </script>
 
 <div class="container">
-    <h1>OTP Secrets</h1>
+    {% if search_query %}
+        <h1>{{ total_results }} results for "{{ search_query }}"</h1>
+    {% else %}
+        <h1>OTP Secrets</h1>
+    {% endif %}
     <!-- <div class="countdown-timer" id="countdown">Calculating OTP Expiry...</div> -->
 
     <div id="toast" class="toast" style="display:none;">Copied to clipboard!</div>

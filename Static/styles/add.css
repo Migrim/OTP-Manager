@@ -14,7 +14,7 @@ body {
     justify-content: center;
     align-items: flex-start;
     min-height: 100vh;
-    padding-top: 50px;
+    padding-top: 10px;
 }
 
 .form-container {
@@ -48,20 +48,20 @@ body {
 
 .form-submit {
     margin-top: 20px;
-    margin-bottom: 20px; 
-    margin-left: auto; 
-    margin-right: auto; 
+    margin-bottom: 20px;
+    margin-left: auto;
+    margin-right: auto;
     display: block;
-    width: fit-content; 
-    background-color: #555;
-    color: #ddd; 
-    border: 1px solid #666; 
-    padding: 10px 15px; 
+    width: fit-content;
+    background-color: #555; /* Default background color */
+    color: #ddd; /* Default text color */
+    border: 1px solid #666; /* Default border color */
+    padding: 10px 15px;
     border-radius: 5px;
-    transition: background-color 0.3s, color 0.3s, border-color 0.3s; 
-    font-weight: bold; 
-    text-transform: uppercase; 
-    cursor: pointer; 
+    transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+    font-weight: bold;
+    text-transform: uppercase;
+    cursor: pointer;
     text-align: center;
 }
 
@@ -69,6 +69,12 @@ body {
     background-color: #666; 
     color: #fff; 
     border-color: #777; 
+}
+
+.form-submit:active {
+    background-color: #10d60f !important; 
+    color: #fff; 
+    border-color: #10d60f !important;
 }
 
 .text-danger {
@@ -161,7 +167,6 @@ select.form-control option {
 
 @keyframes fadeInScale {
     0% {
-        opacity: 0;
         transform: scale(0.9);
     }
     100% {

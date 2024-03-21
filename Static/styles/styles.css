@@ -14,7 +14,7 @@ body {
 }
 
 #clockDisplay {
-    margin-left: auto; /* Pushes the clock to the far right */
+    margin-left: auto; 
     padding: 10px;
     color: #fff;
     font-size: 17px;
@@ -26,13 +26,21 @@ body {
     font-size: 17px;
     border: 1px solid #757575;
     width: 15.5%; 
-    background: rgba(255, 255, 255, 0.1);
+    padding-right: 30px; 
+    background: rgba(255, 255, 255, 0.1) url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0Ij48cGF0aCBmaWxsPSIjRkZGIiBkPSJNOC40MSA3Ljg0TDEyIDExLjQyTDE1LjU5IDcuODRMMTcgOWwtNSA1bC01LTVMOC40MSA3Ljg0Wk0xMiAxM1oiLz48L3N2Zz4=') no-repeat;
+    background-position: right 10px center;
+    background-size: 20px;
     color: #f1f1f1;
     border-radius: 12px;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5); 
     appearance: none; 
     -webkit-appearance: none; 
-    -moz-appearance: none; /
+    -moz-appearance: none;
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    background-size: 20px;
+    text-align-last: center;
+    -moz-text-align-last: center;
 }
 
 .custom-dropdown option {
@@ -41,19 +49,14 @@ body {
     color: #fff;
 }
 
-.custom-dropdown {
-    background-image: url('down-arrow-icon.png');
-    background-repeat: no-repeat;
-    background-position: right 10px center;
-    background-size: 20px;
-}
-
 .custom-dropdown::-ms-expand {
     display: none;
 }
 
 .custom-dropdown:hover {
-    background: rgba(50, 50, 50, 0.8);
+    background: rgba(50, 50, 50, 0.8) url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0Ij48cGF0aCBmaWxsPSIjRkZGIiBkPSJNOC40MSA3Ljg0TDEyIDExLjQyTDE1LjU5IDcuODRMMTcgOWwtNSA1bC01LTVMOC40MSA3Ljg0Wk0xMiAxM1oiLz48L3N2Zz4=') no-repeat;
+    background-position: right 10px center;
+    background-size: 20px;
 }
 
 .custom-dropdown:focus {
