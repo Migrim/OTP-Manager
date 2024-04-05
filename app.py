@@ -44,6 +44,11 @@ import uuid
 import signal
 import json
 
+from forms.otp_forms import OTPForm
+from forms.user_forms import UserForm
+from forms.company_form import CompanyForm
+from forms.user import User
+
 logging.basicConfig(filename='MV.log', level=logging.INFO, format='%(asctime)s [%(levelname)s] %(message)s')
 my_logger = logging.getLogger('MV_logger')
 
@@ -83,6 +88,8 @@ broadcast_message = None
 slow_requests_counter = 0
 flash_messages = []
 
+subprocess.Popen(["python", "Database.py"])
+
 @app.login_manager.user_loader
 def load_user(user_id):
     with sqlite3.connect("otp.db") as conn:
@@ -103,70 +110,6 @@ def load_user(user_id):
             show_company=bool(user_row[12])  
         )
     return None
-
-def init_db():
-    try:
-        with sqlite3.connect("otp.db") as db:
-            cursor = db.cursor()
-
-            print("Creating otp_secrets table...")
-            cursor.execute("""
-                CREATE TABLE IF NOT EXISTS otp_secrets (
-                    id INTEGER PRIMARY KEY,
-                    name TEXT NOT NULL,
-                    email TEXT DEFAULT 'none',
-                    secret TEXT NOT NULL,
-                    otp_type TEXT NOT NULL,
-                    refresh_time INTEGER NOT NULL,
-                    company_id INTEGER,
-                    FOREIGN KEY (company_id) REFERENCES companies (id)
-                )
-            """)
-
-            print("Creating users table...")
-            cursor.execute("""
-                CREATE TABLE IF NOT EXISTS users (
-                    id INTEGER PRIMARY KEY,
-                    username TEXT NOT NULL UNIQUE,
-                    password TEXT NOT NULL,
-                    last_login_time TEXT,
-                    session_token TEXT,
-                    is_admin INTEGER DEFAULT 0,
-                    enable_pagination INTEGER DEFAULT 0,
-                    show_timer INTEGER DEFAULT 0,
-                    show_otp_type INTEGER DEFAULT 1,
-                    show_content_titles INTEGER DEFAULT 1,
-                    alert_color TEXT DEFAULT 'alert-primary',
-                    text_color TEXT DEFAULT '#FFFFFF',
-                    show_emails INTEGER DEFAULT 0,
-                    show_company INTEGER DEFAULT 0
-                )
-            """)
-
-            print("Creating companies table...")
-            cursor.execute("""
-                CREATE TABLE IF NOT EXISTS companies (
-                    id INTEGER PRIMARY KEY,
-                    name TEXT NOT NULL UNIQUE,
-                    kundennummer TEXT
-                )
-            """)
-
-            print("Creating statistics table...")
-            cursor.execute("""
-                CREATE TABLE IF NOT EXISTS statistics (
-                    id INTEGER PRIMARY KEY,
-                    logins_today INTEGER NOT NULL,
-                    times_refreshed INTEGER NOT NULL,
-                    date TEXT NOT NULL
-                )
-            """)
-
-            db.commit()
-            print("Database initialized successfully.")
-
-    except sqlite3.Error as e:
-        print(f"An error occurred while initializing the database: {e}")
 
 import sqlite3
 
@@ -234,38 +177,6 @@ def load_companies_from_db():
         cursor = db.cursor()
         cursor.execute("SELECT company_id, name, kundennummer FROM companies ORDER BY company_id")
         return [{'company_id': row[0], 'name': row[1], 'kundennummer': row[2]} for row in cursor.fetchall()]
-
-class OTPForm(FlaskForm):
-    name = StringField('Name', validators=[InputRequired(), Length(max=25, message="Der Name darf nicht länger als 25 Zeichen sein.")])
-    email = StringField('Email', validators=[Optional(), Email(message='Invalid email address.')])
-    secret = StringField('Secret', validators=[InputRequired()])
-    otp_type = SelectField('OTP Type', validators=[InputRequired()], choices=[('totp', 'TOTP'), ('hotp', 'HOTP')])
-    refresh_time = IntegerField('Refresh Time', default=30, render_kw={"disabled": "disabled"})
-    refresh_time_hidden = HiddenField(default=30)
-    company = SelectField('Company', validators=[InputRequired()], choices=[])
-    submit = SubmitField('Submit')
-
-class UserForm(FlaskForm):
-    username = StringField('Username', validators=[DataRequired()], render_kw={"placeholder": "Enter cool username"})
-    password = PasswordField('Password', validators=[DataRequired()], render_kw={"placeholder": "Enter a secure password"})
-    submit = SubmitField('Add User')
-
-class CompanyForm(FlaskForm):
-    name = StringField('Company Name', validators=[DataRequired()], render_kw={"placeholder": "Enter company name"})
-    kundennummer = StringField('Kundennummer', validators=[DataRequired()], render_kw={"placeholder": "Enter Kundennummer"})
-    submit_company = SubmitField('Add Company')
-
-class User(UserMixin):
-    def __init__(self, user_id, username, is_admin=False, enable_pagination=False, show_timer=False, show_otp_type=True, show_content_titles=True, show_emails=0, show_company=False):  
-        self.id = user_id
-        self.username = username
-        self.is_admin = is_admin
-        self.enable_pagination = enable_pagination
-        self.show_timer = show_timer
-        self.show_otp_type = show_otp_type
-        self.show_content_titles = show_content_titles
-        self.show_emails = bool(show_emails)
-        self.show_company = bool(show_company)
 
 def get_current_user():
     user_id = session.get('user_id') 

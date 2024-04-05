@@ -3055,3 +3055,86 @@ UnboundLocalError: local variable 'show_company' referenced before assignment
 2024-04-05 12:46:10,340 [INFO] Response time for login: 0.01s
 2024-04-05 12:48:47,521 [INFO] Response time for home: 0.01s
 2024-04-05 12:49:56,888 [INFO] Response time for home: 0.04s
+2024-04-05 16:45:55,963 [INFO] Server starting on port 5001...
+2024-04-05 16:45:59,211 Redirecting to login: No user_id or session_token
+2024-04-05 16:45:59,367 [INFO] Response time for login: 0.03s
+2024-04-05 16:46:03,901 [INFO] Response time for login: 0.23s
+2024-04-05 16:46:04,078 [INFO] Response time for home: 0.04s
+2024-04-05 16:46:46,521 [INFO] User ID 1 successfully logged out.
+2024-04-05 16:46:46,655 [INFO] Response time for login: 0.00s
+2024-04-05 16:46:47,019 Redirecting to login: No user_id or session_token
+2024-04-05 16:46:47,144 [INFO] Response time for login: 0.00s
+2024-04-05 16:46:48,020 Redirecting to login: No user_id or session_token
+2024-04-05 16:46:48,132 [INFO] Response time for login: 0.00s
+2024-04-05 16:46:49,024 Redirecting to login: No user_id or session_token
+2024-04-05 16:46:49,167 [INFO] Response time for login: 0.00s
+2024-04-05 16:46:50,082 Redirecting to login: No user_id or session_token
+2024-04-05 16:46:50,220 [INFO] Response time for login: 0.00s
+2024-04-05 16:46:51,024 Redirecting to login: No user_id or session_token
+2024-04-05 16:46:51,143 [INFO] Response time for login: 0.00s
+2024-04-05 16:46:52,025 Redirecting to login: No user_id or session_token
+2024-04-05 16:46:52,155 [INFO] Response time for login: 0.00s
+2024-04-05 16:46:53,024 Redirecting to login: No user_id or session_token
+2024-04-05 16:46:53,137 [INFO] Response time for login: 0.00s
+2024-04-05 16:46:57,159 [INFO] Response time for login: 0.22s
+2024-04-05 16:46:57,354 [INFO] Response time for home: 0.00s
+2024-04-05 16:47:57,386 [INFO] Server starting on port 5001...
+2024-04-05 16:49:43,427 [INFO] Response time for home: 0.02s
+2024-04-05 16:49:49,237 [INFO] Response time for home: 0.00s
+2024-04-05 16:49:55,586 [INFO] Response time for home: 0.00s
+2024-04-05 16:50:05,890 [INFO] Response time for home: 0.01s
+2024-04-05 16:50:06,944 [INFO] Response time for home: 0.00s
+2024-04-05 16:50:23,571 [INFO] Response time for home: 0.00s
+2024-04-05 16:50:32,696 [INFO] Response time for home: 0.00s
+2024-04-05 16:51:01,278 [INFO] Response time for home: 0.01s
+2024-04-05 16:51:34,547 [INFO] Response time for home: 0.00s
+2024-04-05 16:52:11,105 [INFO] Response time for home: 0.01s
+2024-04-05 16:52:24,988 [INFO] Response time for home: 0.00s
+2024-04-05 16:52:41,712 [ERROR] Error updating company details: no such column: id
+2024-04-05 16:52:41,712 [ERROR] Error updating company details: no such column: id
+2024-04-05 16:52:49,298 [ERROR] Error updating company details: no such column: id
+2024-04-05 16:52:49,298 [ERROR] Error updating company details: no such column: id
+2024-04-05 16:53:09,965 [INFO] Response time for home: 0.00s
+2024-04-05 16:53:28,421 [INFO] Response time for home: 0.00s
+2024-04-05 16:55:28,847 [INFO] Response time for home: 0.01s
+2024-04-05 16:55:43,632 [INFO] Response time for home: 0.00s
+2024-04-05 16:56:44,243 [INFO] Response time for home: 0.00s
+2024-04-05 16:57:17,966 [INFO] Response time for home: 0.01s
+2024-04-05 16:57:26,440 [INFO] Response time for home: 0.00s
+2024-04-05 16:59:21,881 [INFO] Response time for home: 0.00s
+2024-04-05 16:59:31,298 [INFO] Response time for home: 0.01s
+2024-04-05 17:00:28,030 [INFO] Response time for home: 0.00s
+2024-04-05 17:00:40,609 [INFO] Response time for home: 0.00s
+2024-04-05 17:03:39,656 [INFO] Server starting on port 5001...
+2024-04-05 17:04:04,404 [INFO] Response time for home: 0.03s
+2024-04-05 17:04:07,222 [INFO] Response time for home: 0.00s
+2024-04-05 17:04:08,696 [INFO] User ID 1 successfully logged out.
+2024-04-05 17:04:08,816 [INFO] Response time for login: 0.01s
+2024-04-05 17:04:12,791 [INFO] Response time for login: 0.23s
+2024-04-05 17:04:12,910 [INFO] Response time for home: 0.00s
+2024-04-05 17:04:14,090 [INFO] Response time for home: 0.01s
+2024-04-05 17:04:16,555 [INFO] Response time for home: 0.00s
+2024-04-05 17:05:19,696 [INFO] Server starting on port 5001...
+2024-04-05 17:06:21,339 [INFO] Server starting on port 5001...
+2024-04-05 17:08:49,170 [INFO] Server starting on port 5001...
+2024-04-05 17:09:10,736 [INFO] Response time for home: 0.02s
+2024-04-05 17:09:11,913 [INFO] User ID 1 successfully logged out.
+2024-04-05 17:09:12,039 [INFO] Response time for login: 0.01s
+2024-04-05 17:09:14,468 [INFO] Response time for login: 0.22s
+2024-04-05 17:09:14,605 [INFO] Response time for home: 0.00s
+2024-04-05 17:09:39,431 [INFO] Response time for home: 0.00s
+2024-04-05 17:09:46,013 [INFO] Response time for home: 0.00s
+2024-04-05 17:09:50,993 [INFO] Response time for home: 0.01s
+2024-04-05 17:23:53,131 [INFO] Server starting on port 5001...
+2024-04-05 17:23:59,843 [INFO] Response time for home: 0.02s
+2024-04-05 17:24:46,237 [INFO] Response time for home: 0.00s
+2024-04-05 17:28:41,742 [INFO] Server starting on port 5001...
+2024-04-05 17:29:08,867 [INFO] Response time for home: 0.02s
+2024-04-05 17:30:35,777 [INFO] Server starting on port 5001...
+2024-04-05 17:32:31,049 [INFO] Server starting on port 5001...
+2024-04-05 17:34:44,570 [INFO] Server starting on port 5001...
+2024-04-05 17:35:05,158 [INFO] Server starting on port 5001...
+2024-04-05 17:45:07,056 [INFO] Response time for home: 0.02s
+2024-04-05 17:45:14,656 [INFO] Fetched all users successfully.
+2024-04-05 17:45:14,656 [INFO] Fetched all users successfully.
+2024-04-05 17:45:32,558 [INFO] Response time for home: 0.01s
