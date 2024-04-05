@@ -1,17 +1,24 @@
 const countdownIntervals = new Map();
 const emojiList = ['😇', '😇', '🧐', '🫠', '🚫', '💀','✨','🥺'];
 
+const lastOtpCodes = new Map(); 
+
 async function updateOtpCodes(otpCodes) {
     otpCodes.forEach(async (otp) => {
         let currentOtpCodeElement = document.getElementById(`current_otp_code_${otp.name}`);
-
         if (currentOtpCodeElement && otp.current_otp) {
             const newDigits = otp.current_otp.split('');
-
+            const lastDigits = lastOtpCodes.get(otp.name) ? lastOtpCodes.get(otp.name).split('') : [];
             for (let index = 0; index < newDigits.length; index++) {
                 let digitElement = currentOtpCodeElement.querySelectorAll('.digit')[index];
-                await simulateRolling(digitElement, newDigits[index]);
+
+                if (newDigits[index] !== lastDigits[index]) {
+                    await simulateRolling(digitElement, newDigits[index]);
+                } else {
+                    digitElement.textContent = newDigits[index];
+                }
             }
+            lastOtpCodes.set(otp.name, otp.current_otp);
         }
     });
 }
@@ -63,7 +70,7 @@ function startAutoRefresh() {
 
     setTimeout(() => {
         manuallyRefreshOtps();
-        const intervalId = setInterval(manuallyRefreshOtps, 30000);
+        const intervalId = setInterval(manuallyRefreshOtps, 1000);
         countdownIntervals.set('autoRefreshInterval', intervalId);
     }, millisTillNextInterval);
 }

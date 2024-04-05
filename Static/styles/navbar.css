@@ -289,3 +289,27 @@
     transform: rotate(180deg);
     transition: transform 0.5s ease;
 }
+
+.tooltip {
+    position: absolute;
+    background: rgba(0, 0, 0, 0.75); /* Semi-transparent black background */
+    color: white; /* White text color */
+    padding: 5px 10px; /* Padding around the text */
+    border-radius: 4px; /* Rounded corners */
+    font-size: 12px; /* Font size */
+    display: none; /* Initially hidden */
+    z-index: 1000; /* Ensure it appears on top of other elements */
+    white-space: pre-line; /* Keep formatting of the text, allows for line breaks */
+}
+
+/* Optional: Add an arrow to the tooltip */
+.tooltip::after {
+    content: "";
+    position: absolute;
+    bottom: 100%; /* Positioned just above the tooltip */
+    left: 50%; /* Centered arrow under the tooltip */
+    margin-left: -5px; /* Offset to center the arrow */
+    border-width: 5px; /* Size of the arrow */
+    border-style: solid;
+    border-color: transparent transparent rgba(0, 0, 0, 0.75) transparent; /* Arrow color */
+}

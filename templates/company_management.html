@@ -43,7 +43,7 @@
                     </div>
                     <div class="form-group">
                         {{ company_form.kundennummer.label }}
-                        {{ company_form.kundennummer(class="form-control", placeholder="Enter Kundennummer") }}
+                        {{ company_form.kundennummer(class="form-control", placeholder="Enter the Company Identificaion Number") }}
                     </div>                    
                     <div class="form-group">
                         {{ company_form.submit_company(class="btn btn-primary") }}
@@ -141,7 +141,7 @@
 document.addEventListener('DOMContentLoaded', function() {
     var userCards = document.querySelectorAll('.company-card');
     userCards.forEach(function(card, index) {
-        var delay = (index + 1) * 0.1;
+        var delay = (index + 1) * 0.06;
         card.style.animationDelay = delay + 's';
     });
 
@@ -158,11 +158,11 @@ document.addEventListener('DOMContentLoaded', function() {
 
     var deleteCompanyButtons = document.querySelectorAll('.delete-company-btn');
     var confirmDeleteButton = document.getElementById('confirmDeleteButton');
-    var companyIdToDelete = null; // This variable will hold the ID of the company to delete
+    var companyIdToDelete = null; 
 
     deleteCompanyButtons.forEach(function(button) {
         button.addEventListener('click', function() {
-            companyIdToDelete = button.getAttribute('data-company-id'); // Set the company ID to delete
+            companyIdToDelete = button.getAttribute('data-company-id'); 
             $('#confirmDeleteCompanyModal').modal('show');
         });
     });
@@ -177,15 +177,12 @@ document.addEventListener('DOMContentLoaded', function() {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                // Ensure CSRF token is passed if required by your framework
             },
-            body: JSON.stringify({}) // Pass any necessary data in the request body
+            body: JSON.stringify({}) 
         }).then(response => {
             if (response.ok) {
-                // Handle successful deletion (e.g., redirect or refresh the page)
-                window.location.href = '/admin/company_management'; // Redirect after delete
+                window.location.href = '/admin/company_management'; 
             } else {
-                // Handle failure (e.g., display an error message)
                 alert('Failed to delete the company.');
             }
         });
@@ -195,10 +192,8 @@ document.addEventListener('DOMContentLoaded', function() {
     editButtons.forEach(function(button) {
         button.addEventListener('click', function() {
             var companyId = button.getAttribute('data-company-id');
-            // Populate the form fields in the modal here, e.g.:
+
             document.getElementById('editCompanyId').value = companyId;
-            // $('#editCompanyName').val( /* Company Name */ );
-            // $('#editCompanyKundennummer').val( /* Kundennummer */ );
 
             $('#editCompanyModal').modal('show');
         });

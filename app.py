@@ -707,7 +707,7 @@ def login():
                         cursor.execute("UPDATE users SET session_token = ? WHERE id = ?", (session_token, user_id))
                         db.commit()
 
-                    flash("Identity verified!", "auth")
+                    flash("Access granted!", "auth")
                     print(f"User {username} logged in, redirecting to home.")
                     return redirect(url_for('home'))
                 else:
@@ -718,7 +718,7 @@ def login():
                 flash('User not found!', 'error')
 
         except Exception as e:
-            print(f"Error during login: {e}")
+            print(f"An server error occoured during login: {e}")
             flash("An error occurred during login. Please try again later.", 'error')
 
     return render_template('login.html')

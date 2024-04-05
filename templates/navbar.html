@@ -7,9 +7,6 @@
     <div class="navbar-nav mr-auto">
         <a class="navbar-brand" href="{{ url_for('add') }}" style="hover_color: {{ text_color }};">Add</a> 
     </div>
-    <div class="navbar-nav mr-auto">
-        <a class="navbar-brand" href="{{ url_for('view_logs') }}" style="hover_color: {{ text_color }};">Logs</a> 
-    </div>
     <div class="navbar-nav mr-auto dropdown">
         <a class="navbar-brand">
             Management
@@ -82,9 +79,9 @@ document.addEventListener('DOMContentLoaded', function() {
     const elementsToMakeNonDraggable = document.querySelectorAll('.navbar-brand, .icon-link i');
 
     elementsToMakeNonDraggable.forEach(el => {
-        el.setAttribute('draggable', 'false'); // Set the draggable attribute to false
+        el.setAttribute('draggable', 'false'); 
         el.addEventListener('dragstart', function(e) {
-            e.preventDefault(); // Prevent the dragstart action
+            e.preventDefault(); 
         });
     });
 
@@ -248,10 +245,20 @@ document.addEventListener('DOMContentLoaded', function() {
         const now = new Date();
         const timeString = now.toLocaleTimeString();
 
+        statusDot.classList.add('spinner');
+        let spinnerDisplayed = false;
+
+        setTimeout(() => {
+            spinnerDisplayed = true;
+            if (statusDot.classList.contains('update-complete')) {
+                statusDot.classList.remove('spinner', 'update-complete');
+            }
+        }, 1000);
+
         fetch('/internet_status')
             .then(response => response.json())
             .then(data => {
-                let connectionStatus = "Disconnected"; 
+                let connectionStatus = "Disconnected";
                 if(data.status === 'connected') {
                     connectionStatus = "Connected";
                     statusDot.classList.remove('ntp-disconnected');
@@ -266,6 +273,12 @@ document.addEventListener('DOMContentLoaded', function() {
 
                 localStorage.setItem('internetStatus', connectionStatus);
                 localStorage.setItem('lastChecked', timeString);
+
+                if (spinnerDisplayed) {
+                    statusDot.classList.remove('spinner');
+                } else {
+                    statusDot.classList.add('update-complete');
+                }
             })
             .catch(error => {
                 console.error('Error fetching Internet status:', error);
@@ -275,8 +288,15 @@ document.addEventListener('DOMContentLoaded', function() {
 
                 localStorage.setItem('internetStatus', 'Disconnected');
                 localStorage.setItem('lastChecked', timeString);
+
+                if (spinnerDisplayed) {
+                    statusDot.classList.remove('spinner');
+                } else {
+                    statusDot.classList.add('update-complete');
+                }
             });
     }
+
 
     setInterval(updateInternetStatus, 10000); 
     setInterval(fetchFlashMessages, 1000); 
