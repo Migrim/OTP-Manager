@@ -141,12 +141,34 @@
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
+        const userCards = document.querySelectorAll('.user-card');
+        userCards.forEach(function(card) {
+            const userInfoText = card.querySelector('.user-info').textContent.trim();
+
+            if (userInfoText.includes("(Admin)")) {
+                const adminName = userInfoText.split(' ')[0];
+                if (adminName.toLowerCase() === "admin") { 
+                    const toggleAdminBtn = card.querySelector('a.btn-warning');
+                    if (toggleAdminBtn) {
+                        toggleAdminBtn.href = "#"; 
+                        toggleAdminBtn.style.cursor = "not-allowed";
+                        toggleAdminBtn.style.backgroundColor = "#6c757d"; 
+                        toggleAdminBtn.style.borderColor = "#6c757d"; 
+                        toggleAdminBtn.style.color = "#ffffff"; 
+                    }
+                }
+            }
+        });
+    });
+
+    document.addEventListener('DOMContentLoaded', function() {
         var userCards = document.querySelectorAll('.user-card');
         userCards.forEach(function(card, index) {
             var delay = (index + 1) * 0.1; 
             card.style.animationDelay = delay + 's';
         });
-    
+
+
         var confirmDeleteButton = document.getElementById('confirmDeleteButton');
         var userIdToDelete = null;
     

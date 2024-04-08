@@ -319,3 +319,10 @@ body {
     color: #f8f9fa;
     margin-bottom: .5rem; 
 }
+
+a.btn-warning[style*="not-allowed"], a.btn-warning:disabled {
+    cursor: not-allowed; !important;
+    background-color: #6c757d !important;
+    border-color: #6c757d !important; 
+    color: #ffffff !important; 
+}
