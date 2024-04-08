@@ -159,55 +159,59 @@ def edit_company(company_id):
     company_form = CompanyForm()
 
     if request.method == 'POST':
-        if company_form.validate_on_submit():
-            try:
-                with sqlite3.connect("otp.db") as db:
-                    cursor = db.cursor()
-                    cursor.execute("UPDATE companies SET name = ?, kundennummer = ? WHERE id = ?",
-                                   (company_form.name.data, company_form.kundennummer.data, company_id))
-                    db.commit()
-                flash("Company details updated successfully.", "success")
-            except sqlite3.Error as e:
-                flash("Failed to update company details.", "error")
-                logger.error(f"Error updating company details: {e}")
-            return redirect(url_for('admin.company_management'))
-    else:
+        if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
+            if company_form.validate_on_submit():
+                try:
+                    with sqlite3.connect("otp.db") as db:
+                        cursor = db.cursor()
+                        cursor.execute("UPDATE companies SET name = ?, kundennummer = ? WHERE company_id = ?",
+                                       (company_form.name.data, company_form.kundennummer.data, company_id))
+                        db.commit()
+                    return jsonify({'success': True, 'message': 'Company details updated successfully.'})
+                except sqlite3.Error as e:
+                    print(f"Error updating company details: {e}")
+                    return jsonify({'success': False, 'message': 'Failed to update company details.'}), 500
+            else:
+                return jsonify({'success': False, 'message': 'Form validation failed.'}), 400
+
+    else: 
         try:
             with sqlite3.connect("otp.db") as db:
                 cursor = db.cursor()
-                # Fetch the existing company details
-                cursor.execute("SELECT name, kundennummer FROM companies WHERE id = ?", (company_id,))
+                cursor.execute("SELECT name, kundennummer FROM companies WHERE company_id = ?", (company_id,))
                 company = cursor.fetchone()
                 if company:
-                    # Populate the form with the existing company details
-                    company_form.name.data = company[0]
-                    company_form.kundennummer.data = company[1]
+                    return jsonify({'success': True, 'name': company[0], 'kundennummer': company[1]})
                 else:
-                    flash("Company not found.", "error")
-                    return redirect(url_for('admin.company_management'))
+                    return jsonify({'success': False, 'message': 'Company not found.'}), 404
         except sqlite3.Error as e:
-            flash("Failed to retrieve company details.", "error")
-            logger.error(f"Error retrieving company details: {e}")
-            return redirect(url_for('admin.company_management'))
-
-    return render_template('edit_company.html', company_form=company_form, company_id=company_id)
+            print(f"Error retrieving company details: {e}")
+            return jsonify({'success': False, 'message': 'Failed to retrieve company details.'}), 500
 
 @admin_bp.route('/toggle_admin/<int:user_id>', methods=['GET'])
 @login_required
 def toggle_admin(user_id):
-    if current_user.username != "admin":
-        flash("Only the admin can toggle admin status.")
-        return redirect(url_for('admin.user_management'))
-
     try:
         with sqlite3.connect("otp.db") as db:
             cursor = db.cursor()
+            cursor.execute("SELECT is_admin FROM users WHERE username = ?", (current_user.username,))
+            is_current_user_admin = cursor.fetchone()[0]
+            if not is_current_user_admin:
+                flash("Only admins can toggle admin status.")
+                return redirect(url_for('admin.user_management'))
+
+            cursor.execute("SELECT username FROM users WHERE id = ?", (user_id,))
+            username = cursor.fetchone()
+            if username and username[0] == "admin":
+                flash(f"Admin user's status cannot be toggled.", "error")
+                return redirect(url_for('admin.user_management'))
+
             cursor.execute("SELECT is_admin FROM users WHERE id = ?", (user_id,))
             current_status = cursor.fetchone()[0]
             new_status = not current_status
             cursor.execute("UPDATE users SET is_admin = ? WHERE id = ?", (new_status, user_id))
             db.commit()
-        flash(f"Admin status for user ID {user_id} {'enabled' if new_status else 'disabled'}.", "success")
+            flash(f"Admin status for user ID {user_id} {'enabled' if new_status else 'disabled'}.", "success")
     except sqlite3.Error as e:
         flash("Failed to toggle admin status.", "error")
         logger.error(f"Error toggling admin status for user_id {user_id}: {e}")
@@ -230,22 +234,6 @@ def admin_settings():
 
     return render_template('admin_settings.html', is_admin=is_admin)
 
-@admin_bp.route('/delete_user/<int:user_id>', methods=['POST'])
-@login_required
-def delete_user(user_id):
-    if current_user.username != "admin":
-        return jsonify({"success": False, "message": "Only the admin can delete users."}), 403
-
-    try:
-        with sqlite3.connect("otp.db") as db:
-            cursor = db.cursor()
-            cursor.execute("DELETE FROM users WHERE id = ?", (user_id,))
-            db.commit()
-        return jsonify({"success": True, "message": "User successfully deleted."})
-    except sqlite3.Error as e:
-        logger.error(f"Error deleting user with user_id {user_id}: {e}")
-        return jsonify({"success": False, "message": "Failed to delete user."}), 500
-
 @admin_bp.route('/add_company', methods=['POST'])
 @login_required
 def add_company():
@@ -267,26 +255,6 @@ def add_company():
         logger.error(f"Error inserting new company: {e}")
     return redirect(url_for('admin.admin_settings'))
 
-@admin_bp.route('/rename_company/<int:company_id>', methods=['GET', 'POST'])
-@login_required
-def rename_company(company_id):
-    if current_user.get_id() != "admin":
-        flash("Only the admin can rename companies.")
-        return redirect(url_for('admin.admin_settings'))
-
-    if request.method == 'POST':
-        new_name = request.form.get('new_name')
-
-        with sqlite3.connect("otp.db") as db:
-            cursor = db.cursor()
-            cursor.execute("UPDATE companies SET name = ? WHERE id = ?", (new_name, company_id))
-            db.commit()
-
-        flash('Company name updated!')
-        return redirect(url_for('admin.admin_settings'))
-
-    return render_template('rename_company.html', company_id=company_id)
-
 @admin_bp.route('/add_search_terms/<int:company_id>', methods=['GET'])
 @login_required
 def add_search_terms(company_id):
@@ -296,21 +264,44 @@ def add_search_terms(company_id):
 
     return redirect(url_for('admin.admin_settings'))
 
-@admin_bp.route('/delete_company/<int:company_id>', methods=['POST'])
+@admin_bp.route('/delete_user/<int:user_id>', methods=['POST'])
 @login_required
-def delete_company(company_id):
+def delete_user(user_id):
     if current_user.username != "admin":
-        flash("Only the admin can delete companies.")
-        return redirect(url_for('admin.company_management'))
+        flash("Only the admin can delete users.")
+        return jsonify(success=False, message="Only the admin can delete users."), 403
 
     try:
         with sqlite3.connect("otp.db") as db:
             cursor = db.cursor()
-            cursor.execute("DELETE FROM companies WHERE id = ?", (company_id,))  # Ensure column name matches your DB schema
+            print(f"Attempting to delete user with ID: {user_id}")
+            cursor.execute("DELETE FROM users WHERE id = ?", (user_id,))
             db.commit()
-        flash('Company deleted successfully!')
+            print(f"User with ID: {user_id} deleted successfully.")
+            return jsonify(success=True), 200
     except sqlite3.Error as e:
-        flash('Failed to delete company.')
-        logger.error(f"Error deleting company with id {company_id}: {e}")
-    return redirect(url_for('admin.company_management'))
+        print(f"Error deleting user with ID {user_id}: {e}")
+        return jsonify(success=False, message="Failed to delete user."), 500
+    
+@admin_bp.route('/delete_company/<int:company_id>', methods=['POST'])
+@login_required
+def delete_company(company_id):
+    if not current_user.is_admin:
+        flash("You do not have permission to perform this action.", "error")
+        return jsonify(success=False, message="Unauthorized access."), 403
 
+    try:
+        with sqlite3.connect("otp.db") as db:
+            cursor = db.cursor()
+            cursor.execute("DELETE FROM companies WHERE company_id = ?", (company_id,))
+            db.commit()
+            
+            if cursor.rowcount == 0:
+                flash("The company could not be found.", "error")
+                return jsonify(success=False, message="The company does not exist."), 404
+
+            flash("Company deleted successfully.", "success")
+            return jsonify(success=True, message="Company deleted successfully."), 200
+    except sqlite3.Error as e:
+        logger.error(f"Failed to delete company {company_id}: {e}")
+        return jsonify(success=False, message="Failed to delete the company."), 500

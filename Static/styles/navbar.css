@@ -2,7 +2,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    box-shadow: 0 8px 16px 0 rgba(29, 29, 29, 0.4); /* Adjusted shadow */
+    box-shadow: 0 8px 16px 0 rgba(29, 29, 29, 0.4);
     background-color: #1d1d1d;
     height: 50px;
 }
@@ -50,7 +50,7 @@
 
 #logoutBtn a:hover {
     background-color: #ff5d51;
-    color: #f1f1f1;
+    color: #333;
 }
 
 #logoutBtn a i.material-icons-outlined {
@@ -111,24 +111,21 @@
     border: 1px solid transparent;
     border-radius: 10px;
     color: #fff;
-    /* Initial state before the animation starts */
     opacity: 0;
     transform: translateY(20px);
     transition: all 0.3s ease-in-out;
-    /* Animation */
     animation: fadeInSlideUp 0.5s ease forwards;
     transition: opacity 0.3s ease-in-out;
 }
 
-/* Define the keyframes for the fadeInSlideUp animation */
 @keyframes fadeInSlideUp {
     0% {
         opacity: 0;
-        transform: translateY(20px); /* Start below the final position */
+        transform: translateY(20px); 
     }
     100% {
         opacity: 1;
-        transform: translateY(0); /* End at the final position */
+        transform: translateY(0);
     }
 }
 
@@ -164,7 +161,7 @@
 }
 
 .flash-close-btn {
-    margin-left: 10px; /* Gives space between the message and the close button */
+    margin-left: 10px; 
     cursor: pointer;
     background: none;
     border: none;

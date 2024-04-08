@@ -192,10 +192,49 @@ document.addEventListener('DOMContentLoaded', function() {
     editButtons.forEach(function(button) {
         button.addEventListener('click', function() {
             var companyId = button.getAttribute('data-company-id');
+            fetch('/admin/edit_company/' + companyId, {
+                method: 'GET',
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    document.querySelector('#editCompanyForm [name="name"]').value = data.name;
+                    document.querySelector('#editCompanyForm [name="kundennummer"]').value = data.kundennummer;
+                    document.getElementById('editCompanyId').value = companyId; 
+                    $('#editCompanyModal').modal('show');
+                } else {
+                    alert(data.message);
+                }
+            })
+            .catch(error => {
+                console.error('Error fetching company details:', error);
+            });
+        });
+    });
 
-            document.getElementById('editCompanyId').value = companyId;
+    document.getElementById('editCompanyForm').addEventListener('submit', function(e) {
+        e.preventDefault(); 
+        var formData = new FormData(this);
+        var companyId = document.getElementById('editCompanyId').value; 
 
-            $('#editCompanyModal').modal('show');
+        fetch('/admin/edit_company/' + companyId, {
+            method: 'POST',
+            body: formData,
+            headers: {
+                'X-Requested-With': 'XMLHttpRequest',
+            },
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                $('#editCompanyModal').modal('hide');
+                location.reload();
+            } else {
+                alert(data.message);
+            }
+        })
+        .catch(error => {
+            console.error('Error updating company details:', error);
         });
     });
 });

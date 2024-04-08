@@ -564,7 +564,7 @@ def get_last_login_time_from_db():
 @app.route('/login', methods=['GET', 'POST'])
 @check_server_capacity
 def login():
-    print("Accessing /login route")
+#    print("Accessing /login route")
     if 'user_id' in session:
         flash("You are already logged in.", "info")
         print("User is already logged in, redirecting to home")

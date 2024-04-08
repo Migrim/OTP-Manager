@@ -129,6 +129,7 @@ body {
 
 .btn-primary:hover {
     background-color: #44ABED;
+    color: #333;
 }
 
 .btn-danger {
@@ -138,12 +139,13 @@ body {
 }
 
 .btn-danger:hover {
-    background-color: #ff5d51; 
+    background-color: #ff7451; 
+    color: #333;
 }
 
 .btn-light {
-    background-color: #B6B6B6;
-    color: #292b2c;
+    background-color: #6b6b6b;
+    color: #ffffff;
     border: none;
     border-radius: 5px;
     transition: background-color 0.3s;
@@ -151,6 +153,7 @@ body {
 
 .btn-light:hover {
     background-color: #e9ecef;
+    color: #333;
 }
 
 .btn-secondary {
@@ -540,4 +543,18 @@ body {
     display: inline-block;
     margin-right: -4px;
     transition: transform 0.01s ease-in-out;
+}
+
+.modal-icon {
+    font-size: 18px; 
+    margin-right: 4px; 
+    vertical-align: middle; 
+    line-height: 1; 
+}
+
+.icon-report {
+    font-size: 24px;
+    margin-right: 8px;
+    display: inline-flex;
+    align-items: center;
 }

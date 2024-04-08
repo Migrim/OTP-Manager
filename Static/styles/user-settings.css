@@ -51,13 +51,14 @@ body {
     text-align: center;
     animation: fadeInUp 0.5s ease-out forwards;
     opacity: 0; 
+    max-width: 300px;
 }
 
 .user-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    justify-content: center; 
-    grid-gap: 20px;
+    grid-template-columns: repeat(auto-fit, minmax(250px, max-content));
+    justify-content: start;
+    grid-gap: 10px;
     padding: 20px 10px;
 }
 
@@ -112,6 +113,7 @@ body {
 .btn-danger:hover {
     background-color: #ff5d51;
     border-color: #ff5d51;
+    color: #333;
 }
 
 .btn-secondary {
@@ -126,14 +128,16 @@ body {
 }
 
 .modal-dialog {
-    max-width: 300px;
-    margin: 1.75rem auto;
+    max-width: 500px;
+    margin: auto;
+    margin-top: 10vh; 
 }
 
 .modal-content {
     background-color: #333;
     color: #f8f9fa;
     border-radius: 15px;
+    padding: 20px;
     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2); 
 }
 
@@ -142,7 +146,7 @@ body {
     align-items: center; 
     justify-content: space-between; 
     padding: 5px 10px; 
-    border-bottom: none; /* This removes the line under the modal title */
+    border-bottom: none;
 }
 
 .modal-title {
@@ -168,14 +172,19 @@ body {
 }
 
 .modal-body {
-    padding-top: 20px;
+    padding-top: 60px;
     padding: 20px;
     text-align: center; 
-    font-size: 1.2rem; 
+    font-size: 2rem; 
 }
 
 .close:hover {
     color: #ccc;
+}
+
+.btn .material-icons-outlined {
+    vertical-align: middle;
+    margin-right: 5px;
 }
 
 #deleteConfirmationInput {
@@ -207,6 +216,7 @@ body {
 .btn-warning:hover {
     background-color: #ffc942;
     border-color: #ffc942;
+    color: #333;
 }
 
 .btn-add {
@@ -254,7 +264,7 @@ body {
 
 @media (max-width: 1200px) {
     .user-grid {
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
     }
 }
 
@@ -273,7 +283,7 @@ body {
 
 @media (max-width: 768px) {
     .user-grid {
-        grid-template-columns: 1fr; 
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     }
 }
 
