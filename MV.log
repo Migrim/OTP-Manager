@@ -3451,3 +3451,68 @@ UnboundLocalError: local variable 'show_company' referenced before assignment
 2024-04-08 14:03:20,183 [INFO] Response time for home: 0.01s
 2024-04-08 14:03:37,264 [INFO] Fetched all users successfully.
 2024-04-08 14:03:37,264 [INFO] Fetched all users successfully.
+2024-04-08 20:35:57,335 [INFO] Server starting on port 5001...
+2024-04-08 20:36:01,358 [INFO] Response time for login: 0.04s
+2024-04-08 20:37:25,358 [INFO] Response time for login: 0.23s
+2024-04-08 20:37:25,517 [INFO] Response time for home: 0.05s
+2024-04-08 21:16:13,419 [INFO] Fetched all users successfully.
+2024-04-08 21:16:13,419 [INFO] Fetched all users successfully.
+2024-04-08 21:16:43,942 [INFO] Fetched all users successfully.
+2024-04-08 21:16:43,942 [INFO] Fetched all users successfully.
+2024-04-08 21:16:51,958 [INFO] Fetched all users successfully.
+2024-04-08 21:16:51,958 [INFO] Fetched all users successfully.
+2024-04-08 21:16:55,670 [INFO] Fetched all users successfully.
+2024-04-08 21:16:55,670 [INFO] Fetched all users successfully.
+2024-04-08 21:16:57,085 [INFO] Fetched all users successfully.
+2024-04-08 21:16:57,085 [INFO] Fetched all users successfully.
+2024-04-08 21:17:41,403 [INFO] Fetched all users successfully.
+2024-04-08 21:17:41,403 [INFO] Fetched all users successfully.
+2024-04-08 21:17:54,338 [INFO] Fetched all users successfully.
+2024-04-08 21:17:54,338 [INFO] Fetched all users successfully.
+2024-04-08 21:17:55,345 [INFO] Fetched all users successfully.
+2024-04-08 21:17:55,345 [INFO] Fetched all users successfully.
+2024-04-08 21:18:18,082 [INFO] Fetched all users successfully.
+2024-04-08 21:18:18,082 [INFO] Fetched all users successfully.
+2024-04-08 21:18:29,252 [INFO] Fetched all users successfully.
+2024-04-08 21:18:29,252 [INFO] Fetched all users successfully.
+2024-04-08 21:18:39,451 [INFO] Fetched all users successfully.
+2024-04-08 21:18:39,451 [INFO] Fetched all users successfully.
+2024-04-08 21:18:56,414 [INFO] Response time for home: 0.01s
+2024-04-08 21:19:54,597 [INFO] Response time for home: 0.01s
+2024-04-08 21:20:25,566 [INFO] Response time for home: 0.01s
+2024-04-08 21:23:13,222 [INFO] Response time for home: 0.01s
+2024-04-08 21:23:27,550 [INFO] Response time for home: 0.00s
+2024-04-08 21:23:42,939 [INFO] Response time for home: 0.00s
+2024-04-08 21:23:55,750 [INFO] Response time for home: 0.01s
+2024-04-08 21:27:45,220 [INFO] Response time for home: 0.00s
+2024-04-08 21:28:04,294 [INFO] Server starting on port 5001...
+2024-04-08 21:28:07,902 [INFO] Response time for home: 0.03s
+2024-04-08 21:33:04,702 [INFO] Server starting on port 5001...
+2024-04-08 21:33:06,697 [INFO] Response time for home: 0.03s
+2024-04-08 21:33:14,889 [INFO] Response time for home: 0.00s
+2024-04-08 21:33:29,649 [INFO] Response time for home: 0.00s
+2024-04-08 21:33:31,488 [INFO] Response time for home: 0.01s
+2024-04-08 21:34:27,261 [INFO] Response time for home: 0.01s
+2024-04-08 21:36:47,820 [INFO] Response time for home: 0.01s
+2024-04-08 21:38:51,169 [INFO] Response time for home: 0.00s
+2024-04-08 21:39:31,211 [INFO] Response time for home: 0.00s
+2024-04-08 21:40:30,749 [INFO] Response time for home: 0.00s
+2024-04-08 21:46:06,590 [INFO] Server starting on port 5001...
+2024-04-08 21:47:20,678 [INFO] Server starting on port 5001...
+2024-04-08 21:51:39,623 [INFO] Server starting on port 5001...
+2024-04-08 21:54:45,111 [INFO] Server starting on port 5001...
+2024-04-08 21:56:27,106 [INFO] Server starting on port 5001...
+2024-04-08 22:02:02,419 [INFO] Server starting on port 5001...
+2024-04-08 22:03:51,059 [INFO] Response time for home: 0.02s
+2024-04-08 22:04:48,361 [INFO] Server starting on port 5001...
+2024-04-08 22:08:45,364 [INFO] Server starting on port 5001...
+2024-04-08 22:12:42,055 [INFO] Server starting on port 5001...
+2024-04-08 22:16:01,102 [INFO] Server starting on port 5001...
+2024-04-08 22:16:32,007 Redirecting to login: No user_id or session_token
+2024-04-08 22:16:32,142 [INFO] Response time for login: 0.00s
+2024-04-08 22:25:51,421 Redirecting to login: No user_id or session_token
+2024-04-08 22:25:51,557 [INFO] Response time for login: 0.00s
+2024-04-08 22:25:54,865 [INFO] Response time for login: 0.23s
+2024-04-08 22:25:54,989 [INFO] Response time for home: 0.02s
+2024-04-08 22:25:58,768 [WARNING] Non-admin user attempted to list backups.
+2024-04-08 22:33:46,883 [INFO] Response time for home: 0.01s

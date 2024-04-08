@@ -43,6 +43,7 @@ import re
 import uuid
 import signal
 import json
+import psutil
 
 from forms.otp_forms import OTPForm
 from forms.user_forms import UserForm
@@ -505,6 +506,21 @@ def refresh_codes_v2():
 
     return jsonify({"otp_codes": otp_codes})
 
+@app.route('/refresh_specific_code')
+@login_required
+def refresh_specific_code():
+    name = request.args.get('name')
+    otp_secret = next((item for item in load_from_db() if item['name'] == name), None)
+    
+    if not otp_secret:
+        return jsonify({'error': 'Secret not found'}), 404
+    
+    current_otp_code, _ = generate_current_and_next_otp(otp_secret)
+    return jsonify({'otp_code': {
+        'name': otp_secret['name'],
+        'current_otp': current_otp_code
+    }})
+
 def generate_current_and_next_otp(otp):
     try:
         if otp['otp_type'] == 'totp':
@@ -686,8 +702,17 @@ def about():
     times_refreshed = stats['times_refreshed']
     uptime = get_uptime()
     current_server_time = datetime.now()
-    last_user_login_time = "Ihre Logik hier"
+    last_user_login_time = "logic missing!"
     current_server_time = datetime.now().strftime('%d/%m/%Y %H:%M:%S')
+
+    ram = psutil.virtual_memory()
+    ram_usage = ram.percent  
+    ram_total_gb = ram.total / (1024**3)  
+    ram_used_gb = ram.used / (1024**3)  
+
+    cpu_usage = psutil.cpu_percent(interval=None)  
+    disk = psutil.disk_usage('/')
+    disk_usage = disk.percent
 
     older_stats = get_older_statistics()
     uptime = get_uptime()
@@ -696,6 +721,9 @@ def about():
     return render_template(
         'about.html',
         stored_otps=stored_otps,
+        ram_usage=f"{ram_usage}% / {ram_used_gb:.2f} GB",
+        cpu_usage=cpu_usage, 
+        disk_usage=disk_usage,
         logins_today=logins_today,
         times_refreshed=times_refreshed,
         uptime=uptime,
@@ -724,11 +752,22 @@ def get_stats_json():
     uptime = get_uptime()
     
     server_time = datetime.now().strftime('%d/%m/%Y %H:%M:%S')
-    
+
+    ram = psutil.virtual_memory()
+    ram_usage = ram.percent
+    ram_total_gb = ram.total / (1024**3)
+    ram_used_gb = ram.used / (1024**3)
+
+    cpu_usage = psutil.cpu_percent(interval=None)
+    disk_usage = psutil.disk_usage('/').percent
+
     last_login_time = get_last_login_time_from_db()
 
     return jsonify({
         'stored_otps': stored_otps,
+        'ram_usage': f"{ram_usage}% / {ram_used_gb:.2f} GB",
+        'cpu_usage': cpu_usage, 
+        'disk_usage': disk_usage,
         'logins_today': logins_today,
         'times_refreshed': times_refreshed,
         'uptime': uptime,

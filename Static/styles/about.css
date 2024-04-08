@@ -59,11 +59,10 @@ body {
 .stats li {
     font-size: 16px;
     margin-bottom: 10px;
-    list-style-type: none; 
+    list-style-type: none;
     padding-left: 0;
     display: flex;
     align-items: center;
-    gap: 7px;
 }
 
 .stats li:before {
@@ -74,12 +73,11 @@ body {
     display: inline-block;
     font-size: 20px;
     margin-right: 10px;
-    color: #ffffff; 
+    color: #ffffff;
 }
 
 .stats li span.label {
-    width: 150px; 
-    display: inline-block;
+    flex-basis: 40%; /* Adjusted from fixed width to flexible basis */
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -87,7 +85,7 @@ body {
 
 .stats li span.value {
     flex-grow: 1;
-    text-align: right;
+    text-align: right; /* Ensures right alignment for all values */
 }
 
 .stats li:hover {

@@ -25,8 +25,11 @@
                     <li id="logins_today" data-icon="login"><span class="label">Logins Today:</span><span class="value">31</span></li>
                     <li id="times_refreshed" data-icon="refresh"><span class="label">Times Refreshed:</span><span class="value">3286</span></li>
                     <li id="uptime" data-icon="schedule"><span class="label">Server Uptime:</span><span class="value">0 Days 0h:17m:21s</span></li>
-                    <li id="last_user_login_time" data-icon="access_time"><span class="label">Last User Login Time:</span><span class="value">19/01/2024 12:23:52</span></li>
+                    <li id="last_user_login_time" data-icon="access_time"><span class="label">Last User Login Time:</span><span class="value">Cant fetch the Login Data at the moment</span></li>
                     <li id="current_server_time" data-icon="update"><span class="label">Current Server Time:</span><span class="value">10/02/2024 16:55:34</span></li>
+                    <li id="ram_usage" data-icon="memory"><span class="label">RAM Usage:</span><span class="value">{{ ram_usage }}</span></li>
+                    <li id="cpu_usage" data-icon="speed"><span class="label">CPU Usage:</span> <span class="value">{{ cpu_usage }}</span></li>
+                    <li id="disk_usage" data-icon="storage"><span class="label">Disk Usage:</span> <span class="value">{{ disk_usage }}</span></li>                    
                 </ul>                
             </section>
         </div>        
@@ -133,6 +136,9 @@
                 document.getElementById('uptime').textContent = 'Server Uptime: ' + data.uptime;
                 document.getElementById('last_user_login_time').textContent = 'Last User Login Time: ' + data.last_user_login_time;
                 document.getElementById('current_server_time').textContent = 'Current Server Time: ' + data.current_server_time;
+                document.getElementById('ram_usage').textContent = 'Current RAM Usage: ' + data.ram_usage;
+                document.getElementById('cpu_usage').textContent = 'Current CPU Usage: ' + data.cpu_usage + '%';
+                document.getElementById('disk_usage').textContent = 'Current Disk Usage: ' + data.disk_usage + '%';
             });
         }
 

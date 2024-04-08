@@ -474,7 +474,7 @@ document.getElementById('searchInput').addEventListener('input', function() {
         }
     
         let greeting = getGreeting();
-        let searchPrompt = "Type here to search for otps";
+        let searchPrompt = "Type here to search for OTPs";
         let placeholderText = `${greeting} ${username}! ${searchPrompt}`;
         let input = document.getElementById("searchInput");
         input.setAttribute("placeholder", placeholderText);
