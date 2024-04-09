@@ -113,6 +113,14 @@ body {
     border-color: #ff5252;
 }
 
+.btn-danger:hover {
+    font-size: 0.8rem;
+    padding: 3px 10px;
+    background-color: #ff5d51;
+    border-color: #ff5d51;
+    color: #333;
+}
+
 .btn-secondary {
     padding: 3px 10px;
     font-size: 0.8rem;
@@ -153,6 +161,7 @@ body {
 
 .btn-delete-custom:hover {
     background-color: #ff5d51; 
+    color: #333;
 }
 
 .modal-dialog {
@@ -220,14 +229,15 @@ body {
 }
 
 .btn-primary {
-    background-color: #6c757d;
-    border-color: #6c757d;
+    background-color: #285fd6;
+    border-color: #285fd6;
     color: #f8f9fa;
 }
 
 .btn-primary:hover {
-    background-color: #5a6268;
-    border-color: #5a6268;
+    background-color: #44abed;
+    border-color: #44abed;
+    color: #333;
 }
 
 .close {
@@ -338,4 +348,74 @@ body {
     .float-right {
         float: none;
     }
+}
+
+.ns-confirmDeleteCompanyModal .modal-content {
+    background-color: #333;
+    color: #ffffff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, .5);
+}
+
+.ns-confirmDeleteCompanyModal .modal-header {
+    padding-bottom: 10px;
+    margin: 0 0 10px;
+}
+
+.ns-confirmDeleteCompanyModal .modal-title {
+    font-size: 20px;
+    margin: 0;
+}
+
+.ns-confirmDeleteCompanyModal .modal-body {
+    padding: 20px 0;
+}
+
+.ns-confirmDeleteCompanyModal .modal-footer {
+    padding-top: 10px;
+    text-align: right;
+}
+
+.ns-confirmDeleteCompanyModal .btn-close-custom, .ns-confirmDeleteCompanyModal .btn-delete-custom {
+    position: relative;
+    transition: background-color 0.3s ease;
+}
+
+.ns-confirmDeleteCompanyModal .btn-close-custom {
+    background-color: #285fd6; 
+    color: #ffffff;
+}
+
+.ns-confirmDeleteCompanyModal .btn-delete-custom {
+    background-color: #FF5252;
+    color: #ffffff; 
+}
+
+.ns-confirmDeleteCompanyModal .btn-close-custom:hover {
+    background-color: #44abed; 
+    color: #333;
+}
+
+.ns-confirmDeleteCompanyModal .btn-delete-custom:hover {
+    background-color: #ff5d51;
+    color: #333; 
+}
+
+.ns-confirmDeleteCompanyModal .btn-close-custom::before, .ns-confirmDeleteCompanyModal .btn-delete-custom::before {
+    font-family: 'Material Icons Outlined';
+    display: inline-block;
+    font-size: 20px;
+    line-height: 1;
+    vertical-align: middle;
+    margin-right: 8px;
+    transition: transform 0.3s ease;
+}
+
+.ns-confirmDeleteCompanyModal .btn-close-custom::before {
+    content: 'close'; 
+}
+
+.ns-confirmDeleteCompanyModal .btn-delete-custom::before {
+    content: 'check'; 
 }

@@ -326,3 +326,112 @@ a.btn-warning[style*="not-allowed"], a.btn-warning:disabled {
     border-color: #6c757d !important; 
     color: #ffffff !important; 
 }
+
+.unique-modal-dialog {
+    margin-top: 10vh;
+}
+
+.unique-modal-content {
+    border-radius: 15px;
+}
+
+.unique-modal-header {
+    background-color: #333;
+    border-bottom: 1px solid #dee2e6;
+    position: relative;
+}
+
+.unique-modal-header .unique-warning-icon {
+    position: absolute;
+    left: 10px;
+    top: 40%;
+    transform: translateY(-50%);
+    font-size: 24px;
+    color: #ffeb3b; 
+}
+
+.unique-modal-header .modal-title {
+    color: #ffffff;
+    margin-left: 40px; 
+    margin-bottom: 10px;
+}
+
+.unique-modal-body {
+    font-size: 16px;
+}
+
+.unique-modal-footer {
+    border-top: 1px solid #dee2e6;
+}
+
+.unique-btn-secondary, .unique-btn-danger {
+    font-weight: bold;
+    margin-right: 5px;
+}
+
+.unique-btn-secondary {
+    color: #ffffff;
+    background-color: #285fd6;
+    border-color: #285fd6;
+}
+
+.unique-btn-secondary:hover {
+    background-color: #44abed;
+    border-color: #44abed;
+    color: #333;
+}
+
+.unique-btn-danger {
+    color: #fff;
+    background-color: #FF5252;
+    border-color: #FF5252;
+}
+
+.unique-btn-danger:hover {
+    color: #333;
+    background-color: #ff5d51;
+    border-color: #ff5d51;
+}
+
+.unique-password-reset-dialog {
+    margin-top: 10vh;
+}
+
+.unique-password-reset-content {
+    border-radius: 10px; 
+}
+
+.unique-password-reset-header {
+    color: white; 
+}
+
+.unique-password-reset-header .modal-title {
+    margin: 0 auto;
+}
+
+.unique-password-reset-header .unique-password-reset-close {
+    color: white;
+}
+
+.unique-password-reset-input, .unique-password-reset-btn {
+    border-radius: 4px; 
+}
+
+.unique-password-reset-input {
+    border: 1px solid #cccccc; 
+    margin-top: 8px; 
+}
+
+.unique-password-reset-btn {
+    background-color: #285fd6; 
+    color: white; 
+    border-color: #285fd6;
+    padding: 10px 15px; 
+    margin-top: 15px;
+}
+
+.unique-password-reset-btn:hover {
+    background-color: #44abed;
+    border-color: #44abed;
+    color: #333;
+}

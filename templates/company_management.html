@@ -54,18 +54,18 @@
     </div>
 </div>
 
-<div class="modal fade" id="confirmDeleteCompanyModal" tabindex="-1" role="dialog" aria-labelledby="confirmDeleteCompanyModalLabel" aria-hidden="true">
+<div class="modal fade ns-confirmDeleteCompanyModal" id="ns-confirmDeleteCompanyModal" tabindex="-1" role="dialog" aria-labelledby="ns-confirmDeleteCompanyModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="confirmDeleteCompanyModalLabel">Confirm Deletion</h5>
+                <h5 class="modal-title" id="ns-confirmDeleteCompanyModalLabel">Confirm Deletion</h5>
             </div>
             <div class="modal-body">
                 <p>Are you sure you want to delete this company?</p>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-close-custom" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-delete-custom" id="confirmDeleteButton" data-company-id="{{ company_id }}">Delete</button>
+                <button type="button" class="btn btn-delete-custom" id="ns-confirmDeleteButton" data-company-id="{{ company_id }}">Delete</button>
             </div>
         </div>
     </div>
@@ -146,24 +146,13 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     var deleteCompanyButtons = document.querySelectorAll('.delete-company-btn');
-    var confirmDeleteCompanyButton = document.getElementById('confirmDeleteCompanyButton');
+    var confirmDeleteButton = document.getElementById('ns-confirmDeleteButton');
     var companyIdToDelete = null;
 
     deleteCompanyButtons.forEach(function(button) {
         button.addEventListener('click', function() {
-            companyIdToDelete = button.getAttribute('data-company-id');
-            $('#confirmDeleteCompanyModal').modal('show');
-        });
-    });
-
-    var deleteCompanyButtons = document.querySelectorAll('.delete-company-btn');
-    var confirmDeleteButton = document.getElementById('confirmDeleteButton');
-    var companyIdToDelete = null; 
-
-    deleteCompanyButtons.forEach(function(button) {
-        button.addEventListener('click', function() {
             companyIdToDelete = button.getAttribute('data-company-id'); 
-            $('#confirmDeleteCompanyModal').modal('show');
+            $('#ns-confirmDeleteCompanyModal').modal('show');
         });
     });
 

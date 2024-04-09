@@ -64,18 +64,31 @@ def load_companies_from_db():
 @admin_bp.route('/admin/reset_password', methods=['POST'])
 @login_required
 def reset_password():
-    user_id = request.form.get('user_id')
-    new_password = request.form.get('new_password')
+    if not current_user.is_admin:
+        return jsonify({'success': False, 'message': 'Unauthorized access. Only admins can reset passwords.'}), 403
+
+    data = request.get_json()
+    user_id_to_reset = data.get('userIdToReset')
+    new_password = data.get('new_password')
+
+    if not user_id_to_reset or not new_password:
+        return jsonify({'success': False, 'message': 'Missing user ID or new password.'}), 400
+
     hashed_password = bcrypt.generate_password_hash(new_password).decode('utf-8')
-    
+
     try:
         with sqlite3.connect("otp.db") as db:
             cursor = db.cursor()
-            cursor.execute("UPDATE users SET password = ? WHERE id = ?", (hashed_password, user_id))
+            cursor.execute("UPDATE users SET password = ? WHERE id = ?", (hashed_password, user_id_to_reset))
             db.commit()
-        return jsonify({'success': True})
+
+            if cursor.rowcount == 0:
+                return jsonify({'success': False, 'message': 'User not found.'}), 404
+
+            return jsonify({'success': True, 'message': 'Password reset successfully.'})
     except sqlite3.Error as e:
-        return jsonify({'success': False, 'message': str(e)})
+        logger.error(f"Error resetting password for user {user_id_to_reset}: {e}")
+        return jsonify({'success': False, 'message': 'Failed to reset password.'}), 500
 
 @admin_bp.route('/user_management', methods=['GET', 'POST'])
 @login_required
