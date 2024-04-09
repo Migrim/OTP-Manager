@@ -25,21 +25,22 @@
     {% endwith %}
 </div>
 
-<div class="modal fade" id="confirmDeleteModal" tabindex="-1" role="dialog" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="confirmDeleteModalLabel">Confirm Deletion</h5>
+<div class="modal fade" id="uniqueConfirmDeleteModal" tabindex="-1" role="dialog" aria-labelledby="uniqueConfirmDeleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog unique-modal-dialog" role="document">
+        <div class="modal-content unique-modal-content">
+            <div class="modal-header unique-modal-header">
+                <span class="material-icons-outlined unique-warning-icon">warning</span>
+                <h5 class="modal-title" id="uniqueConfirmDeleteModalLabel">Confirm User Deletion</h5>
             </div>
-            <div class="modal-body">
-                Are you sure you want to delete this user?
+            <div class="modal-body unique-modal-body">
+                You are about to delete this user. This action cannot be undone. Please confirm you wish to proceed.
             </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">
-                    <span class="material-icons-outlined">close</span> No
+            <div class="modal-footer unique-modal-footer">
+                <button type="button" class="btn unique-btn-secondary" data-dismiss="modal">
+                    <span class="material-icons-outlined">close</span> Cancel
                 </button>
-                <button type="button" class="btn btn-danger" id="confirmDeleteButton">
-                    <span class="material-icons-outlined">check</span> Yes
+                <button type="button" class="btn unique-btn-danger" id="uniqueConfirmDeleteButton">
+                    <span class="material-icons-outlined">check</span> Delete
                 </button>
             </div>            
         </div>
@@ -56,7 +57,7 @@
                         </button>
                     </div>
                     <div class="modal-body" style="padding: 10px;">
-                        <form method="post" autocomplete="off"> <!-- Disable autocomplete -->
+                        <form method="post" autocomplete="off">
                             <!-- Dummy fields to trick browser autofill -->
                             <input style="display:none" type="text" name="fakeusernameremembered"/>
                             <input style="display:none" type="password" name="fakepasswordremembered"/>
@@ -98,16 +99,16 @@
                     </div>
                     <div class="user-actions">
                         <form action="{{ url_for('admin.delete_user', user_id=user[0]) }}" method="POST" class="action-form">
-                            <button type="button" class="btn btn-danger delete-user-btn" data-user-id="{{ user[0] }}" data-toggle="modal" data-target="#confirmDeleteModal" draggable="false">
+                            <button type="button" class="btn btn-danger delete-user-btn" data-user-id="{{ user[0] }}" data-toggle="modal" data-target="#uniqueConfirmDeleteModal" draggable="false">
                                 <span class="material-symbols-outlined">delete_forever</span>
                             </button>                            
                         </form>                        
                         <a href="{{ url_for('admin.toggle_admin', user_id=user[0]) }}" class="btn btn-warning" draggable="false">
                             <span class="material-symbols-outlined">admin_panel_settings</span>
                         </a>
-                        <button type="button" class="btn btn-secondary reset-password-btn" data-user-id="{{ user[0] }}" data-toggle="modal" data-target="#passwordResetModal">
+                        <button type="button" class="btn btn-secondary reset-password-btn" data-user-id="{{ user[0] }}" data-toggle="modal" data-target="#uniquePasswordResetModal">
                             <span class="material-symbols-outlined">password</span>
-                        </button>
+                        </button>                        
                     </div>
                 </div>
                 {% endfor %}
@@ -116,23 +117,23 @@
     </div>
 </div>
 
-<div class="modal fade" id="passwordResetModal" tabindex="-1" role="dialog" aria-labelledby="passwordResetModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="passwordResetModalLabel">Reset Password</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+<div class="modal fade" id="uniquePasswordResetModal" tabindex="-1" role="dialog" aria-labelledby="uniquePasswordResetModalLabel" aria-hidden="true">
+    <div class="modal-dialog unique-password-reset-dialog" role="document">
+        <div class="modal-content unique-password-reset-content">
+            <div class="modal-header unique-password-reset-header">
+                <h5 class="modal-title" id="uniquePasswordResetModalLabel">Reset Password</h5>
+                <button type="button" class="close unique-password-reset-close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
-                <form id="passwordResetForm">
-                    <input type="hidden" id="userIdToReset" name="user_id" value="">
+                <form id="uniquePasswordResetForm" autocomplete="off">
+                    <input type="hidden" id="uniqueUserIdToReset" name="user_id" value="" autocomplete="off">
                     <div class="form-group">
-                        <label for="newPassword">New Password</label>
-                        <input type="password" class="form-control" id="newPassword" name="new_password" required>
+                        <label for="uniqueNewPassword">New Password</label>
+                        <input type="password" class="form-control unique-password-reset-input" id="uniqueNewPassword" name="new_password" required autocomplete="new-password" placeholder="Enter new password">
                     </div>
-                    <button type="submit" class="btn btn-primary">Reset Password</button>
+                    <button type="submit" class="btn unique-password-reset-btn">Reset Password</button>
                 </form>
             </div>
         </div>
@@ -140,6 +141,59 @@
 </div>
 
 <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var passwordResetForm = document.getElementById('uniquePasswordResetForm');
+        var userIdToResetField = document.getElementById('uniqueUserIdToReset');
+        var userIdToReset;
+
+        document.querySelectorAll('.reset-password-btn').forEach(function(button) {
+            button.addEventListener('click', function() {
+                userIdToReset = button.getAttribute('data-user-id');
+                console.log('Reset password button pressed for user ID:', userIdToReset);
+            });
+        });
+
+        passwordResetForm.addEventListener('submit', function(event) {
+            event.preventDefault();
+            var newPassword = document.getElementById('uniqueNewPassword').value;
+
+            if (!newPassword || !userIdToReset) {
+                alert('Missing user ID or new password.');
+                return;
+            }
+
+            userIdToResetField.value = userIdToReset;
+
+            fetch('/admin/reset_password', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    userIdToReset: userIdToReset,
+                    new_password: newPassword
+                })
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                return response.json();
+            })
+            .then(data => {
+                if (data.success) {
+                    alert('Password reset successfully.');
+                    $('#uniquePasswordResetModal').modal('hide'); 
+                } else {
+                    alert('Password reset failed: ' + data.message);
+                }
+            })
+            .catch(error => {
+                alert('Error: ' + error.message);
+            });
+        });
+    });
+
     document.addEventListener('DOMContentLoaded', function() {
         const userCards = document.querySelectorAll('.user-card');
         userCards.forEach(function(card) {
@@ -168,8 +222,7 @@
             card.style.animationDelay = delay + 's';
         });
 
-
-        var confirmDeleteButton = document.getElementById('confirmDeleteButton');
+        var confirmDeleteButton = document.getElementById('uniqueConfirmDeleteButton');
         var userIdToDelete = null;
     
         document.querySelectorAll('.delete-user-btn').forEach(function(button) {
@@ -198,51 +251,18 @@
                     } else {
                         alert(data.message);
                     }
-                    $('#confirmDeleteModal').modal('hide'); 
+                    $('#uniqueConfirmDeleteModal').modal('hide'); 
                 })
                 .catch(error => {
                     alert('Error: ' + error.message);
-                    $('#confirmDeleteModal').modal('hide'); 
+                    $('#uniqueConfirmDeleteModal').modal('hide'); 
                 });
             } else {
                 alert('No user ID found for deletion.');
-                $('#confirmDeleteModal').modal('hide'); 
+                $('#uniqueConfirmDeleteModal').modal('hide'); 
             }
         });
-
-        noButton.addEventListener('click', function() {
-            $('#confirmDeleteModal').modal('hide');
-        });
-    
-        document.querySelectorAll('.reset-password-btn').forEach(function(button) {
-            button.addEventListener('click', function() {
-                var userId = button.getAttribute('data-user-id');
-                document.getElementById('userIdToReset').value = userId;
-                $('#passwordResetModal').modal('show');
-            });
-        });
-    
-        document.getElementById('passwordResetForm').addEventListener('submit', function(event) {
-            event.preventDefault();
-            var formData = new FormData(this);
-            fetch('/admin/reset_password', {
-                method: 'POST',
-                body: formData
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    alert('Password reset successfully');
-                    $('#passwordResetModal').modal('hide');
-                } else {
-                    alert('Error resetting password');
-                }
-            })
-            .catch(error => {
-                alert('Error: ' + error);
-            });
-        });
     });
-    </script>    
+</script>
 
 {% endblock %}
