@@ -186,24 +186,6 @@ body {
     transition: opacity 0.5s ease; 
 }
 
-.toast-show {
-    display: block;
-    opacity: 1; 
-    animation: glowEffect 2s infinite;
-}
-
-@keyframes glowEffect {
-    0% {
-        box-shadow: 0 0 5px #a885d8, 0 0 10px #a885d8;
-    }
-    50% {
-        box-shadow: 0 0 15px #dcb5ff, 0 0 20px #dcb5ff;
-    }
-    100% {
-        box-shadow: 0 0 5px #a885d8, 0 0 10px #a885d8;
-    }
-}
-
 .modal-content {
     background-color: #333;
     border: none; 
@@ -308,15 +290,16 @@ body {
 }
 
 .search-input {
-  transition: border 0.3s ease, box-shadow 0.3s ease;
-  border: 1px solid #ccc;
-  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    font-family: 'Segoe UI Emoji', 'Roboto', Arial, sans-serif;
+    transition: border 0.3s ease, box-shadow 0.3s ease;
+    border: 1px solid #ccc;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
 }
 
 .search-input:focus {
-  outline: none;
-  border-color: #66afe9;
-  box-shadow: 0 0 5px rgba(102, 175, 233, 0.75);
+    outline: none;
+    border-color: #66afe9;
+    box-shadow: 0 0 5px rgba(102, 175, 233, 0.75);
 }
 
 .timer {
@@ -354,7 +337,7 @@ body {
 }
 
 .no-secrets {
-    font-family: 'Noto Color Emoji', sans-serif;
+    font-family: 'Segoe UI Emoji', 'Noto Color Emoji', sans-serif;
     display: inline-block; 
     margin-top: 20px; 
     font-size: 2rem; 

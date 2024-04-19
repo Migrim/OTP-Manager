@@ -1,17 +1,32 @@
 const countdownIntervals = new Map();
-const emojiList = ['😇', '😇', '🧐', '🫠', '🚫', '💀','✨','🥺'];
+const emojiList = [
+    '😇', '🧐', '🫠', '🚫', '💀', '✨', '🥺', 
+    '🎉', '🚀', '🌟', '🔥', '🌈', '😂', 
+    '👽', '👾', '🎃', '🕵️‍♂️',
+    '🧙‍♂️', '🧛‍♂️', '🧟‍♂️', '🐉', '🐲', '🦄',
+    '🍀', '🌺', '🌻', '🌹', '🌷', '🌼', '🌸'
+];
 
 const lastOtpCodes = new Map(); 
+
+function isElementVisible(el) {
+    const rect = el.getBoundingClientRect();
+    return (
+        rect.top >= 0 &&
+        rect.left >= 0 &&
+        rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
+        rect.right <= (window.innerWidth || document.documentElement.clientWidth)
+    );
+}
 
 async function updateOtpCodes(otpCodes) {
     otpCodes.forEach(async (otp) => {
         let currentOtpCodeElement = document.getElementById(`current_otp_code_${otp.name}`);
-        if (currentOtpCodeElement && otp.current_otp) {
+        if (currentOtpCodeElement && isElementVisible(currentOtpCodeElement) && otp.current_otp) {
             const newDigits = otp.current_otp.split('');
             const lastDigits = lastOtpCodes.get(otp.name) ? lastOtpCodes.get(otp.name).split('') : [];
             for (let index = 0; index < newDigits.length; index++) {
                 let digitElement = currentOtpCodeElement.querySelectorAll('.digit')[index];
-
                 if (newDigits[index] !== lastDigits[index]) {
                     await simulateRolling(digitElement, newDigits[index]);
                 } else {
@@ -21,6 +36,24 @@ async function updateOtpCodes(otpCodes) {
             lastOtpCodes.set(otp.name, otp.current_otp);
         }
     });
+}
+
+document.addEventListener('scroll', function() {
+    if (typeof refreshOtpCodes === 'function') {
+        refreshOtpCodes();
+    }
+}, {
+    passive: true
+});
+
+async function refreshOtpCodes() {
+    try {
+        const response = await fetch('/refresh_codes_v2');
+        const data = await response.json();
+        updateOtpCodes(data.otp_codes);
+    } catch (error) {
+        console.error('Fetch error:', error);
+    }
 }
 
 async function simulateRolling(digitElement, finalDigit) {
@@ -39,7 +72,7 @@ async function simulateRolling(digitElement, finalDigit) {
                 digitElement.textContent = finalDigit; 
                 resolve(); 
             }
-        }, 10); 
+        }, 8); 
     });
 }
 
@@ -230,6 +263,8 @@ window.onload = function() {
     startAutoRefresh();
 };
 
+startAutoRefresh();
+
 document.getElementById('searchInput').addEventListener('input', function() {
     var filter = this.value.toUpperCase();
     var rowDiv = document.querySelector('.row'); 
@@ -245,34 +280,37 @@ document.getElementById('searchInput').addEventListener('input', function() {
             div.style.display = 'none';
         }
     });
-        
-        var companyGroups = rowDiv.querySelectorAll('.col-md-12.mt-4');
-        companyGroups.forEach(function(companyGroup) {
-            var nextSibling = companyGroup.nextElementSibling;
-            var atLeastOneVisible = false;
-            
-            while (nextSibling && !nextSibling.matches('.col-md-12.mt-4')) {
-                if (nextSibling.style.display !== 'none') {
-                    atLeastOneVisible = true;
-                    break;
-                }
-                nextSibling = nextSibling.nextElementSibling;
-            }
-            
-            if (atLeastOneVisible) {
-                companyGroup.style.display = 'block';
-            } else {
-                companyGroup.style.display = 'none';
-            }
-        });
 
-        if (displayed === 0) {
-            document.getElementById('noSecretsFound').style.display = 'block';
-            updateNoSecretsMessage();
+    var companyGroups = rowDiv.querySelectorAll('.col-md-12.mt-4');
+    companyGroups.forEach(function(companyGroup) {
+        var nextSibling = companyGroup.nextElementSibling;
+        var atLeastOneVisible = false;
+        
+        while (nextSibling && !nextSibling.matches('.col-md-12.mt-4')) {
+            if (nextSibling.style.display !== 'none') {
+                atLeastOneVisible = true;
+                break;
+            }
+            nextSibling = nextSibling.nextElementSibling;
+        }
+        
+        if (atLeastOneVisible) {
+            companyGroup.style.display = 'block';
         } else {
-            document.getElementById('noSecretsFound').style.display = 'none';
+            companyGroup.style.display = 'none';
         }
     });
+
+    if (displayed === 0) {
+        document.getElementById('noSecretsFound').style.display = 'block';
+        updateNoSecretsMessage();
+    } else {
+        document.getElementById('noSecretsFound').style.display = 'none';
+    }
+
+    // Refresh the displayed OTP codes
+    refreshOtpCodes();
+});
 
     document.getElementById('searchInput').addEventListener('keydown', function(event) {
         if (event.key === 'Enter') {
@@ -377,8 +415,14 @@ document.getElementById('searchInput').addEventListener('input', function() {
         document.getElementById('editOtpSecret').value = secret;
     
         const secretField = document.getElementById('editOtpSecret');
-        secretField.value = secret;
-    
+        secretField.addEventListener('input', function() {
+            let inputValue = this.value.toUpperCase();
+            if (inputValue.length > 16) {
+                inputValue = inputValue.substr(0, 16);
+            }
+            this.value = inputValue;
+        });
+        
         secretField.addEventListener('focus', function() {
             this.type = 'text';
         });
