@@ -3737,3 +3737,184 @@ UnboundLocalError: local variable 'show_company' referenced before assignment
 2024-04-09 10:25:18,039 [INFO] Fetched all users successfully.
 2024-04-09 10:25:18,039 [INFO] Fetched all users successfully.
 2024-04-09 10:25:52,289 [INFO] Response time for home: 0.02s
+2024-04-09 20:55:06,219 [INFO] Server starting on port 5001...
+2024-04-09 20:55:11,563 [INFO] Fetched all users successfully.
+2024-04-09 20:55:11,563 [INFO] Fetched all users successfully.
+2024-04-09 20:55:27,169 Redirecting to login: No user_id or session_token
+2024-04-09 20:55:27,173 Redirecting to login: No user_id or session_token
+2024-04-09 20:55:27,176 Redirecting to login: No user_id or session_token
+2024-04-09 20:55:27,180 Redirecting to login: No user_id or session_token
+2024-04-09 20:55:27,185 Redirecting to login: No user_id or session_token
+2024-04-09 20:55:27,189 Redirecting to login: No user_id or session_token
+2024-04-09 20:55:27,194 Redirecting to login: No user_id or session_token
+2024-04-09 20:55:27,197 Redirecting to login: No user_id or session_token
+2024-04-09 20:55:27,201 Redirecting to login: No user_id or session_token
+2024-04-09 20:55:27,204 Redirecting to login: No user_id or session_token
+2024-04-09 20:55:27,207 Redirecting to login: No user_id or session_token
+2024-04-09 20:55:27,211 Redirecting to login: No user_id or session_token
+2024-04-09 20:55:27,215 Redirecting to login: No user_id or session_token
+2024-04-09 20:55:27,218 Redirecting to login: No user_id or session_token
+2024-04-09 20:55:27,222 Redirecting to login: No user_id or session_token
+2024-04-09 20:55:27,226 Redirecting to login: No user_id or session_token
+2024-04-09 20:55:27,230 Redirecting to login: No user_id or session_token
+2024-04-09 20:55:27,235 Redirecting to login: No user_id or session_token
+2024-04-09 20:55:27,239 Redirecting to login: No user_id or session_token
+2024-04-09 20:55:27,242 Redirecting to login: No user_id or session_token
+2024-04-09 20:55:27,246 Redirecting to login: No user_id or session_token
+2024-04-09 20:55:27,249 Redirecting to login: No user_id or session_token
+2024-04-09 20:55:27,253 Redirecting to login: No user_id or session_token
+2024-04-09 20:55:27,257 Redirecting to login: No user_id or session_token
+2024-04-09 20:55:27,260 Redirecting to login: No user_id or session_token
+2024-04-09 20:55:27,265 Redirecting to login: No user_id or session_token
+2024-04-09 20:55:27,268 Redirecting to login: No user_id or session_token
+2024-04-09 20:55:27,272 Redirecting to login: No user_id or session_token
+2024-04-09 20:55:27,276 Redirecting to login: No user_id or session_token
+2024-04-09 20:55:32,294 [INFO] Response time for login: 0.00s
+2024-04-09 20:55:37,420 [INFO] Response time for login: 0.00s
+2024-04-09 20:55:42,538 [INFO] Response time for login: 0.00s
+2024-04-09 20:55:47,654 [INFO] Response time for login: 0.00s
+2024-04-09 20:55:52,307 [INFO] Response time for login: 0.00s
+2024-04-09 20:55:52,316 [INFO] Response time for login: 0.00s
+2024-04-09 20:55:52,318 [INFO] Response time for login: 0.00s
+2024-04-09 20:55:52,322 [INFO] Response time for login: 0.00s
+2024-04-09 20:55:52,324 [INFO] Response time for login: 0.00s
+2024-04-09 20:55:52,774 [INFO] Response time for login: 0.00s
+2024-04-09 20:55:55,190 Redirecting to login: No user_id or session_token
+2024-04-09 20:55:57,430 [INFO] Response time for login: 0.00s
+2024-04-09 20:55:57,432 [INFO] Response time for login: 0.00s
+2024-04-09 20:55:57,439 [INFO] Response time for login: 0.00s
+2024-04-09 20:55:57,455 [INFO] Response time for login: 0.00s
+2024-04-09 20:55:57,564 [INFO] Response time for login: 0.00s
+2024-04-09 20:55:57,870 [INFO] Response time for login: 0.00s
+2024-04-09 20:55:58,294 Redirecting to login: No user_id or session_token
+2024-04-09 20:55:59,275 [INFO] Response time for login: 0.00s
+2024-04-09 20:56:00,330 [INFO] Response time for login: 0.00s
+2024-04-09 20:56:02,552 [INFO] Response time for login: 0.00s
+2024-04-09 20:56:02,552 [INFO] Response time for login: 0.00s
+2024-04-09 20:56:02,554 [INFO] Response time for login: 0.00s
+2024-04-09 20:56:02,565 [INFO] Response time for login: 0.00s
+2024-04-09 20:56:02,683 [INFO] Response time for login: 0.00s
+2024-04-09 20:56:03,007 [INFO] Response time for login: 0.00s
+2024-04-09 20:56:03,426 [INFO] Response time for login: 0.00s
+2024-04-09 20:56:07,664 [INFO] Response time for login: 0.00s
+2024-04-09 20:56:07,667 [INFO] Response time for login: 0.00s
+2024-04-09 20:56:07,693 [INFO] Response time for login: 0.00s
+2024-04-09 20:56:07,743 [INFO] Response time for login: 0.00s
+2024-04-09 20:56:07,795 [INFO] Response time for login: 0.00s
+2024-04-09 20:56:08,120 [INFO] Response time for login: 0.00s
+2024-04-09 20:56:12,795 [INFO] Response time for login: 0.00s
+2024-04-09 20:56:12,802 [INFO] Response time for login: 0.00s
+2024-04-09 20:56:17,322 [INFO] Response time for login: 0.00s
+2024-04-09 20:56:22,550 Redirecting to login: No user_id or session_token
+2024-04-09 20:56:22,563 Redirecting to login: No user_id or session_token
+2024-04-09 20:56:22,571 Redirecting to login: No user_id or session_token
+2024-04-09 20:56:22,576 Redirecting to login: No user_id or session_token
+2024-04-09 20:56:22,580 Redirecting to login: No user_id or session_token
+2024-04-09 20:56:22,584 Redirecting to login: No user_id or session_token
+2024-04-09 20:56:22,589 Redirecting to login: No user_id or session_token
+2024-04-09 20:56:22,594 Redirecting to login: No user_id or session_token
+2024-04-09 20:56:22,598 Redirecting to login: No user_id or session_token
+2024-04-09 20:56:22,601 Redirecting to login: No user_id or session_token
+2024-04-09 20:56:22,605 Redirecting to login: No user_id or session_token
+2024-04-09 20:56:22,609 Redirecting to login: No user_id or session_token
+2024-04-09 20:56:22,613 Redirecting to login: No user_id or session_token
+2024-04-09 20:56:22,617 Redirecting to login: No user_id or session_token
+2024-04-09 20:56:22,620 Redirecting to login: No user_id or session_token
+2024-04-09 20:56:22,625 Redirecting to login: No user_id or session_token
+2024-04-09 20:56:22,625 Redirecting to login: No user_id or session_token
+2024-04-09 20:56:22,625 Redirecting to login: No user_id or session_token
+2024-04-09 20:56:22,627 Redirecting to login: No user_id or session_token
+2024-04-09 20:56:22,639 Redirecting to login: No user_id or session_token
+2024-04-09 20:56:22,639 Redirecting to login: No user_id or session_token
+2024-04-09 20:56:22,640 Redirecting to login: No user_id or session_token
+2024-04-09 20:56:22,640 Redirecting to login: No user_id or session_token
+2024-04-09 20:56:22,652 Redirecting to login: No user_id or session_token
+2024-04-09 20:56:22,652 Redirecting to login: No user_id or session_token
+2024-04-09 20:56:22,653 Redirecting to login: No user_id or session_token
+2024-04-09 20:56:22,654 Redirecting to login: No user_id or session_token
+2024-04-09 20:56:22,666 Redirecting to login: No user_id or session_token
+2024-04-09 20:56:22,666 Redirecting to login: No user_id or session_token
+2024-04-09 20:56:22,667 Redirecting to login: No user_id or session_token
+2024-04-09 20:56:23,129 Redirecting to login: No user_id or session_token
+2024-04-09 20:56:27,676 [INFO] Response time for login: 0.00s
+2024-04-09 20:56:28,464 [INFO] Response time for login: 0.00s
+2024-04-09 20:56:41,842 [INFO] Response time for login: 0.22s
+2024-04-09 20:56:46,977 [INFO] Response time for home: 0.02s
+2024-04-09 20:57:26,067 [INFO] Server starting on port 5001...
+2024-04-09 20:57:33,112 [INFO] Response time for home: 0.03s
+2024-04-09 20:57:46,677 [INFO] Response time for home: 0.00s
+2024-04-09 20:57:57,588 [INFO] Response time for home: 0.00s
+2024-04-09 20:57:58,963 [INFO] Response time for home: 0.00s
+2024-04-09 20:58:00,403 [INFO] Response time for home: 0.01s
+2024-04-09 20:58:05,745 [INFO] Response time for home: 0.00s
+2024-04-09 20:58:06,421 [INFO] Response time for home: 0.01s
+2024-04-09 20:58:06,764 [INFO] Response time for home: 0.00s
+2024-04-09 20:58:06,910 [INFO] Response time for home: 0.00s
+2024-04-09 20:58:07,085 [INFO] Response time for home: 0.00s
+2024-04-09 20:58:07,252 [INFO] Response time for home: 0.00s
+2024-04-09 20:58:07,384 [INFO] Response time for home: 0.00s
+2024-04-09 20:58:10,050 [INFO] Response time for home: 0.00s
+2024-04-09 20:58:15,567 Redirecting to login: No user_id or session_token
+2024-04-09 20:58:20,715 [INFO] Response time for login: 0.00s
+2024-04-09 20:58:44,929 Redirecting to login: No user_id or session_token
+2024-04-09 20:58:45,033 [INFO] Response time for login: 0.00s
+2024-04-09 20:58:50,065 [INFO] Response time for login: 0.00s
+2024-04-19 22:37:15,128 [INFO] Server starting on port 5001...
+2024-04-19 22:37:24,309 Redirecting to login: No user_id or session_token
+2024-04-19 22:37:24,456 [INFO] Response time for login: 0.04s
+2024-04-19 22:37:27,538 [INFO] Response time for login: 0.23s
+2024-04-19 22:37:27,688 [INFO] Response time for home: 0.03s
+2024-04-19 22:37:39,360 [INFO] Response time for home: 0.00s
+2024-04-19 22:37:44,198 [INFO] Response time for home: 0.00s
+2024-04-19 22:37:45,666 [INFO] Response time for home: 0.00s
+2024-04-19 22:38:02,773 [INFO] Response time for home: 0.01s
+2024-04-19 22:38:07,504 [INFO] Response time for home: 0.00s
+2024-04-19 22:40:43,401 [INFO] Response time for home: 0.01s
+2024-04-19 22:40:48,469 Redirecting to login: No user_id or session_token
+2024-04-19 22:40:48,623 [INFO] Response time for login: 0.00s
+2024-04-19 22:42:55,893 [INFO] Response time for home: 0.00s
+2024-04-19 22:43:02,167 Redirecting to login: No user_id or session_token
+2024-04-19 22:43:02,361 [INFO] Response time for login: 0.00s
+2024-04-19 22:45:24,056 [INFO] Server starting on port 5001...
+2024-04-19 22:45:29,696 [INFO] Response time for home: 0.02s
+2024-04-19 22:45:33,571 [INFO] Response time for home: 0.00s
+2024-04-19 22:46:36,589 [INFO] Server starting on port 5001...
+2024-04-19 22:46:41,991 [INFO] Response time for home: 0.02s
+2024-04-19 22:48:01,140 [INFO] Response time for home: 0.01s
+2024-04-19 22:48:11,659 [INFO] Response time for home: 0.00s
+2024-04-19 22:55:29,267 [INFO] Server starting on port 5001...
+2024-04-19 22:55:32,961 [INFO] Response time for home: 0.02s
+2024-04-19 22:55:41,963 [INFO] Response time for home: 0.00s
+2024-04-19 22:55:42,968 [INFO] Response time for home: 0.00s
+2024-04-19 22:55:49,938 [INFO] Server starting on port 5001...
+2024-04-19 22:55:54,918 [INFO] Response time for home: 0.03s
+2024-04-19 23:00:04,579 [INFO] Server starting on port 5001...
+2024-04-19 23:00:13,056 [INFO] Response time for home: 0.03s
+2024-04-19 23:00:20,397 [INFO] Response time for home: 0.00s
+2024-04-19 23:00:24,122 [INFO] Response time for home: 0.01s
+2024-04-19 23:03:33,313 [INFO] Server starting on port 5001...
+2024-04-19 23:06:03,289 [INFO] Server starting on port 5001...
+2024-04-19 23:06:11,653 [INFO] Response time for home: 0.02s
+2024-04-19 23:08:47,328 [INFO] Server starting on port 5001...
+2024-04-19 23:09:12,288 [INFO] Response time for home: 0.03s
+2024-04-19 23:09:34,187 [INFO] Response time for home: 0.01s
+2024-04-19 23:11:26,787 [INFO] Server starting on port 5001...
+2024-04-19 23:13:53,332 [INFO] Server starting on port 5001...
+2024-04-19 23:16:37,517 [INFO] Server starting on port 5001...
+2024-04-19 23:16:40,465 [INFO] Response time for home: 0.03s
+2024-04-19 23:16:43,521 [INFO] Response time for home: 0.01s
+2024-04-19 23:17:07,638 [INFO] Server starting on port 5001...
+2024-04-19 23:17:08,905 [INFO] Response time for home: 0.02s
+2024-04-19 23:17:12,527 [INFO] Response time for home: 0.00s
+2024-04-19 23:17:52,112 [INFO] Response time for home: 0.01s
+2024-04-19 23:17:56,655 [INFO] Response time for home: 0.01s
+2024-04-19 23:17:58,701 [INFO] Response time for home: 0.00s
+2024-04-19 23:19:47,372 [INFO] Server starting on port 5001...
+2024-04-19 23:19:50,329 [INFO] Response time for home: 0.02s
+2024-04-19 23:19:53,103 [INFO] Response time for home: 0.00s
+2024-04-19 23:19:55,089 [INFO] Response time for home: 0.00s
+2024-04-19 23:20:20,061 [INFO] Response time for home: 0.03s
+2024-04-19 23:20:25,003 [INFO] Server starting on port 5001...
+2024-04-19 23:20:25,942 [INFO] Response time for home: 0.03s
+2024-04-19 23:21:42,794 [INFO] Server starting on port 5001...
+2024-04-19 23:21:44,579 [INFO] Response time for home: 0.03s

@@ -104,28 +104,6 @@
                 {% endfor %} 
             {% endfor %} 
         </div>
-                
-                <nav aria-label="Page navigation">
-                    {% if enable_pagination %}
-                    <ul class="pagination justify-content-center">
-                        <li class="page-item {% if page is not defined or page <= 1 %}disabled{% endif %}">
-                            <a class="page-link" href="{{ url_for('home', page=page-1) }}" aria-label="Previous">
-                                <span aria-hidden="true">&laquo;</span>
-                            </a>
-                        </li>
-                        {% for i in range(1, total_pages + 1) %}
-                            <li class="page-item {% if i == page %}active custom-active{% endif %}">
-                                <a class="page-link" href="{{ url_for('home', page=i, name=request.args.get('name'), company=request.args.get('company')) }}">{{ i }}</a>
-                            </li>
-                        {% endfor %}
-                        <li class="page-item {% if page >= total_pages %}disabled{% endif %}">
-                            <a class="page-link" href="{{ url_for('home', page=page+1) }}" aria-label="Next">
-                                <span aria-hidden="true">&raquo;</span>
-                            </a>
-                        </li>
-                    </ul>
-                    {% endif %}
-                </nav>
 
                 <div class="modal fade" id="deleteConfirmationModal" tabindex="-1" role="dialog" aria-labelledby="deleteConfirmationModalLabel" aria-hidden="true">
                     <div class="modal-dialog modal-dialog-centered" role="document">

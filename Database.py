@@ -1,6 +1,7 @@
 import os
 import sqlite3
 import shutil
+import re
 from datetime import datetime
 
 def init_db():
@@ -20,88 +21,97 @@ def init_db():
         else:
             print("Backup already exists for today.")
 
-        if not os.path.exists(db_path):
-            print("Creating otp.db database...")
-            with sqlite3.connect(db_path) as db:
-                cursor = db.cursor()
+        with sqlite3.connect(db_path) as db:
+            cursor = db.cursor()
 
-                print("Creating otp_secrets table...")
-                cursor.execute("""
-                    CREATE TABLE IF NOT EXISTS otp_secrets (
-                        id INTEGER PRIMARY KEY,
-                        name TEXT NOT NULL,
-                        email TEXT DEFAULT 'none',
-                        secret TEXT NOT NULL,
-                        otp_type TEXT NOT NULL,
-                        refresh_time INTEGER NOT NULL,
-                        company_id INTEGER,
-                        FOREIGN KEY (company_id) REFERENCES companies (id)
-                    )
-                """)
+            print("Ensuring database tables are set up...")
+            cursor.execute("""
+                CREATE TABLE IF NOT EXISTS otp_secrets (
+                    id INTEGER PRIMARY KEY,
+                    name TEXT NOT NULL,
+                    email TEXT DEFAULT 'none',
+                    secret TEXT NOT NULL,
+                    otp_type TEXT NOT NULL,
+                    refresh_time INTEGER NOT NULL,
+                    company_id INTEGER,
+                    FOREIGN KEY (company_id) REFERENCES companies (id)
+                )
+            """)
 
-                print("Creating users table...")
-                cursor.execute("""
-                    CREATE TABLE IF NOT EXISTS users (
-                        id INTEGER PRIMARY KEY,
-                        username TEXT NOT NULL UNIQUE,
-                        password TEXT NOT NULL,
-                        last_login_time TEXT,
-                        session_token TEXT,
-                        is_admin INTEGER DEFAULT 0,
-                        enable_pagination INTEGER DEFAULT 0,
-                        show_timer INTEGER DEFAULT 0,
-                        show_otp_type INTEGER DEFAULT 1,
-                        show_content_titles INTEGER DEFAULT 1,
-                        alert_color TEXT DEFAULT 'alert-primary',
-                        text_color TEXT DEFAULT '#FFFFFF',
-                        show_emails INTEGER DEFAULT 0,
-                        show_company INTEGER DEFAULT 0
-                    )
-                """)
+            cursor.execute("""
+                CREATE TABLE IF NOT EXISTS users (
+                    id INTEGER PRIMARY KEY,
+                    username TEXT NOT NULL UNIQUE,
+                    password TEXT NOT NULL,
+                    last_login_time TEXT,
+                    session_token TEXT,
+                    is_admin INTEGER DEFAULT 0,
+                    enable_pagination INTEGER DEFAULT 0,
+                    show_timer INTEGER DEFAULT 0,
+                    show_otp_type INTEGER DEFAULT 1,
+                    show_content_titles INTEGER DEFAULT 1,
+                    alert_color TEXT DEFAULT 'alert-primary',
+                    text_color TEXT DEFAULT '#FFFFFF',
+                    show_emails INTEGER DEFAULT 0,
+                    show_company INTEGER DEFAULT 0
+                )
+            """)
 
-                print("Creating companies table...")
-                cursor.execute("""
-                    CREATE TABLE IF NOT EXISTS companies (
-                        id INTEGER PRIMARY KEY,
-                        name TEXT NOT NULL UNIQUE,
-                        kundennummer TEXT
-                    )
-                """)
+            cursor.execute("""
+                CREATE TABLE IF NOT EXISTS companies (
+                    id INTEGER PRIMARY KEY,
+                    name TEXT NOT NULL UNIQUE,
+                    kundennummer TEXT
+                )
+            """)
 
-                print("Creating statistics table...")
-                cursor.execute("""
-                    CREATE TABLE IF NOT EXISTS statistics (
-                        id INTEGER PRIMARY KEY,
-                        logins_today INTEGER NOT NULL,
-                        times_refreshed INTEGER NOT NULL,
-                        date TEXT NOT NULL
-                    )
-                """)
+            cursor.execute("""
+                CREATE TABLE IF NOT EXISTS statistics (
+                    id INTEGER PRIMARY KEY,
+                    logins_today INTEGER NOT NULL,
+                    times_refreshed INTEGER NOT NULL,
+                    date TEXT NOT NULL
+                )
+            """)
 
-                print("Running consistency check...")
-                cursor.execute("PRAGMA foreign_key_check")
-                consistency_result = cursor.fetchall()
-                if not consistency_result:
-                    print("Database consistency check passed.")
-                else:
-                    print("Database consistency check failed. Inconsistent foreign key constraints.")
+            db.commit()
+            print("Database tables verified or created successfully.")
 
-                db.commit()
-                print("Database initialized successfully.")
-                
-        else:
-            print("otp.db database already exists.")
-            
-            with sqlite3.connect(db_path) as db:
-                cursor = db.cursor()
-                print("Running consistency check...")
-                cursor.execute("PRAGMA foreign_key_check")
-                consistency_result = cursor.fetchall()
-                if not consistency_result:
-                    print("Database consistency check passed.")
-                    print("Exiting Database initialization.")
-                else:
-                    print("Database consistency check failed. Inconsistent foreign key constraints.")
+            print("Running database consistency check...")
+            cursor.execute("PRAGMA foreign_key_check")
+            consistency_result = cursor.fetchall()
+            if not consistency_result:
+                print("Database consistency check passed.")
+            else:
+                print("Database consistency check failed. Inconsistent foreign key constraints.")
+
+            print("Validating OTP secrets format...")
+            cursor.execute("SELECT id, secret FROM otp_secrets")
+            secrets = cursor.fetchall()
+            for id, secret in secrets:
+                if not re.match('^[A-Z0-9]+$', secret):
+                    cleaned_secret = re.sub('[^A-Z0-9]', '', secret.upper())
+                    cursor.execute("UPDATE otp_secrets SET secret = ? WHERE id = ?", (cleaned_secret, id))
+                    print(f"Updated secret for ID {id}: {cleaned_secret}")
+
+            forbidden_words = [
+                'INVALID', 'FORBIDDEN', 'ERROR', 'SELECT', 'DROP', 'INSERT', 'DELETE',
+                'CREATE', 'ALTER', 'EXEC', 'EXECUTE', 'TRIGGER', 'GRANT', 'REVOKE', 'COMMIT',
+                'ROLLBACK', 'SAVEPOINT', 'FLUSH', 'SHUTDOWN', 'UNION', 'INTERSECT', 'EXCEPT',
+                'SCRIPT', 'SCRIPTING', 'NULL', 'TRUE', 'FALSE', 'LIMIT', 'TABLE',
+                'VIEW', 'KEY', 'INDEX', 'DISTINCT', 'JOIN', 'WHERE', 'ORDER BY', 'GROUP BY',
+                'HAVING', 'DECLARE', 'CURSOR', 'FETCH', 'LOCK'
+            ]
+            print("Validating names...")
+            cursor.execute("SELECT id, name FROM otp_secrets")
+            names = cursor.fetchall()
+            for id, name in names:
+                if name.strip() == "" or any(word in name.upper() for word in forbidden_words):
+                    print(f"Invalid name detected for ID {id}: {name}, please rename the saved Secret!")
+                    print(f"Name for ID {id} has not been automatically updated!")
+
+            db.commit()
+            print("All records validated and updated as necessary.")
 
     except sqlite3.Error as e:
         print(f"An error occurred while initializing the database: {e}")

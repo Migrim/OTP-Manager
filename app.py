@@ -1341,6 +1341,7 @@ def delete_user(user_id):
     return redirect(url_for('admin.admin_settings'))
 
 @app.route('/add', methods=['GET', 'POST'])
+@check_server_capacity
 @login_required
 def add():
     form = OTPForm()
