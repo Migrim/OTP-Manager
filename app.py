@@ -202,7 +202,6 @@ def load_from_db(secret_id=None):
                 for row in cursor.fetchall()
             ]
 
-
 def load_companies_from_db():
     with sqlite3.connect("otp.db") as db:
         cursor = db.cursor()
@@ -1442,13 +1441,18 @@ def add():
 @app.route('/view_otp/<int:secret_id>')
 @login_required
 def view_otp(secret_id):
-    otp_secret = load_from_db(secret_id)  
+    otp_secret = load_from_db(secret_id)
     if not otp_secret:
         flash("No OTP secret found with the given ID.", "error")
         return redirect(url_for('home'))
 
     otp_code_info = generate_otp_code(otp_secret)  
-    return render_template('view_otp.html', otp_code=otp_code_info['otp_code'], secret=otp_code_info)
+    return render_template('view_otp.html', secret=otp_code_info)
+
+@app.route('/copy_otp_flash')
+def copy_otp_flash():
+    flash('OTP Copied to Clipboard!', 'info')
+    return jsonify(success=True)
 
 if __name__ == '__main__':
     port = 5001 

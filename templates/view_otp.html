@@ -3,28 +3,29 @@
 {% block title %}View OTP Code{% endblock %}
 
 {% block styles %}
-{{ super() }}
-<link rel="stylesheet" href="{{ url_for('static', filename='styles/otp_view.css') }}">
-<link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
-<link rel="icon" href=".{{ url_for('static', filename='favicon.ico') }}">
-<link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
+    {{ super() }}
+    <link rel="icon" href="/static/favicon.ico">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/otp_view.css') }}">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
 {% endblock %}
 
 {% block content %}
 {% include 'navbar.html' %}
 <div class="container">
-    <div class="title">OTP Code for <span class="secret-name">{{ secret.name }}</span></div>
-    <div class="secret-info">
-        <p id="otp-code" class="clickable-otp">Current OTP Code: {{ otp_code }}</p>
+    <div class="title">OTP Code</div>
+    <div class="otp-info">
+        <p id="otp-code" class="clickable-otp">Current OTP Code: <span class="otp-number">Loading...</span></p>
+        <p class="otp-type">OTP Type: {{ secret.otp_type }}</p>
     </div>
     <div class="progress">
-        <div class="progress-bar bg-primary" id="progress-bar" role="progressbar" style="width: 100%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="30">
+        <div class="progress-bar" id="progress-bar" role="progressbar" style="width: 100%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="30">
             <span class="progress-text" id="progress-text"></span>
         </div>
     </div>
     <div class="button-container">
         <a href="{{ url_for('home') }}" class="btn">Home</a>
-        <a href="{{ url_for('add') }}" class="btn">Add Another Secret</a>
+        <a href="{{ url_for('add') }}" class="btn">Add another Secret</a>
     </div>
 </div>
 {% endblock %}
@@ -32,73 +33,83 @@
 {% block scripts %}
 {{ super() }}
 <script>
+    let flashTriggered = false; 
+
     document.getElementById('otp-code').addEventListener('click', async function() {
-        const otpCodeText = document.getElementById('otp-code').innerText.split(': ')[1]; // This splits the text and takes the second part, which is the OTP code.
-        if (navigator.clipboard) {
-            try {
-                await navigator.clipboard.writeText(otpCodeText);
-                console.log('OTP Copied to clipboard');
-            } catch (err) {
-                console.error('Clipboard API failed, using fallback:', err);
-                copyTextToClipboard(otpCodeText);  // Using fallback method
+        const otpCodeText = this.querySelector('.otp-number').innerText;  
+        try {
+            await navigator.clipboard.writeText(otpCodeText);
+            console.log('OTP Copied to clipboard');
+            if (!flashTriggered) {
+                triggerFlashMessage();
+                flashTriggered = true; 
             }
-        } else {
-            console.error('Clipboard API not available, using fallback.');
-            copyTextToClipboard(otpCodeText);  // Using fallback method
+        } catch (err) {
+            console.error('Clipboard API failed, using fallback:', err);
+            copyTextToClipboard(otpCodeText);
         }
     });
 
+    function triggerFlashMessage() {
+        fetch('/copy_otp_flash').then(response => {
+            console.log('Flash message triggered');
+        }).finally(() => {
+            setTimeout(() => {
+                flashTriggered = false;
+            }, 30000); 
+        });
+    }
+
     function copyTextToClipboard(text) {
+        console.log('Attempting to copy using fallback method');
         const textArea = document.createElement("textarea");
         textArea.value = text;
-
+        document.body.appendChild(textArea);
         textArea.style.position = "fixed";
         textArea.style.left = "-999999px";
         textArea.style.top = "-999999px";
-
-        document.body.appendChild(textArea);
         textArea.focus();
         textArea.select();
-
         try {
-            const successful = document.execCommand('copy');
-            const msg = successful ? 'successful' : 'unsuccessful';
-            console.log('Fallback: Copying text command was ' + msg);
+            if (document.execCommand('copy')) {
+                console.log('Fallback: Copying text command was successful');
+                if (!flashTriggered) {
+                    triggerFlashMessage();
+                    flashTriggered = true;
+                }
+            }
         } catch (err) {
             console.error('Fallback: Oops, unable to copy', err);
         }
-
         document.body.removeChild(textArea);
     }
 
     function refreshOTP() {
+        const otpCodeSpan = document.querySelector('#otp-code .otp-number');
         fetch('/refresh_specific_code?name={{ secret.name }}')
             .then(response => response.json())
             .then(data => {
-                const otpCodeElement = document.getElementById('otp-code');
-                if (data.otp_code.current_otp !== otpCodeElement.innerText) {
-                    otpCodeElement.innerText = 'Current OTP Code: ' + data.otp_code.current_otp;
-                }
+                otpCodeSpan.innerText = data.otp_code.current_otp;
             })
-            .catch(error => console.error('Error:', error));
+            .catch(error => {
+                console.error('Error:', error);
+                otpCodeSpan.innerText = 'Failed to load OTP';
+            });
     }
 
-    setInterval(refreshOTP, 1000);
+    document.addEventListener('DOMContentLoaded', function() {
+        setInterval(refreshOTP, 900);  
+        setInterval(updateProgressBar, 1000);
+    });
 
     const progressBar = document.getElementById('progress-bar');
     const progressText = document.getElementById('progress-text');
-
     function updateProgressBar() {
-        const now = new Date();
-        let seconds = now.getSeconds();
+        let seconds = new Date().getSeconds();
         let remainingSeconds = 30 - seconds % 30;
-        const progressValue = (remainingSeconds / 30) * 100;
-        progressBar.style.width = progressValue + '%';
+        progressBar.style.width = (remainingSeconds / 30 * 100) + '%';
         progressBar.setAttribute('aria-valuenow', remainingSeconds);
         progressText.innerText = remainingSeconds + 's';
     }
-
-    updateProgressBar();
-    setInterval(updateProgressBar, 1000);
 </script>
 {% endblock %}
