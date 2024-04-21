@@ -213,3 +213,38 @@ select.form-control option {
 .modal-content .modal-header .modal-title {
     color: #fff; 
 }
+
+.button-container {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px; 
+}
+
+.button-container button {
+    flex-grow: 1; 
+    margin: 0 10px; 
+    padding: 10px 20px; 
+    font-size: 16px; 
+    border-radius: 5px;
+    border: none; 
+    cursor: pointer; 
+    transition: background-color 0.3s; 
+}
+
+.button-container .btn-primary {
+    background-color: #007bff;
+    color: white; 
+}
+
+.button-container .btn-primary:hover {
+    background-color: #0056b3; 
+}
+
+.button-container .btn-secondary {
+    background-color: #6c757d; 
+    color: white; 
+}
+
+.button-container .btn-secondary:hover {
+    background-color: #545b62; 
+}

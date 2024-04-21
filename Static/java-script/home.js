@@ -1,10 +1,10 @@
 const countdownIntervals = new Map();
 const emojiList = [
     '😇', '🧐', '🫠', '🚫', '💀', '✨', '🥺', 
-    '🎉', '🚀', '🌟', '🔥', '🌈', '😂', 
+    '🔥', '🌈', '😂', 
     '👽', '👾', '🎃', '🕵️‍♂️',
-    '🧙‍♂️', '🧛‍♂️', '🧟‍♂️', '🐉', '🐲', '🦄',
-    '🍀', '🌺', '🌻', '🌹', '🌷', '🌼', '🌸'
+    '🧙‍♂️', '🧟‍♂️', '🐉', '🦄',
+    '🌺', '🌸'
 ];
 
 const lastOtpCodes = new Map(); 
@@ -308,7 +308,6 @@ document.getElementById('searchInput').addEventListener('input', function() {
         document.getElementById('noSecretsFound').style.display = 'none';
     }
 
-    // Refresh the displayed OTP codes
     refreshOtpCodes();
 });
 
@@ -507,7 +506,7 @@ document.getElementById('searchInput').addEventListener('input', function() {
             let now = new Date();
             let hour = now.getHours();
             if (hour < 4) {
-                return "🌜 Good night";
+                return "🌜 It's getting late";
             } else if (hour < 12) {
                 return "☕ Good morning";
             } else if (hour < 18) {

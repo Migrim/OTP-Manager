@@ -4,7 +4,7 @@ import base64
 
 def is_base32(secret):
     try:
-        base64.b32decode(secret)
+        base64.b32decode(secret, True) 
         return True
     except:
         return False

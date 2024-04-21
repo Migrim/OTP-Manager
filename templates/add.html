@@ -70,7 +70,10 @@
                     <span class="text-danger">{{ error }}</span>
                 {% endfor %}
             </div>                    
-            {{ form.submit(value="Add OTP", class="btn btn-primary btn-block form-submit") }}
+            <div class="button-container" style="display: flex; justify-content: space-between; padding: 10px;">
+                <button type="submit" name="action" value="add" class="btn btn-primary">Add</button>
+                <button type="submit" name="action" value="add_view" class="btn btn-secondary">Add + View</button>
+            </div>
         </form>
     </div>
 </div>

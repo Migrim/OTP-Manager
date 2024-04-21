@@ -120,15 +120,18 @@ def save_to_db(otp_secrets):
     
     cursor.execute("DELETE FROM otp_secrets")
 
+    last_row_id = None
     for otp_secret in otp_secrets:
         email = otp_secret.get('email', "none")
         cursor.execute("""
         INSERT INTO otp_secrets (name, email, secret, otp_type, refresh_time, company_id)
         VALUES (?, ?, ?, ?, ?, ?)
         """, (otp_secret['name'], email, otp_secret['secret'], otp_secret['otp_type'], otp_secret['refresh_time'], otp_secret['company_id']))
+        last_row_id = cursor.lastrowid
 
     conn.commit()
     conn.close()
+    return last_row_id
 
 def save_companies_to_db(companies):
     conn = sqlite3.connect("otp.db")
@@ -145,33 +148,60 @@ def save_companies_to_db(companies):
     conn.commit()
     conn.close()
 
-def load_from_db():
+def load_from_db(secret_id=None):
     with sqlite3.connect("otp.db") as db:
         cursor = db.cursor()
-        cursor.execute("""
-            SELECT 
-                otp_secrets.name, 
-                otp_secrets.email, 
-                otp_secrets.secret, 
-                otp_secrets.otp_type, 
-                otp_secrets.refresh_time, 
-                otp_secrets.company_id, 
-                companies.name AS company_name
-            FROM otp_secrets
-            LEFT JOIN companies ON otp_secrets.company_id = companies.company_id
-        """)
-        return [
-            {
-                'name': row[0], 
-                'email': row[1],  
-                'secret': row[2], 
-                'otp_type': row[3], 
-                'refresh_time': row[4], 
-                'company_id': row[5], 
-                'company': row[6] if row[6] else 'Unbekannt'
-            } 
-            for row in cursor.fetchall()
-        ]
+        if secret_id:
+            cursor.execute("""
+                SELECT 
+                    otp_secrets.name, 
+                    otp_secrets.email, 
+                    otp_secrets.secret, 
+                    otp_secrets.otp_type, 
+                    otp_secrets.refresh_time, 
+                    otp_secrets.company_id, 
+                    companies.name AS company_name
+                FROM otp_secrets
+                LEFT JOIN companies ON otp_secrets.company_id = companies.company_id
+                WHERE otp_secrets.id = ?
+            """, (secret_id,))
+            row = cursor.fetchone()
+            if row:
+                return {
+                    'name': row[0], 
+                    'email': row[1],  
+                    'secret': row[2], 
+                    'otp_type': row[3], 
+                    'refresh_time': row[4], 
+                    'company_id': row[5], 
+                    'company': row[6] if row[6] else 'Unbekannt'
+                }
+        else:
+            cursor.execute("""
+                SELECT 
+                    otp_secrets.name, 
+                    otp_secrets.email, 
+                    otp_secrets.secret, 
+                    otp_secrets.otp_type, 
+                    otp_secrets.refresh_time, 
+                    otp_secrets.company_id, 
+                    companies.name AS company_name
+                FROM otp_secrets
+                LEFT JOIN companies ON otp_secrets.company_id = companies.company_id
+            """)
+            return [
+                {
+                    'name': row[0], 
+                    'email': row[1],  
+                    'secret': row[2], 
+                    'otp_type': row[3], 
+                    'refresh_time': row[4], 
+                    'company_id': row[5], 
+                    'company': row[6] if row[6] else 'Unbekannt'
+                } 
+                for row in cursor.fetchall()
+            ]
+
 
 def load_companies_from_db():
     with sqlite3.connect("otp.db") as db:
@@ -1349,6 +1379,7 @@ def add():
     form.company.choices = [(company['company_id'], company['name']) for company in companies_from_db]
 
     if form.validate_on_submit():
+        action = request.form.get('action')
         name = form.name.data.strip()
         email = form.email.data.strip() or "none"
         secret = form.secret.data.strip().upper()
@@ -1397,11 +1428,27 @@ def add():
         existing_otp_secrets.append(new_otp_secret)
         save_to_db(existing_otp_secrets)
         save_companies_to_db(companies_from_db)
+        secret_id = save_to_db(existing_otp_secrets)
 
-        flash(f"New OTP secret '{name}' added successfully.", 'info')
-        return redirect(url_for('home'))
+        if action == 'add':
+            flash(f"New OTP secret '{name}' added successfully.", 'info')
+            return redirect(url_for('home'))
+        elif action == 'add_view':
+            flash(f"New OTP secret '{name}' added successfully. Viewing details.", 'info')
+            return redirect(url_for('view_otp', secret_id=secret_id))
 
     return render_template('add.html', form=form)
+
+@app.route('/view_otp/<int:secret_id>')
+@login_required
+def view_otp(secret_id):
+    otp_secret = load_from_db(secret_id)  
+    if not otp_secret:
+        flash("No OTP secret found with the given ID.", "error")
+        return redirect(url_for('home'))
+
+    otp_code_info = generate_otp_code(otp_secret)  
+    return render_template('view_otp.html', otp_code=otp_code_info['otp_code'], secret=otp_code_info)
 
 if __name__ == '__main__':
     port = 5001 
