@@ -13,6 +13,7 @@ import logging
 from logging.handlers import RotatingFileHandler
 
 app = Flask(__name__)
+app.config['DATABASE'] = 'instance/otp.db' 
 bcrypt = Bcrypt(app)
 
 logger = logging.getLogger('mv_admin_logger')
@@ -40,7 +41,8 @@ class CompanyForm(FlaskForm):
 
 def get_all_users():
     try:
-        with sqlite3.connect("otp.db") as db:
+        db_path = app.config['DATABASE'] 
+        with sqlite3.connect(db_path) as db:
             cursor = db.cursor()
             cursor.execute("SELECT id, username, is_admin FROM users")
             users = cursor.fetchall()
@@ -52,7 +54,8 @@ def get_all_users():
 
 def load_companies_from_db():
     try:
-        with sqlite3.connect("otp.db") as db:
+        db_path = app.config['DATABASE'] 
+        with sqlite3.connect(db_path) as db:
             cursor = db.cursor()
             cursor.execute("SELECT * FROM companies")
             companies = cursor.fetchall()
@@ -77,7 +80,8 @@ def reset_password():
     hashed_password = bcrypt.generate_password_hash(new_password).decode('utf-8')
 
     try:
-        with sqlite3.connect("otp.db") as db:
+        db_path = app.config['DATABASE'] 
+        with sqlite3.connect(db_path) as db:
             cursor = db.cursor()
             cursor.execute("UPDATE users SET password = ? WHERE id = ?", (hashed_password, user_id_to_reset))
             db.commit()
@@ -95,7 +99,8 @@ def reset_password():
 def user_management():
     is_admin = False
     try:
-        with sqlite3.connect("otp.db") as db:
+        db_path = app.config['DATABASE'] 
+        with sqlite3.connect(db_path) as db:
             cursor = db.cursor()
             cursor.execute("SELECT is_admin FROM users WHERE id = ?", (current_user.id,))
             is_admin = cursor.fetchone()[0]
@@ -117,7 +122,8 @@ def user_management():
         hashed_password = bcrypt.generate_password_hash(password).decode('utf-8')
         
         try:
-            with sqlite3.connect("otp.db") as db:
+            db_path = app.config['DATABASE'] 
+            with sqlite3.connect(db_path) as db:
                 cursor = db.cursor()
                 cursor.execute("INSERT INTO users (username, password) VALUES (?, ?)", (username, hashed_password))
                 db.commit()
@@ -138,7 +144,8 @@ def company_management():
 
     is_admin = False
     try:
-        with sqlite3.connect("otp.db") as db:
+        db_path = app.config['DATABASE'] 
+        with sqlite3.connect(db_path) as db:
             cursor = db.cursor()
             cursor.execute("SELECT is_admin FROM users WHERE username = ?", (current_user.username,))
             result = cursor.fetchone()
@@ -153,7 +160,8 @@ def company_management():
         kundennummer = company_form.kundennummer.data
 
         try:
-            with sqlite3.connect("otp.db") as db:
+            db_path = app.config['DATABASE'] 
+            with sqlite3.connect(db_path) as db:
                 cursor = db.cursor()
                 cursor.execute("INSERT INTO companies (name, kundennummer) VALUES (?, ?)", (company_name, kundennummer))
                 db.commit()
@@ -175,7 +183,8 @@ def edit_company(company_id):
         if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
             if company_form.validate_on_submit():
                 try:
-                    with sqlite3.connect("otp.db") as db:
+                    db_path = app.config['DATABASE'] 
+                    with sqlite3.connect(db_path) as db:
                         cursor = db.cursor()
                         cursor.execute("UPDATE companies SET name = ?, kundennummer = ? WHERE company_id = ?",
                                        (company_form.name.data, company_form.kundennummer.data, company_id))
@@ -189,7 +198,8 @@ def edit_company(company_id):
 
     else: 
         try:
-            with sqlite3.connect("otp.db") as db:
+            db_path = app.config['DATABASE'] 
+            with sqlite3.connect(db_path) as db:
                 cursor = db.cursor()
                 cursor.execute("SELECT name, kundennummer FROM companies WHERE company_id = ?", (company_id,))
                 company = cursor.fetchone()
@@ -205,7 +215,8 @@ def edit_company(company_id):
 @login_required
 def toggle_admin(user_id):
     try:
-        with sqlite3.connect("otp.db") as db:
+        db_path = app.config['DATABASE'] 
+        with sqlite3.connect(db_path) as db:
             cursor = db.cursor()
             cursor.execute("SELECT is_admin FROM users WHERE username = ?", (current_user.username,))
             is_current_user_admin = cursor.fetchone()[0]
@@ -237,7 +248,8 @@ def admin_settings():
 
     is_admin = False
     try:
-        with sqlite3.connect("otp.db") as db:
+        db_path = app.config['DATABASE'] 
+        with sqlite3.connect(db_path) as db:
             cursor = db.cursor()
             cursor.execute("SELECT is_admin FROM users WHERE id = ?", (current_user.id,))
             is_admin = bool(cursor.fetchone()[0])
@@ -257,7 +269,8 @@ def add_company():
     new_company_name = request.form.get('name')
     new_kundennummer = request.form.get('kundennummer')
     try:
-        with sqlite3.connect("otp.db") as db:
+        db_path = app.config['DATABASE'] 
+        with sqlite3.connect(db_path) as db:
             cursor = db.cursor()
             cursor.execute("INSERT INTO companies (name, kundennummer) VALUES (?, ?)", (new_company_name, new_kundennummer))  # Modified Line
             db.commit()
@@ -285,7 +298,8 @@ def delete_user(user_id):
         return jsonify(success=False, message="Only the admin can delete users."), 403
 
     try:
-        with sqlite3.connect("otp.db") as db:
+        db_path = app.config['DATABASE'] 
+        with sqlite3.connect(db_path) as db:
             cursor = db.cursor()
             print(f"Attempting to delete user with ID: {user_id}")
             cursor.execute("DELETE FROM users WHERE id = ?", (user_id,))
@@ -304,7 +318,8 @@ def delete_company(company_id):
         return jsonify(success=False, message="Unauthorized access."), 403
 
     try:
-        with sqlite3.connect("otp.db") as db:
+        db_path = app.config['DATABASE'] 
+        with sqlite3.connect(db_path) as db:
             cursor = db.cursor()
             cursor.execute("DELETE FROM companies WHERE company_id = ?", (company_id,))
             db.commit()

@@ -8,8 +8,10 @@ from math import ceil
 
 search_blueprint = Blueprint('search_blueprint', __name__)
 app = Flask(__name__)
+app.config['DATABASE'] = 'instance/otp.db' 
 def load_from_db():
-    with sqlite3.connect("otp.db") as db:
+    db_path = app.config['DATABASE'] 
+    with sqlite3.connect(db_path) as db:
         cursor = db.cursor()
         cursor.execute("""
             SELECT 
@@ -46,7 +48,8 @@ def is_base32(secret):
         return False
 
 def load_companies_from_db():
-    with sqlite3.connect("otp.db") as db:
+    db_path = app.config['DATABASE'] 
+    with sqlite3.connect(db_path) as db:
         cursor = db.cursor()
         cursor.execute("SELECT company_id, name FROM companies")
         return [{'company_id': row[0], 'name': row[1]} for row in cursor.fetchall()]

@@ -3918,3 +3918,555 @@ UnboundLocalError: local variable 'show_company' referenced before assignment
 2024-04-19 23:20:25,942 [INFO] Response time for home: 0.03s
 2024-04-19 23:21:42,794 [INFO] Server starting on port 5001...
 2024-04-19 23:21:44,579 [INFO] Response time for home: 0.03s
+2024-04-23 14:26:54,309 [INFO] Server starting on port 5001...
+2024-04-23 14:27:10,390 [INFO] Server starting on port 5002...
+2024-04-23 14:27:20,510 [INFO] Server starting on port 5001...
+2024-04-23 14:27:24,952 [INFO] Server starting on port 5002...
+2024-04-23 14:27:33,585 [INFO] Response time for login: 0.03s
+2024-04-23 14:27:38,230 [INFO] Response time for login: 0.22s
+2024-04-23 14:27:38,380 [INFO] Response time for home: 0.04s
+2024-04-23 14:27:43,345 [INFO] Response time for home: 0.01s
+2024-04-23 14:28:18,547 [INFO] Response time for add: 0.03s
+2024-04-23 14:29:05,773 [INFO] Fetched all users successfully.
+2024-04-23 14:29:05,773 [INFO] Fetched all users successfully.
+2024-04-23 14:29:22,299 [INFO] User ID 1 successfully logged out.
+2024-04-23 14:29:22,444 [INFO] Response time for login: 0.00s
+2024-04-24 14:42:52,254 [INFO] Server starting on port 5001...
+2024-04-24 14:42:52,343 Redirecting to login: No user_id or session_token
+2024-04-24 14:42:52,343 Redirecting to login: No user_id or session_token
+2024-04-24 14:42:52,344 Redirecting to login: No user_id or session_token
+2024-04-24 14:42:52,355 Redirecting to login: No user_id or session_token
+2024-04-24 14:42:52,356 Redirecting to login: No user_id or session_token
+2024-04-24 14:42:52,361 Redirecting to login: No user_id or session_token
+2024-04-24 14:42:52,365 Redirecting to login: No user_id or session_token
+2024-04-24 14:42:52,366 Redirecting to login: No user_id or session_token
+2024-04-24 14:42:52,373 Redirecting to login: No user_id or session_token
+2024-04-24 14:42:52,374 Redirecting to login: No user_id or session_token
+2024-04-24 14:42:52,376 Redirecting to login: No user_id or session_token
+2024-04-24 14:42:52,385 Redirecting to login: No user_id or session_token
+2024-04-24 14:42:52,386 Redirecting to login: No user_id or session_token
+2024-04-24 14:42:52,393 Redirecting to login: No user_id or session_token
+2024-04-24 14:42:52,397 Redirecting to login: No user_id or session_token
+2024-04-24 14:42:52,397 Redirecting to login: No user_id or session_token
+2024-04-24 14:42:52,405 Redirecting to login: No user_id or session_token
+2024-04-24 14:42:52,408 Redirecting to login: No user_id or session_token
+2024-04-24 14:42:52,415 Redirecting to login: No user_id or session_token
+2024-04-24 14:42:52,419 Redirecting to login: No user_id or session_token
+2024-04-24 14:42:52,427 Redirecting to login: No user_id or session_token
+2024-04-24 14:42:52,603 [INFO] Response time for login: 0.03s
+2024-04-24 14:42:52,607 [INFO] Response time for login: 0.01s
+2024-04-24 14:42:52,609 [INFO] Response time for login: 0.05s
+2024-04-24 14:42:52,613 [INFO] Response time for login: 0.04s
+2024-04-24 14:42:52,669 [INFO] Response time for login: 0.00s
+2024-04-24 14:42:52,672 [INFO] Response time for login: 0.00s
+2024-04-24 14:42:52,723 [INFO] Response time for login: 0.00s
+2024-04-24 14:42:52,726 [INFO] Response time for login: 0.00s
+2024-04-24 14:42:52,731 [INFO] Response time for login: 0.00s
+2024-04-24 14:42:52,731 [INFO] Response time for login: 0.00s
+2024-04-24 14:42:52,781 [INFO] Response time for login: 0.00s
+2024-04-24 14:42:52,789 [INFO] Response time for login: 0.00s
+2024-04-24 14:42:52,835 [INFO] Response time for login: 0.00s
+2024-04-24 14:42:52,845 [INFO] Response time for login: 0.00s
+2024-04-24 14:42:52,847 [INFO] Response time for login: 0.00s
+2024-04-24 14:42:52,855 [INFO] Response time for login: 0.00s
+2024-04-24 14:42:52,899 [INFO] Response time for login: 0.00s
+2024-04-24 14:42:52,923 [INFO] Response time for login: 0.00s
+2024-04-24 14:42:52,969 [INFO] Response time for login: 0.00s
+2024-04-24 14:42:52,983 [INFO] Response time for login: 0.00s
+2024-04-24 14:42:52,987 Redirecting to login: No user_id or session_token
+2024-04-24 14:42:52,990 [INFO] Response time for login: 0.00s
+2024-04-24 14:42:52,992 Redirecting to login: No user_id or session_token
+2024-04-24 14:42:52,997 Redirecting to login: No user_id or session_token
+2024-04-24 14:42:52,998 Redirecting to login: No user_id or session_token
+2024-04-24 14:42:53,010 [INFO] Response time for login: 0.00s
+2024-04-24 14:42:53,040 [INFO] Response time for login: 0.00s
+2024-04-24 14:42:53,062 [INFO] Response time for login: 0.00s
+2024-04-24 14:42:53,106 [INFO] Response time for login: 0.00s
+2024-04-24 14:42:53,139 [INFO] Response time for login: 0.00s
+2024-04-24 14:42:53,151 [INFO] Response time for login: 0.00s
+2024-04-24 14:42:53,156 [INFO] Response time for login: 0.00s
+2024-04-24 14:42:53,201 [INFO] Response time for login: 0.00s
+2024-04-24 14:42:53,807 Redirecting to login: No user_id or session_token
+2024-04-24 14:42:53,852 Redirecting to login: No user_id or session_token
+2024-04-24 14:42:53,946 [INFO] Response time for login: 0.00s
+2024-04-24 14:42:54,017 [INFO] Response time for login: 0.00s
+2024-04-24 14:42:54,824 Redirecting to login: No user_id or session_token
+2024-04-24 14:42:54,867 Redirecting to login: No user_id or session_token
+2024-04-24 14:42:54,956 Redirecting to login: No user_id or session_token
+2024-04-24 14:42:54,986 [INFO] Response time for login: 0.00s
+2024-04-24 14:42:55,053 [INFO] Response time for login: 0.00s
+2024-04-24 14:42:55,109 [INFO] Response time for login: 0.00s
+2024-04-24 14:43:01,852 [INFO] Response time for login: 0.23s
+2024-04-24 14:43:02,049 [INFO] Response time for home: 0.04s
+2024-04-24 14:43:48,475 [INFO] Response time for home: 0.00s
+2024-04-24 14:49:23,836 [ERROR] An error occurred on the home page.
+Traceback (most recent call last):
+  File "c:\Users\Sebastian\Desktop\OTP-Manager\app.py", line 976, in home
+    return render_template('home.html', form=form, grouped_otp_codes=grouped_otp_codes, total_otp_count=total_otp_count, companies=companies, search_name=search_name, page=page, total_pages=total_pages, enable_pagination=current_user.enable_pagination,  alert_color=alert_color, text_color=text_color, username=current_user.username, show_emails=show_emails, show_company=show_company)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Sebastian\AppData\Local\Programs\Python\Python311\Lib\site-packages\flask\templating.py", line 150, in render_template
+    return _render(app, template, context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Sebastian\AppData\Local\Programs\Python\Python311\Lib\site-packages\flask\templating.py", line 131, in _render
+    rv = template.render(context)
+         ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Sebastian\AppData\Local\Programs\Python\Python311\Lib\site-packages\jinja2\environment.py", line 1301, in render
+    self.environment.handle_exception()
+  File "C:\Users\Sebastian\AppData\Local\Programs\Python\Python311\Lib\site-packages\jinja2\environment.py", line 936, in handle_exception
+    raise rewrite_traceback_stack(source=source)
+  File "c:\Users\Sebastian\Desktop\OTP-Manager\templates\home.html", line 4, in top-level template code
+    {% extends 'bootstrap/base.html' %}
+    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Sebastian\AppData\Local\Programs\Python\Python311\Lib\site-packages\flask_bootstrap\templates\bootstrap\base.html", line 1, in top-level template code
+    {% block doc -%}
+  File "C:\Users\Sebastian\AppData\Local\Programs\Python\Python311\Lib\site-packages\flask_bootstrap\templates\bootstrap\base.html", line 4, in block 'doc'
+    {%- block html %}
+  File "C:\Users\Sebastian\AppData\Local\Programs\Python\Python311\Lib\site-packages\flask_bootstrap\templates\bootstrap\base.html", line 20, in block 'html'
+    {% block body -%}
+  File "C:\Users\Sebastian\AppData\Local\Programs\Python\Python311\Lib\site-packages\flask_bootstrap\templates\bootstrap\base.html", line 23, in block 'body'
+    {% block content -%}
+  File "c:\Users\Sebastian\Desktop\OTP-Manager\templates\home.html", line 83, in block 'content'
+    <button type="button" class="material-icons-outlined" title="View OTP" onclick="location.href='{{ url_for('view_otp', secret_id=otp.secret_id) }}'">visibility</button>
+    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Sebastian\AppData\Local\Programs\Python\Python311\Lib\site-packages\flask\app.py", line 1063, in url_for
+    rv = url_adapter.build(  # type: ignore[union-attr]
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Sebastian\AppData\Local\Programs\Python\Python311\Lib\site-packages\werkzeug\routing\map.py", line 917, in build
+    rv = self._partial_build(endpoint, values, method, append_unknown)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Sebastian\AppData\Local\Programs\Python\Python311\Lib\site-packages\werkzeug\routing\map.py", line 796, in _partial_build
+    rv = self._partial_build(
+         ^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Sebastian\AppData\Local\Programs\Python\Python311\Lib\site-packages\werkzeug\routing\map.py", line 809, in _partial_build
+    build_rv = rule.build(values, append_unknown)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Sebastian\AppData\Local\Programs\Python\Python311\Lib\site-packages\werkzeug\routing\rules.py", line 831, in build
+    return self._build_unknown(**values)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<werkzeug routing>", line 1, in <builder:'/view_otp/<int:secret_id>'>
+  File "C:\Users\Sebastian\AppData\Local\Programs\Python\Python311\Lib\site-packages\werkzeug\routing\converters.py", line 163, in to_url
+    value = str(self.num_convert(value))
+                ^^^^^^^^^^^^^^^^^^^^^^^
+jinja2.exceptions.UndefinedError: 'dict object' has no attribute 'secret_id'
+2024-04-24 14:50:21,928 [ERROR] An error occurred on the home page.
+Traceback (most recent call last):
+  File "c:\Users\Sebastian\Desktop\OTP-Manager\app.py", line 976, in home
+    return render_template('home.html', form=form, grouped_otp_codes=grouped_otp_codes, total_otp_count=total_otp_count, companies=companies, search_name=search_name, page=page, total_pages=total_pages, enable_pagination=current_user.enable_pagination,  alert_color=alert_color, text_color=text_color, username=current_user.username, show_emails=show_emails, show_company=show_company)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Sebastian\AppData\Local\Programs\Python\Python311\Lib\site-packages\flask\templating.py", line 150, in render_template
+    return _render(app, template, context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Sebastian\AppData\Local\Programs\Python\Python311\Lib\site-packages\flask\templating.py", line 131, in _render
+    rv = template.render(context)
+         ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Sebastian\AppData\Local\Programs\Python\Python311\Lib\site-packages\jinja2\environment.py", line 1301, in render
+    self.environment.handle_exception()
+  File "C:\Users\Sebastian\AppData\Local\Programs\Python\Python311\Lib\site-packages\jinja2\environment.py", line 936, in handle_exception
+    raise rewrite_traceback_stack(source=source)
+  File "c:\Users\Sebastian\Desktop\OTP-Manager\templates\home.html", line 4, in top-level template code
+    {% extends 'bootstrap/base.html' %}
+    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Sebastian\AppData\Local\Programs\Python\Python311\Lib\site-packages\flask_bootstrap\templates\bootstrap\base.html", line 1, in top-level template code
+    {% block doc -%}
+  File "C:\Users\Sebastian\AppData\Local\Programs\Python\Python311\Lib\site-packages\flask_bootstrap\templates\bootstrap\base.html", line 4, in block 'doc'
+    {%- block html %}
+  File "C:\Users\Sebastian\AppData\Local\Programs\Python\Python311\Lib\site-packages\flask_bootstrap\templates\bootstrap\base.html", line 20, in block 'html'
+    {% block body -%}
+  File "C:\Users\Sebastian\AppData\Local\Programs\Python\Python311\Lib\site-packages\flask_bootstrap\templates\bootstrap\base.html", line 23, in block 'body'
+    {% block content -%}
+  File "c:\Users\Sebastian\Desktop\OTP-Manager\templates\home.html", line 83, in block 'content'
+    <button type="button" class="material-icons-outlined" title="View OTP" onclick="location.href='{{ url_for('view_otp', secret_id=otp.secret_id) }}'">visibility</button>
+    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Sebastian\AppData\Local\Programs\Python\Python311\Lib\site-packages\flask\app.py", line 1063, in url_for
+    rv = url_adapter.build(  # type: ignore[union-attr]
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Sebastian\AppData\Local\Programs\Python\Python311\Lib\site-packages\werkzeug\routing\map.py", line 917, in build
+    rv = self._partial_build(endpoint, values, method, append_unknown)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Sebastian\AppData\Local\Programs\Python\Python311\Lib\site-packages\werkzeug\routing\map.py", line 796, in _partial_build
+    rv = self._partial_build(
+         ^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Sebastian\AppData\Local\Programs\Python\Python311\Lib\site-packages\werkzeug\routing\map.py", line 809, in _partial_build
+    build_rv = rule.build(values, append_unknown)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Sebastian\AppData\Local\Programs\Python\Python311\Lib\site-packages\werkzeug\routing\rules.py", line 831, in build
+    return self._build_unknown(**values)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<werkzeug routing>", line 1, in <builder:'/view_otp/<int:secret_id>'>
+  File "C:\Users\Sebastian\AppData\Local\Programs\Python\Python311\Lib\site-packages\werkzeug\routing\converters.py", line 163, in to_url
+    value = str(self.num_convert(value))
+                ^^^^^^^^^^^^^^^^^^^^^^^
+jinja2.exceptions.UndefinedError: 'dict object' has no attribute 'secret_id'
+2024-04-24 14:50:23,113 [ERROR] An error occurred on the home page.
+Traceback (most recent call last):
+  File "c:\Users\Sebastian\Desktop\OTP-Manager\app.py", line 976, in home
+    return render_template('home.html', form=form, grouped_otp_codes=grouped_otp_codes, total_otp_count=total_otp_count, companies=companies, search_name=search_name, page=page, total_pages=total_pages, enable_pagination=current_user.enable_pagination,  alert_color=alert_color, text_color=text_color, username=current_user.username, show_emails=show_emails, show_company=show_company)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Sebastian\AppData\Local\Programs\Python\Python311\Lib\site-packages\flask\templating.py", line 150, in render_template
+    return _render(app, template, context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Sebastian\AppData\Local\Programs\Python\Python311\Lib\site-packages\flask\templating.py", line 131, in _render
+    rv = template.render(context)
+         ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Sebastian\AppData\Local\Programs\Python\Python311\Lib\site-packages\jinja2\environment.py", line 1301, in render
+    self.environment.handle_exception()
+  File "C:\Users\Sebastian\AppData\Local\Programs\Python\Python311\Lib\site-packages\jinja2\environment.py", line 936, in handle_exception
+    raise rewrite_traceback_stack(source=source)
+  File "c:\Users\Sebastian\Desktop\OTP-Manager\templates\home.html", line 4, in top-level template code
+    {% extends 'bootstrap/base.html' %}
+    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Sebastian\AppData\Local\Programs\Python\Python311\Lib\site-packages\flask_bootstrap\templates\bootstrap\base.html", line 1, in top-level template code
+    {% block doc -%}
+  File "C:\Users\Sebastian\AppData\Local\Programs\Python\Python311\Lib\site-packages\flask_bootstrap\templates\bootstrap\base.html", line 4, in block 'doc'
+    {%- block html %}
+  File "C:\Users\Sebastian\AppData\Local\Programs\Python\Python311\Lib\site-packages\flask_bootstrap\templates\bootstrap\base.html", line 20, in block 'html'
+    {% block body -%}
+  File "C:\Users\Sebastian\AppData\Local\Programs\Python\Python311\Lib\site-packages\flask_bootstrap\templates\bootstrap\base.html", line 23, in block 'body'
+    {% block content -%}
+  File "c:\Users\Sebastian\Desktop\OTP-Manager\templates\home.html", line 83, in block 'content'
+    <button type="button" class="material-icons-outlined" title="View OTP" onclick="location.href='{{ url_for('view_otp', secret_id=otp.secret_id) }}'">visibility</button>
+    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Sebastian\AppData\Local\Programs\Python\Python311\Lib\site-packages\flask\app.py", line 1063, in url_for
+    rv = url_adapter.build(  # type: ignore[union-attr]
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Sebastian\AppData\Local\Programs\Python\Python311\Lib\site-packages\werkzeug\routing\map.py", line 917, in build
+    rv = self._partial_build(endpoint, values, method, append_unknown)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Sebastian\AppData\Local\Programs\Python\Python311\Lib\site-packages\werkzeug\routing\map.py", line 796, in _partial_build
+    rv = self._partial_build(
+         ^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Sebastian\AppData\Local\Programs\Python\Python311\Lib\site-packages\werkzeug\routing\map.py", line 809, in _partial_build
+    build_rv = rule.build(values, append_unknown)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Sebastian\AppData\Local\Programs\Python\Python311\Lib\site-packages\werkzeug\routing\rules.py", line 831, in build
+    return self._build_unknown(**values)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<werkzeug routing>", line 1, in <builder:'/view_otp/<int:secret_id>'>
+  File "C:\Users\Sebastian\AppData\Local\Programs\Python\Python311\Lib\site-packages\werkzeug\routing\converters.py", line 163, in to_url
+    value = str(self.num_convert(value))
+                ^^^^^^^^^^^^^^^^^^^^^^^
+jinja2.exceptions.UndefinedError: 'dict object' has no attribute 'secret_id'
+2024-04-24 14:50:29,047 [INFO] Response time for home: 0.02s
+2024-04-24 14:51:25,415 [INFO] Response time for add: 0.02s
+2024-04-24 15:48:47,019 [INFO] Response time for home: 0.01s
+2024-04-24 15:48:54,659 [INFO] Response time for add: 0.00s
+2024-04-24 15:50:34,393 [INFO] Response time for home: 0.01s
+2024-04-24 15:54:46,539 [INFO] Response time for home: 0.01s
+2024-04-24 15:54:48,542 [INFO] Response time for home: 0.00s
+2024-04-24 15:55:10,461 [INFO] Fetched all users successfully.
+2024-04-24 15:55:10,461 [INFO] Fetched all users successfully.
+2024-04-24 16:12:15,203 [INFO] Fetched all users successfully.
+2024-04-24 16:12:15,203 [INFO] Fetched all users successfully.
+2024-04-24 16:14:13,844 [INFO] Response time for home: 0.01s
+2024-04-24 18:07:15,784 [INFO] Response time for home: 0.00s
+2024-04-24 18:37:46,580 [INFO] Server starting on port 5001...
+2024-04-24 18:42:42,101 [INFO] Server starting on port 5001...
+2024-04-24 18:42:49,524 [INFO] Response time for home: 0.04s
+2024-04-24 18:42:49,631 [INFO] Response time for home: 0.00s
+2024-04-24 18:42:49,636 [INFO] Response time for home: 0.01s
+2024-04-24 18:42:53,355 [INFO] Response time for home: 0.00s
+2024-04-24 18:42:54,256 [INFO] Response time for add: 0.01s
+2024-04-24 18:42:54,980 [INFO] Response time for home: 0.01s
+2024-04-24 18:43:03,785 [INFO] Response time for home: 0.00s
+2024-04-24 18:43:04,931 [INFO] Response time for home: 0.00s
+2024-04-24 18:43:21,195 [INFO] User ID 1 successfully logged out.
+2024-04-24 18:43:21,346 [INFO] Response time for login: 0.03s
+2024-04-24 18:43:24,168 [INFO] Response time for login: 0.23s
+2024-04-24 18:43:24,591 [INFO] Response time for home: 0.00s
+2024-04-24 18:47:12,106 [INFO] Server starting on port 5001...
+2024-04-24 18:48:39,420 [INFO] Response time for add: 0.02s
+2024-04-24 18:48:40,297 [INFO] Response time for home: 0.02s
+2024-04-24 18:50:42,197 [INFO] Server starting on port 5001...
+2024-04-24 18:54:39,714 [INFO] Server starting on port 5001...
+2024-04-24 18:55:34,536 [INFO] Server starting on port 5001...
+2024-04-24 18:57:38,797 [INFO] Server starting on port 5001...
+2024-04-24 19:01:38,081 [INFO] Server starting on port 5001...
+2024-04-24 19:04:09,201 [INFO] Server starting on port 5001...
+2024-04-24 19:05:43,980 [INFO] Server starting on port 5001...
+2024-04-24 19:06:50,419 [INFO] Server starting on port 5001...
+2024-04-24 19:08:38,768 [INFO] Server starting on port 5001...
+2024-04-24 19:10:43,738 [INFO] Server starting on port 5001...
+2024-04-24 19:12:48,903 [INFO] Server starting on port 5001...
+2024-04-24 19:17:32,281 [INFO] Server starting on port 5001...
+2024-04-24 19:19:45,781 [INFO] Server starting on port 5001...
+2024-04-24 19:21:28,615 [INFO] Server starting on port 5001...
+2024-04-24 19:23:49,944 [INFO] Server starting on port 5001...
+2024-04-24 19:26:31,580 [INFO] Server starting on port 5001...
+2024-04-24 19:27:47,117 [INFO] Server starting on port 5001...
+2024-04-29 18:52:54,999 [INFO] Server starting on port 5001...
+2024-04-29 18:53:20,822 [INFO] Response time for home: 0.05s
+2024-04-29 18:57:06,353 [INFO] Server starting on port 5001...
+2024-04-29 18:57:13,538 [INFO] Response time for home: 0.02s
+2024-04-29 18:57:22,289 [INFO] Response time for home: 0.00s
+2024-04-29 18:57:28,078 [INFO] Server starting on port 5002...
+2024-04-29 18:57:31,662 [INFO] Response time for home: 0.02s
+2024-04-29 19:03:04,307 [INFO] Server starting on port 5001...
+2024-04-29 19:03:07,316 [INFO] Response time for home: 0.02s
+2024-04-29 22:30:13,998 [INFO] Server starting on port 5001...
+2024-04-29 22:30:26,818 [INFO] Server starting on port 5002...
+2024-04-29 22:30:34,919 [INFO] Response time for login: 0.03s
+2024-04-29 22:30:41,249 [INFO] Response time for login: 0.00s
+2024-04-29 22:34:43,071 [INFO] Server starting on port 5002...
+2024-04-29 22:34:46,079 Redirecting to login: No user_id or session_token
+2024-04-29 22:34:46,232 [INFO] Response time for login: 0.01s
+2024-04-29 22:34:50,833 [INFO] Response time for login: 0.45s
+2024-04-29 22:37:30,368 [INFO] Server starting on port 5002...
+2024-04-29 22:37:33,446 [ERROR] An error occurred on the home page.
+Traceback (most recent call last):
+  File "c:\Users\Sebastian\Desktop\OTP-Manager\app.py", line 883, in home
+    companies = sorted(load_companies_from_db(), key=lambda x: x['name'])
+                       ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\Sebastian\Desktop\OTP-Manager\app.py", line 210, in load_companies_from_db
+    cursor.execute("SELECT company_id, name, kundennummer FROM companies ORDER BY company_id")
+sqlite3.OperationalError: no such column: company_id
+2024-04-29 22:38:27,550 [ERROR] An error occurred on the home page.
+Traceback (most recent call last):
+  File "c:\Users\Sebastian\Desktop\OTP-Manager\app.py", line 883, in home
+    companies = sorted(load_companies_from_db(), key=lambda x: x['name'])
+                       ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\Sebastian\Desktop\OTP-Manager\app.py", line 210, in load_companies_from_db
+    cursor.execute("SELECT company_id, name, kundennummer FROM companies ORDER BY company_id")
+sqlite3.OperationalError: no such column: company_id
+2024-04-29 22:38:28,635 [ERROR] An error occurred on the home page.
+Traceback (most recent call last):
+  File "c:\Users\Sebastian\Desktop\OTP-Manager\app.py", line 883, in home
+    companies = sorted(load_companies_from_db(), key=lambda x: x['name'])
+                       ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\Sebastian\Desktop\OTP-Manager\app.py", line 210, in load_companies_from_db
+    cursor.execute("SELECT company_id, name, kundennummer FROM companies ORDER BY company_id")
+sqlite3.OperationalError: no such column: company_id
+2024-04-29 22:39:40,557 [INFO] Server starting on port 5002...
+2024-04-29 22:39:41,702 [ERROR] An error occurred on the home page.
+Traceback (most recent call last):
+  File "c:\Users\Sebastian\Desktop\OTP-Manager\app.py", line 886, in home
+    companies = sorted(load_companies_from_db(), key=lambda x: x['name'])
+                       ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\Sebastian\Desktop\OTP-Manager\app.py", line 210, in load_companies_from_db
+    cursor.execute("SELECT company_id, name, kundennummer FROM companies ORDER BY company_id")
+sqlite3.OperationalError: no such column: company_id
+2024-04-29 22:41:39,482 [INFO] Server starting on port 5002...
+2024-04-29 22:41:42,669 [ERROR] An error occurred on the home page.
+Traceback (most recent call last):
+  File "c:\Users\Sebastian\Desktop\OTP-Manager\app.py", line 884, in home
+    companies = sorted(load_companies_from_db(), key=lambda x: x['name'])
+                       ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\Sebastian\Desktop\OTP-Manager\app.py", line 210, in load_companies_from_db
+    cursor.execute("SELECT company_id, name, kundennummer FROM companies ORDER BY company_id")
+sqlite3.OperationalError: no such column: company_id
+2024-04-29 22:41:57,746 [ERROR] An error occurred on the home page.
+Traceback (most recent call last):
+  File "c:\Users\Sebastian\Desktop\OTP-Manager\app.py", line 884, in home
+    flash(f'New OTP secret "{new_secret["name"]}" added successfully!', 'success')
+                   ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\Sebastian\Desktop\OTP-Manager\app.py", line 210, in load_companies_from_db
+    cursor.execute("SELECT company_id, name, kundennummer FROM companies ORDER BY company_id")
+sqlite3.OperationalError: no such column: company_id
+2024-04-29 22:42:04,299 [INFO] Server starting on port 5002...
+2024-04-29 22:42:05,408 [ERROR] An error occurred on the home page.
+Traceback (most recent call last):
+  File "c:\Users\Sebastian\Desktop\OTP-Manager\app.py", line 887, in home
+    companies = sorted(load_companies_from_db(), key=lambda x: x['name'])
+                       ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\Sebastian\Desktop\OTP-Manager\app.py", line 210, in load_companies_from_db
+    cursor.execute("SELECT company_id, name, kundennummer FROM companies ORDER BY company_id")
+sqlite3.OperationalError: no such column: company_id
+2024-04-29 22:43:40,165 [INFO] Server starting on port 5002...
+2024-04-29 22:43:41,287 [ERROR] An error occurred on the home page.
+Traceback (most recent call last):
+  File "c:\Users\Sebastian\Desktop\OTP-Manager\app.py", line 888, in home
+    companies = sorted(load_companies_from_db(), key=lambda x: x['name'])
+                       ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\Sebastian\Desktop\OTP-Manager\app.py", line 210, in load_companies_from_db
+    cursor.execute("SELECT company_id, name, kundennummer FROM companies ORDER BY company_id")
+sqlite3.OperationalError: no such column: company_id
+2024-04-29 22:44:39,962 [INFO] Server starting on port 5002...
+2024-04-29 22:44:41,214 [ERROR] An error occurred on the home page.
+Traceback (most recent call last):
+  File "c:\Users\Sebastian\Desktop\OTP-Manager\app.py", line 890, in home
+    companies = sorted(load_companies_from_db(), key=lambda x: x['name'])
+                       ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\Sebastian\Desktop\OTP-Manager\app.py", line 210, in load_companies_from_db
+    cursor.execute("SELECT company_id, name, kundennummer FROM companies ORDER BY company_id")
+sqlite3.OperationalError: no such column: company_id
+2024-04-29 22:44:41,233 [INFO] Response time for home: 0.02s
+2024-04-29 22:44:44,980 [ERROR] An error occurred on the home page.
+Traceback (most recent call last):
+  File "c:\Users\Sebastian\Desktop\OTP-Manager\app.py", line 890, in home
+    companies = sorted(load_companies_from_db(), key=lambda x: x['name'])
+                       ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\Sebastian\Desktop\OTP-Manager\app.py", line 210, in load_companies_from_db
+    cursor.execute("SELECT company_id, name, kundennummer FROM companies ORDER BY company_id")
+sqlite3.OperationalError: no such column: company_id
+2024-04-29 22:44:44,981 [INFO] Response time for home: 0.00s
+2024-04-29 22:44:48,915 [ERROR] Error fetching user admin status: no such table: users
+2024-04-29 22:44:48,915 [ERROR] Error fetching user admin status: no such table: users
+2024-04-29 22:44:50,603 [ERROR] Error fetching user admin status: no such table: users
+2024-04-29 22:44:50,603 [ERROR] Error fetching user admin status: no such table: users
+2024-04-29 22:44:50,721 [ERROR] An error occurred on the home page.
+Traceback (most recent call last):
+  File "c:\Users\Sebastian\Desktop\OTP-Manager\app.py", line 890, in home
+    companies = sorted(load_companies_from_db(), key=lambda x: x['name'])
+                       ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\Sebastian\Desktop\OTP-Manager\app.py", line 210, in load_companies_from_db
+    cursor.execute("SELECT company_id, name, kundennummer FROM companies ORDER BY company_id")
+sqlite3.OperationalError: no such column: company_id
+2024-04-29 22:44:50,722 [INFO] Response time for home: 0.00s
+2024-04-29 22:44:53,726 [ERROR] Error fetching user admin status: no such table: users
+2024-04-29 22:44:53,726 [ERROR] Error fetching user admin status: no such table: users
+2024-04-29 22:44:53,837 [ERROR] An error occurred on the home page.
+Traceback (most recent call last):
+  File "c:\Users\Sebastian\Desktop\OTP-Manager\app.py", line 890, in home
+    companies = sorted(load_companies_from_db(), key=lambda x: x['name'])
+                       ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\Sebastian\Desktop\OTP-Manager\app.py", line 210, in load_companies_from_db
+    cursor.execute("SELECT company_id, name, kundennummer FROM companies ORDER BY company_id")
+sqlite3.OperationalError: no such column: company_id
+2024-04-29 22:44:53,839 [INFO] Response time for home: 0.00s
+2024-04-29 22:45:04,759 [ERROR] An error occurred on the home page.
+Traceback (most recent call last):
+  File "c:\Users\Sebastian\Desktop\OTP-Manager\app.py", line 890, in home
+    companies = sorted(load_companies_from_db(), key=lambda x: x['name'])
+                       ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\Sebastian\Desktop\OTP-Manager\app.py", line 210, in load_companies_from_db
+    cursor.execute("SELECT company_id, name, kundennummer FROM companies ORDER BY company_id")
+sqlite3.OperationalError: no such column: company_id
+2024-04-29 22:45:04,761 [INFO] Response time for home: 0.00s
+2024-04-29 22:45:15,132 [ERROR] An error occurred on the home page.
+Traceback (most recent call last):
+  File "c:\Users\Sebastian\Desktop\OTP-Manager\app.py", line 890, in home
+    companies = sorted(load_companies_from_db(), key=lambda x: x['name'])
+                       ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\Sebastian\Desktop\OTP-Manager\app.py", line 210, in load_companies_from_db
+    cursor.execute("SELECT company_id, name, kundennummer FROM companies ORDER BY company_id")
+sqlite3.OperationalError: no such column: company_id
+2024-04-29 22:45:15,133 [INFO] Response time for home: 0.00s
+2024-04-29 22:45:31,938 [ERROR] An error occurred on the home page.
+Traceback (most recent call last):
+  File "c:\Users\Sebastian\Desktop\OTP-Manager\app.py", line 890, in home
+    companies = sorted(load_companies_from_db(), key=lambda x: x['name'])
+                       ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\Sebastian\Desktop\OTP-Manager\app.py", line 210, in load_companies_from_db
+    cursor.execute("SELECT company_id, name, kundennummer FROM companies ORDER BY company_id")
+sqlite3.OperationalError: no such column: company_id
+2024-04-29 22:45:31,939 [INFO] Response time for home: 0.00s
+2024-04-29 22:45:41,476 [ERROR] Error fetching user admin status: no such table: users
+2024-04-29 22:45:41,476 [ERROR] Error fetching user admin status: no such table: users
+2024-04-29 22:45:44,403 [ERROR] Error fetching user admin status: no such table: users
+2024-04-29 22:45:44,403 [ERROR] Error fetching user admin status: no such table: users
+2024-04-29 22:45:44,534 [ERROR] An error occurred on the home page.
+Traceback (most recent call last):
+  File "c:\Users\Sebastian\Desktop\OTP-Manager\app.py", line 890, in home
+    companies = sorted(load_companies_from_db(), key=lambda x: x['name'])
+                       ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\Sebastian\Desktop\OTP-Manager\app.py", line 210, in load_companies_from_db
+    cursor.execute("SELECT company_id, name, kundennummer FROM companies ORDER BY company_id")
+sqlite3.OperationalError: no such column: company_id
+2024-04-29 22:45:44,536 [INFO] Response time for home: 0.00s
+2024-04-29 22:45:52,836 [ERROR] An error occurred on the home page.
+Traceback (most recent call last):
+  File "c:\Users\Sebastian\Desktop\OTP-Manager\app.py", line 890, in home
+    companies = sorted(load_companies_from_db(), key=lambda x: x['name'])
+                       ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\Sebastian\Desktop\OTP-Manager\app.py", line 210, in load_companies_from_db
+    cursor.execute("SELECT company_id, name, kundennummer FROM companies ORDER BY company_id")
+sqlite3.OperationalError: no such column: company_id
+2024-04-29 22:45:52,838 [INFO] Response time for home: 0.00s
+2024-04-29 22:45:55,993 [INFO] User ID 1 successfully logged out.
+2024-04-29 22:45:56,110 [INFO] Response time for login: 0.00s
+2024-04-29 22:46:01,149 [INFO] Response time for login: 0.24s
+2024-04-29 22:46:01,268 [ERROR] An error occurred on the home page.
+Traceback (most recent call last):
+  File "c:\Users\Sebastian\Desktop\OTP-Manager\app.py", line 890, in home
+    companies = sorted(load_companies_from_db(), key=lambda x: x['name'])
+                       ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\Sebastian\Desktop\OTP-Manager\app.py", line 210, in load_companies_from_db
+    cursor.execute("SELECT company_id, name, kundennummer FROM companies ORDER BY company_id")
+sqlite3.OperationalError: no such column: company_id
+2024-04-29 22:46:01,270 [INFO] Response time for home: 0.00s
+2024-04-29 22:46:15,711 [ERROR] An error occurred on the home page.
+Traceback (most recent call last):
+  File "c:\Users\Sebastian\Desktop\OTP-Manager\app.py", line 890, in home
+    companies = sorted(load_companies_from_db(), key=lambda x: x['name'])
+                       ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\Sebastian\Desktop\OTP-Manager\app.py", line 210, in load_companies_from_db
+    cursor.execute("SELECT company_id, name, kundennummer FROM companies ORDER BY company_id")
+sqlite3.OperationalError: no such column: company_id
+2024-04-29 22:46:15,712 [INFO] Response time for home: 0.00s
+2024-04-29 22:47:02,576 [INFO] Server starting on port 5002...
+2024-04-29 22:48:38,899 [INFO] Server starting on port 5002...
+2024-04-29 22:59:50,640 [INFO] Server starting on port 5002...
+2024-04-29 23:02:00,325 [INFO] Server starting on port 5002...
+2024-04-29 23:02:25,712 [INFO] Server starting on port 5002...
+2024-04-29 23:02:29,006 [ERROR] An error occurred on the home page.
+Traceback (most recent call last):
+  File "c:\Users\Sebastian\Desktop\OTP-Manager\app.py", line 896, in home
+    companies = sorted(load_companies_from_db(), key=lambda x: x['name'])
+                       ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\Sebastian\Desktop\OTP-Manager\app.py", line 212, in load_companies_from_db
+    cursor.execute("SELECT company_id, name, kundennummer FROM companies ORDER BY company_id")
+sqlite3.OperationalError: no such column: company_id
+2024-04-29 23:06:38,352 [INFO] Server starting on port 5002...
+2024-04-29 23:09:44,390 [INFO] Server starting on port 5002...
+2024-04-29 23:09:47,288 [INFO] Response time for login: 0.01s
+2024-04-29 23:09:51,398 [INFO] Response time for login: 0.45s
+2024-04-29 23:09:51,566 [INFO] Response time for home: 0.02s
+2024-04-29 23:09:53,470 [INFO] Response time for add: 0.02s
+2024-04-29 23:09:54,760 [INFO] Response time for home: 0.00s
+2024-04-29 23:09:55,138 [ERROR] Error fetching user admin status: no such table: users
+2024-04-29 23:09:55,138 [ERROR] Error fetching user admin status: no such table: users
+2024-04-29 23:09:56,583 [ERROR] Error fetching user admin status: no such table: users
+2024-04-29 23:09:56,583 [ERROR] Error fetching user admin status: no such table: users
+2024-04-29 23:09:56,709 [INFO] Response time for home: 0.00s
+2024-04-29 23:10:02,321 [INFO] Response time for home: 0.00s
+2024-04-29 23:10:03,398 [INFO] Response time for add: 0.00s
+2024-04-29 23:10:17,043 [ERROR] Error fetching user admin status: no such table: users
+2024-04-29 23:10:17,043 [ERROR] Error fetching user admin status: no such table: users
+2024-04-29 23:10:23,357 [ERROR] Error fetching user admin status: no such table: users
+2024-04-29 23:10:23,357 [ERROR] Error fetching user admin status: no such table: users
+2024-04-29 23:10:23,358 [ERROR] Error inserting new company: no such table: companies
+2024-04-29 23:10:23,358 [ERROR] Error inserting new company: no such table: companies
+2024-04-29 23:10:27,033 [INFO] Response time for home: 0.00s
+2024-04-29 23:10:28,637 [INFO] Response time for add: 0.00s
+2024-04-29 23:10:32,393 [INFO] Response time for home: 0.00s
+2024-04-29 23:14:12,670 [INFO] Server starting on port 5002...
+2024-04-29 23:14:14,968 [INFO] Response time for home: 0.02s
+2024-04-29 23:14:17,319 [INFO] Fetched all users successfully.
+2024-04-29 23:14:17,319 [INFO] Fetched all users successfully.
+2024-04-29 23:14:22,293 [INFO] Fetched all users successfully.
+2024-04-29 23:14:22,293 [INFO] Fetched all users successfully.
+2024-04-29 23:14:38,831 [INFO] Response time for home: 0.00s
+2024-04-29 23:14:40,506 [INFO] Response time for add: 0.01s
+2024-04-29 23:14:47,160 [INFO] Response time for add: 0.02s
+2024-04-29 23:14:47,286 [INFO] Response time for home: 0.00s
+2024-04-29 23:15:00,888 [INFO] Response time for home: 0.00s
+2024-04-29 23:15:56,050 [INFO] Server starting on port 5002...
+2024-04-29 23:15:59,873 [INFO] Response time for home: 0.01s
+2024-04-29 23:16:05,059 [INFO] Response time for home: 0.00s
+2024-04-29 23:16:18,685 [INFO] Response time for home: 0.00s
+2024-04-29 23:16:26,359 [INFO] Fetched all users successfully.
+2024-04-29 23:16:26,359 [INFO] Fetched all users successfully.
+2024-04-29 23:20:01,385 [INFO] Server starting on port 5002...
+2024-04-29 23:20:06,807 [INFO] Fetched all users successfully.
+2024-04-29 23:20:06,807 [INFO] Fetched all users successfully.
+2024-04-29 23:20:13,981 [INFO] Server starting on port 5002...
+2024-04-29 23:24:25,582 [INFO] Server starting on port 5002...
+2024-04-29 23:24:42,723 [INFO] Server starting on port 5002...
+2024-04-29 23:25:07,673 [INFO] Response time for login: 0.00s
+2024-04-29 23:25:11,477 [INFO] Response time for login: 0.45s
+2024-04-29 23:25:11,602 [INFO] Response time for home: 0.01s
+2024-04-29 23:25:14,691 [INFO] Fetched all users successfully.
+2024-04-29 23:25:14,691 [INFO] Fetched all users successfully.
+2024-04-29 23:25:40,279 [INFO] Response time for home: 0.00s
+2024-04-29 23:25:43,988 [INFO] Response time for home: 0.00s
+2024-04-29 23:25:45,071 [INFO] Response time for home: 0.00s
+2024-04-29 23:25:45,675 [INFO] Response time for add: 0.01s
+2024-04-29 23:25:46,635 [INFO] Response time for home: 0.00s
+2024-04-29 23:25:58,559 [INFO] Server starting on port 5002...
+2024-04-29 23:26:03,957 [INFO] Fetched all users successfully.
+2024-04-29 23:26:03,957 [INFO] Fetched all users successfully.
+2024-04-29 23:26:05,783 [INFO] Response time for home: 0.01s
+2024-04-29 23:30:35,902 [INFO] Response time for home: 0.00s
+2024-04-29 23:30:37,051 [INFO] Response time for home: 0.00s
+2024-04-29 23:30:45,016 [INFO] Response time for home: 0.00s
+2024-04-29 23:30:47,315 [INFO] Response time for home: 0.00s
+2024-04-29 23:30:51,425 [INFO] Response time for home: 0.00s

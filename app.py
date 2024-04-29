@@ -44,6 +44,7 @@ import uuid
 import signal
 import json
 import psutil
+import configparser
 
 from forms.otp_forms import OTPForm
 from forms.user_forms import UserForm
@@ -60,6 +61,7 @@ start_time = datetime.now()
 app.config['SECRET_KEY'] = 'your-secret-key'
 app.config['SESSION_TYPE'] = 'filesystem'
 app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(days=7)
+app.config['DATABASE'] = 'instance/otp.db'
 Session(app)
 Bootstrap(app)
 
@@ -93,7 +95,8 @@ subprocess.Popen(["python", "Database.py"])
 
 @app.login_manager.user_loader
 def load_user(user_id):
-    with sqlite3.connect("otp.db") as conn:
+    db_path = app.config['DATABASE']
+    with sqlite3.connect(db_path) as conn:
         cursor = conn.cursor()
         cursor.execute("SELECT * FROM users WHERE id = ?", (user_id,))
         user_row = cursor.fetchone()
@@ -112,10 +115,9 @@ def load_user(user_id):
         )
     return None
 
-import sqlite3
-
 def save_to_db(otp_secrets):
-    conn = sqlite3.connect('otp.db')
+    db_path = app.config['DATABASE']
+    conn = sqlite3.connect(db_path)
     cursor = conn.cursor()
     
     cursor.execute("DELETE FROM otp_secrets")
@@ -134,7 +136,8 @@ def save_to_db(otp_secrets):
     return last_row_id
 
 def save_companies_to_db(companies):
-    conn = sqlite3.connect("otp.db")
+    db_path = app.config['DATABASE']
+    conn = sqlite3.connect(db_path)
     cursor = conn.cursor()
 
     cursor.execute("DELETE FROM companies")
@@ -149,7 +152,8 @@ def save_companies_to_db(companies):
     conn.close()
 
 def load_from_db(secret_id=None):
-    with sqlite3.connect("otp.db") as db:
+    db_path = app.config['DATABASE'] 
+    with sqlite3.connect(db_path) as db:
         cursor = db.cursor()
         if secret_id:
             cursor.execute("""
@@ -193,7 +197,7 @@ def load_from_db(secret_id=None):
                 {
                     'name': row[0], 
                     'email': row[1],  
-                    'secret': row[2], 
+                    'secret': row[2],  
                     'otp_type': row[3], 
                     'refresh_time': row[4], 
                     'company_id': row[5], 
@@ -203,7 +207,8 @@ def load_from_db(secret_id=None):
             ]
 
 def load_companies_from_db():
-    with sqlite3.connect("otp.db") as db:
+    db_path = app.config['DATABASE']  
+    with sqlite3.connect(db_path) as db:
         cursor = db.cursor()
         cursor.execute("SELECT company_id, name, kundennummer FROM companies ORDER BY company_id")
         return [{'company_id': row[0], 'name': row[1], 'kundennummer': row[2]} for row in cursor.fetchall()]
@@ -213,7 +218,8 @@ def get_current_user():
     if not user_id:
         return None  
 
-    with sqlite3.connect("otp.db") as db:
+    db_path = app.config['DATABASE']  
+    with sqlite3.connect(db_path) as db:
         db.row_factory = sqlite3.Row 
         cursor = db.cursor()
         cursor.execute("SELECT * FROM users WHERE id = ?", (user_id,))
@@ -230,7 +236,8 @@ def get_current_user():
         return None
 
 def get_all_users():
-    with sqlite3.connect("otp.db") as db:
+    db_path = app.config['DATABASE']  
+    with sqlite3.connect(db_path) as db:
         cursor = db.cursor()
         cursor.execute("SELECT id, username FROM users")
         users = cursor.fetchall()
@@ -346,7 +353,8 @@ def get_flash_messages():
 
 def update_statistics(logins=0, refreshed=0):
     today = datetime.now().strftime('%Y-%m-%d')
-    with sqlite3.connect("otp.db") as db:
+    db_path = app.config['DATABASE']  
+    with sqlite3.connect(db_path) as db:
         cursor = db.cursor()
         cursor.execute("SELECT * FROM statistics WHERE date = ?", (today,))
         stats = cursor.fetchone()
@@ -360,7 +368,8 @@ def update_statistics(logins=0, refreshed=0):
 
 def get_statistics():
     today = datetime.now().strftime('%Y-%m-%d')
-    with sqlite3.connect("otp.db") as db:
+    db_path = app.config['DATABASE']  
+    with sqlite3.connect(db_path) as db:
         cursor = db.cursor()
         cursor.execute("SELECT * FROM statistics WHERE date = ?", (today,))
         stats = cursor.fetchone()
@@ -370,34 +379,11 @@ def get_statistics():
             return {'logins_today': 0, 'times_refreshed': 0}
 
 def get_older_statistics(limit=5):
-    with sqlite3.connect("otp.db") as db:
+    db_path = app.config['DATABASE']  
+    with sqlite3.connect(db_path) as db:
         cursor = db.cursor()
         cursor.execute("SELECT * FROM statistics ORDER BY date DESC LIMIT ?", (limit,))
         return cursor.fetchall()
-
-@app.route('/register', methods=['GET', 'POST'])
-def register():
-    current_user = get_current_user()
-    
-    users = get_all_users()
-    
-    if not current_user or current_user[1] != "admin":
-        flash("Nur der Admin kann neue Benutzer registrieren!")
-        return redirect(url_for('home'))
-
-    if request.method == 'POST':
-        username = request.form.get('username')
-        password = request.form.get('password')
-        hashed_password = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt()).decode('utf-8')
-
-        with sqlite3.connect("otp.db") as db:
-            cursor = db.cursor()
-            cursor.execute("INSERT INTO users (username, password) VALUES (?, ?)", (username, hashed_password))
-            db.commit()
-
-        flash('Successfully registered!')
-        return redirect(url_for('login'))
-    return render_template('register.html', passwords=users)
 
 @app.route('/logout')
 def logout():
@@ -411,7 +397,8 @@ def logout():
         print(f"Logging out user ID {user_id} with session token {session_token}")
 
     try:
-        with sqlite3.connect("otp.db") as db:
+        db_path = app.config['DATABASE']  
+        with sqlite3.connect(db_path) as db:
             print("Database connection established.")
             cursor = db.cursor()
             cursor.execute("UPDATE users SET session_token = NULL WHERE id = ?", (user_id,))
@@ -439,7 +426,8 @@ def login_required(f):
             app.logger.info("Redirecting to login: No user_id or session_token")
             return redirect(url_for('login'))
         
-        with sqlite3.connect("otp.db") as db:
+        db_path = app.config['DATABASE']  
+        with sqlite3.connect(db_path) as db:
             cursor = db.cursor()
             cursor.execute("SELECT session_token FROM users WHERE id = ?", (user_id,))
             db_session_token = cursor.fetchone()
@@ -486,7 +474,8 @@ def settings():
             text_color = '#3E3E41' if alert_color in colors_for_dark_text else '#FFFFFF'
 
         try:
-            with sqlite3.connect("otp.db") as db:
+            db_path = app.config['DATABASE']  
+            with sqlite3.connect(db_path) as db:
                 cursor = db.cursor()
                 cursor.execute(
                     "UPDATE users SET show_timer = ?, show_otp_type = ?, show_content_titles = ?, alert_color = ?, text_color = ?, show_emails = ?, show_company = ? WHERE id = ?",
@@ -577,7 +566,8 @@ def reset_password(user_id):
         hashed_password = generate_password_hash(new_password, method='sha256')
         
         try:
-            with sqlite3.connect("otp.db") as db:
+            db_path = app.config['DATABASE']  # Use the configured database path
+            with sqlite3.connect(db_path) as db:
                 cursor = db.cursor()
                 cursor.execute("UPDATE users SET password = ? WHERE id = ?", (hashed_password, user_id))
                 db.commit()
@@ -598,7 +588,8 @@ def reset_password(user_id):
 def get_last_login_time_from_db():
     user_id = session.get('user_id')
     if user_id:
-        with sqlite3.connect("otp.db") as db:
+        db_path = app.config['DATABASE']  # Use the configured database path
+        with sqlite3.connect(db_path) as db:
             cursor = db.cursor()
             cursor.execute("SELECT last_login_time FROM users WHERE id = ?", (user_id,))
             last_login_time = cursor.fetchone()
@@ -609,7 +600,6 @@ def get_last_login_time_from_db():
 @app.route('/login', methods=['GET', 'POST'])
 @check_server_capacity
 def login():
-#    print("Accessing /login route")
     if 'user_id' in session:
         flash("You are already logged in.", "info")
         print("User is already logged in, redirecting to home")
@@ -622,7 +612,8 @@ def login():
         keep_logged_in = 'keep_logged_in' in request.form
 
         try:
-            with sqlite3.connect("otp.db") as db:
+            db_path = app.config['DATABASE']  
+            with sqlite3.connect(db_path) as db:
                 cursor = db.cursor()
                 cursor.execute("SELECT * FROM users WHERE username = ?", (username,))
                 user_record = cursor.fetchone()
@@ -636,7 +627,8 @@ def login():
                 if is_cleartext(stored_password):
                     print("Cleartext password found, hashing it")
                     hashed_password = bcrypt.generate_password_hash(stored_password).decode('utf-8')
-                    with sqlite3.connect("otp.db") as db:
+                    db_path = app.config['DATABASE']  
+                    with sqlite3.connect(db_path) as db:
                         cursor = db.cursor()
                         cursor.execute("UPDATE users SET password = ? WHERE id = ?", (hashed_password, user_id))
                         db.commit()
@@ -657,7 +649,8 @@ def login():
                     session['user_id'] = user_id
                     session['session_token'] = session_token
 
-                    with sqlite3.connect("otp.db") as db:
+                    db_path = app.config['DATABASE']  
+                    with sqlite3.connect(db_path) as db:
                         cursor = db.cursor()
                         cursor.execute("UPDATE statistics SET logins_today = logins_today + 1")
                         cursor.execute("UPDATE users SET session_token = ? WHERE id = ?", (session_token, user_id))
@@ -697,7 +690,8 @@ def perform_login_actions(user, keep_logged_in):
     my_logger.info(f"User: {user[1]} Logged in!")
 
     last_login_time = datetime.now().strftime('%d/%m/%Y %H:%M:%S')
-    with sqlite3.connect("otp.db") as db:
+    db_path = app.config['DATABASE']  # Use the configured database path
+    with sqlite3.connect(db_path) as db:
         cursor = db.cursor()
         cursor.execute("UPDATE users SET last_login_time = ?, session_token = ? WHERE id = ?", (last_login_time, session_token, user[0]))
         db.commit()
@@ -817,7 +811,8 @@ def get_otp_v2(name):
     return 'Secret Not Found', 404
 
 def get_user_colors(user_id):
-    with sqlite3.connect("otp.db") as db:
+    db_path = app.config['DATABASE']  
+    with sqlite3.connect(db_path) as db:
         cursor = db.cursor()
         cursor.execute("SELECT alert_color, text_color FROM users WHERE id = ?", (user_id,))
         result = cursor.fetchone()
@@ -827,13 +822,8 @@ def get_user_colors(user_id):
             return 'alert-primary', '#FFFFFF'  
 
 def get_user_alert_color(user_id):
-    """
-    Fetch the user's alert color preference from the database.
-
-    :param user_id: The user's ID.
-    :return: The alert color as a string.
-    """
-    with sqlite3.connect("otp.db") as db:
+    db_path = app.config['DATABASE']  
+    with sqlite3.connect(db_path) as db:
         cursor = db.cursor()
         cursor.execute("SELECT alert_color FROM users WHERE id = ?", (user_id,))
         result = cursor.fetchone()
@@ -861,16 +851,9 @@ def inject_user_text_color():
     return {'text_color': text_color}
 
 def get_user_text_color(user_id):
-    """Fetch the user's text color from the database.
-
-    Args:
-        user_id (int): The ID of the user.
-
-    Returns:
-        str: The text color of the user. Returns a default color if not found.
-    """
+    db_path = app.config['DATABASE']  
     try:
-        with sqlite3.connect("otp.db") as conn:
+        with sqlite3.connect(db_path) as conn:
             cursor = conn.cursor()
             cursor.execute("SELECT text_color FROM users WHERE id = ?", (user_id,))
             result = cursor.fetchone()
@@ -880,7 +863,7 @@ def get_user_text_color(user_id):
                 return "#FFFFFF"  
     except sqlite3.Error as e:
         print(f"Database error: {e}")
-        return "#FFFFFF" 
+        return "#FFFFFF"
 
 @app.route('/', methods=['GET', 'POST'])
 @login_required
@@ -1329,8 +1312,9 @@ def restart_server():
 @app.route('/delete_secret/<name>', methods=['POST'])
 @login_required
 def delete_secret(name):
+    db_path = app.config['DATABASE']  
     try:
-        with sqlite3.connect('otp.db') as conn:
+        with sqlite3.connect(db_path) as conn:
             cursor = conn.cursor()
             cursor.execute("DELETE FROM otp_secrets WHERE name = ?", (name,))
             conn.commit()
@@ -1358,7 +1342,8 @@ def delete_user(user_id):
         return redirect(url_for('admin.admin_settings'))
 
     try:
-        with sqlite3.connect("otp.db") as db:
+        db_path = app.config['DATABASE']  
+        with sqlite3.connect(db_path) as db:
             cursor = db.cursor()
             cursor.execute("DELETE FROM users WHERE id = ?", (user_id,))
             db.commit()
@@ -1455,7 +1440,10 @@ def copy_otp_flash():
     return jsonify(success=True)
 
 if __name__ == '__main__':
-    port = 5001 
+    config = configparser.ConfigParser()
+    config.read('config.ini')
+    port = config.getint('server', 'port')
+    logging.basicConfig(level=logging.INFO)
     logging.info(f"Server starting on port {port}...")
     try:
         app.run(debug=True, port=port, host='0.0.0.0', use_reloader=False)

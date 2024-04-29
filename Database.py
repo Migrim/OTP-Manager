@@ -6,7 +6,14 @@ from datetime import datetime
 
 def init_db():
     try:
-        db_path = "otp.db"
+        instance_folder = "instance"
+        db_filename = "otp.db"
+        db_path = os.path.join(instance_folder, db_filename)
+        is_new_database = not os.path.exists(db_path)
+
+        if not os.path.exists(instance_folder):
+            os.makedirs(instance_folder)
+
         print("Checking for database backup...")
         backup_folder = "backup"
         current_date = datetime.now().strftime("%Y-%m-%d")
@@ -16,8 +23,11 @@ def init_db():
         if not os.path.exists(backup_path):
             if not os.path.exists(backup_folder):
                 os.makedirs(backup_folder)
-            shutil.copy(db_path, backup_path)
-            print(f"Database backup created at {backup_path}")
+            if os.path.exists(db_path):
+                shutil.copy(db_path, backup_path)
+                print(f"Database backup created at {backup_path}")
+            else:
+                print("No database to back up.")
         else:
             print("Backup already exists for today.")
 
@@ -26,45 +36,24 @@ def init_db():
 
             print("Ensuring database tables are set up...")
             cursor.execute("""
+                CREATE TABLE IF NOT EXISTS companies (
+                    company_id INTEGER PRIMARY KEY,
+                    name TEXT NOT NULL UNIQUE,
+                    kundennummer INTEGER UNIQUE
+                )
+            """)
+            cursor.execute("""
                 CREATE TABLE IF NOT EXISTS otp_secrets (
                     id INTEGER PRIMARY KEY,
-                    name TEXT NOT NULL,
+                    name TEXT NOT NULL DEFAULT 'none' UNIQUE,
                     email TEXT DEFAULT 'none',
                     secret TEXT NOT NULL,
-                    otp_type TEXT NOT NULL,
+                    otp_type TEXT NOT NULL DEFAULT 'totp',
                     refresh_time INTEGER NOT NULL,
                     company_id INTEGER,
-                    FOREIGN KEY (company_id) REFERENCES companies (id)
+                    FOREIGN KEY (company_id) REFERENCES companies (company_id)
                 )
             """)
-
-            cursor.execute("""
-                CREATE TABLE IF NOT EXISTS users (
-                    id INTEGER PRIMARY KEY,
-                    username TEXT NOT NULL UNIQUE,
-                    password TEXT NOT NULL,
-                    last_login_time TEXT,
-                    session_token TEXT,
-                    is_admin INTEGER DEFAULT 0,
-                    enable_pagination INTEGER DEFAULT 0,
-                    show_timer INTEGER DEFAULT 0,
-                    show_otp_type INTEGER DEFAULT 1,
-                    show_content_titles INTEGER DEFAULT 1,
-                    alert_color TEXT DEFAULT 'alert-primary',
-                    text_color TEXT DEFAULT '#FFFFFF',
-                    show_emails INTEGER DEFAULT 0,
-                    show_company INTEGER DEFAULT 0
-                )
-            """)
-
-            cursor.execute("""
-                CREATE TABLE IF NOT EXISTS companies (
-                    id INTEGER PRIMARY KEY,
-                    name TEXT NOT NULL UNIQUE,
-                    kundennummer TEXT
-                )
-            """)
-
             cursor.execute("""
                 CREATE TABLE IF NOT EXISTS statistics (
                     id INTEGER PRIMARY KEY,
@@ -73,9 +62,39 @@ def init_db():
                     date TEXT NOT NULL
                 )
             """)
-
+            cursor.execute("""
+                CREATE TABLE IF NOT EXISTS users (
+                    id INTEGER PRIMARY KEY,
+                    username TEXT NOT NULL UNIQUE,
+                    password TEXT NOT NULL,
+                    last_login_time INTEGER,
+                    session_token TEXT,
+                    is_admin INTEGER DEFAULT 0,
+                    enable_pagination INTEGER DEFAULT 0,
+                    show_timer INTEGER DEFAULT 0,
+                    show_otp_type INTEGER DEFAULT 1,
+                    show_content_titles INTEGER DEFAULT 1,
+                    alert_color TEXT DEFAULT '#333333',
+                    text_color TEXT DEFAULT '#FFFFFF',
+                    show_emails INTEGER DEFAULT 0,
+                    show_company INTEGER DEFAULT 0
+                )
+            """)
             db.commit()
             print("Database tables verified or created successfully.")
+
+            if is_new_database:
+                print("Inserting default companies 'Public' and 'Private'...")
+                cursor.execute("INSERT INTO companies (name) VALUES ('Public'), ('Private')")
+                db.commit()
+                print("Default companies added.")
+
+            print("Adding default admin user if not exists...")
+            cursor.execute("SELECT id FROM users WHERE id = 1")
+            if cursor.fetchone() is None:
+                cursor.execute("INSERT INTO users (id, username, password, is_admin) VALUES (1, 'admin', '1234', 1)")
+                db.commit()
+                print("Default admin user created.")
 
             print("Running database consistency check...")
             cursor.execute("PRAGMA foreign_key_check")

@@ -144,3 +144,26 @@ body {
     justify-content: center;
     gap: 10px;
 }
+:root {
+    --link-color: #ff5252;
+}
+
+.license-container p {
+    font-size: 16px; /* increased font size for better readability */
+    line-height: 1.4; /* adjusted line height for visual comfort */
+    margin-bottom: 12px; /* consistent spacing between paragraphs */
+}
+
+.custom-link {
+    color: var(--link-color);
+    text-decoration: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.custom-link:hover {
+    background-color: var(--link-color);
+    color: #fff;
+}
+
