@@ -91,7 +91,22 @@ broadcast_message = None
 slow_requests_counter = 0
 flash_messages = []
 
-subprocess.Popen(["python", "Database.py"])
+def find_database_py():
+    current_dir = os.getcwd() 
+    while True:
+        database_path = os.path.join(current_dir, "Database.py")
+        if os.path.isfile(database_path):  
+            return database_path  
+        current_dir = os.path.dirname(current_dir)
+        if current_dir == os.path.dirname(current_dir):
+            break  
+    return None 
+
+database_path = find_database_py()
+if database_path:
+    subprocess.Popen(["python", database_path])
+else:
+    print("Database.py not found.")
 
 @app.login_manager.user_loader
 def load_user(user_id):
