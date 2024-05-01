@@ -93,14 +93,16 @@ flash_messages = []
 
 def find_database_py():
     current_dir = os.getcwd() 
+    print("Searching for Database.py in:", current_dir)
     while True:
         database_path = os.path.join(current_dir, "Database.py")
+        print("Checking:", database_path)
         if os.path.isfile(database_path):  
             return database_path  
         current_dir = os.path.dirname(current_dir)
         if current_dir == os.path.dirname(current_dir):
             break  
-    return None 
+    return None
 
 database_path = find_database_py()
 if database_path:
