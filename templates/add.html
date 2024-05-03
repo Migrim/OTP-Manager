@@ -57,7 +57,7 @@
                 {{ form.company.label }}
                 <select class="form-control" name="{{ form.company.name }}" required>
                     <option value="" disabled selected>Select a Company</option>
-                    {% for value, label in form.company.choices %}
+                    {% for value, label in form.company.choices|sort(attribute='1') %}
                         <option value="{{ value }}">{{ label }}</option>
                     {% endfor %}
                 </select>
