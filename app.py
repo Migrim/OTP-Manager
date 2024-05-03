@@ -486,6 +486,18 @@ def settings():
             text_color = '#c4b550'
         elif alert_color == '#1b2e4b':
             text_color = '#e9bfff'
+        elif alert_color == '#FAD4C0':
+            text_color = '#333333'
+        elif alert_color == '#E0C3FC':
+            text_color = '#4A306D'
+        elif alert_color == '#FFFDD0':
+            text_color = '#9A8B55'
+        elif alert_color == '#D0AAB0':
+            text_color = '#40232B'
+        elif alert_color == '#4B0082':
+            text_color = '#E6E6FA'
+        elif alert_color == '#8CA6DB':
+            text_color = '#1D2029'
         else:
             colors_for_dark_text = {'#ffffff', '#9495df'}
             text_color = '#3E3E41' if alert_color in colors_for_dark_text else '#FFFFFF'
@@ -706,11 +718,11 @@ def perform_login_actions(user, keep_logged_in):
 
     my_logger.info(f"User: {user[1]} Logged in!")
 
-    last_login_time = datetime.now().strftime('%d/%m/%Y %H:%M:%S')
-    db_path = app.config['DATABASE']  # Use the configured database path
+    last_login_time = datetime.now()
+    db_path = app.config['DATABASE'] 
     with sqlite3.connect(db_path) as db:
         cursor = db.cursor()
-        cursor.execute("UPDATE users SET last_login_time = ?, session_token = ? WHERE id = ?", (last_login_time, session_token, user[0]))
+        cursor.execute("UPDATE users SET last_login_time = ? WHERE id = ?", (last_login_time, user[0]))
         db.commit()
 
     user_obj = UserMixin()
