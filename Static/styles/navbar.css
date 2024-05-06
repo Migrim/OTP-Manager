@@ -1,4 +1,5 @@
 .navbar {
+    font-family: 'Poppins', 'Roboto', sans-serif;   
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -58,14 +59,6 @@
     margin-left: 8px; 
 }
 
-.flash-messages {
-    position: fixed;
-    top: 70px; 
-    right: 20px;
-    z-index: 1050;
-    max-width: 300px;
-}
-
 @keyframes spin {
     from { transform: rotate(0deg); }
     to { transform: rotate(180deg); }
@@ -102,6 +95,7 @@
 }
 
 .flash-message {
+    font-family: 'Poppins', sans-serif; 
     position: relative;
     display: flex;
     justify-content: space-between;
@@ -117,7 +111,6 @@
     animation: fadeInSlideUp 0.5s ease forwards;
     transition: opacity 0.3s ease-in-out;
 }
-
 @keyframes fadeInSlideUp {
     0% {
         opacity: 0;
@@ -145,14 +138,14 @@
     border-color: #f39c12;
 }
 
-.flash-error {
-    background-color: #ff5252;
-    border-color: #ff5252;
+.flash-auth {
+    background-color: #4CAF50; 
+    border-color: #4CAF50;
 }
 
-.flash-auth {
-    background-color: #7852ff;
-    border-color: #7852ff;
+.flash-error {
+    background-color: #ff5252; 
+    border-color: #ff5252;
 }
 
 .flash-message .flash-icon {
@@ -173,7 +166,7 @@
 }
 
 .flash-close-btn:hover {
-    color: #000000;
+    color: #333;
 }
 
 .right-align-items {

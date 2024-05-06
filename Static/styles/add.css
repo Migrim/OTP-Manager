@@ -1,12 +1,12 @@
 body {
     background-color: #222;
     color: #fff;
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Poppins', 'Roboto', sans-serif; 
     margin: 0; /* Remove default margin */
     overflow: hidden; /* Prevent scrolling */
     justify-content: center;
     align-items: center; /* Center content vertically and horizontally */
-    min-height: 100vh; /* Full viewport height */
+    min-height: 100vh; 
 }
 
 .center-content {

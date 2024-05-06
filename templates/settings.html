@@ -4,6 +4,7 @@
 
 {% block styles %}
     {{ super() }}
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
     <link rel="stylesheet" href=".{{ url_for('static', filename='styles/settings.css') }}">
@@ -22,7 +23,7 @@
                 <input type="checkbox" id="showContentTitles" name="show_content_titles" {% if current_user.show_content_titles %}checked{% endif %}>
                 <span class="slider"></span>
             </label>
-            <span class="setting-description">Show Content Titles</span>
+            <span class="setting-description">Display Page-Titles on all Pages</span>
         </div>
 
         <h2>OTP Container Settings</h2>
@@ -31,48 +32,49 @@
                 <input type="checkbox" id="showTimer" name="show_timer" {% if current_user.show_timer %}checked{% endif %}>
                 <span class="slider"></span>
             </label>
-            <span class="setting-description">Show Timer instead of Progress Bar</span>
+            <span class="setting-description">Show a simple Text only timer instead of the Progress Bar</span>
         </div>
         <div class="form-item">
             <label class="toggle-switch">
                 <input type="checkbox" id="showOtpType" name="show_otp_type" {% if current_user.show_otp_type %}checked{% endif %}>
                 <span class="slider"></span>
             </label>
-            <span class="setting-description">Show OTP Type in Home Menu</span>
+            <span class="setting-description">Show the type of OTP in the OTP-List</span>
         </div>
         <div class="form-item">
             <label class="toggle-switch">
                 <input type="checkbox" id="showEmails" name="show_emails" {% if current_user.show_emails %}checked{% endif %}>
                 <span class="slider"></span>
             </label>
-            <span class="setting-description">Show Emails</span>
+            <span class="setting-description">Show Emails in the OTP-List</span>
         </div>
 
         <h2>Theme Settings</h2>
         <div class="form-item">
-            <label>OTP-Color</label>
+            <label>color scheme</label>
             <div id="colorPalette">
-                <div class="colorSwatch" data-color="#333333" style="background-color: #333333;"></div>
-                <div class="colorSwatch" data-color="#ffffff" style="background-color: #ffffff;"></div>
-                <div class="colorSwatch" data-color="#2c2c54" style="background-color: #2c2c54;"></div>
-                <div class="colorSwatch" data-color="#40407a" style="background-color: #40407a;"></div>
-                <div class="colorSwatch" data-color="#474787" style="background-color: #474787;"></div>
-                <div class="colorSwatch" data-color="#706fd3" style="background-color: #706fd3;"></div>
-                <div class="colorSwatch" data-color="#9495df" style="background-color: #9495df;"></div>
-                <div class="colorSwatch" data-color="#2f3542" style="background-color: #2f3542;"></div>
-                <div class="colorSwatch" data-color="#57606f" style="background-color: #57606f;"></div>
-                <div class="colorSwatch" data-color="#3e4637" style="background-color: #3e4637;"></div>
+                <div class="colorSwatch" data-color="#4B0082" style="background-color: #4B0082;"></div>
                 <div class="colorSwatch" data-color="#292d26" style="background-color: #292d26;"></div>
                 <div class="colorSwatch" data-color="#1b2e4b" style="background-color: #1b2e4b;"></div>
-                <div class="colorSwatch" data-color="#FAD4C0" style="background-color: #FAD4C0;"></div>
-                <div class="colorSwatch" data-color="#E0C3FC" style="background-color: #E0C3FC;"></div>
-                <div class="colorSwatch" data-color="#FFFDD0" style="background-color: #FFFDD0;"></div>
-                <div class="colorSwatch" data-color="#D0AAB0" style="background-color: #D0AAB0;"></div>
-                <div class="colorSwatch" data-color="#4B0082" style="background-color: #4B0082;"></div>
+                <div class="colorSwatch" data-color="#2c2c54" style="background-color: #2c2c54;"></div>
+                <div class="colorSwatch" data-color="#333333" style="background-color: #333333;"></div>
+                <div class="colorSwatch" data-color="#2f3542" style="background-color: #2f3542;"></div>
+                <div class="colorSwatch" data-color="#3e4637" style="background-color: #3e4637;"></div>
+                <div class="colorSwatch" data-color="#40407a" style="background-color: #40407a;"></div>
+                <div class="colorSwatch" data-color="#474787" style="background-color: #474787;"></div>
+                <div class="colorSwatch" data-color="#57606f" style="background-color: #57606f;"></div>
+                <div class="colorSwatch" data-color="#706fd3" style="background-color: #706fd3;"></div>
+                <div class="colorSwatch" data-color="#9495df" style="background-color: #9495df;"></div>
                 <div class="colorSwatch" data-color="#8CA6DB" style="background-color: #8CA6DB;"></div>
+                <div class="colorSwatch" data-color="#D0AAB0" style="background-color: #D0AAB0;"></div>
+                <div class="colorSwatch" data-color="#E0C3FC" style="background-color: #E0C3FC;"></div>
+                <div class="colorSwatch" data-color="#FAD4C0" style="background-color: #FAD4C0;"></div>
+                <div class="colorSwatch" data-color="#FFFDD0" style="background-color: #FFFDD0;"></div>
+                <div class="colorSwatch" data-color="#ffffff" style="background-color: #ffffff;"></div>                
             </div>
             <input type="hidden" id="alertColor" name="alert_color" value="{{ alert_color }}">
         </div>
+        <p>This setting allows you to customize the color theme of your interface.</p>
 
         <div class="d-flex justify-content-center">
             <button type="submit" class="btn btn-primary">Save</button>

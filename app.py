@@ -127,8 +127,9 @@ def load_user(user_id):
             show_timer=bool(user_row[7]),
             show_otp_type=bool(user_row[8]),
             show_content_titles=bool(user_row[9]),
-            show_emails=bool(user_row[11]),  
-            show_company=bool(user_row[12])  
+            show_emails=bool(user_row[12]),  
+            show_company=bool(user_row[13]),
+            font=(user_row[14])
         )
     return None
 
@@ -471,10 +472,12 @@ def cli():
 @login_required
 def settings():
     user_id = session.get('user_id')
-    
+    print("User ID:", user_id)
+
     if request.method == 'POST':
-        data = request.get_json()  
-        
+        data = request.get_json()
+        print("Received POST data:", data)
+
         show_timer = 1 if data.get('show_timer') == 'on' else 0
         show_otp_type = 1 if data.get('show_otp_type') == 'on' else 0
         show_content_titles = 1 if data.get('show_content_titles') == 'on' else 0
@@ -482,55 +485,58 @@ def settings():
         show_emails = 1 if data.get('show_emails') == 'on' else 0
         show_company = 1 if data.get('show_company') == 'on' else 0
 
-        if alert_color in {'#292d26', '#3e4637'}:
-            text_color = '#c4b550'
-        elif alert_color == '#1b2e4b':
-            text_color = '#e9bfff'
-        elif alert_color == '#FAD4C0':
-            text_color = '#333333'
-        elif alert_color == '#E0C3FC':
-            text_color = '#4A306D'
-        elif alert_color == '#FFFDD0':
-            text_color = '#9A8B55'
-        elif alert_color == '#D0AAB0':
-            text_color = '#40232B'
-        elif alert_color == '#4B0082':
-            text_color = '#E6E6FA'
-        elif alert_color == '#8CA6DB':
-            text_color = '#1D2029'
-        else:
-            colors_for_dark_text = {'#ffffff', '#9495df'}
-            text_color = '#3E3E41' if alert_color in colors_for_dark_text else '#FFFFFF'
+        # Define a mapping of alert colors to their respective text colors
+        color_map = {
+            '#292d26': '#c4b550', '#3e4637': '#c4b550',
+            '#1b2e4b': '#e9bfff', '#FAD4C0': '#333333',
+            '#E0C3FC': '#4A306D', '#FFFDD0': '#9A8B55',
+            '#D0AAB0': '#40232B', '#4B0082': '#E6E6FA',
+            '#8CA6DB': '#3e3e41'
+        }
+
+        # Calculate brightness of the alert color and choose text color for good contrast
+        def get_brightness(hex_color):
+            hex_color = hex_color.lstrip('#')
+            rgb = tuple(int(hex_color[i:i+2], 16) for i in (0, 2, 4))
+            return 0.299 * rgb[0] + 0.587 * rgb[1] + 0.114 * rgb[2]
+
+        brightness = get_brightness(alert_color)
+        # First check in the color map, if not found, then determine based on brightness
+        text_color = color_map.get(alert_color, '#FFFFFF' if brightness < 120 else '#000000')
+
+        print("Determined text color:", text_color)
 
         try:
-            db_path = app.config['DATABASE']  
+            db_path = app.config['DATABASE']
             with sqlite3.connect(db_path) as db:
                 cursor = db.cursor()
+                print("Database connection established.")
                 cursor.execute(
                     "UPDATE users SET show_timer = ?, show_otp_type = ?, show_content_titles = ?, alert_color = ?, text_color = ?, show_emails = ?, show_company = ? WHERE id = ?",
                     (show_timer, show_otp_type, show_content_titles, alert_color, text_color, show_emails, show_company, user_id)
                 )
-                flash('Settings updated successfully', 'success')
                 db.commit()
-
-            current_user.show_timer = show_timer
-            current_user.show_otp_type = show_otp_type
-            current_user.show_content_titles = show_content_titles
-            current_user.show_emails = show_emails
-            current_user.show_company = show_company
-            current_user.alert_color = alert_color
-            current_user.text_color = text_color
-
-            current_user.show_emails = True if show_emails == 1 else False
-
-            flash('Settings updated successfully', 'success')
+                print("Database updated successfully.")
+                flash('Settings updated successfully', 'success')
         except sqlite3.Error as e:
+            print("Error updating database:", str(e))
             flash('An error occurred while updating settings.', 'danger')
 
-    alert_color = getattr(current_user, 'alert_color', '#333333')  
-    text_color = getattr(current_user, 'text_color', '#FFFFFF') 
-    flash('Settigs loaded', 'auth')
-    return render_template('settings.html', show_timer=current_user.show_timer, show_otp_type=current_user.show_otp_type, alert_color=alert_color, show_emails=current_user.show_emails, show_company=current_user.show_company)
+    print("Loading settings from database.")
+    db_path = app.config['DATABASE']
+    with sqlite3.connect(db_path) as db:
+        cursor = db.cursor()
+        cursor.execute(
+            "SELECT show_timer, show_otp_type, show_content_titles, alert_color, text_color, show_emails, show_company FROM users WHERE id = ?",
+            (user_id,)
+        )
+        settings = cursor.fetchone()
+        print("Settings loaded:", settings)
+        if settings:
+            current_user.show_timer, current_user.show_otp_type, current_user.show_content_titles, current_user.alert_color, current_user.text_color, current_user.show_emails, current_user.show_company = settings
+            flash('Personal settings loaded', 'info')
+
+    return render_template('settings.html', show_timer=current_user.show_timer, show_otp_type=current_user.show_otp_type, alert_color=current_user.alert_color, show_emails=current_user.show_emails, show_company=current_user.show_company)
 
 @app.route('/refresh_codes_v2')
 @login_required

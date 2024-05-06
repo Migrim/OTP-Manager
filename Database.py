@@ -77,7 +77,8 @@ def init_db():
                     alert_color TEXT DEFAULT '#333333',
                     text_color TEXT DEFAULT '#FFFFFF',
                     show_emails INTEGER DEFAULT 0,
-                    show_company INTEGER DEFAULT 0
+                    show_company INTEGER DEFAULT 0,
+                    font TEXT DEFAULT 'Roboto' 
                 )
             """)
             db.commit()
