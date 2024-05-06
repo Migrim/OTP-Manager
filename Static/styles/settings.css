@@ -118,59 +118,6 @@ input[type="checkbox"]:not(:checked) + .slider:before {
     background-color: #fff; 
 }
 
-.navbar {
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.1);
-}
-
-.navbar-dark .navbar-brand {
-    color: #f1f1f1;
-    font-size: 1.5rem;
-    margin-right: 20px;
-    transition: color 0.3s;
-}
-
-.navbar-dark .navbar-brand:hover {
-    color: #CD5C5C;
-}
-
-#logoutContainer {
-    display: flex;
-    align-items: center;
-    justify-content: flex-end; 
-}
-
-#logoutBtn {
-    position: absolute;
-    right: -1px; 
-    top: 0.1px;
-    cursor: pointer;
-}
-
-#logoutBtn a {
-    margin-top: 5px;
-    display: flex;
-    align-items: center;
-    justify-content: center; 
-    padding: 4px 12px;
-    font-size: 1.4rem; 
-    background-color: #CD5C5C;
-    color: #fff;
-    text-decoration: none;
-    border-radius: 5px;
-    transition: background-color 0.3s;
-    width: 100px; 
-    height: 40px; 
-}
-
-#logoutBtn a:hover {
-    background-color: #E68A89;
-}
-
-#logoutBtn a i.material-icons-outlined {
-    font-size: 18px; 
-    margin-left: 8px; 
-}
-
 .form-container {
     display: flex;
     flex-direction: column;
@@ -185,20 +132,15 @@ input[type="checkbox"]:not(:checked) + .slider:before {
 
 .setting-description {
     font-family: 'Helvetica Neue', Arial, sans-serif; 
-    color: #40407a; 
-    background-color: #E0C3FC; 
+    color: #ffffff; 
+    background-color: #333333; 
     padding: 10px 20px; 
     border-left: 8px solid #E0C3FC; 
     border-radius: 5px; 
-    box-shadow: 2px 2px 10px rgba(0,0,0,0.15);
     transition: all 0.3s ease-in-out;
     display: block; 
     width: max-content; 
     margin: 20px auto;
-}
-
-.setting-description:hover {
-    box-shadow: 2px 4px 12px rgba(0,0,0,0.2); 
 }
 
 .colorSwatch {
@@ -222,20 +164,20 @@ input[type="checkbox"]:not(:checked) + .slider:before {
     padding: 5px;  
     display: flex;  
     flex-wrap: wrap;  
-    justify-content: flex-start; 
+    justify-content: flex-start;
+    align-items: center; 
     background-color: #222222;  
     border-radius: 8px;  
     margin-top: 10px;  
     width: fit-content;  
     max-width: 400px;
-    margin-left: 50px;
+    margin-left: 98px;
 }
 p {
     font-family: 'Helvetica Neue', Arial, sans-serif; 
     color: #40407a; 
     background-color: #E0C3FC; 
     padding: 10px 20px; 
-    border-left: 8px solid #E0C3FC; 
     border-radius: 5px; 
     box-shadow: 2px 2px 10px rgba(0,0,0,0.15);
     transition: all 0.3s ease-in-out; 
