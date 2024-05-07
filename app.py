@@ -270,19 +270,7 @@ def show_endpoints():
 def server_status():
     return jsonify({'status': 'ok'}), 200
 
-@app.before_request
-def check_server_status():
-    global is_restarting
-    if is_restarting and request.endpoint != 'restarting':
-        return redirect(url_for('restarting'))
-
-@app.route('/restarting')
-def restarting():
-    restart_server()
-    return render_template('restarting.html')
-
 def is_internet_available():
-    """Check if the internet is available."""
     try:
         response = requests.get('http://www.google.com', timeout=5)
         return response.status_code == 200
@@ -297,9 +285,10 @@ def is_internet_available():
         return False
 
 def check_ntp_sync():
-    """Check if the server's time is in sync with an NTP server."""
     if not is_internet_available():
-        return False 
+        logging.warning("Internet is not available.")
+        flash("Internet is not available. Check your connection.", "error")
+        return False, None  
 
     try:
         ntp_client = ntplib.NTPClient()
@@ -308,16 +297,25 @@ def check_ntp_sync():
         local_time = time.time()
         offset = local_time - ntp_time
 
-        allowable_offset = 1  
+        allowable_offset = 1
 
-        return abs(offset) <= allowable_offset
+        if abs(offset) > allowable_offset:
+            logging.warning("Time is not synchronized. Offset: %s seconds", offset)
+            flash(f"Warning: Time is not synchronized. Offset: {offset} seconds", "warning")
+            return False, ntp_time
+        return True, ntp_time
     except Exception as e:
-        return False  
+        logging.error("Failed to synchronize time: %s", e)
+        flash(f"Error: Failed to synchronize time due to {e}.", "error")
+        return False, None
 
 @app.route('/ntp_status')
 def ntp_status():
     is_ntp_synced = check_ntp_sync()  
-    return jsonify({"status": "connected" if is_ntp_synced else "disconnected"})
+    if is_ntp_synced:
+        return jsonify({"status": "connected", "message": "NTP time is synchronized."})
+    else:
+        return jsonify({"status": "disconnected", "message": "NTP time is not synchronized. Check the warnings/errors."})
 
 @app.route('/internet_status')
 def internet_status():
@@ -469,6 +467,7 @@ def cli():
     return render_template('cli.html', output=output)
 
 @app.route('/settings', methods=['GET', 'POST'])
+@check_server_capacity
 @login_required
 def settings():
     user_id = session.get('user_id')
@@ -485,7 +484,6 @@ def settings():
         show_emails = 1 if data.get('show_emails') == 'on' else 0
         show_company = 1 if data.get('show_company') == 'on' else 0
 
-        # Define a mapping of alert colors to their respective text colors
         color_map = {
             '#292d26': '#c4b550', '#3e4637': '#c4b550',
             '#1b2e4b': '#e9bfff', '#FAD4C0': '#333333',
@@ -494,14 +492,12 @@ def settings():
             '#8CA6DB': '#3e3e41'
         }
 
-        # Calculate brightness of the alert color and choose text color for good contrast
         def get_brightness(hex_color):
             hex_color = hex_color.lstrip('#')
             rgb = tuple(int(hex_color[i:i+2], 16) for i in (0, 2, 4))
             return 0.299 * rgb[0] + 0.587 * rgb[1] + 0.114 * rgb[2]
 
         brightness = get_brightness(alert_color)
-        # First check in the color map, if not found, then determine based on brightness
         text_color = color_map.get(alert_color, '#FFFFFF' if brightness < 120 else '#000000')
 
         print("Determined text color:", text_color)
@@ -752,6 +748,7 @@ def category_icon_filter(category):
 app.jinja_env.filters['category_icon'] = category_icon_filter
 
 @app.route('/about')
+@check_server_capacity
 @login_required
 def about():
     stats = get_statistics()
@@ -1157,150 +1154,9 @@ def edit(name):
         flash('OTP edit action completed.', 'info')  
     return redirect(url_for('home'))
 
-@app.route('/create_backup', methods=['GET'])
-@login_required
-def create_backup():
-    try:
-        if not current_user.is_admin:
-            logging.warning('Non-admin user attempted to create a backup.')
-            print(f"Non-admin user attempted to create a backup.") 
-            return jsonify({'success': False, 'message': 'Not authorized'})
-        
-        db_path = "otp.db"  
-        if not os.path.isfile(db_path):
-            logging.error('Database file not found for backup.')
-            print(f"Database file not found for backup.") 
-            return jsonify({'success': False, 'message': 'Database file not found'})
-
-        backup_folder = "backups"
-        if not os.path.exists(backup_folder):
-            os.makedirs(backup_folder)
-
-        timestamp = datetime.now().strftime("%d.%m.%y-%H:%M")
-        backup_file_path = os.path.join(backup_folder, f"otpbcp-{timestamp}.db")
-        shutil.copy2(db_path, backup_file_path)
-        print(f"Backup created at {backup_file_path}") 
-        logging.info(f'Backup created at {backup_file_path}')
-
-        return jsonify({'success': True, 'message': backup_file_path}) 
-    except Exception as e:
-        logging.error(f'Error creating backup: {e}', exc_info=True)
-        print(f"Error creating backup: {e}") 
-        return jsonify({'success': False, 'message': str(e)})
-
-@app.route('/load_backup', methods=['POST'])
-@login_required
-def load_backup():
-    try:
-        print("load_backup function reached")
-        if not current_user.is_admin:
-            print("Not authorized")
-            return {'success': False, 'message': 'Not authorized'}
-        
-        file = request.files.get('backup')
-        if file:
-            backup_folder = "backups"
-            backup_file_path = os.path.join(backup_folder, file.filename)
-            
-            file.save(backup_file_path)
-            
-            with open(backup_file_path, 'rb') as f_in:
-                with open("otp.db", 'wb') as f_out:
-                    shutil.copyfileobj(f_in, f_out)
-
-            print(f"Copying backup file from {backup_file_path}")
-            return {'success': True}
-        else:
-            print("No backup file provided")
-            return {'success': False, 'message': 'No backup file provided'}
-    except Exception as e:
-        return {'success': False, 'message': str(e)}
-
-@app.route('/list_backups', methods=['GET'])
-@login_required
-def list_backups():
-    try:
-        if not current_user.is_admin:
-            logging.warning('Non-admin user attempted to list backups.')
-            return jsonify({'success': False, 'message': 'Not authorized'})
-        
-        backup_folder = "backups"
-        backups = []
-        if os.path.exists(backup_folder):
-            # Fetch all backup files and sort them by modification time, newest first
-            backups = sorted(os.listdir(backup_folder), key=lambda x: os.path.getmtime(os.path.join(backup_folder, x)), reverse=True)
-        
-        return jsonify({'success': True, 'backups': backups})
-    except Exception as e:
-        logging.error(f'Error listing backups: {e}')
-        return jsonify({'success': False, 'message': str(e)})
-
-@app.route('/shutdown', methods=['POST'])
-@login_required
-def shutdown_server():
-    if not current_user.is_admin: 
-        return jsonify({'status': 'error', 'message': 'Unauthorized'}), 401
-    
-    try:
-        global is_restarting
-        is_restarting = True
-
-        shutdown_function = request.environ.get('werkzeug.server.shutdown')
-        if shutdown_function is None:
-            raise RuntimeError('Not running the Werkzeug server')
-        
-        shutdown_function()  
-        
-        return jsonify({'status': 'success', 'message': 'Server shutting down...'}), 200
-    except Exception as e:
-        is_restarting = False
-        logging.error(f"Failed to shut down server: {e}")
-        return jsonify({'status': 'error', 'message': str(e)}), 500
-
-@app.route('/server_settings', methods=['GET', 'POST'])
-@login_required
-def server_settings():
-    if not current_user.is_admin:
-        flash("You do not have permission to view this page", 'error')
-        return redirect(url_for('home'))
-
-    current_time = datetime.now()
-    uptime = current_time - start_time
-    formatted_uptime = f"{uptime.days} Days {uptime.seconds // 3600}h:{(uptime.seconds // 60) % 60}m:{uptime.seconds % 60}s"
-
-    if request.method == 'POST':
-        new_port = request.form.get('server_port')
-        action = request.form.get('server_action')
-
-        if new_port:
-            change_server_port(new_port)
-
-        if action == 'restart':
-            restart_server()
-        elif action == 'stop':
-            shutdown_server()
-
-        flash('Server settings updated successfully!')
-
-    server_time = current_time.strftime('%d/%m/%Y %H:%M:%S')
-    current_port = request.host.split(':')[1] if ':' in request.host else 80
-    return render_template('server_settings.html', current_port=current_port, uptime=formatted_uptime, server_time=server_time)
-
 @app.route('/get_start_time')
 def get_start_time():
     return jsonify({'start_time': start_time.isoformat()})
-
-def change_server_port(new_port):
-    pass
-
-def get_current_server_port():
-    return os.environ.get('SERVER_PORT', 'default_port')
-
-@app.before_request
-def check_for_restarting():
-    global is_restarting
-    if is_restarting and request.endpoint != 'restarting':
-        return redirect(url_for('restarting'))
 
 @app.route('/broadcast', methods=['POST'])
 @login_required
@@ -1320,29 +1176,6 @@ def check_for_broadcast_message():
     global broadcast_message
     if broadcast_message and request.endpoint != 'broadcast':
         flash(broadcast_message)
-
-def restart_server():
-    global is_restarting
-    with restart_lock:
-        if is_restarting:
-            logging.info("Server restart already in progress.")
-            return
-        is_restarting = True
-
-    logging.info("Server restart initiated.")
-    
-    with app.app_context():
-        flash('Server is restarting, you will be redirected.')
-
-    current_dir = os.path.dirname(os.path.abspath(__file__))
-    reboot_script_path = os.path.join(current_dir, 'static', 'script', 'reboot.py')
-
-    subprocess.Popen(["python", reboot_script_path], shell=True)
-
-    time.sleep(1)
-
-    logging.info("Main server is shutting down.")
-    os.kill(os.getpid(), signal.SIGINT)  
 
 @app.route('/delete_secret/<name>', methods=['POST'])
 @login_required
