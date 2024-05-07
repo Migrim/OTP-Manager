@@ -831,6 +831,7 @@ def get_stats_json():
     })
 
 @app.route('/get_otp_v2/<name>', methods=['GET'])
+@login_required
 def get_otp_v2(name):
     otp_secrets = load_from_db()
 

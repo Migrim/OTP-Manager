@@ -246,3 +246,13 @@ h1, h2 {
     justify-content: center;
     width: 100%;  
 }
+h1.text-center {
+    font-family: 'poppins';
+    color: #FFFFFF; 
+    transition: all 0.3s ease-in-out; 
+    font-weight: normal; 
+}
+
+h1.text-center:hover {
+    color: #E0C3FC;
+}
