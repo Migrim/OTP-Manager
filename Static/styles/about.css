@@ -127,7 +127,7 @@ body {
 
 .older-stats {
     max-height: 14em; 
-    overflow-y: auto; 
+    overflow-y: hidden; 
 }
 
 .backup-container {

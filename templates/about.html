@@ -38,12 +38,11 @@
                 <section class="settings-container">
                     <h2 class="text-center">Recent Stats:</h2>
                     <ul class="older-stats">
-                        {% for stat in older_stats %}
-                        <li class="older-stat-item">Date: {{ stat[3] }}, Logins: {{ stat[1] }}, Times Refreshed: {{ stat[2] }}</li>
-                        {% endfor %}
+                        <div class="col-md-12">
+                            <canvas id="statsChart" width="400" height="200"></canvas>
+                        </div>                        
                     </ul>                                      
                 </section>
-
             
                 <section class="license-container text-center mt-5">
                     <p>© 2024 OTP Manager by Sebastian Junginger, licensed under</p>
@@ -62,7 +61,104 @@
 
 {% block scripts %}
 {{ super() }}
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
+        const Utils = {
+            CHART_COLORS: {
+                red: 'rgb(246, 81, 81)',
+                blue: 'rgb(246, 81, 81)',
+                backgroundRed: 'rgb(246, 81, 81)',
+                backgroundBlue: 'rgb(246, 81, 81)'
+            }
+        };
+
+        document.addEventListener('DOMContentLoaded', function() {
+            loadOlderBackups();
+            updateStats();
+            setInterval(updateStats, 1000);
+            renderStatsChart();
+        });
+
+        function renderStatsChart() {
+            fetch('/get_older_statistics')
+            .then(response => response.json())
+            .then(data => {
+                const ctx = document.getElementById('statsChart').getContext('2d');
+                const gradientRed = ctx.createLinearGradient(0, 0, 0, 400);
+                gradientRed.addColorStop(0, Utils.CHART_COLORS.red);
+                gradientRed.addColorStop(1, Utils.CHART_COLORS.backgroundRed);
+
+                const gradientBlue = ctx.createLinearGradient(0, 0, 0, 400);
+                gradientBlue.addColorStop(0, Utils.CHART_COLORS.blue);
+                gradientBlue.addColorStop(1, Utils.CHART_COLORS.backgroundBlue);
+
+                const loginsData = data.map((stat, index) => ({x: index, y: stat.logins_today}));
+                const timesRefreshedData = data.map((stat, index) => ({x: index, y: stat.times_refreshed}));
+
+                const totalDuration = 1000;
+                const delayBetweenPoints = totalDuration / data.length;
+
+                const config = {
+                    type: 'line',
+                    data: {
+                        datasets: [{
+                            label: 'Times Refreshed',
+                            borderColor: Utils.CHART_COLORS.blue,
+                            backgroundColor: gradientBlue,
+                            borderWidth: 2,
+                            radius: 0,
+                            data: timesRefreshedData,
+                            tension: 0.4,
+                        }]
+                    },
+                    options: {
+                        responsive: true, 
+                        maintainAspectRatio: false, 
+                        animation: {
+                            duration: 2000 
+                        },
+                        interaction: {
+                            intersect: false
+                        },
+                        plugins: {
+                            legend: {
+                                display: true,
+                                labels: {
+                                    color: 'rgb(255, 99, 132)' 
+                                }
+                            },
+                            tooltip: {
+                                mode: 'index',
+                                intersect: false
+                            }
+                        },
+                        scales: {
+                            x: {
+                                type: 'linear',
+                                ticks: {
+                                    display: false 
+                                },
+                                grid: {
+                                    display: false 
+                                }
+                            },
+                            y: {
+                                beginAtZero: true,
+                                grid: {
+                                    borderDash: [5, 5] 
+                                }
+                            }
+                        }
+                    }
+                };
+
+                const statsChart = new Chart(ctx, config);
+            })
+            .catch(error => {
+                console.error('Failed to fetch data: ', error);
+            });
+        }
+
         function createBackup() {
             fetch('/create_backup')
             .then(response => response.json())

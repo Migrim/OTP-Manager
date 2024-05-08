@@ -394,12 +394,22 @@ def get_statistics():
         else:
             return {'logins_today': 0, 'times_refreshed': 0}
 
-def get_older_statistics(limit=5):
+def get_older_statistics(limit=200):
     db_path = app.config['DATABASE']  
     with sqlite3.connect(db_path) as db:
         cursor = db.cursor()
         cursor.execute("SELECT * FROM statistics ORDER BY date DESC LIMIT ?", (limit,))
         return cursor.fetchall()
+    
+@app.route('/get_older_statistics')
+def older_statistics():
+    stats = get_older_statistics(200)  
+    result = [{
+        'logins_today': stat[1],
+        'times_refreshed': stat[2],
+        'day_index': index  
+    } for index, stat in enumerate(stats)]
+    return jsonify(result)
 
 @app.route('/logout')
 def logout():
