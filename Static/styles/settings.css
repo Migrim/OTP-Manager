@@ -36,7 +36,8 @@ body {
 .settings-container {
     padding: 15px;
     margin: auto;
-    width: 50%;
+    width: 50%; /* Default width */
+    max-width: 600px; /* Max width limit for large screens */
     background-color: #333333;
     border-radius: 20px;
     animation: scaleFadeIn 0.8s ease-in-out;
@@ -255,4 +256,22 @@ h1.text-center {
 
 h1.text-center:hover {
     color: #E0C3FC;
+}
+
+@media screen and (max-width: 1024px) {
+    .settings-container {
+        width: 70%;
+    }
+}
+@media screen and (max-width: 768px) {
+    .settings-container {
+        width: 80%;
+        padding: 20px;
+        overflow-y: auto;
+    }
+}
+@media screen and (max-width: 480px) {
+    .settings-container {
+        width: 95%;
+    }
 }
