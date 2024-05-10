@@ -66,10 +66,10 @@
     <script>
         const Utils = {
             CHART_COLORS: {
-                red: 'rgb(246, 81, 81)',
-                blue: 'rgb(246, 81, 81)',
-                backgroundRed: 'rgb(246, 81, 81)',
-                backgroundBlue: 'rgb(246, 81, 81)'
+                red: 'rgb(255, 82, 82)',
+                blue: 'rgb(255, 82, 82)',
+                backgroundRed: 'rgba(141, 65, 183, 0.2)',
+                backgroundBlue: 'rgba(133, 31, 18, 0.2)'
             }
         };
 
@@ -96,7 +96,7 @@
                 const loginsData = data.map((stat, index) => ({x: index, y: stat.logins_today}));
                 const timesRefreshedData = data.map((stat, index) => ({x: index, y: stat.times_refreshed}));
 
-                const totalDuration = 1000;
+                const totalDuration = 2000; 
                 const delayBetweenPoints = totalDuration / data.length;
 
                 const config = {
@@ -107,16 +107,22 @@
                             borderColor: Utils.CHART_COLORS.blue,
                             backgroundColor: gradientBlue,
                             borderWidth: 2,
-                            radius: 0,
+                            pointRadius: 0,
+                            pointBackgroundColor: Utils.CHART_COLORS.blue,
+                            fill: true,
                             data: timesRefreshedData,
-                            tension: 0.4,
+                            tension: 0.4
                         }]
                     },
                     options: {
-                        responsive: true, 
-                        maintainAspectRatio: false, 
+                        responsive: true,
+                        maintainAspectRatio: false,
                         animation: {
-                            duration: 2000 
+                            duration: 2000,
+                            easing: 'easeInOutBack',
+                            delay: function(context) {
+                                return context.type === 'data' && context.mode === 'default' ? context.dataIndex * delayBetweenPoints : 0;
+                            }
                         },
                         interaction: {
                             intersect: false
@@ -125,7 +131,10 @@
                             legend: {
                                 display: true,
                                 labels: {
-                                    color: 'rgb(255, 99, 132)' 
+                                    color: 'rgb(255, 255, 255)',
+                                    font: {
+                                        size: 14
+                                    }
                                 }
                             },
                             tooltip: {
@@ -136,24 +145,28 @@
                         scales: {
                             x: {
                                 type: 'linear',
-                                ticks: {
-                                    display: false 
-                                },
+                                display: true,
                                 grid: {
-                                    display: false 
+                                    display: false
                                 }
                             },
                             y: {
                                 beginAtZero: true,
                                 grid: {
-                                    borderDash: [5, 5] 
+                                    color: 'rgba(255, 255, 255, 0.2)',
+                                    borderDash: [5, 5],
+                                    drawBorder: true,
+                                    drawOnChartArea: true
+                                },
+                                ticks: {
+                                    color: 'rgba(255, 255, 255, 0.7)'
                                 }
                             }
                         }
                     }
                 };
 
-                const statsChart = new Chart(ctx, config);
+                new Chart(ctx, config);
             })
             .catch(error => {
                 console.error('Failed to fetch data: ', error);
