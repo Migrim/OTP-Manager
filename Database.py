@@ -44,7 +44,7 @@ def init_db():
             """)
             cursor.execute("""
                 CREATE TABLE IF NOT EXISTS otp_secrets (
-                    id INTEGER PRIMARY KEY,
+                    id INTEGER PRIMARY KEY UNIQUE,
                     name TEXT NOT NULL DEFAULT 'none' UNIQUE,
                     email TEXT DEFAULT 'none',
                     secret TEXT NOT NULL,

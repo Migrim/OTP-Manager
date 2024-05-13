@@ -1251,32 +1251,33 @@ def add():
         company_id = form.company.data
 
         if otp_type not in ['totp', 'hotp']:
-            flash('Invalid OTP type. Choose either TOTP or HOTP.')
-            return redirect(url_for('add'))
+            flash('Invalid OTP type. Choose either TOTP or HOTP.', 'error')
+            return render_template('add.html', form=form)
         
-        if len(secret) < 16:
-            flash('Secret is too short. It should be at least 16 characters.')
-            return redirect(url_for('add'))
+        if len(secret) < 16 or len(secret) > 32:
+            flash('Secret length should be between 16 and 32 characters.', 'error')
+            return render_template('add.html', form=form)
 
         if not secret.isalnum():
-            flash('Secret must contain only alphanumeric characters.')
-            return redirect(url_for('add'))
+            flash('Secret must contain only alphanumeric characters.', 'error')
+            return render_template('add.html', form=form)
 
         if not isinstance(refresh_time, int) or refresh_time <= 0:
-            flash('Refresh time must be a positive number.')
-            return redirect(url_for('add'))
+            flash('Refresh time must be a positive number.', 'error')
+            return render_template('add.html', form=form)
 
-        valid_base32 = re.fullmatch('[A-Z2-7=]{16,}', secret, re.IGNORECASE)
+        valid_base32 = re.fullmatch('[A-Z2-7=]{16,32}', secret, re.IGNORECASE)
         if not valid_base32 or len(secret) % 8 != 0:
-            flash('Secret must be a valid base32 string with a length that is a multiple of 8 characters.')
-            return redirect(url_for('add'))
+            flash('Secret must be a valid base32 string with a length that is a multiple of 8 characters.', 'error')
+            return render_template('add.html', form=form)
 
         selected_company_name = next((company['name'] for company in companies_from_db if company['company_id'] == company_id), 'N/A')
 
         existing_otp_secrets = load_from_db()
         if any(secret['name'] == name for secret in existing_otp_secrets):
-            flash('A secret with this name already exists. Please choose a different name.')
-            return redirect(url_for('add'))
+            flash(f"A secret with the name '{name}' already exists!", 'error')
+            form.name.data = ""
+            return render_template('add.html', form=form)
 
         new_otp_secret = {
             'name': name,
@@ -1285,7 +1286,7 @@ def add():
             'otp_type': otp_type,
             'refresh_time': refresh_time,
             'company_id': company_id,
-            'company': selected_company_name 
+            'company': selected_company_name
         }
 
         existing_otp_secrets.append(new_otp_secret)

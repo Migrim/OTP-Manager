@@ -47,7 +47,7 @@
             </div>                    
             <div class="form-group form-group-with-icon">
                 {{ form.secret.label }} 
-                {{ form.secret(class="form-control", placeholder="Enter exactly 16 characters", title="Enter a secure secret, exactly 16 characters", maxlength="16") }} 
+                {{ form.secret(class="form-control", placeholder="Enter between 16 to 32 characters", title="Enter a secure secret, between 16 to 32 characters", maxlength="32") }}
                 <span class="validation-icon" id="secretCheck" style="display: none;"><i class="material-icons-outlined">check_small</i></span>
             </div>
             <div class="form-group"> 
@@ -121,8 +121,8 @@ $(document).ready(function() {
     });
 
     function validateSecret(secret) {
-        const isValidLength = secret.length >= 16;
-        const isValidFormat = /^[A-Z2-7=]{16,}$/.test(secret);
+        const isValidLength = secret.length >= 16 && secret.length <= 32;
+        const isValidFormat = /^[A-Z2-7=]{16,32}$/.test(secret);
         return isValidLength && isValidFormat;
     }
 
@@ -145,7 +145,6 @@ $(document).ready(function() {
         let valid = true;
         let errorMsgs = [];
 
-        // Force uppercase
         const name = $("input[name='name']").val();
         const email = $("input[name='email']").val();
         const secret = $("input[name='secret']").val().toUpperCase();
@@ -157,7 +156,6 @@ $(document).ready(function() {
 
         if (!validateEmail(email)) {
             $("input[name='email']").addClass('is-invalid');
-            errorMsgs.push("Please enter a valid email address or leave it empty.");
             valid = false;
         } else {
             $("input[name='email']").removeClass('is-invalid');
@@ -170,7 +168,6 @@ $(document).ready(function() {
 
         if (name.length < 4) {
             $("input[name='name']").addClass('is-invalid');
-            errorMsgs.push("The name must be at least 4 characters long.");
             valid = false;
         } else {
             $("input[name='name']").removeClass('is-invalid');
@@ -178,19 +175,16 @@ $(document).ready(function() {
 
         if (!validateSecret(secret)) {
             $("input[name='secret']").addClass('is-invalid');
-            errorMsgs.push("Secret must be exactly 16 characters long and consist of uppercase letters A-Z, numbers 2-7, or the '=' character.");
             valid = false;
         } else {
             $("input[name='secret']").removeClass('is-invalid');
         }
 
         if (!["totp", "hotp"].includes(otpType.toLowerCase())) {
-            errorMsgs.push("Invalid OTP type selected. Only TOTP is supported at this moment.");
             valid = false;
         }
 
         if (!Number.isInteger(parseInt(refreshTime)) || parseInt(refreshTime) <= 0) {
-            errorMsgs.push("Refresh time must be a positive integer number.");
             valid = false;
         }
 
@@ -203,7 +197,7 @@ $(document).ready(function() {
     });
 
     $("input[name='secret']").on('input', function() {
-        this.value = this.value.toUpperCase(); // Ensure uppercase for consistency
+        this.value = this.value.toUpperCase();
 
         const isValidSecret = validateSecret($(this).val());
         updateValidationStatus(isValidSecret, 'secretCheck');
@@ -214,13 +208,11 @@ $(document).ready(function() {
         updateValidationStatus(isValidName, 'nameCheck');
     });
 
-    // Email input event for validation check and icon update
     $("input[name='email']").on("input", function() {
         const isValidEmail = validateEmail($(this).val());
-        updateValidationStatus(isValidEmail, 'emailCheck'); // Add emailCheck span for the icon next to the email input field
+        updateValidationStatus(isValidEmail, 'emailCheck'); 
     });
 
-    // Email character limit (e.g., 256 characters)
     $("input[name='email']").attr('maxlength', '256');
 });
 </script>
