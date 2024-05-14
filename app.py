@@ -1217,7 +1217,7 @@ def delete(name):
 @login_required
 def delete_user(user_id):
     if current_user.get_id() != "admin":
-        flash("Only the admin can delete users.")
+        flash("Only the root can delete users.", 'error')
         return redirect(url_for('admin.admin_settings'))
 
     try:
