@@ -158,13 +158,15 @@ def save_companies_to_db(companies):
     conn = sqlite3.connect(db_path)
     cursor = conn.cursor()
 
-    cursor.execute("DELETE FROM companies")
-
     for company in companies:
         cursor.execute("""
-        INSERT OR IGNORE INTO companies (company_id, name)
-        VALUES (?, ?)
-        """, (company['company_id'], company['name']))
+        INSERT OR IGNORE INTO companies (company_id, name, kundennummer)
+        VALUES (?, ?, ?)
+        """, (company['company_id'], company['name'], company['kundennummer']))
+
+        cursor.execute("""
+        UPDATE companies SET name = ?, kundennummer = ? WHERE company_id = ?
+        """, (company['name'], company['kundennummer'], company['company_id']))
 
     conn.commit()
     conn.close()

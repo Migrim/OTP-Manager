@@ -54,14 +54,13 @@ def get_all_users():
 
 def load_companies_from_db():
     try:
-        db_path = app.config['DATABASE'] 
+        db_path = app.config['DATABASE']
         with sqlite3.connect(db_path) as db:
             cursor = db.cursor()
-            cursor.execute("SELECT * FROM companies")
-            companies = cursor.fetchall()
-            companies = [{"company_id": company[0], "name": company[1]} for company in companies] 
-        return companies
+            cursor.execute("SELECT company_id, name, kundennummer FROM companies ORDER BY company_id")
+            return [{'company_id': row[0], 'name': row[1], 'kundennummer': row[2]} for row in cursor.fetchall()]
     except sqlite3.Error as e:
+        logger.error(f"Error loading companies from db: {e}")
         return []
 
 @admin_bp.route('/admin/reset_password', methods=['POST'])
