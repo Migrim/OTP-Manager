@@ -413,6 +413,29 @@ def older_statistics():
     } for index, stat in enumerate(stats)]
     return jsonify(result)
 
+@app.route('/get_secrets_by_company/<kundennummer>', methods=['GET'])
+def get_secrets_by_company(kundennummer):
+    db_path = app.config['DATABASE']
+    with sqlite3.connect(db_path) as db:
+        cursor = db.cursor()
+        cursor.execute("""
+            SELECT otp_secrets.name, otp_secrets.email, otp_secrets.secret, otp_secrets.otp_type, 
+                   otp_secrets.refresh_time, otp_secrets.company_id, companies.name AS company_name
+            FROM otp_secrets
+            LEFT JOIN companies ON otp_secrets.company_id = companies.company_id
+            WHERE companies.kundennummer = ?
+        """, (kundennummer,))
+        secrets = cursor.fetchall()
+        return jsonify([{
+            'name': row[0],
+            'email': row[1],
+            'secret': row[2],
+            'otp_type': row[3],
+            'refresh_time': row[4],
+            'company_id': row[5],
+            'company': row[6]
+        } for row in secrets])
+
 @app.route('/logout')
 def logout():
     user_id = session.pop('user_id', None)
