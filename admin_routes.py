@@ -12,6 +12,8 @@ import sqlite3
 import logging
 from logging.handlers import RotatingFileHandler
 
+from forms.company_form import CompanyForm
+
 app = Flask(__name__)
 app.config['DATABASE'] = 'instance/otp.db' 
 bcrypt = Bcrypt(app)
@@ -33,11 +35,6 @@ class UserForm(FlaskForm):
     username = StringField('Username', validators=[DataRequired()])
     password = PasswordField('Password', validators=[DataRequired()])
     submit = SubmitField('Submit')
-
-class CompanyForm(FlaskForm):
-    name = StringField('Company Name', validators=[DataRequired()])
-    kundennummer = StringField('Kundennummer', validators=[DataRequired()])
-    submit_company = SubmitField('Add Company')
 
 def get_all_users():
     try:
@@ -141,36 +138,40 @@ def user_management():
 def company_management():
     company_form = CompanyForm()
 
-    is_admin = False
-    try:
-        db_path = app.config['DATABASE'] 
-        with sqlite3.connect(db_path) as db:
-            cursor = db.cursor()
-            cursor.execute("SELECT is_admin FROM users WHERE username = ?", (current_user.username,))
-            result = cursor.fetchone()
-            if result:
-                is_admin = bool(result[0])
-    except sqlite3.Error as e:
-        flash('Failed to fetch user admin status.')
-        logger.error(f"Error fetching user admin status: {e}")
-
     if company_form.validate_on_submit() and company_form.submit_company.data:
         company_name = company_form.name.data
         kundennummer = company_form.kundennummer.data
+        password = company_form.password.data
+
+        hashed_password = bcrypt.generate_password_hash(password).decode('utf-8')
 
         try:
-            db_path = app.config['DATABASE'] 
+            db_path = app.config['DATABASE']
             with sqlite3.connect(db_path) as db:
                 cursor = db.cursor()
-                cursor.execute("INSERT INTO companies (name, kundennummer) VALUES (?, ?)", (company_name, kundennummer))
+                cursor.execute("""
+                    INSERT INTO companies (name, kundennummer, password) 
+                    VALUES (?, ?, ?)
+                """, (company_name, kundennummer, hashed_password))
                 db.commit()
             flash(f"New company {company_name} with Kundennummer {kundennummer} added.", "success")
         except sqlite3.Error as e:
             flash('Failed to add new company.')
             logger.error(f"Error inserting new company: {e}")
+            logger.debug(f"Company details: name={company_name}, kundennummer={kundennummer}, hashed_password={hashed_password}")
+
+    is_admin = False
+    try:
+        db_path = app.config['DATABASE']
+        with sqlite3.connect(db_path) as db:
+            cursor = db.cursor()
+            cursor.execute("SELECT is_admin FROM users WHERE id = ?", (current_user.id,))
+            is_admin = cursor.fetchone()[0]
+    except sqlite3.Error as e:
+        flash('Failed to fetch user admin status.', 'error')
+        logger.error(f"Error fetching user admin status: {e}")
 
     companies = load_companies_from_db()
-    
     return render_template('company_management.html', company_form=company_form, companies=companies, is_admin=is_admin)
 
 @admin_bp.route('/edit_company/<int:company_id>', methods=['GET', 'POST'])
@@ -182,11 +183,22 @@ def edit_company(company_id):
         if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
             if company_form.validate_on_submit():
                 try:
-                    db_path = app.config['DATABASE'] 
+                    db_path = app.config['DATABASE']
                     with sqlite3.connect(db_path) as db:
                         cursor = db.cursor()
-                        cursor.execute("UPDATE companies SET name = ?, kundennummer = ? WHERE company_id = ?",
-                                       (company_form.name.data, company_form.kundennummer.data, company_id))
+
+                        cursor.execute("SELECT password FROM companies WHERE company_id = ?", (company_id,))
+                        result = cursor.fetchone()
+                        current_password = result[0] if result else None
+
+                        if company_form.password.data:
+                            hashed_password = bcrypt.generate_password_hash(company_form.password.data).decode('utf-8')
+                        else:
+                            hashed_password = current_password
+
+                        cursor.execute("""
+                            UPDATE companies SET name = ?, kundennummer = ?, password = ? WHERE company_id = ?
+                        """, (company_form.name.data, company_form.kundennummer.data, hashed_password, company_id))
                         db.commit()
                     return jsonify({'success': True, 'message': 'Company details updated successfully.'})
                 except sqlite3.Error as e:
@@ -195,15 +207,16 @@ def edit_company(company_id):
             else:
                 return jsonify({'success': False, 'message': 'Form validation failed.'}), 400
 
-    else: 
+    else:
         try:
-            db_path = app.config['DATABASE'] 
+            db_path = app.config['DATABASE']
             with sqlite3.connect(db_path) as db:
                 cursor = db.cursor()
-                cursor.execute("SELECT name, kundennummer FROM companies WHERE company_id = ?", (company_id,))
+                cursor.execute("SELECT name, kundennummer, password FROM companies WHERE company_id = ?", (company_id,))
                 company = cursor.fetchone()
                 if company:
-                    return jsonify({'success': True, 'name': company[0], 'kundennummer': company[1]})
+                    password_status = "Current password is set" if company[2] else "No current password"
+                    return jsonify({'success': True, 'name': company[0], 'kundennummer': company[1], 'password_status': password_status})
                 else:
                     return jsonify({'success': False, 'message': 'Company not found.'}), 404
         except sqlite3.Error as e:

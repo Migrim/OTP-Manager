@@ -159,10 +159,18 @@ def save_companies_to_db(companies):
     cursor = conn.cursor()
 
     for company in companies:
+        cursor.execute("SELECT password FROM companies WHERE company_id = ?", (company['company_id'],))
+        result = cursor.fetchone()
+        existing_password = result[0] if result else None
+        
+        if not existing_password:
+            flash(f"No existing password found for company {company['name']}. Please check the database.", 'error')
+            continue
+
         cursor.execute("""
-        INSERT OR IGNORE INTO companies (company_id, name, kundennummer)
-        VALUES (?, ?, ?)
-        """, (company['company_id'], company['name'], company['kundennummer']))
+        INSERT OR IGNORE INTO companies (company_id, name, kundennummer, password)
+        VALUES (?, ?, ?, ?)
+        """, (company['company_id'], company['name'], company['kundennummer'], existing_password))
 
         cursor.execute("""
         UPDATE companies SET name = ?, kundennummer = ? WHERE company_id = ?
@@ -415,26 +423,42 @@ def older_statistics():
 
 @app.route('/get_secrets_by_company/<kundennummer>', methods=['GET'])
 def get_secrets_by_company(kundennummer):
+    print(f"Received request to get secrets for company with kundennummer: {kundennummer}")
+    
     db_path = app.config['DATABASE']
+    print(f"Connecting to database at: {db_path}")
+    
     with sqlite3.connect(db_path) as db:
         cursor = db.cursor()
-        cursor.execute("""
+        print("Successfully connected to the database.")
+        
+        query = """
             SELECT otp_secrets.name, otp_secrets.email, otp_secrets.secret, otp_secrets.otp_type, 
-                   otp_secrets.refresh_time, otp_secrets.company_id, companies.name AS company_name
+                   otp_secrets.refresh_time, otp_secrets.company_id, companies.name AS company_name, companies.password
             FROM otp_secrets
             LEFT JOIN companies ON otp_secrets.company_id = companies.company_id
             WHERE companies.kundennummer = ?
-        """, (kundennummer,))
+        """
+        print(f"Executing query: {query}")
+        
+        cursor.execute(query, (kundennummer,))
         secrets = cursor.fetchall()
-        return jsonify([{
+        
+        print(f"Query executed successfully. Number of secrets retrieved: {len(secrets)}")
+        
+        response = jsonify([{
             'name': row[0],
             'email': row[1],
             'secret': row[2],
             'otp_type': row[3],
             'refresh_time': row[4],
             'company_id': row[5],
-            'company': row[6]
+            'company': row[6],
+            'password': row[7]
         } for row in secrets])
+        
+        print(f"Returning response: {response.get_data(as_text=True)}")
+        return response
 
 @app.route('/logout')
 def logout():
@@ -1316,7 +1340,9 @@ def add():
 
         existing_otp_secrets.append(new_otp_secret)
         save_to_db(existing_otp_secrets)
+
         save_companies_to_db(companies_from_db)
+
         secret_id = save_to_db(existing_otp_secrets)
 
         if action == 'add':

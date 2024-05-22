@@ -44,13 +44,17 @@
                     </div>
                     <div class="form-group">
                         {{ company_form.kundennummer.label }}
-                        {{ company_form.kundennummer(class="form-control", placeholder="Enter the Company Identificaion Number") }}
-                    </div>                    
+                        {{ company_form.kundennummer(class="form-control", placeholder="Enter the Company Identification Number") }}
+                    </div>
+                    <div class="form-group">
+                        {{ company_form.password.label }}
+                        {{ company_form.password(class="form-control", placeholder="Enter a secure Web-Password") }}
+                    </div>
                     <div class="form-group">
                         {{ company_form.submit_company(class="btn btn-primary") }}
                     </div>
                 </form>
-            </div>
+            </div>            
         </div>
     </div>
 </div>
@@ -91,7 +95,12 @@
                     <div class="form-group">
                         {{ company_form.kundennummer.label }}
                         {{ company_form.kundennummer(class="form-control", placeholder="Enter Kundennummer") }}
-                    </div>                    
+                    </div>
+                    <div class="form-group">
+                        {{ company_form.password.label }}
+                        {{ company_form.password(class="form-control", placeholder="Enter a new password (leave blank to keep current password)") }}
+                        <small id="currentPassword" class="form-text text-muted"></small> <!-- Placeholder for current password status -->
+                    </div>
                     <input type="hidden" name="company_id" id="editCompanyId">
                     <div class="form-group">
                         <button type="submit" class="btn btn-primary">Save Changes</button>
@@ -139,95 +148,96 @@
 
 </div>
 <script>
-document.addEventListener('DOMContentLoaded', function() {
-    var userCards = document.querySelectorAll('.company-card');
-    userCards.forEach(function(card, index) {
-        var delay = (index + 1) * 0.06;
-        card.style.animationDelay = delay + 's';
-    });
-
-    var deleteCompanyButtons = document.querySelectorAll('.delete-company-btn');
-    var confirmDeleteButton = document.getElementById('ns-confirmDeleteButton');
-    var companyIdToDelete = null;
-
-    deleteCompanyButtons.forEach(function(button) {
-        button.addEventListener('click', function() {
-            companyIdToDelete = button.getAttribute('data-company-id'); 
-            $('#ns-confirmDeleteCompanyModal').modal('show');
+    document.addEventListener('DOMContentLoaded', function() {
+        var userCards = document.querySelectorAll('.company-card');
+        userCards.forEach(function(card, index) {
+            var delay = (index + 1) * 0.06;
+            card.style.animationDelay = delay + 's';
         });
-    });
-
-    confirmDeleteButton.addEventListener('click', function() {
-        if (!companyIdToDelete) {
-            console.error('No company ID set for deletion.');
-            return;
-        }
-
-        fetch('/admin/delete_company/' + companyIdToDelete, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({}) 
-        }).then(response => {
-            if (response.ok) {
-                window.location.href = '/admin/company_management'; 
-            } else {
-                alert('Failed to delete the company.');
+    
+        var deleteCompanyButtons = document.querySelectorAll('.delete-company-btn');
+        var confirmDeleteButton = document.getElementById('ns-confirmDeleteButton');
+        var companyIdToDelete = null;
+    
+        deleteCompanyButtons.forEach(function(button) {
+            button.addEventListener('click', function() {
+                companyIdToDelete = button.getAttribute('data-company-id'); 
+                $('#ns-confirmDeleteCompanyModal').modal('show');
+            });
+        });
+    
+        confirmDeleteButton.addEventListener('click', function() {
+            if (!companyIdToDelete) {
+                console.error('No company ID set for deletion.');
+                return;
             }
+    
+            fetch('/admin/delete_company/' + companyIdToDelete, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({}) 
+            }).then(response => {
+                if (response.ok) {
+                    window.location.href = '/admin/company_management'; 
+                } else {
+                    alert('Failed to delete the company.');
+                }
+            });
         });
-    });
-
-    var editButtons = document.querySelectorAll('.edit-company-btn');
-    editButtons.forEach(function(button) {
-        button.addEventListener('click', function() {
-            var companyId = button.getAttribute('data-company-id');
+    
+        var editButtons = document.querySelectorAll('.edit-company-btn');
+        editButtons.forEach(function(button) {
+            button.addEventListener('click', function() {
+                var companyId = button.getAttribute('data-company-id');
+                fetch('/admin/edit_company/' + companyId, {
+                    method: 'GET',
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        document.querySelector('#editCompanyForm [name="name"]').value = data.name;
+                        document.querySelector('#editCompanyForm [name="kundennummer"]').value = data.kundennummer;
+                        document.getElementById('editCompanyId').value = companyId;
+                        document.getElementById('currentPassword').textContent = data.password_status; // Display password status
+                        $('#editCompanyModal').modal('show');
+                    } else {
+                        alert(data.message);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error fetching company details:', error);
+                });
+            });
+        });
+    
+        document.getElementById('editCompanyForm').addEventListener('submit', function(e) {
+            e.preventDefault(); 
+            var formData = new FormData(this);
+            var companyId = document.getElementById('editCompanyId').value; 
+    
             fetch('/admin/edit_company/' + companyId, {
-                method: 'GET',
+                method: 'POST',
+                body: formData,
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest',
+                },
             })
             .then(response => response.json())
             .then(data => {
                 if (data.success) {
-                    document.querySelector('#editCompanyForm [name="name"]').value = data.name;
-                    document.querySelector('#editCompanyForm [name="kundennummer"]').value = data.kundennummer;
-                    document.getElementById('editCompanyId').value = companyId; 
-                    $('#editCompanyModal').modal('show');
+                    $('#editCompanyModal').modal('hide');
+                    location.reload();
                 } else {
                     alert(data.message);
                 }
             })
             .catch(error => {
-                console.error('Error fetching company details:', error);
+                console.error('Error updating company details:', error);
             });
         });
     });
-
-    document.getElementById('editCompanyForm').addEventListener('submit', function(e) {
-        e.preventDefault(); 
-        var formData = new FormData(this);
-        var companyId = document.getElementById('editCompanyId').value; 
-
-        fetch('/admin/edit_company/' + companyId, {
-            method: 'POST',
-            body: formData,
-            headers: {
-                'X-Requested-With': 'XMLHttpRequest',
-            },
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.success) {
-                $('#editCompanyModal').modal('hide');
-                location.reload();
-            } else {
-                alert(data.message);
-            }
-        })
-        .catch(error => {
-            console.error('Error updating company details:', error);
-        });
-    });
-});
-</script>
-
+    </script>
+    
 {% endblock %}

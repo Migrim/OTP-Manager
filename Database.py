@@ -39,7 +39,8 @@ def init_db():
                 CREATE TABLE IF NOT EXISTS companies (
                     company_id INTEGER PRIMARY KEY,
                     name TEXT NOT NULL UNIQUE,
-                    kundennummer INTEGER UNIQUE
+                    kundennummer INTEGER UNIQUE,
+                    password TEXT
                 )
             """)
             cursor.execute("""
