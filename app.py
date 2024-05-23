@@ -410,7 +410,27 @@ def get_older_statistics(limit=20):
         cursor = db.cursor()
         cursor.execute("SELECT * FROM statistics ORDER BY date DESC LIMIT ?", (limit,))
         return cursor.fetchall()
-    
+
+def find_db_path(db_name='otp.db'):
+    exclude_dirs = ['/tmp', '/var/tmp', os.path.expanduser('~/.local/share/Trash'), os.path.expanduser('~/.Trash')]
+    appdata_dir = os.getenv('APPDATA') if os.name == 'nt' else os.path.expanduser('~/.config')
+    exclude_dirs.append(appdata_dir)
+
+    for root, dirs, files in os.walk('/'):
+        if any(root.startswith(ex_dir) for ex_dir in exclude_dirs):
+            continue
+        if db_name in files:
+            return os.path.join(root, db_name)
+    raise FileNotFoundError(f"Database file '{db_name}' not found.")
+
+@app.route('/get_db_path', methods=['GET'])
+def get_db_path():
+    try:
+        db_path = find_db_path()
+        return jsonify({'db_path': db_path}), 200
+    except FileNotFoundError as e:
+        return jsonify({'error': str(e)}), 404
+
 @app.route('/get_older_statistics')
 def older_statistics():
     stats = get_older_statistics(20)  
@@ -420,45 +440,6 @@ def older_statistics():
         'day_index': index  
     } for index, stat in enumerate(stats)]
     return jsonify(result)
-
-@app.route('/get_secrets_by_company/<kundennummer>', methods=['GET'])
-def get_secrets_by_company(kundennummer):
-    print(f"Received request to get secrets for company with kundennummer: {kundennummer}")
-    
-    db_path = app.config['DATABASE']
-    print(f"Connecting to database at: {db_path}")
-    
-    with sqlite3.connect(db_path) as db:
-        cursor = db.cursor()
-        print("Successfully connected to the database.")
-        
-        query = """
-            SELECT otp_secrets.name, otp_secrets.email, otp_secrets.secret, otp_secrets.otp_type, 
-                   otp_secrets.refresh_time, otp_secrets.company_id, companies.name AS company_name, companies.password
-            FROM otp_secrets
-            LEFT JOIN companies ON otp_secrets.company_id = companies.company_id
-            WHERE companies.kundennummer = ?
-        """
-        print(f"Executing query: {query}")
-        
-        cursor.execute(query, (kundennummer,))
-        secrets = cursor.fetchall()
-        
-        print(f"Query executed successfully. Number of secrets retrieved: {len(secrets)}")
-        
-        response = jsonify([{
-            'name': row[0],
-            'email': row[1],
-            'secret': row[2],
-            'otp_type': row[3],
-            'refresh_time': row[4],
-            'company_id': row[5],
-            'company': row[6],
-            'password': row[7]
-        } for row in secrets])
-        
-        print(f"Returning response: {response.get_data(as_text=True)}")
-        return response
 
 @app.route('/logout')
 def logout():
