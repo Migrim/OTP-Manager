@@ -3,6 +3,7 @@ from wtforms import StringField, PasswordField, SubmitField, SelectField, Intege
 from wtforms.validators import InputRequired, Length, Email, Optional, DataRequired
 
 class CompanyForm(FlaskForm):
-    name = StringField('Company Name', validators=[DataRequired()], render_kw={"placeholder": "Enter company name"})
-    kundennummer = StringField('Kundennummer', validators=[DataRequired()], render_kw={"placeholder": "Enter Kundennummer"})
+    name = StringField('Company Name', validators=[DataRequired()])
+    kundennummer = StringField('Kundennummer', validators=[DataRequired()])
+    password = PasswordField('Password', validators=[DataRequired()])
     submit_company = SubmitField('Add Company')
