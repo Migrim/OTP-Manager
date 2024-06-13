@@ -66,9 +66,9 @@ OTP-Manager is a secure, easy-to-use tool designed to manage one-time passwords 
 
 ### Customizability
 
-![Custom 1]([https://github.com/Migrim/OTP-Manager/raw/main/static/images/Custom%20%231.png](https://github.com/Migrim/OTP-Manager/blob/main/Static/images/Custom%20%231.png))
-![Custom 2]([https://github.com/Migrim/OTP-Manager/raw/main/static/images/Custom%20%232.png](https://github.com/Migrim/OTP-Manager/blob/main/Static/images/Custom%20%232.png))
+![Custom 1](https://github.com/Migrim/OTP-Manager/blob/main/Static/images/Custom%20%231.png?raw=true)
+![Custom 2](https://github.com/Migrim/OTP-Manager/blob/main/Static/images/Custom%20%232.png?raw=true)
 
 ### Statistics
 
-![Stats]([https://github.com/Migrim/OTP-Manager/raw/main/static/images/Stats.png](https://github.com/Migrim/OTP-Manager/blob/main/Static/images/Stats.png))
+![Stats](https://github.com/Migrim/OTP-Manager/blob/main/Static/images/Stats.png?raw=true)
