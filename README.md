@@ -57,3 +57,18 @@ OTP-Manager is a secure, easy-to-use tool designed to manage one-time passwords 
     - Choose a company. If no company exists, you need to create one first under `Management > Company Settings`.
     - Click "Save".
 5. To view the OTP for a service, navigate to the service entry and the OTP will be displayed.
+
+## Screenshots
+
+### Dashboard
+
+![Dashboard](https://github.com/Migrim/OTP-Manager/blob/main/Static/images/Dashboard.png?raw=true)
+
+### Customizability
+
+![Custom 1](https://github.com/Migrim/OTP-Manager/blob/main/Static/images/Custom%20%231.png?raw=true)
+![Custom 2](https://github.com/Migrim/OTP-Manager/blob/main/Static/images/Custom%20%232.png?raw=true)
+
+### Statistics
+
+![Stats](https://github.com/Migrim/OTP-Manager/blob/main/Static/images/Stats.png?raw=true)
