@@ -51,12 +51,19 @@ OTP-Manager is a secure, easy-to-use tool designed to manage one-time passwords 
     - Username: `admin`
     - Password: `1234`
 3. Change the admin password and create a new user for yourself. Note that new users can only be created by the "admin" user.
-4. To add a new OTP entry:
+4. To add a company:
+    - Open `Management > Company Settings`.
+    - Enter the following details:
+        - **Name**: The name of the company or folder (you can use companies as folders as well).
+        - **Kundennummer**: Your company identification number (set a random ID if you don't have specifics).
+        - **Web-Password**: If this option is displayed, type in whatever you want. This will be removed later on as the Web-API is deprecated and the OTP-Manager is completely offline.
+    - Click "Save".
+5. To add a new OTP entry:
     - Click on "Add".
     - Enter the service name (must be at least 4 letters), the secret key, and optionally an email.
     - Choose a company. If no company exists, you need to create one first under `Management > Company Settings`.
     - Click "Save".
-5. To view the OTP for a service, navigate to the service entry and the OTP will be displayed.
+6. To view the OTP for a service, navigate to the service entry and the OTP will be displayed.
 
 ## Screenshots
 
