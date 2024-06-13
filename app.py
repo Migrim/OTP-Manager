@@ -51,6 +51,9 @@ from forms.user_forms import UserForm
 from forms.company_form import CompanyForm
 from forms.user import User
 
+config = configparser.ConfigParser()
+config.read('config.ini')
+
 logging.basicConfig(filename='MV.log', level=logging.INFO, format='%(asctime)s [%(levelname)s] %(message)s')
 my_logger = logging.getLogger('MV_logger')
 
@@ -58,10 +61,10 @@ app = Flask(__name__)
 bcrypt = Bcrypt(app)
 CORS(app)
 start_time = datetime.now()
-app.config['SECRET_KEY'] = 'your-secret-key'
+app.config['SECRET_KEY'] = config.get('server', 'secret_key', fallback='your-secret-key')
 app.config['SESSION_TYPE'] = 'filesystem'
 app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(days=7)
-app.config['DATABASE'] = 'instance/otp.db'
+app.config['DATABASE'] = config.get('database', 'path', fallback='instance/otp.db')
 Session(app)
 Bootstrap(app)
 
