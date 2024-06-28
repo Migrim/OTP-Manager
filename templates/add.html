@@ -2,13 +2,13 @@
 
 {% block title %} Add OTP Secret {% endblock %}
 
-    {% block styles %}
-    {{ super() }}
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
-    <link rel="stylesheet" href=".{{ url_for('static', filename='styles/add.css') }}">
-    <link rel="icon" href=".{{ url_for('static', filename='favicon.ico') }}">
-    <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+{% block styles %}
+{{ super() }}
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
+<link rel="stylesheet" href=".{{ url_for('static', filename='styles/add.css') }}">
+<link rel="icon" href=".{{ url_for('static', filename='favicon.ico') }}">
+<link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 {% endblock %}
 
 {% block content %}
@@ -39,8 +39,11 @@
             </div>                    
             <div class="form-group form-group-with-icon">
                 {{ form.secret.label }} 
-                {{ form.secret(class="form-control", placeholder="Enter between 16 to 32 characters", title="Enter a secure secret, between 16 to 32 characters", maxlength="32") }}
+                {{ form.secret(class="form-control", placeholder="Enter a Base32 secret (16 to 32 characters)", title="Enter a secure Base32 secret, between 16 to 32 characters", maxlength="32") }}
                 <span class="validation-icon" id="secretCheck" style="display: none;"><i class="material-icons-outlined">check_small</i></span>
+                {% for error in form.secret.errors %}
+                    <span class="text-danger">{{ error }}</span>
+                {% endfor %}
             </div>
             <div class="form-group"> 
                 {{ form.otp_type.label(class="form-check-label") }} <span>  (Only TOTP is supported)</span>

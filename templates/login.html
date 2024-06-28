@@ -29,7 +29,6 @@
 
     document.addEventListener("mousemove", function () {
         clearTimeout(idleTimeout);
-        hideIdleAnimation();
         idleTimeout = setTimeout(showIdleAnimation, 300000);
     });
 
@@ -48,7 +47,7 @@
 
             columns = c.width / font_size;
             drops = [];
-            for(var x = 0; x < columns; x++) {
+            for (var x = 0; x < columns; x++) {
                 drops[x] = Math.floor(Math.random() * -20);
             }
         }
@@ -57,24 +56,43 @@
         matrixChars = matrixChars.split("");
 
         var font_size = 10;
-        var columns = c.width / font_size; 
+        var columns = c.width / font_size;
         var drops = [];
 
-        for(var x = 0; x < columns; x++) {
+        for (var x = 0; x < columns; x++) {
             drops[x] = Math.floor(Math.random() * -20);
         }
 
-        function drawMatrix() {
-            ctx.fillStyle = "rgba(0, 0, 0, 0.04)"; 
-            ctx.fillRect(0, 0, c.width, c.height);
-            ctx.fillStyle = "#ff5252"; 
-            ctx.font = font_size + "px arial";
+        var effectType = Math.random();
+        var isRainbow = effectType < 0.1;
+        var isPurpleBlue = effectType >= 0.1 && effectType < 0.2;
 
-            for(var i = 0; i < drops.length; i++) {
+        function drawMatrix() {
+            ctx.fillStyle = "rgba(0, 0, 0, 0.04)";
+            ctx.fillRect(0, 0, c.width, c.height);
+
+            for (var i = 0; i < drops.length; i++) {
                 var text = matrixChars[Math.floor(Math.random() * matrixChars.length)];
+
+                if (isRainbow) {
+                    var hue = (i * font_size) % 360;
+                    ctx.fillStyle = "hsl(" + hue + ", 100%, 50%)";
+                } else if (isPurpleBlue) {
+                    var gradient = ctx.createLinearGradient(0, 0, c.width, 0);
+                    gradient.addColorStop("0", "purple");
+                    gradient.addColorStop("1.0", "blue");
+                    ctx.fillStyle = gradient;
+                } else {
+                    var gradient = ctx.createLinearGradient(0, 0, c.width, 0);
+                    gradient.addColorStop("0", "#ff5252");
+                    gradient.addColorStop("1.0", "#ff1744");
+                    ctx.fillStyle = gradient;
+                }
+
+                ctx.font = font_size + "px arial";
                 ctx.fillText(text, i * font_size, drops[i] * font_size);
 
-                if(drops[i] * font_size > c.height && Math.random() > 0.975) {
+                if (drops[i] * font_size > c.height && Math.random() > 0.975) {
                     drops[i] = Math.floor(Math.random() * -20);
                 }
 
@@ -83,7 +101,7 @@
         }
 
         resizeCanvas();
-        window.addEventListener('resize', function() {
+        window.addEventListener('resize', function () {
             resizeCanvas();
         });
 
@@ -92,19 +110,21 @@
 
     document.addEventListener("DOMContentLoaded", function () {
         startMatrixAnimation();
-        idleTimeout = setTimeout(fadeOutForm, 30000); 
+        idleTimeout = setTimeout(fadeOutForm, 30000);
 
         var formContainer = document.querySelector(".form-container");
         formContainer.style.opacity = "1";
 
         var flashMessage = document.querySelector(".flash-messages");
         if (flashMessage) {
-            flashMessage.style.opacity = "1"; 
-            setTimeout(function() {
-                flashMessage.style.opacity = "0"; 
-            }, 5000); 
+            flashMessage.style.opacity = "1";
+            setTimeout(function () {
+                flashMessage.style.opacity = "0";
+            }, 5000);
         }
     });
+
+
 
     document.addEventListener("mousemove", function () {
         clearTimeout(idleTimeout);
@@ -144,7 +164,6 @@
         document.getElementById('whatsNewModal').style.display = 'none';
     }
 
-    // Optional: Close the modal when the user clicks anywhere outside of the modal content
     window.onclick = function(event) {
         var modal = document.getElementById('whatsNewModal');
         if (event.target == modal) {
@@ -154,7 +173,7 @@
 
     $(document).ready(function() {
         $('form').submit(function(event) {
-            event.preventDefault(); // Prevent the form from submitting via the browser
+            event.preventDefault(); 
 
             var form = $(this);
             $.ajax({
@@ -163,14 +182,14 @@
                 data: form.serialize(),
                 success: function(response) {
                     if(response.status === 'success') {
-                        $('.center-content').hide(); // Hide the form
-                        $('.welcome-message').text(response.message).show(); // Show welcome message
+                        $('.center-content').hide(); 
+                        $('.welcome-message').text(response.message).show(); 
 
                         setTimeout(function() {
                             window.location.href = "{{ url_for('home') }}";
                         }, 4500);
                     } else {
-                        alert(response.message); // Show error message
+                        alert(response.message); 
                     }
                 }
             });

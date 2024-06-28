@@ -1,9 +1,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Noto+Color+Emoji&display=swap');
 
 body {
     background-color: #222;
     color: #fff;
-    font-family: 'Poppins', 'Roboto', sans-serif; 
+    font-family: 'Poppins', 'Roboto', 'Noto Color Emoji', sans-serif; 
 }
 
 .search-bar {
@@ -290,7 +291,7 @@ body {
 }
 
 .search-input {
-    font-family: 'Segoe UI Emoji', 'Roboto', Arial, sans-serif;
+    font-family: 'Segoe UI Emoji', 'Roboto', 'Noto Color Emoji', Arial, sans-serif;
     transition: border 0.3s ease, box-shadow 0.3s ease;
     border: 1px solid #ccc;
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
@@ -337,7 +338,7 @@ body {
 }
 
 .no-secrets {
-    font-family: 'Segoe UI Emoji', 'Noto Color Emoji', sans-serif;
+    font-family: 'Segoe UI Emoji', 'Roboto', 'Noto Color Emoji', Arial, sans-serif;
     display: inline-block; 
     margin-top: 20px; 
     font-size: 2rem; 

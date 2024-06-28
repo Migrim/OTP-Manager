@@ -109,7 +109,7 @@ def find_database_py():
 
 database_path = find_database_py()
 if database_path:
-    subprocess.Popen(["python", database_path])
+    subprocess.Popen(["python3", database_path])
 else:
     print("Database.py not found.")
 
@@ -1301,13 +1301,13 @@ def add():
 
         valid_base32 = re.fullmatch('[A-Z2-7=]{16,32}', secret, re.IGNORECASE)
         if not valid_base32 or len(secret) % 8 != 0:
-            flash('Secret must be a valid base32 string with a length that is a multiple of 8 characters.', 'error')
+            flash('Secret must be a valid Base32 string with a length that is a multiple of 8 characters.', 'error')
             return render_template('add.html', form=form)
 
         selected_company_name = next((company['name'] for company in companies_from_db if company['company_id'] == company_id), 'N/A')
 
         existing_otp_secrets = load_from_db()
-        if any(secret['name'] == name for secret in existing_otp_secrets):
+        if any(existing_secret['name'] == name for existing_secret in existing_otp_secrets):
             flash(f"A secret with the name '{name}' already exists!", 'error')
             form.name.data = ""
             return render_template('add.html', form=form)
@@ -1325,16 +1325,12 @@ def add():
         existing_otp_secrets.append(new_otp_secret)
         save_to_db(existing_otp_secrets)
 
-        save_companies_to_db(companies_from_db)
-
-        secret_id = save_to_db(existing_otp_secrets)
-
         if action == 'add':
             flash(f"New OTP secret '{name}' added successfully.", 'info')
             return redirect(url_for('home'))
         elif action == 'add_view':
             flash(f"New OTP secret '{name}' added successfully. Viewing details.", 'info')
-            return redirect(url_for('view_otp', secret_id=secret_id))
+            return redirect(url_for('view_otp', secret_id=new_otp_secret['name']))
 
     return render_template('add.html', form=form)
 
