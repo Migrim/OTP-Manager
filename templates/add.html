@@ -199,8 +199,15 @@ $(document).ready(function() {
     });
 
     $("input[name='name']").on("input", function() {
-        const isValidName = $(this).val().length >= 4;
+        const nameValue = $(this).val();
+        const isValidName = nameValue.length >= 4;
         updateValidationStatus(isValidName, 'nameCheck');
+
+        if (nameValue.length > 0) {
+            document.title = "Adding: " + nameValue;
+        } else {
+            document.title = "Add OTP Secret";
+        }
     });
 
     $("input[name='email']").on("input", function() {

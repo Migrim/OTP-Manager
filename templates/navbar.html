@@ -162,10 +162,10 @@ document.addEventListener('DOMContentLoaded', function() {
     closeButtons.forEach(function(btn) {
         btn.onclick = function() {
             var flashMessage = this.parentElement;
-            flashMessage.style.opacity = '0';
+            flashMessage.style.animation = 'fadeOutSlideDown 0.5s ease forwards'; // Add fade-out animation
             setTimeout(function() {
                 flashMessage.remove();
-            }, 300);
+            }, 500);
         };
     });
 
@@ -188,13 +188,13 @@ document.addEventListener('DOMContentLoaded', function() {
 
                         div.querySelector('.flash-close-btn').onclick = function() {
                             var flashMessage = this.parentElement;
-                            flashMessage.style.opacity = '0';
-                            setTimeout(function() { flashMessage.remove(); }, 300);
+                            flashMessage.style.animation = 'fadeOutSlideDown 0.5s ease forwards'; // Add fade-out animation
+                            setTimeout(function() { flashMessage.remove(); }, 500);
                         };
 
                         setTimeout(() => {
-                            div.style.opacity = '0';
-                            setTimeout(() => { div.remove(); }, 300); 
+                            div.style.animation = 'fadeOutSlideDown 0.5s ease forwards'; // Add fade-out animation
+                            setTimeout(() => { div.remove(); }, 500); 
                         }, 5000);
                     });
                 }
@@ -206,36 +206,11 @@ document.addEventListener('DOMContentLoaded', function() {
     var flashMessages = document.querySelectorAll('.flash-message');
     flashMessages.forEach(function(message) {
         setTimeout(function() {
-            message.style.transition = "opacity 0.5s ease-in-out"; 
-            message.style.opacity = '0';
+            message.style.animation = 'fadeOutSlideDown 0.5s ease forwards'; // Add fade-out animation
             setTimeout(function() {
                 message.remove();
             }, 500); 
         }, 5000); 
-    });
-
-    var navbarLinks = document.querySelectorAll('.navbar .navbar-brand:not(#logoutBtn a)');
-    navbarLinks.forEach(function(link) {
-        link.onmouseover = function() {
-            if (!this.closest('#logoutContainer')) {
-                this.style.color = hoverColor;
-                var icon = this.querySelector('.material-icons-outlined');
-                if (icon && icon.textContent === 'settings') {
-                    icon.classList.add('spin-animation');
-                    icon.style.color = hoverColor;
-                }
-            }
-        };
-        link.onmouseout = function() {
-            if (!this.closest('#logoutContainer')) {
-                this.style.color = ''; 
-                var icon = this.querySelector('.material-icons-outlined');
-                if (icon) {
-                    icon.classList.remove('spin-animation');
-                    icon.style.color = ''; 
-                }
-            }
-        };
     });
 
     const statusDot = document.getElementById('ntpStatusDot');
@@ -252,7 +227,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 statusDot.classList.remove('ntp-disconnected', 'spinner');
                 statusDot.classList.add('ntp-connected');
             } else {
-                statusDot.classList.remove('ntp-connected', 'spinner');
+                statusDot.classList.remove('ntp-connected');
                 statusDot.classList.add('ntp-disconnected');
             }
         } else {

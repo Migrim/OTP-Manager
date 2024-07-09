@@ -109,7 +109,7 @@ def find_database_py():
 
 database_path = find_database_py()
 if database_path:
-    subprocess.Popen(["python3", database_path])
+    subprocess.Popen(["python", database_path])
 else:
     print("Database.py not found.")
 
@@ -293,7 +293,7 @@ def is_internet_available():
     except requests.Timeout as e:
         logging.error(f"Timeout error: {e}")
         return False
-    except Exception as e:  
+    except Exception as e:
         logging.error(f"Unexpected error when checking internet connectivity: {e}")
         return False
 
@@ -301,11 +301,11 @@ def check_ntp_sync():
     if not is_internet_available():
         logging.warning("Internet is not available.")
         flash("Internet is not available. Check your connection.", "error")
-        return False, None  
+        return False, None
 
     try:
         ntp_client = ntplib.NTPClient()
-        response = ntp_client.request('pool.ntp.org')
+        response = ntp_client.request('pool.ntp.org', timeout=5)
         ntp_time = response.tx_time
         local_time = time.time()
         offset = local_time - ntp_time
@@ -317,6 +317,10 @@ def check_ntp_sync():
             flash(f"Warning: Time is not synchronized. Offset: {offset} seconds", "warning")
             return False, ntp_time
         return True, ntp_time
+    except ntplib.NTPException as e:
+        logging.error("NTP request failed: %s", e)
+        flash(f"Error: NTP request failed due to {e}.", "error")
+        return False, None
     except Exception as e:
         logging.error("Failed to synchronize time: %s", e)
         flash(f"Error: Failed to synchronize time due to {e}.", "error")
@@ -324,7 +328,7 @@ def check_ntp_sync():
 
 @app.route('/ntp_status')
 def ntp_status():
-    is_ntp_synced = check_ntp_sync()  
+    is_ntp_synced, ntp_time = check_ntp_sync()
     if is_ntp_synced:
         return jsonify({"status": "connected", "message": "NTP time is synchronized."})
     else:
@@ -332,17 +336,11 @@ def ntp_status():
 
 @app.route('/internet_status')
 def internet_status():
-    try:
-        response = requests.get('http://www.google.com', timeout=5)
-        if response.status_code == 200:
-            return jsonify({"status": "connected"})
-        else:
-            print("Internet connection status: Disconnected (non-200 response)")  
-            return jsonify({"status": "disconnected"})
-    except requests.RequestException as e:
-        print(f"Internet connection status: Disconnected (exception caught) - {e}")  
+    if is_internet_available():
+        return jsonify({"status": "connected"})
+    else:
         return jsonify({"status": "disconnected"})
-    
+
 def check_server_capacity(f):
     @wraps(f)
     def decorated_function(*args, **kwargs):
@@ -510,7 +508,6 @@ def cli():
     return render_template('cli.html', output=output)
 
 @app.route('/settings', methods=['GET', 'POST'])
-@check_server_capacity
 @login_required
 def settings():
     user_id = session.get('user_id')
@@ -662,7 +659,7 @@ def reset_password(user_id):
 def get_last_login_time_from_db():
     user_id = session.get('user_id')
     if user_id:
-        db_path = app.config['DATABASE']  # Use the configured database path
+        db_path = app.config['DATABASE']  
         with sqlite3.connect(db_path) as db:
             cursor = db.cursor()
             cursor.execute("SELECT last_login_time FROM users WHERE id = ?", (user_id,))
@@ -696,6 +693,7 @@ def login():
             if user_record:
                 stored_password = user_record[2]
                 user_id = user_record[0]
+                is_admin = bool(user_record[5])
                 print(f"Stored password for user: {stored_password}")
 
                 if is_cleartext(stored_password):
@@ -710,7 +708,7 @@ def login():
 
                 if bcrypt.check_password_hash(stored_password, password):
                     print("Password matched with bcrypt")
-                    user_obj = User(user_id, username, is_admin=bool(user_record[5]))  
+                    user_obj = User(user_id, username, is_admin=is_admin)  
                     login_user(user_obj, remember=keep_logged_in)
 
                     if keep_logged_in:
@@ -731,6 +729,10 @@ def login():
                         db.commit()
 
                     flash("Access granted!", "auth")
+                    
+                    if is_admin and password == "1234":
+                        flash("You are using the default password. Please consider changing it!", "warning")
+                    
                     print(f"User {username} logged in, redirecting to home.")
                     return redirect(url_for('home'))
                 else:
@@ -791,7 +793,6 @@ def category_icon_filter(category):
 app.jinja_env.filters['category_icon'] = category_icon_filter
 
 @app.route('/about')
-@check_server_capacity
 @login_required
 def about():
     stats = get_statistics()
@@ -943,7 +944,6 @@ def get_user_text_color(user_id):
 
 @app.route('/', methods=['GET', 'POST'])
 @login_required
-@check_server_capacity
 def home():
     form = OTPForm()
     otp_secrets = session.get('filtered_secrets', load_from_db())
@@ -1267,7 +1267,6 @@ def delete_user(user_id):
     return redirect(url_for('admin.admin_settings'))
 
 @app.route('/add', methods=['GET', 'POST'])
-@check_server_capacity
 @login_required
 def add():
     form = OTPForm()

@@ -433,3 +433,30 @@ ul li {
     vertical-align: middle;
     margin-right: 10px;
 }
+
+.btn-primary {
+    display: inline-block;
+    padding: 8px 30px;
+    font-size: 16px;
+    font-weight: normal;
+    text-align: center;
+    text-decoration: none;
+    color: #fff;
+    background-color: #ff5252;
+    border: none;
+    border-radius: 12px;
+    transition: background-color 0.3s ease;
+    margin-top: -6px;
+    white-space: nowrap;
+}
+
+.btn-primary:hover {
+    background-color: #ff5d51;
+    color: #333;
+}
+
+.button-wrapper {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}

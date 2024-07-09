@@ -209,7 +209,7 @@
 
 <div class="center-content">
     <div class="form-container">
-        <h1 class="form-title">Login</h1>
+        <h1 class="form-title">OTP-Tool</h1>
         <form method="post">
             <div class="wave-group">
                 <input class="input" required="" type="text" name="username" placeholder="Username" value="{{ username or '' }}" autocomplete="username">
@@ -223,8 +223,9 @@
                 <input type="checkbox" class="form-check-input" name="keep_logged_in" id="keep_logged_in" style="display: none;">
                 <label class="form-check-label" for="keep_logged_in">Keep me logged in</label>
             </div>            
-
-            <input type="submit" value="Login" class="btn btn-primary btn-block form-submit">
+            <div class="button-wrapper">
+                <input type="submit" value="Login" class="btn btn-primary form-submit">
+            </div>
         </form>
         <div class="loader"></div>
         <div class="error-message" style="display: none;">Benutzername oder Passwort ist falsch!</div>
