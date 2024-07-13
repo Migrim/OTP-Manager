@@ -6,6 +6,7 @@
 {{ super() }}
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
 <link rel="stylesheet" href=".{{ url_for('static', filename='styles/add.css') }}">
+<link rel="stylesheet" href=".{{ url_for('static', filename='styles/loader.css') }}">
 <link rel="icon" href=".{{ url_for('static', filename='favicon.ico') }}">
 <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -105,7 +106,21 @@
     </div>
 </div>
 
-{% endblock %} 
+<div class="overlay" style="display: none;">
+    <div class="terminal-loader">
+        <div class="terminal-header">
+            <div class="terminal-title">Status</div>
+            <div class="terminal-controls">
+                <div class="control close"></div>
+                <div class="control minimize"></div>
+                <div class="control maximize"></div>
+            </div>
+        </div>
+        <div class="text">Adding new OTP-Secret...</div>
+    </div>
+</div>
+
+{% endblock %}
 
 {% block scripts %}
 {{ super() }}
@@ -188,8 +203,21 @@ $(document).ready(function() {
             let errorMessageHtml = errorMsgs.join("<br/>");
             $('#errorModalText').html(errorMessageHtml);
             $('#errorModal').modal('show');
+        } else {
+            const action = $("button[type='submit'][clicked=true]").val();
+            if (action === "add" || action === "add_view") {
+                $(".overlay").addClass("visible");
+                console.log('Form submitted successfully, marking new OTP:', name);
+                markNewOTP(name); // Mark the new OTP as "New"
+            }
         }
     });
+
+    function markNewOTP(name) {
+        const now = Date.now();
+        localStorage.setItem(`otp_created_at_${name}`, now);
+        console.log(`Marked new OTP: ${name}, Timestamp: ${now}`);
+    }
 
     $("input[name='secret']").on('input', function() {
         this.value = this.value.toUpperCase();
@@ -216,6 +244,11 @@ $(document).ready(function() {
     });
 
     $("input[name='email']").attr('maxlength', '256');
+
+    $("button[type='submit']").click(function() {
+        $("button[type='submit']").removeAttr('clicked');
+        $(this).attr('clicked', 'true');
+    });
 });
 </script>
 {% endblock %}

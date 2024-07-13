@@ -19,6 +19,41 @@ function isElementVisible(el) {
     );
 }
 
+document.addEventListener("DOMContentLoaded", function() {
+    const newLabels = document.querySelectorAll('.new-label');
+    
+    newLabels.forEach(label => {
+        const name = label.id.split('-').pop();
+        const createdAt = localStorage.getItem(`otp_created_at_${name}`);
+        const now = Date.now();
+        const oneHour = 3600 * 1000; // One hour in milliseconds
+
+        console.log(`Checking OTP: ${name}`);
+        console.log(`Created at: ${createdAt}, Now: ${now}`);
+
+        if (createdAt) {
+            console.log(`Time since created: ${now - createdAt} ms`);
+        }
+
+        if (createdAt && (now - createdAt) < oneHour) {
+            console.log(`Showing 'New' label for OTP: ${name}`);
+            label.style.display = 'block';
+            setTimeout(() => {
+                console.log(`Hiding 'New' label for OTP: ${name}`);
+                label.style.display = 'none';
+            }, oneHour - (now - createdAt));
+        } else {
+            console.log(`'New' label not shown for OTP: ${name}`);
+        }
+    });
+});
+
+function markNewOTP(name) {
+    const now = Date.now();
+    localStorage.setItem(`otp_created_at_${name}`, now);
+    console.log(`Marked new OTP: ${name}, Timestamp: ${now}`);
+}
+
 async function updateOtpCodes(otpCodes) {
     otpCodes.forEach(async (otp) => {
         let currentOtpCodeElement = document.getElementById(`current_otp_code_${otp.name}`);
@@ -538,4 +573,3 @@ document.getElementById('searchInput').addEventListener('input', function() {
     
         updateClock(); 
     });
-    

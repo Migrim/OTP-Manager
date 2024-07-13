@@ -112,9 +112,10 @@
                         <h3>{{ company }}</h3>
                     </div>
                     {% for otp in otp_list %}
-                        <div class="col-md-4">
-                            <div class="alert mt-3 position-relative" style="background-color: {{ alert_color | default('#ff0000', true) }}; color: {{ text_color | default('#000000', true) }};">
-                                {% if show_company %}  
+                    <div class="col-md-4 position-relative">
+                        <div class="alert mt-3" style="background-color: {{ alert_color }}; color: {{ text_color }};">
+                            <div class="new-label" id="new-label-{{ otp.name }}" style="display: none;">New</div>
+                            {% if show_company %}
                                 Firma: {{ otp.company }} <br>
                                 {% endif %}
                                 Name: <span style="text-decoration: underline;">{{ otp.name }}</span> <br>
@@ -235,7 +236,7 @@
         </div>                
 
         <div id="toast" class="toast">Copied to clipboard</div>
-        <div class="copyright">Development Version - © June 24. Not for production.</div>
+        <div class="copyright">Development Version - © July 24. Not for production.</div>
     </div>
 
     <script src="{{ url_for('static', filename='java-script/home.js') }}"></script>
