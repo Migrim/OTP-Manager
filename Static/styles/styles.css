@@ -549,13 +549,18 @@ body {
     position: absolute;
     top: 10px;
     right: 15px; 
-    background-color: red;
-    color: white;
+    background-color: #ff5252;
+    color: #333;
     padding: 2px 5px; 
     border-radius: 0 10px 0 10px; 
     font-weight: bold;
     opacity: 0;
-    animation: show 0s 1s forwards, blink 1s step-start infinite 1s;
+    animation: show 0s 1s forwards;
+    font-family: 'Roboto', sans-serif;
+}
+
+.blink-text {
+    animation: blink 1s step-start infinite 1s;
 }
 
 @keyframes show {

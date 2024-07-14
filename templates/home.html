@@ -21,8 +21,7 @@
     {% include 'navbar.html' %}
     <div class="container">
         {% if current_user.show_content_titles %}
-        <h1 class="text-center text-white">One Time Passwords</h1>
-        <h5 class="text-center text-white">Total Secrets: {{ total_otp_count }}</h5>
+        <h1 class="text-center text-white">{{ total_otp_count }} One Time Passwords</h1>
         {% endif %}        
     
         <form method="get" action="{{ url_for('search_blueprint.search_otp') }}" class="search-bar">
@@ -114,7 +113,9 @@
                     {% for otp in otp_list %}
                     <div class="col-md-4 position-relative">
                         <div class="alert mt-3" style="background-color: {{ alert_color }}; color: {{ text_color }};">
-                            <div class="new-label" id="new-label-{{ otp.name }}" style="display: none;">New</div>
+                            <div class="new-label" id="new-label-{{ otp.name }}" style="display: none;">
+                                <span class="blink-text">New</span>
+                            </div>                            
                             {% if show_company %}
                                 Firma: {{ otp.company }} <br>
                                 {% endif %}
