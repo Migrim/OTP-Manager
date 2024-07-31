@@ -48,17 +48,19 @@ a:hover {
     padding: 20px; 
     margin-bottom: 20px;
     border-radius: 20px; 
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); 
-    background: #333333;
+    box-shadow: 0 4px 8px rgba(20, 20, 20, 0.5); 
+    background: rgba(43, 43, 43, 0.5);  
+    backdrop-filter: blur(10px); 
+    -webkit-backdrop-filter: blur(10px); 
+    border: 1px solid rgba(32, 32, 32, 0.3); 
     opacity: 0;
     transition: opacity 0.6s ease-out, transform 0.3s ease;
-    transition: opacity 0.6s ease-out; /* Smooth transition for opacity */
     opacity: 1;
 }
 
 .form-container.fade-out {
-    opacity: 0; /* Fully transparent when faded out */
-    transition: opacity 0.6s ease-out; /* Transition for fading out */
+    opacity: 0; 
+    transition: opacity 0.6s ease-out; 
 }
 
 .instruction-text {
@@ -171,11 +173,11 @@ a:hover {
 }
 
 .wave-group {
-    position: relative; /* Ensure the icon is positioned relative to the password input field */
-    width: calc(100% - 20px); /* Adjust width as necessary */
-    max-width: 220px; /* Match the input field max-width */
+    position: relative;
+    width: calc(100% - 20px); 
+    max-width: 220px; 
     margin: auto;
-    margin-bottom: 10px; /* Center the container */
+    margin-bottom: 10px; 
 }
 
 .password-container {
@@ -186,9 +188,9 @@ a:hover {
 
 .toggle-password {
     position: absolute;
-    right: 10px; /* Position the icon inside the right edge of the input field */
-    top: 50%; /* Center the icon vertically */
-    transform: translateY(-50%); /* Ensure the icon is centered with respect to its height */
+    right: 10px; 
+    top: 50%; 
+    transform: translateY(-50%); 
     color: rgba(255, 255, 255, 0.7);
     cursor: pointer;
 }
@@ -199,11 +201,13 @@ a:hover {
     height: 45px;
     padding: 16px;
     border-radius: 15px;
-    border: 1px solid lightgrey;
+    border: 1px solid rgba(32, 32, 32, 0.3); 
     outline: none;
     transition: all 0.3s cubic-bezier(0.19, 1, 0.22, 1);
-    box-shadow: 0px 0px 20px -18px;
-    background: #3a3a3a; 
+    box-shadow: 0px 0px 20px -18px rgba(0, 0, 0, 0.3); 
+    background: rgba(48, 48, 48, 0.5);
+    backdrop-filter: blur(10px); 
+    -webkit-backdrop-filter: blur(10px);
     color: #ffffff;
     padding-right: 40px;
 }
@@ -226,7 +230,7 @@ a:hover {
     }
     100% {
         transform: scale(1.02);
-        border-color: #f8bbd0; /* Soft pink */
+        border-color: #f8bbd0; 
     }
 }
 
@@ -246,7 +250,7 @@ a:hover {
     align-items: center;
     margin-top: 15px;
     margin-bottom: 15px;
-    width: 100%; /* Ensure it spans the full width of its parent */
+    width: 100%; 
 }
 
 .cl-checkbox {
@@ -256,7 +260,7 @@ a:hover {
 }
 
 .cl-checkbox input[type="checkbox"] {
-    display: none; /* Hide the default checkbox */
+    display: none; 
 }
 
 .cl-checkbox label {
@@ -264,7 +268,7 @@ a:hover {
     padding-left: 25px;
     cursor: pointer;
     display: inline-block;
-    color: #ffffff; /* Adjust as needed */
+    color: #ffffff;
 }
 
 .cl-checkbox label::before {
@@ -272,27 +276,26 @@ a:hover {
     position: absolute;
     left: 0;
     top: 0;
-    width: 20px; /* Checkbox width */
-    height: 20px; /* Checkbox height */
-    background: #3a3a3a; /* Background color */
-    border-radius: 5px; /* Rounded corners */
-    transition: background 0.3s, border 0.3s; /* Smooth transition */
+    width: 20px; 
+    height: 20px; 
+    background: #3a3a3a;
+    border-radius: 5px; 
+    transition: background 0.3s, border 0.3s;
 }
 
 .cl-checkbox label::after {
     content: '';
     position: absolute;
-    left: 7px; /* Centered horizontally */
-    top: 4px; /* Adjusted for vertical centering */
-    width: 6px; /* Checkmark width */
-    height: 9px; /* Checkmark height */
-    border: solid #f8bbd0; /* Checkmark color */
-    border-width: 0 2px 2px 0; /* Thinner checkmark */
+    left: 7px; 
+    top: 4px; 
+    width: 6px; 
+    height: 9px; 
+    border: solid #f8bbd0; 
+    border-width: 0 2px 2px 0;
     transform: rotate(45deg);
     display: none;
 }
 
-/* Display checkmark when checkbox is checked */
 .cl-checkbox input[type="checkbox"]:checked + label::after {
     animation: fadeInCheckmark 0.5s ease-in-out forwards;
     display: block;
@@ -302,13 +305,10 @@ a:hover {
     from { opacity: 0; }
     to { opacity: 1; }
 }
-/* Modify background and add border on hover */
 .cl-checkbox label:hover::before {
-    background: #4d4d4d; /* Slightly brighter background */
-    border: 1px solid #f8bbd0; /* Tiny white border */
+    background: #4d4d4d; 
+    border: 1px solid #f8bbd0; 
 }
-
-
 
 #matrixEffect {
     position: fixed;
@@ -334,18 +334,17 @@ a:hover {
     position: fixed;
     bottom: 20px;
     right: 20px;
-    font-size: 24px; /* Size of the icon */
+    font-size: 24px; 
     cursor: pointer;
     animation: glowEffect 2s infinite;
-    z-index: 1001; /* Make sure it's above other elements */
+    z-index: 1001; 
     border: none;
-    background: transparent; /* Ensuring background is transparent */
+    background: transparent; 
     transition: opacity 0.5s ease;
-    /* Removed box-shadow as it's being controlled by the animation */
 }
 
 .modal {
-    display: none; /* Hidden by default */
+    display: none; 
     position: fixed;
     z-index: 1000;
     left: 0;
@@ -353,36 +352,36 @@ a:hover {
     width: 100%;
     height: 100%;
     overflow: auto;
-    background-color: rgba(0,0,0,0.8); /* Darker background w/ more opacity */
+    background-color: rgba(0,0,0,0.8); 
 }
 
 .modal-content {
-    background-color: #333; /* Dark background for the content */
-    margin: 5% auto; /* Less vertical space to make it appear more centered */
-    padding: 15px; /* Reduced padding for a more compact layout */
-    border: 1px solid #555; /* Darker border color */
-    width: 50%; /* Reduced width to make the modal smaller */
-    color: #ddd; /* Light text color for contrast */
-    border-radius: 10px; /* Rounded corners for the modal */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Subtle shadow for depth */
+    background-color: #333; 
+    margin: 5% auto; 
+    padding: 15px; 
+    border: 1px solid #555; 
+    width: 50%; 
+    color: #ddd; 
+    border-radius: 10px; 
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); 
 }
 
 ul {
     padding: 0;
-    margin: 0; /* Remove default margin */
-    list-style-type: none; /* No bullets */
+    margin: 0; 
+    list-style-type: none; 
 }
 
 ul li {
-    margin-bottom: 10px; /* Reduced space between list items for compactness */
-    color: #ddd; /* Light text color for readability */
-    font-size: 14px; /* Reduced font size for compactness */
+    margin-bottom: 10px; 
+    color: #ddd; 
+    font-size: 14px; 
 }
 
 .close {
-    color: #bbb; /* Lighter color for the close button */
+    color: #bbb; 
     float: right;
-    font-size: 24px; /* Smaller close button */
+    font-size: 24px; 
     font-weight: bold;
     cursor: pointer;
 }
@@ -405,7 +404,7 @@ ul li {
     border: 1px solid transparent;
     border-radius: 10px;
     color: #fff;
-    opacity: 0;
+    opacity: 1;
     transition: opacity 0.3s ease-in-out;
 }
 

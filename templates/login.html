@@ -9,29 +9,6 @@
 <link rel="icon" href=".{{ url_for('static', filename='favicon.ico') }}">
 
 <script>
-    var idleTimeout;
-
-    function fadeOutForm() {
-        var formContainer = document.querySelector(".form-container");
-        formContainer.classList.add('fade-out');
-    }
-
-    function fadeInForm() {
-        var formContainer = document.querySelector(".form-container");
-        formContainer.classList.remove('fade-out');
-    }
-
-    function showIdleAnimation() {
-        document.getElementById('matrixEffect').style.display = 'block';
-        document.body.classList.remove('loaded'); 
-        startMatrixAnimation();
-    }
-
-    document.addEventListener("mousemove", function () {
-        clearTimeout(idleTimeout);
-        idleTimeout = setTimeout(showIdleAnimation, 300000);
-    });
-
     function startMatrixAnimation() {
         var c = document.createElement("canvas");
         document.getElementById('matrixEffect').appendChild(c);
@@ -108,33 +85,11 @@
         setInterval(drawMatrix, 33);
     }
 
-    document.addEventListener("DOMContentLoaded", function () {
-        startMatrixAnimation();
-        idleTimeout = setTimeout(fadeOutForm, 30000);
-
-        var formContainer = document.querySelector(".form-container");
-        formContainer.style.opacity = "1";
-
-        var flashMessage = document.querySelector(".flash-messages");
-        if (flashMessage) {
-            flashMessage.style.opacity = "1";
-            setTimeout(function () {
-                flashMessage.style.opacity = "0";
-            }, 5000);
-        }
-    });
-
-
-
-    document.addEventListener("mousemove", function () {
-        clearTimeout(idleTimeout);
-        fadeInForm();
-        idleTimeout = setTimeout(fadeOutForm, 30000); 
-    });
-
     document.addEventListener("DOMContentLoaded", function() {
+        startMatrixAnimation();
         var flashMessages = document.querySelectorAll(".flash-message");
         flashMessages.forEach(function(msg) {
+            console.log("Flash message:", msg.innerText); 
             msg.style.opacity = "1"; 
             setTimeout(function() {
                 msg.style.opacity = "0"; 
@@ -148,11 +103,9 @@
         if (passwordInput.type === 'password') {
             passwordInput.type = 'text';
             togglePasswordIcon.textContent = 'visibility';
-            passwordInput.classList.add("visible");
         } else {
             passwordInput.type = 'password';
             togglePasswordIcon.textContent = 'visibility_off';
-            passwordInput.classList.remove("visible");
         }
     }
 
@@ -171,27 +124,31 @@
         }
     }
 
-    $(document).ready(function() {
-        $('form').submit(function(event) {
-            event.preventDefault(); 
+    document.addEventListener("DOMContentLoaded", function() {
+        var form = document.querySelector('form');
+        form.addEventListener('submit', function(event) {
+            event.preventDefault();
 
-            var form = $(this);
-            $.ajax({
-                type: 'POST',
-                url: "{{ url_for('login') }}",
-                data: form.serialize(),
-                success: function(response) {
-                    if(response.status === 'success') {
-                        $('.center-content').hide(); 
-                        $('.welcome-message').text(response.message).show(); 
-
-                        setTimeout(function() {
-                            window.location.href = "{{ url_for('home') }}";
-                        }, 4500);
-                    } else {
-                        alert(response.message); 
-                    }
+            var formData = new FormData(form);
+            fetch("{{ url_for('login') }}", {
+                method: 'POST',
+                body: formData,
+            })
+            .then(response => {
+                if (response.redirected) {
+                    window.location.href = response.url;
+                } else {
+                    return response.json();
                 }
+            })
+            .then(data => {
+                if (data && data.message) {
+                    alert(data.message);
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('An error occurred. Please try again later.');
             });
         });
     });
@@ -262,7 +219,7 @@
         {% if messages %}
             {% for category, message in messages %}
                 <div class="flash-message flash-{{ category }}">
-                    <span class="material-icons-outlined flash-icon">{{ category|category_icon }}</span>
+                    <span class="material-icons-outlined flash-icon">{{ category|default("info")|category_icon }}</span>
                     {{ message }}
                 </div>
             {% endfor %}

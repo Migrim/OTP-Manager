@@ -187,6 +187,7 @@ def load_from_db(secret_id=None):
     with sqlite3.connect(db_path) as db:
         cursor = db.cursor()
         if secret_id:
+            print(f"Looking up OTP secret with ID: {secret_id}")  # Debug statement
             cursor.execute("""
                 SELECT 
                     otp_secrets.name, 
@@ -198,10 +199,11 @@ def load_from_db(secret_id=None):
                     companies.name AS company_name
                 FROM otp_secrets
                 LEFT JOIN companies ON otp_secrets.company_id = companies.company_id
-                WHERE otp_secrets.id = ?
+                WHERE otp_secrets.name = ?
             """, (secret_id,))
             row = cursor.fetchone()
             if row:
+                print(f"OTP secret found: {row}")  # Debug statement
                 return {
                     'name': row[0], 
                     'email': row[1],  
@@ -211,6 +213,8 @@ def load_from_db(secret_id=None):
                     'company_id': row[5], 
                     'company': row[6] if row[6] else 'Unbekannt'
                 }
+            else:
+                print("No OTP secret found with the given ID.")  # Debug statement
         else:
             cursor.execute("""
                 SELECT 
@@ -497,16 +501,6 @@ def login_required(f):
         return f(*args, **kwargs)
     return decorated_function
 
-@app.route('/cli', methods=['GET', 'POST'])
-@login_required
-def cli():
-    output = ""
-    if request.method == 'POST':
-        command = request.form['command']
-
-        output = f"Executed command: {command}"  
-    return render_template('cli.html', output=output)
-
 @app.route('/settings', methods=['GET', 'POST'])
 @login_required
 def settings():
@@ -637,7 +631,7 @@ def reset_password(user_id):
         hashed_password = generate_password_hash(new_password, method='sha256')
         
         try:
-            db_path = app.config['DATABASE']  # Use the configured database path
+            db_path = app.config['DATABASE']  
             with sqlite3.connect(db_path) as db:
                 cursor = db.cursor()
                 cursor.execute("UPDATE users SET password = ? WHERE id = ?", (hashed_password, user_id))
@@ -672,34 +666,30 @@ def get_last_login_time_from_db():
 @check_server_capacity
 def login():
     if 'user_id' in session:
-        flash("You are already logged in.", "info")
-        print("User is already logged in, redirecting to home")
+        message = "You are already logged in."
+        flash(message, "info")
+        print(f"Flash message: {message}")
         return redirect(url_for('home'))
 
     if request.method == 'POST':
         username = request.form.get('username')
         password = request.form.get('password')
-        print(f"Attempting login for username: {username}")
         keep_logged_in = 'keep_logged_in' in request.form
 
         try:
-            db_path = app.config['DATABASE']  
+            db_path = app.config['DATABASE']
             with sqlite3.connect(db_path) as db:
                 cursor = db.cursor()
                 cursor.execute("SELECT * FROM users WHERE username = ?", (username,))
                 user_record = cursor.fetchone()
-                print(f"User record found: {user_record}")
 
             if user_record:
                 stored_password = user_record[2]
                 user_id = user_record[0]
                 is_admin = bool(user_record[5])
-                print(f"Stored password for user: {stored_password}")
 
                 if is_cleartext(stored_password):
-                    print("Cleartext password found, hashing it")
                     hashed_password = bcrypt.generate_password_hash(stored_password).decode('utf-8')
-                    db_path = app.config['DATABASE']  
                     with sqlite3.connect(db_path) as db:
                         cursor = db.cursor()
                         cursor.execute("UPDATE users SET password = ? WHERE id = ?", (hashed_password, user_id))
@@ -707,44 +697,47 @@ def login():
                     stored_password = hashed_password
 
                 if bcrypt.check_password_hash(stored_password, password):
-                    print("Password matched with bcrypt")
-                    user_obj = User(user_id, username, is_admin=is_admin)  
+                    user_obj = User(user_id, username, is_admin=is_admin)
                     login_user(user_obj, remember=keep_logged_in)
 
-                    if keep_logged_in:
-                        session.permanent = True
-                        print("session.permanent set to True")  
-                    else:
-                        print("session.permanent not set (remains False)")
-
+                    session.permanent = keep_logged_in
                     session_token = str(uuid.uuid4())
                     session['user_id'] = user_id
                     session['session_token'] = session_token
 
-                    db_path = app.config['DATABASE']  
                     with sqlite3.connect(db_path) as db:
                         cursor = db.cursor()
                         cursor.execute("UPDATE statistics SET logins_today = logins_today + 1")
                         cursor.execute("UPDATE users SET session_token = ? WHERE id = ?", (session_token, user_id))
                         db.commit()
 
-                    flash("Access granted!", "auth")
-                    
+                    message = "Access granted!"
+                    flash(message, "success")
+                    print(f"Flash message: {message}")
                     if is_admin and password == "1234":
-                        flash("You are using the default password. Please consider changing it!", "warning")
-                    
-                    print(f"User {username} logged in, redirecting to home.")
+                        warning_message = "You are using the default password. Please consider changing it!"
+                        flash(warning_message, "warning")
+                        print(f"Flash message: {warning_message}")
+
                     return redirect(url_for('home'))
                 else:
-                    print("Invalid bcrypt credentials")
-                    flash('Invalid credentials!', 'warning')
+                    message = 'Invalid credentials! Please try again.'
+                    flash(message, 'danger')
+                    print(f"Flash message: {message}")
+                    return redirect(url_for('login'))
+
             else:
-                print("No user found with provided username")
-                flash('User not found!', 'error')
+                message = 'User not found! Please check your username.'
+                flash(message, 'danger')
+                print(f"Flash message: {message}")
+                return redirect(url_for('login'))
 
         except Exception as e:
-            print(f"An server error occoured during login: {e}")
-            flash("An error occurred during login. Please try again later.", 'error')
+            print(f"An server error occurred during login: {e}")
+            error_message = 'An error occurred during login. Please try again later.'
+            flash(error_message, 'danger')
+            print(f"Flash message: {error_message}")
+            return redirect(url_for('login'))
 
     return render_template('login.html')
 
@@ -1125,32 +1118,9 @@ def view_logs():
         logs = f.read()
     return render_template('logs.html', logs=logs)
 
-@app.route('/search_form', methods=['GET'])
-@login_required
-def search_form():
-    return render_template('search.html')
-
 @app.errorhandler(404)
 def page_not_found(e):
-#    logging.error(f"{current_user.username} was redirected or opened an invalid rout!.")
     return render_template('404.html'), 404
-
-@app.route('/search', methods=['GET'])
-@login_required
-def search_otp():
-    query = request.args.get('name', '')
-    logging.info(f"Search initiated for query: {query}")
-    try:
-        all_secrets = fetch_all_secrets()
-        
-        matched_secrets = [secret for secret in all_secrets if query.lower() in secret['name'].lower()]
-        
-        logging.info(f"Search results for '{query}': {matched_secrets}")
-        return render_template('otp.html', otp_secrets=matched_secrets)
-    except Exception as e:
-        logging.error(f"Search operation failed: {e}", exc_info=True)
-        flash('An error occurred during search.')
-        return redirect(url_for('home'))
 
 @app.route('/edit/<name>', methods=['GET', 'POST'])
 @login_required
@@ -1333,10 +1303,10 @@ def add():
 
     return render_template('add.html', form=form)
 
-@app.route('/view_otp/<int:secret_id>')
+@app.route('/view_otp/<string:secret_id>')  # Change 'int' to 'string'
 @login_required
 def view_otp(secret_id):
-    otp_secret = load_from_db(secret_id)
+    otp_secret = load_from_db(secret_id)  # Assuming load_from_db can handle string IDs
     if not otp_secret:
         flash("No OTP secret found with the given ID.", "error")
         return redirect(url_for('home'))
