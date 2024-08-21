@@ -60,35 +60,43 @@ def load_companies_from_db():
         logger.error(f"Error loading companies from db: {e}")
         return []
 
-@admin_bp.route('/admin/reset_password', methods=['POST'])
+@admin_bp.route('/reset_password', methods=['POST'])
 @login_required
 def reset_password():
     if not current_user.is_admin:
-        return jsonify({'success': False, 'message': 'Unauthorized access. Only admins can reset passwords.'}), 403
+        flash('Unauthorized access. Only admins can reset passwords.', 'danger')
+        return redirect(url_for('admin.user_management'))
 
     data = request.get_json()
     user_id_to_reset = data.get('userIdToReset')
     new_password = data.get('new_password')
 
     if not user_id_to_reset or not new_password:
-        return jsonify({'success': False, 'message': 'Missing user ID or new password.'}), 400
+        flash('Missing user ID or new password.', 'warning')
+        return redirect(url_for('admin.user_management'))
 
     hashed_password = bcrypt.generate_password_hash(new_password).decode('utf-8')
 
     try:
-        db_path = app.config['DATABASE'] 
+        db_path = app.config['DATABASE']
         with sqlite3.connect(db_path) as db:
             cursor = db.cursor()
-            cursor.execute("UPDATE users SET password = ? WHERE id = ?", (hashed_password, user_id_to_reset))
+            cursor.execute("SELECT * FROM users WHERE id = ?", (user_id_to_reset,))
+            user_record = cursor.fetchone()
+
+            if not user_record:
+                flash('User not found.', 'danger')
+                return redirect(url_for('admin.user_management'))
+
+            cursor.execute("UPDATE users SET password = ?, session_token = NULL WHERE id = ?", (hashed_password, user_id_to_reset))
             db.commit()
 
-            if cursor.rowcount == 0:
-                return jsonify({'success': False, 'message': 'User not found.'}), 404
-
-            return jsonify({'success': True, 'message': 'Password reset successfully.'})
+            flash('Password reset successfully.', 'success')
+            return redirect(url_for('admin.user_management'))
     except sqlite3.Error as e:
         logger.error(f"Error resetting password for user {user_id_to_reset}: {e}")
-        return jsonify({'success': False, 'message': 'Failed to reset password.'}), 500
+        flash('Failed to reset password.', 'danger')
+        return redirect(url_for('admin.user_management'))
 
 @admin_bp.route('/user_management', methods=['GET', 'POST'])
 @login_required

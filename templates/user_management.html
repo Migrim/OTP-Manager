@@ -177,23 +177,20 @@
             })
             .then(response => {
                 if (!response.ok) {
+                    console.error(`HTTP error! status: ${response.status} - ${response.statusText}`);
                     throw new Error(`HTTP error! status: ${response.status}`);
                 }
-                return response.json();
+                return response.text(); // No need to parse JSON since we're redirecting
             })
-            .then(data => {
-                if (data.success) {
-                    alert('Password reset successfully.');
-                    $('#uniquePasswordResetModal').modal('hide'); 
-                } else {
-                    alert('Password reset failed: ' + data.message);
-                }
+            .then(() => {
+                window.location.href = window.location.href; // Reload the page to see the flash messages
             })
             .catch(error => {
-                alert('Error: ' + error.message);
+                console.error('Fetch error:', error);
             });
         });
     });
+
 
     document.addEventListener('DOMContentLoaded', function() {
         const userCards = document.querySelectorAll('.user-card');

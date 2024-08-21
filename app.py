@@ -1125,7 +1125,6 @@ def page_not_found(e):
 @app.route('/edit/<name>', methods=['GET', 'POST'])
 @login_required
 def edit(name):
-    print(f"Starting to edit OTP with name: {name}")  
     otp_secrets = load_from_db()
     form = OTPForm()
     form.company.choices = [(company['company_id'], company['name']) for company in load_companies_from_db()]
@@ -1134,38 +1133,35 @@ def edit(name):
     for i, otp in enumerate(otp_secrets):
         if otp['name'] == name:
             secret_found = True
-            print(f"Editing OTP named {name}")  
             if request.method == 'POST':
                 if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
                     data = request.json
                     otp_secrets[i]['name'] = data['name']
                     otp_secrets[i]['secret'] = data['secret']
-                    otp_secrets[i]['company_id'] = data['company'] 
+                    otp_secrets[i]['company_id'] = data['company']
+                    otp_secrets[i]['email'] = data.get('email', "none")
                     save_to_db(otp_secrets)
-                    print(f"OTP named {name} updated successfully via AJAX.")  
-                    flash('OTP updated successfully updated.', 'success')
+                    flash('OTP updated successfully.', 'success')
                     return jsonify({
                         'message': 'OTP updated successfully via AJAX.',
                         'updated_data': {
                             'name': data['name'],
                             'secret': data['secret'],
                             'company': data['company'],
+                            'email': data['email'],
                         }
                     })
                 else:
                     otp_secrets[i]['name'] = form.name.data
                     otp_secrets[i]['secret'] = form.secret.data
-                    otp_secrets[i]['company_id'] = form.company.data  
+                    otp_secrets[i]['company_id'] = form.company.data
+                    otp_secrets[i]['email'] = form.email.data
                     save_to_db(otp_secrets)
                     flash('OTP updated successfully through form submission.', 'success')
-                    print(f"OTP named {name} updated successfully via form submission.")  
                     return redirect(url_for('home'))
 
     if not secret_found:
         flash('Secret Not Found. Unable to edit.', 'error')
-        print(f"Secret named {name} not found. Unable to edit.") 
-    else:
-        flash('OTP edit action completed.', 'info')  
     return redirect(url_for('home'))
 
 @app.route('/get_start_time')
