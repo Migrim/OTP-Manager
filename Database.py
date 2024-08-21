@@ -2,7 +2,9 @@ import os
 import sqlite3
 import shutil
 import re
+import time
 from datetime import datetime
+from logging_config import db_logger
 
 def init_db():
     try:
@@ -14,7 +16,7 @@ def init_db():
         if not os.path.exists(instance_folder):
             os.makedirs(instance_folder)
 
-        print("Checking for database backup...")
+        db_logger.info(">>> [CHECK] Checking for database backup...")
         backup_folder = "backup"
         current_date = datetime.now().strftime("%Y-%m-%d")
         backup_filename = f"otp_{current_date}.db"
@@ -25,16 +27,16 @@ def init_db():
                 os.makedirs(backup_folder)
             if os.path.exists(db_path):
                 shutil.copy(db_path, backup_path)
-                print(f"Database backup created at {backup_path}")
+                db_logger.info(f"+++ [SUCCESS] Database backup created at {backup_path}")
             else:
-                print("No database to back up.")
+                db_logger.warning("--- [WARNING] No database to back up.")
         else:
-            print("Backup already exists for today.")
+            db_logger.info("### [INFO] Backup already exists for today.")
 
         with sqlite3.connect(db_path) as db:
             cursor = db.cursor()
 
-            print("Ensuring database tables are set up...")
+            db_logger.info(">>> [CHECK] Ensuring database tables are set up...")
             cursor.execute("""
                 CREATE TABLE IF NOT EXISTS companies (
                     company_id INTEGER PRIMARY KEY,
@@ -83,37 +85,37 @@ def init_db():
                 )
             """)
             db.commit()
-            print("Database tables verified or created successfully.")
+            db_logger.info("+++ [SUCCESS] Database tables verified or created successfully.")
 
             if is_new_database:
-                print("Inserting default companies 'Public' and 'Private'...")
+                db_logger.info(">>> [ACTION] Inserting default companies 'Public' and 'Private'...")
                 cursor.execute("INSERT INTO companies (name) VALUES ('Public'), ('Private')")
                 db.commit()
-                print("Default companies added.")
+                db_logger.info("+++ [SUCCESS] Default companies added.")
 
-            print("Adding default admin user if not exists...")
+            db_logger.info(">>> [CHECK] Adding default admin user if not exists...")
             cursor.execute("SELECT id FROM users WHERE id = 1")
             if cursor.fetchone() is None:
                 cursor.execute("INSERT INTO users (id, username, password, is_admin) VALUES (1, 'admin', '1234', 1)")
                 db.commit()
-                print("Default admin user created.")
+                db_logger.info("+++ [SUCCESS] Default admin user created.")
 
-            print("Running database consistency check...")
+            db_logger.info(">>> [CHECK] Running database consistency check...")
             cursor.execute("PRAGMA foreign_key_check")
             consistency_result = cursor.fetchall()
             if not consistency_result:
-                print("Database consistency check passed.")
+                db_logger.info("+++ [SUCCESS] Database consistency check passed.")
             else:
-                print("Database consistency check failed. Inconsistent foreign key constraints.")
+                db_logger.error("*** [ERROR] Database consistency check failed. Inconsistent foreign key constraints.")
 
-            print("Validating OTP secrets format...")
+            db_logger.info(">>> [CHECK] Validating OTP secrets format...")
             cursor.execute("SELECT id, secret FROM otp_secrets")
             secrets = cursor.fetchall()
             for id, secret in secrets:
                 if not re.match('^[A-Z0-9]+$', secret):
                     cleaned_secret = re.sub('[^A-Z0-9]', '', secret.upper())
                     cursor.execute("UPDATE otp_secrets SET secret = ? WHERE id = ?", (cleaned_secret, id))
-                    print(f"Updated secret for ID {id}: {cleaned_secret}")
+                    db_logger.info(f"+++ [SUCCESS] Updated secret for ID {id}: {cleaned_secret}")
 
             forbidden_words = [
                 'INVALID', 'FORBIDDEN', 'ERROR', 'SELECT', 'DROP', 'INSERT', 'DELETE',
@@ -123,19 +125,23 @@ def init_db():
                 'VIEW', 'KEY', 'INDEX', 'DISTINCT', 'JOIN', 'WHERE', 'ORDER BY', 'GROUP BY',
                 'HAVING', 'DECLARE', 'CURSOR', 'FETCH', 'LOCK'
             ]
-            print("Validating names...")
+            db_logger.info(">>> [CHECK] Validating names...")
             cursor.execute("SELECT id, name FROM otp_secrets")
             names = cursor.fetchall()
             for id, name in names:
                 if name.strip() == "" or any(word in name.upper() for word in forbidden_words):
-                    print(f"Invalid name detected for ID {id}: {name}, please rename the saved Secret!")
-                    print(f"Name for ID {id} has not been automatically updated!")
+                    db_logger.warning(f"--- [WARNING] Invalid name detected for ID {id}: {name}. Please rename the saved Secret!")
+                    db_logger.warning(f"--- [WARNING] Name for ID {id} has not been automatically updated!")
 
             db.commit()
-            print("All records validated and updated as necessary.")
+            db_logger.info("+++ [SUCCESS] All records validated and updated as necessary.")
 
     except sqlite3.Error as e:
-        print(f"An error occurred while initializing the database: {e}")
+        db_logger.error(f"*** [ERROR] An error occurred while initializing the database: {e}")
 
 if __name__ == "__main__":
-    init_db()
+    db_logger.info(">>> [INFO] Starting hourly database checks...")
+    while True:
+        init_db()
+        db_logger.info(">>> [INFO] Database check completed. Next check in 1 hour.")
+        time.sleep(3600)  

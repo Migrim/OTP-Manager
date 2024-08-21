@@ -51,11 +51,10 @@ from forms.user_forms import UserForm
 from forms.company_form import CompanyForm
 from forms.user import User
 
+from logging_config import my_logger
+
 config = configparser.ConfigParser()
 config.read('config.ini')
-
-logging.basicConfig(filename='MV.log', level=logging.INFO, format='%(asctime)s [%(levelname)s] %(message)s')
-my_logger = logging.getLogger('MV_logger')
 
 app = Flask(__name__)
 bcrypt = Bcrypt(app)
@@ -77,16 +76,10 @@ login_manager.init_app(app)
 
 app.logger.handlers = []
 app.logger.propagate = False
+app.logger.addHandler(my_logger.handlers[0]) 
 
 werkzeug_logger = logging.getLogger('werkzeug')
 werkzeug_logger.disabled = True
-
-handler = logging.FileHandler('MV.log')
-handler.setLevel(logging.INFO)
-app.logger.addHandler(handler)
-
-formatter = logging.Formatter('%(asctime)s %(message)s')
-handler.setFormatter(formatter)
 
 is_restarting = False
 restart_lock = Lock()
@@ -450,33 +443,32 @@ def older_statistics():
 def logout():
     user_id = session.pop('user_id', None)
     session_token = session.pop('session_token', None)
-    print(f"Attempting to log out user ID {user_id}")
+    username = current_user.username if user_id else 'Unknown' 
+
+    app.logger.info(f"User '{username}' is attempting to log out.")
 
     if user_id is None:
-        print("No user ID found in session, redirecting to login.")
+        app.logger.warning("No user ID found in session during logout attempt.")
     else:
-        print(f"Logging out user ID {user_id} with session token {session_token}")
+        app.logger.info(f"User '{username}' with session token {session_token} is logging out.")
 
     try:
         db_path = app.config['DATABASE']  
         with sqlite3.connect(db_path) as db:
-            print("Database connection established.")
             cursor = db.cursor()
             cursor.execute("UPDATE users SET session_token = NULL WHERE id = ?", (user_id,))
             db.commit()
-            print(f"Database updated for user ID {user_id}, session token cleared.")
-        logging.info(f"User ID {user_id} successfully logged out.")
+            app.logger.info(f"User ID {user_id} successfully logged out, session token cleared in database.")
     except sqlite3.Error as e:
-        logging.error(f"Error logging out User ID {user_id}: {e}")
-        print(f"Exception occurred: {e}")
+        app.logger.error(f"Error logging out User ID {user_id}: {e}")
 
     flash("You have been logged out successfully.", "success")
 
     if is_restarting:
-        print("Application is restarting, redirecting to login.")
+        app.logger.info(f"User '{username}' was logged out as part of application restart.")
         return redirect(url_for('login'))
 
-    print("Redirecting to login page.")
+    app.logger.info(f"User '{username}' successfully logged out, redirecting to login.")
     return redirect(url_for('login'))
 
 def login_required(f):
@@ -573,6 +565,8 @@ def settings():
 @app.route('/refresh_codes_v2')
 @login_required
 def refresh_codes_v2():
+    username = current_user.username  
+
     update_statistics(refreshed=1)
     otp_secrets = load_from_db()
     otp_codes = []
@@ -581,7 +575,7 @@ def refresh_codes_v2():
         current_otp_code, next_otp_code = generate_current_and_next_otp(otp)
         if current_otp_code is None:
             flash('Invalid OTP-Secret!', 'error')
-            print(f"Invalid OTP secret was attempted to be loaded in the OTP-List")
+            app.logger.warning(f"User '{username}' encountered invalid OTP secret '{otp['name']}' during refresh.")
             continue
         otp_codes.append({
             'name': otp['name'],
@@ -671,12 +665,15 @@ def login():
 
     if 'user_id' in session:
         flash("You are already logged in.", "info")
+        app.logger.info(f"User with ID {session['user_id']} attempted to access login while already logged in.")
         return redirect(url_for('home'))
 
     if request.method == 'POST':
         username = request.form.get('username')
         password = request.form.get('password')
         keep_logged_in = 'keep_logged_in' in request.form
+
+        app.logger.info(f"Login attempt for username: {username}")
 
         try:
             db_path = app.config['DATABASE']
@@ -714,19 +711,24 @@ def login():
                         cursor.execute("UPDATE users SET session_token = ? WHERE id = ?", (session_token, user_id))
                         db.commit()
 
+                    app.logger.info(f"Successful login for user ID: {user_id} (username: {username})")
+
                     flash("Access granted!", "success")
                     if is_admin and password == "1234":
                         flash("You are using the default password. Please consider changing it!", "warning")
 
                     return redirect(url_for('home'))
                 else:
+                    app.logger.warning(f"Failed login attempt for username: {username} - Invalid credentials")
                     flash('Invalid credentials! Please try again.', 'danger')
                     return redirect(url_for('login'))
             else:
+                app.logger.warning(f"Failed login attempt for username: {username} - User not found")
                 flash('User not found! Please check your username.', 'danger')
                 return redirect(url_for('login'))
 
         except Exception as e:
+            app.logger.error(f"Error during login attempt for username: {username} - {str(e)}")
             flash('An error occurred during login. Please try again later.', 'danger')
             return redirect(url_for('login'))
 
@@ -862,13 +864,18 @@ def get_stats_json():
 @login_required
 def get_otp_v2(name):
     otp_secrets = load_from_db()
+    username = current_user.username 
 
     for otp_secret in otp_secrets:
         if otp_secret.get('name', 'Unnamed') == name:
             current_otp, next_otp = generate_current_and_next_otp(otp_secret)
             if current_otp is None or next_otp is None:
+                app.logger.warning(f"User '{username}' encountered invalid OTP secret for '{name}'.")
                 return 'Invalid OTP secret', 400
+            app.logger.info(f"User '{username}' accessed OTP secret '{name}'.")
             return render_template('otp.html', otp=otp_secret, current_otp=current_otp, next_otp=next_otp)
+    
+    app.logger.warning(f"User '{username}' requested non-existent OTP secret '{name}'.")
     return 'Secret Not Found', 404
 
 def get_user_colors(user_id):
@@ -940,7 +947,7 @@ def home():
 
     try:
         if form.validate_on_submit():
-            logging.info('OTP form submission validated.')
+            app.logger.info(f'User {current_user.username} submitted OTP form.')
             new_secret = {
                 'name': form.name.data,
                 'company': form.company.data if form.company.data else 'N/A',
@@ -950,7 +957,7 @@ def home():
             }
             otp_secrets.append(new_secret)
             save_to_db(otp_secrets)
-            logging.info(f'New OTP secret added for {new_secret["name"]}.')
+            app.logger.info(f'User {current_user.username} added new OTP secret "{new_secret["name"]}".')
             flash(f'New OTP secret "{new_secret["name"]}" added successfully!', 'success')
             return redirect(url_for('home'))
         
@@ -958,7 +965,7 @@ def home():
         selected_company = request.args.get('company')
 
         if selected_company:
-            logging.info(f'Filtering by company: {selected_company}')
+            app.logger.info(f'User {current_user.username} is filtering OTP secrets by company: {selected_company}.')
             otp_secrets = [otp for otp in otp_secrets if otp['company'] == selected_company]
             if not otp_secrets:
                 flash(f'No secrets found for company: {selected_company}', 'info')
@@ -968,8 +975,7 @@ def home():
         for otp in otp_secrets:
             current_otp, next_otp = generate_current_and_next_otp(otp)
             if current_otp is None or next_otp is None:
-                logging.warning(f'Invalid OTP secret for {otp["name"]}.')
-                print(f"Invalid OTP secret: check logs!")   
+                app.logger.warning(f'User {current_user.username} encountered invalid OTP secret "{otp["name"]}".')
                 flash('Invalid OTP secret')
                 continue
             otp['current_otp'] = current_otp
@@ -988,7 +994,7 @@ def home():
         total_otp_count = len(otp_secrets)
 
         if not otp_codes and selected_company:
-                flash(f"No matching secrets for company: {selected_company}", 'info')
+            flash(f"No matching secrets for company: {selected_company}", 'info')
 
         total_pages = ceil(len(otp_codes) / items_per_page) if current_user.enable_pagination else 1
         
@@ -1001,7 +1007,7 @@ def home():
         search_name = request.args.get('name')
 
         if search_name:
-            logging.info(f'Filtering by name: {search_name}')
+            app.logger.info(f'User {current_user.username} is filtering OTP secrets by name: {search_name}.')
             found = False
             for k, v in list(grouped_otp_codes.items()): 
                 matched_secrets = [x for x in v if search_name.lower() in x['name'].lower()]
@@ -1019,20 +1025,22 @@ def home():
         return render_template('home.html', form=form, grouped_otp_codes=grouped_otp_codes, total_otp_count=total_otp_count, companies=companies, search_name=search_name, page=page, total_pages=total_pages, enable_pagination=current_user.enable_pagination,  alert_color=alert_color, text_color=text_color, username=current_user.username, show_emails=show_emails, show_company=show_company)
 
     except Exception as e:
-        logging.error('An error occurred on the home page.', exc_info=True)
+        app.logger.error(f'User {current_user.username} encountered an error on the home page: {e}', exc_info=True)
         flash('An unexpected error occurred. Please try again later.', 'danger')
-        print(f"An unknown error occurred at the home page") 
         return render_template('home.html', alert_color=alert_color)
 
 @app.route('/copy_otp', methods=['POST'])
 @login_required  
 def copy_otp():
+    username = current_user.username  
+
     try:
         data = request.get_json()
-        print("Received data for /copy_otp:", data)
+        app.logger.debug(f"Received data for /copy_otp: {data}")
 
         if not data or 'otpName' not in data:
             flash("Invalid request. Please try again.", "error")
+            app.logger.warning(f"User '{username}' made an invalid request to /copy_otp.")
             return redirect(url_for('home'))
 
         otp_name = data['otpName']
@@ -1042,23 +1050,23 @@ def copy_otp():
         for otp in otp_secrets:
             if otp['name'] == otp_name:
                 otp_code, _ = generate_current_and_next_otp(otp)
-                print(f"Generated OTP for {otp_name}: {otp_code}")
+                app.logger.info(f"User '{username}' generated OTP for '{otp_name}'.")
                 break
 
         if otp_code:
             with open('otp_code.json', 'w') as json_file:
                 json.dump({'otpName': otp_name, 'otpCode': otp_code}, json_file)
             flash(f"OTP for '{otp_name}' copied to the clipboard.", "info")
-            print(f"OTP for {otp_name} saved to file.")
+            app.logger.info(f"OTP for '{otp_name}' copied to the clipboard by user '{username}'.")
             return jsonify(success=True)
         else:
             flash(f"No OTP found for {otp_name}.", "error")
-            print(f"No OTP match found for: {otp_name}")
+            app.logger.warning(f"User '{username}' attempted to copy OTP for '{otp_name}', but no matching OTP was found.")
             return jsonify(success=False, message=f'No OTP found for "{otp_name}".')
 
     except Exception as e:
         flash("An unexpected error occurred. Please try again.", "error")
-        print(f"An error occurred in /copy_otp: {e}")
+        app.logger.error(f"An error occurred for user '{username}' in /copy_otp: {e}")
         return jsonify(success=False, message="An unexpected error occurred.")
 
 @app.route('/get_otp', methods=['GET'])
@@ -1120,18 +1128,26 @@ def edit(name):
     form = OTPForm()
     form.company.choices = [(company['company_id'], company['name']) for company in load_companies_from_db()]
 
+    username = current_user.username  
     secret_found = False
+
     for i, otp in enumerate(otp_secrets):
         if otp['name'] == name:
             secret_found = True
             if request.method == 'POST':
                 if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
                     data = request.json
+                    original_otp = otp_secrets[i].copy()
                     otp_secrets[i]['name'] = data['name']
                     otp_secrets[i]['secret'] = data['secret']
                     otp_secrets[i]['company_id'] = data['company']
                     otp_secrets[i]['email'] = data.get('email', "none")
                     save_to_db(otp_secrets)
+                    
+                    app.logger.info(f"User '{username}' updated OTP '{name}' via AJAX.")
+                    app.logger.debug(f"Original: {original_otp}")
+                    app.logger.debug(f"Updated: {otp_secrets[i]}")
+                    
                     flash('OTP updated successfully.', 'success')
                     return jsonify({
                         'message': 'OTP updated successfully via AJAX.',
@@ -1139,20 +1155,27 @@ def edit(name):
                             'name': data['name'],
                             'secret': data['secret'],
                             'company': data['company'],
-                            'email': data['email'],
                         }
                     })
                 else:
+                    original_otp = otp_secrets[i].copy()
                     otp_secrets[i]['name'] = form.name.data
                     otp_secrets[i]['secret'] = form.secret.data
                     otp_secrets[i]['company_id'] = form.company.data
                     otp_secrets[i]['email'] = form.email.data
                     save_to_db(otp_secrets)
+                    
+                    app.logger.info(f"User '{username}' updated OTP '{name}' via form.")
+                    app.logger.debug(f"Original: {original_otp}")
+                    app.logger.debug(f"Updated: {otp_secrets[i]}")
+                    
                     flash('OTP updated successfully through form submission.', 'success')
                     return redirect(url_for('home'))
 
     if not secret_found:
+        app.logger.warning(f"User '{username}' tried to edit OTP '{name}' but it was not found.")
         flash('Secret Not Found. Unable to edit.', 'error')
+    
     return redirect(url_for('home'))
 
 @app.route('/get_start_time')
@@ -1181,46 +1204,57 @@ def check_for_broadcast_message():
 @app.route('/delete_secret/<name>', methods=['POST'])
 @login_required
 def delete_secret(name):
-    db_path = app.config['DATABASE']  
+    db_path = app.config['DATABASE']
+    username = current_user.username 
+    
     try:
         with sqlite3.connect(db_path) as conn:
             cursor = conn.cursor()
             cursor.execute("DELETE FROM otp_secrets WHERE name = ?", (name,))
             conn.commit()
         flash(f'Successfully deleted secret with name: {name}', 'success')
-        logging.info(f'Secret with name {name} was successfully deleted.')
+        app.logger.info(f"User '{username}' successfully deleted OTP secret with name '{name}'.")
     except sqlite3.Error as e:
         flash(f'Could not delete secret: {e}', 'danger')
-        logging.error(f'Error when trying to delete secret with name {name}: {e}')
+        app.logger.error(f"Error occurred while user '{username}' tried to delete OTP secret with name '{name}': {e}")
+    
     return redirect(url_for('home'))
 
 @app.route('/delete/<name>', methods=['POST'])
 @login_required
 def delete(name):
+    username = current_user.username  
+    
     otp_secrets = load_from_db()
     otp_secrets = [otp for otp in otp_secrets if 'name' in otp and otp['name'] != name]
     save_to_db(otp_secrets)
     flash(f'Successfully deleted secret with name: {name}', 'success')
+    app.logger.info(f"User '{username}' successfully deleted OTP secret with name '{name}' from local storage.")
+    
     return redirect(url_for('home'))
 
 @app.route('/delete_user/<int:user_id>', methods=['GET'])
 @login_required
 def delete_user(user_id):
+    username = current_user.username 
+    
     if current_user.get_id() != "admin":
         flash("Only the root can delete users.", 'error')
+        app.logger.warning(f"User '{username}' attempted to delete user with ID {user_id} but lacks admin privileges.")
         return redirect(url_for('admin.admin_settings'))
 
     try:
-        db_path = app.config['DATABASE']  
+        db_path = app.config['DATABASE']
         with sqlite3.connect(db_path) as db:
             cursor = db.cursor()
             cursor.execute("DELETE FROM users WHERE id = ?", (user_id,))
             db.commit()
         flash("User successfully deleted.")
+        app.logger.info(f"Admin '{username}' successfully deleted user with ID {user_id}.")
     except sqlite3.Error as e:
         flash("Failed to delete user.")
-        logging.error(f"Error deleting user: {e}")
-
+        app.logger.error(f"Error occurred while admin '{username}' tried to delete user with ID {user_id}: {e}")
+    
     return redirect(url_for('admin.admin_settings'))
 
 @app.route('/add', methods=['GET', 'POST'])
@@ -1238,26 +1272,32 @@ def add():
         otp_type = form.otp_type.data.lower().strip()
         refresh_time = form.refresh_time.data
         company_id = form.company.data
+        username = current_user.username 
 
         if otp_type not in ['totp', 'hotp']:
             flash('Invalid OTP type. Choose either TOTP or HOTP.', 'error')
+            app.logger.warning(f"User '{username}' attempted to add OTP with invalid type '{otp_type}'.")
             return render_template('add.html', form=form)
         
         if len(secret) < 16 or len(secret) > 32:
             flash('Secret length should be between 16 and 32 characters.', 'error')
+            app.logger.warning(f"User '{username}' attempted to add OTP with invalid secret length '{len(secret)}'.")
             return render_template('add.html', form=form)
 
         if not secret.isalnum():
             flash('Secret must contain only alphanumeric characters.', 'error')
+            app.logger.warning(f"User '{username}' attempted to add OTP with non-alphanumeric secret '{secret}'.")
             return render_template('add.html', form=form)
 
         if not isinstance(refresh_time, int) or refresh_time <= 0:
             flash('Refresh time must be a positive number.', 'error')
+            app.logger.warning(f"User '{username}' attempted to add OTP with invalid refresh time '{refresh_time}'.")
             return render_template('add.html', form=form)
 
         valid_base32 = re.fullmatch('[A-Z2-7=]{16,32}', secret, re.IGNORECASE)
         if not valid_base32 or len(secret) % 8 != 0:
             flash('Secret must be a valid Base32 string with a length that is a multiple of 8 characters.', 'error')
+            app.logger.warning(f"User '{username}' attempted to add OTP with invalid Base32 secret '{secret}'.")
             return render_template('add.html', form=form)
 
         selected_company_name = next((company['name'] for company in companies_from_db if company['company_id'] == company_id), 'N/A')
@@ -1265,6 +1305,7 @@ def add():
         existing_otp_secrets = load_from_db()
         if any(existing_secret['name'] == name for existing_secret in existing_otp_secrets):
             flash(f"A secret with the name '{name}' already exists!", 'error')
+            app.logger.warning(f"User '{username}' attempted to add duplicate OTP secret with name '{name}'.")
             form.name.data = ""
             return render_template('add.html', form=form)
 
@@ -1281,6 +1322,8 @@ def add():
         existing_otp_secrets.append(new_otp_secret)
         save_to_db(existing_otp_secrets)
 
+        app.logger.info(f"User '{username}' added new OTP secret '{name}' for company '{selected_company_name}'.")
+
         if action == 'add':
             flash(f"New OTP secret '{name}' added successfully.", 'info')
             return redirect(url_for('home'))
@@ -1290,10 +1333,10 @@ def add():
 
     return render_template('add.html', form=form)
 
-@app.route('/view_otp/<string:secret_id>')  # Change 'int' to 'string'
+@app.route('/view_otp/<string:secret_id>') 
 @login_required
 def view_otp(secret_id):
-    otp_secret = load_from_db(secret_id)  # Assuming load_from_db can handle string IDs
+    otp_secret = load_from_db(secret_id) 
     if not otp_secret:
         flash("No OTP secret found with the given ID.", "error")
         return redirect(url_for('home'))
