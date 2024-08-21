@@ -470,6 +470,8 @@ def logout():
         logging.error(f"Error logging out User ID {user_id}: {e}")
         print(f"Exception occurred: {e}")
 
+    flash("You have been logged out successfully.", "success")
+
     if is_restarting:
         print("Application is restarting, redirecting to login.")
         return redirect(url_for('login'))
@@ -665,10 +667,10 @@ def get_last_login_time_from_db():
 @app.route('/login', methods=['GET', 'POST'])
 @check_server_capacity
 def login():
+    flash("Please log in to gain access", "warning")
+
     if 'user_id' in session:
-        message = "You are already logged in."
-        flash(message, "info")
-        print(f"Flash message: {message}")
+        flash("You are already logged in.", "info")
         return redirect(url_for('home'))
 
     if request.method == 'POST':
@@ -695,6 +697,7 @@ def login():
                         cursor.execute("UPDATE users SET password = ? WHERE id = ?", (hashed_password, user_id))
                         db.commit()
                     stored_password = hashed_password
+                    flash("Password for your account has been securely updated.", "info")
 
                 if bcrypt.check_password_hash(stored_password, password):
                     user_obj = User(user_id, username, is_admin=is_admin)
@@ -711,32 +714,20 @@ def login():
                         cursor.execute("UPDATE users SET session_token = ? WHERE id = ?", (session_token, user_id))
                         db.commit()
 
-                    message = "Access granted!"
-                    flash(message, "success")
-                    print(f"Flash message: {message}")
+                    flash("Access granted!", "success")
                     if is_admin and password == "1234":
-                        warning_message = "You are using the default password. Please consider changing it!"
-                        flash(warning_message, "warning")
-                        print(f"Flash message: {warning_message}")
+                        flash("You are using the default password. Please consider changing it!", "warning")
 
                     return redirect(url_for('home'))
                 else:
-                    message = 'Invalid credentials! Please try again.'
-                    flash(message, 'danger')
-                    print(f"Flash message: {message}")
+                    flash('Invalid credentials! Please try again.', 'danger')
                     return redirect(url_for('login'))
-
             else:
-                message = 'User not found! Please check your username.'
-                flash(message, 'danger')
-                print(f"Flash message: {message}")
+                flash('User not found! Please check your username.', 'danger')
                 return redirect(url_for('login'))
 
         except Exception as e:
-            print(f"An server error occurred during login: {e}")
-            error_message = 'An error occurred during login. Please try again later.'
-            flash(error_message, 'danger')
-            print(f"Flash message: {error_message}")
+            flash('An error occurred during login. Please try again later.', 'danger')
             return redirect(url_for('login'))
 
     return render_template('login.html')

@@ -85,18 +85,6 @@
         setInterval(drawMatrix, 33);
     }
 
-    document.addEventListener("DOMContentLoaded", function() {
-        startMatrixAnimation();
-        var flashMessages = document.querySelectorAll(".flash-message");
-        flashMessages.forEach(function(msg) {
-            console.log("Flash message:", msg.innerText); 
-            msg.style.opacity = "1"; 
-            setTimeout(function() {
-                msg.style.opacity = "0"; 
-            }, 7000); 
-        });
-    });
-
     function togglePasswordVisibility() {
         var passwordInput = document.getElementById('passwordInput');
         var togglePasswordIcon = document.querySelector('.toggle-password');
@@ -125,6 +113,21 @@
     }
 
     document.addEventListener("DOMContentLoaded", function() {
+        startMatrixAnimation();
+        fetchFlashMessages();
+
+        setTimeout(function() {
+            var flashContainer = document.getElementById('flash-messages-container');
+            if (flashContainer) {
+                flashContainer.style.transition = "opacity 1s ease";  
+                flashContainer.style.opacity = "0";  
+
+                setTimeout(function() {
+                    flashContainer.style.display = 'none';
+                }, 1000);  
+            }
+        }, 7000);
+
         var form = document.querySelector('form');
         form.addEventListener('submit', function(event) {
             event.preventDefault();
@@ -151,6 +154,10 @@
                 alert('An error occurred. Please try again later.');
             });
         });
+
+        function fetchFlashMessages() {
+            // This function should be defined as per your logic to handle flash messages
+        }
     });
 </script>
 
@@ -163,6 +170,20 @@
             }, 0);
         </script>
 {% else %}
+
+<div class="flash-messages-container" id="flash-messages-container">
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div class="flash-message flash-{{ category }}">
+                    <span class="material-icons-outlined flash-icon">{{ category|category_icon }}</span>
+                    {{ message }}
+                    <span class="flash-close-btn" onclick="this.parentElement.style.display='none';">&times;</span>
+                </div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+</div>
 
 <div class="center-content">
     <div class="form-container">
@@ -185,7 +206,6 @@
             </div>
         </form>
         <div class="loader"></div>
-        <div class="error-message" style="display: none;">Benutzername oder Passwort ist falsch!</div>
     </div>
     <p class="instruction-text">Please login with your Credentials to gain Access to the OTP-List.</p>
 </div>
@@ -199,6 +219,7 @@
         <h2>What's New</h2>
         <p>Here are the latest changes to the OTP-Manager:</p>
         <ul>
+            <li><strong>Aug 21, 2024:</strong> User passwords can now be resetted in the user Management</li>
             <li><strong>May 14, 2024:</strong> The Company Identification Number now won't get cleared when saving a secret.</li>
             <li><strong>May 10, 2024:</strong> Added support for 32-character long secrets and improved error handling.</li>
             <li><strong>May 8, 2024:</strong> Changes to the Graph.</li>
@@ -214,19 +235,5 @@
     </div>
 </div>
 
-<div id="flash-messages-container">
-    {% with messages = get_flashed_messages(with_categories=true) %}
-        {% if messages %}
-            {% for category, message in messages %}
-                <div class="flash-message flash-{{ category }}">
-                    <span class="material-icons-outlined flash-icon">{{ category|default("info")|category_icon }}</span>
-                    {{ message }}
-                </div>
-            {% endfor %}
-        {% endif %}
-    {% endwith %}
-</div>
-
 {% endif %}
 {% endblock %}
-
