@@ -45,6 +45,10 @@ import signal
 import json
 import psutil
 import configparser
+import schedule
+import sys
+import signal
+from threading import Thread
 
 from forms.otp_forms import OTPForm
 from forms.user_forms import UserForm
@@ -81,8 +85,6 @@ app.logger.addHandler(my_logger.handlers[0])
 werkzeug_logger = logging.getLogger('werkzeug')
 werkzeug_logger.disabled = True
 
-is_restarting = False
-restart_lock = Lock()
 broadcast_message = None
 slow_requests_counter = 0
 flash_messages = []
@@ -463,10 +465,6 @@ def logout():
         app.logger.error(f"Error logging out User ID {user_id}: {e}")
 
     flash("You have been logged out successfully.", "success")
-
-    if is_restarting:
-        app.logger.info(f"User '{username}' was logged out as part of application restart.")
-        return redirect(url_for('login'))
 
     app.logger.info(f"User '{username}' successfully logged out, redirecting to login.")
     return redirect(url_for('login'))
@@ -1349,12 +1347,47 @@ def copy_otp_flash():
     flash('OTP Copied to Clipboard!', 'info')
     return jsonify(success=True)
 
+def graceful_exit():
+    logging.info("Gracefully shutting down the server...")
+    os.kill(os.getpid(), signal.SIGTERM)
+
+
+import subprocess
+
+def restart_server():
+    logging.info("Server restarting...")
+    try:
+        subprocess.Popen([sys.executable] + sys.argv)
+        sys.exit(0)
+    except Exception as e:
+        logging.error(f"Failed to restart the server: {e}")
+        sys.exit(1)
+
+def schedule_restart(config):
+    restart_time = config.get('restart', 'time')
+    restart_interval_days = config.getint('restart', 'interval_days')
+
+    schedule.every(restart_interval_days).days.at(restart_time).do(restart_server)
+
+def run_schedule():
+    while True:
+        schedule.run_pending()
+        time.sleep(1)
+
 if __name__ == '__main__':
     config = configparser.ConfigParser()
     config.read('config.ini')
     port = config.getint('server', 'port')
+
     logging.basicConfig(level=logging.INFO)
     logging.info(f"Server starting on port {port}...")
+
+    schedule_restart(config)
+
+    scheduler_thread = Thread(target=run_schedule)
+    scheduler_thread.daemon = True
+    scheduler_thread.start()
+
     try:
         app.run(debug=True, port=port, host='0.0.0.0', use_reloader=False)
     except KeyboardInterrupt:
