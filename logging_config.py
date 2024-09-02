@@ -16,7 +16,7 @@ log_file = os.path.join(daily_log_dir, 'main.log')
 log_format = '%(asctime)s | %(levelname)-8s | %(name)-15s | %(message)s'
 formatter = logging.Formatter(log_format)
 
-my_logger = logging.getLogger('MV_logger')
+my_logger = logging.getLogger('Admin')
 my_logger.setLevel(logging.INFO)
 
 handler = logging.FileHandler(log_file)

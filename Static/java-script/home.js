@@ -93,21 +93,25 @@ async function refreshOtpCodes() {
 
 async function simulateRolling(digitElement, finalDigit) {
     return new Promise((resolve) => {
-        const sequence = [...Array(10).keys()]; 
-        let currentIteration = 0;
-        const maxIterations = 15; 
+        const sequence = [...Array(10).keys()];
+        const duration = 200; 
+        const startTime = performance.now();
 
-        const intervalId = setInterval(() => {
+        function animate(time) {
+            const elapsedTime = time - startTime;
+            const progress = elapsedTime / duration;
 
-            digitElement.textContent = sequence[currentIteration % sequence.length];
-            currentIteration++;
-
-            if (currentIteration >= maxIterations) {
-                clearInterval(intervalId);
-                digitElement.textContent = finalDigit; 
-                resolve(); 
+            if (progress < 1) {
+                const currentDigit = sequence[Math.floor(progress * sequence.length) % sequence.length];
+                digitElement.textContent = currentDigit;
+                requestAnimationFrame(animate);
+            } else {
+                digitElement.textContent = finalDigit;
+                resolve();
             }
-        }, 8); 
+        }
+
+        requestAnimationFrame(animate);
     });
 }
 

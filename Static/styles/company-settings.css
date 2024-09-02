@@ -1,5 +1,5 @@
 body {
-    background-color: #222;
+    background-color: #181818;
     color: #fff;
     font-family: 'Poppins', 'Roboto', sans-serif; 
 }
@@ -45,11 +45,10 @@ body {
 .company-card {
     background: #333;
     color: #f8f9fa;
-    border: 1px solid #6c757d;
     border-radius: 10px;
     padding: 10px;
     text-align: center;
-    animation: fadeInUp 0.5s ease-out forwards;
+    animation: fadeInUp 0.2s ease-out forwards;
     opacity: 0; 
 }
 
@@ -70,13 +69,13 @@ body {
     font-size: 20px;
     font-weight: bold;
     font-size: clamp(1rem, 2.5vw, 1.25rem);
-    border: 1px solid #868e96;
     padding: 5px; 
     border-radius: 5px;
     text-overflow: ellipsis;
     white-space: nowrap;
     overflow: hidden;
     max-width: 100%;
+    border: 1px solid #868e9694;
 }
 
 .company-actions .btn {
@@ -351,19 +350,19 @@ body {
 }
 
 .ns-confirmDeleteCompanyModal .modal-dialog {
-    max-width: 400px; /* Reduces the overall modal width for compactness */
+    max-width: 400px; 
 }
 
 .ns-confirmDeleteCompanyModal .modal-content {
     background-color: #333;
     color: #ffffff;
-    padding: 10px; /* Reduced padding */
+    padding: 10px;
     border-radius: 10px;
     box-shadow: 0 5px 15px rgba(0, 0, 0, .5);
 }
 
 .ns-confirmDeleteCompanyModal .modal-header {
-    padding-bottom: 5px; /* Reduced padding */
+    padding-bottom: 5px; 
     margin: 0;
 }
 
@@ -373,19 +372,19 @@ body {
 }
 
 .ns-confirmDeleteCompanyModal .modal-body {
-    padding: 10px 0; /* Reduced vertical padding */
+    padding: 10px 0; 
 }
 
 .ns-confirmDeleteCompanyModal .modal-footer {
-    padding-top: 5px; /* Reduced padding */
-    padding-bottom: 5px; /* Reduced padding */
+    padding-top: 5px; 
+    padding-bottom: 5px; 
     text-align: right;
 }
 
 .ns-confirmDeleteCompanyModal .btn-close-custom, .ns-confirmDeleteCompanyModal .btn-delete-custom {
     position: relative;
     transition: background-color 0.3s ease;
-    padding: 6px 12px; /* Smaller buttons */
+    padding: 6px 12px; 
 }
 
 .ns-confirmDeleteCompanyModal .btn-close-custom {
@@ -411,10 +410,10 @@ body {
 .ns-confirmDeleteCompanyModal .btn-close-custom::before, .ns-confirmDeleteCompanyModal .btn-delete-custom::before {
     font-family: 'Material Icons Outlined';
     display: inline-block;
-    font-size: 16px; /* Slightly smaller icon size */
+    font-size: 16px; 
     line-height: 1;
     vertical-align: middle;
-    margin-right: 4px; /* Reduced spacing */
+    margin-right: 4px; 
     transition: transform 0.3s ease;
 }
 

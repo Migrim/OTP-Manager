@@ -1,11 +1,11 @@
 body {
-    background-color: #222;
+    background-color: #181818;
     color: #fff;
     font-family: 'Poppins', 'Roboto', sans-serif; 
-    margin: 0; /* Remove default margin */
-    overflow: hidden; /* Prevent scrolling */
+    margin: 0; 
+    overflow: hidden;
     justify-content: center;
-    align-items: center; /* Center content vertically and horizontally */
+    align-items: center; 
     min-height: 100vh; 
 }
 
@@ -23,7 +23,7 @@ body {
     padding: 30px;
     border-radius: 10px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.4);
-    background: #333;
+    background: #222;
     animation: fadeInScale 0.8s ease-in-out;
 }
 
@@ -167,7 +167,7 @@ select.form-control option {
 
 @keyframes fadeInScale {
     0% {
-        transform: scale(0.9);
+        transform: scale(0.95);
     }
     100% {
         opacity: 1;

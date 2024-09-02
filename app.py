@@ -59,6 +59,7 @@ from logging_config import my_logger
 
 config = configparser.ConfigParser()
 config.read('config.ini')
+offline_mode = config.getboolean('server', 'offline_mode', fallback=False)
 
 app = Flask(__name__)
 bcrypt = Bcrypt(app)
@@ -283,6 +284,9 @@ def server_status():
     return jsonify({'status': 'ok'}), 200
 
 def is_internet_available():
+    if offline_mode:
+        return True
+
     try:
         response = requests.get('http://www.google.com', timeout=5)
         return response.status_code == 200
@@ -297,6 +301,9 @@ def is_internet_available():
         return False
 
 def check_ntp_sync():
+    if offline_mode:
+        return True, None
+
     if not is_internet_available():
         logging.warning("Internet is not available.")
         flash("Internet is not available. Check your connection.", "error")
@@ -363,8 +370,6 @@ def check_server_capacity(f):
             logging.warning(f"Slow response detected for {f.__name__}: {response_time:.2f}s")
         else:
             slow_requests_counter = max(0, slow_requests_counter - 1)
-
-        logging.info(f"Response time for {f.__name__}: {response_time:.2f}s")
 
         return response
 
@@ -511,11 +516,35 @@ def settings():
         show_company = 1 if data.get('show_company') == 'on' else 0
 
         color_map = {
-            '#292d26': '#c4b550', '#3e4637': '#c4b550',
-            '#1b2e4b': '#e9bfff', '#FAD4C0': '#333333',
-            '#E0C3FC': '#4A306D', '#FFFDD0': '#9A8B55',
-            '#D0AAB0': '#40232B', '#4B0082': '#E6E6FA',
-            '#8CA6DB': '#3e3e41'
+            # Lighter Pastel Colors
+            '#FFB3BA': '#B22222',  # Pastel Red with Dark Red Text
+            '#FFDFBA': '#A0522D',  # Pastel Orange with Sienna Text
+            '#FFFFBA': '#8B8000',  # Pastel Yellow with Olive Text
+            '#BAFFC9': '#006400',  # Pastel Green with Dark Green Text
+            '#BAE1FF': '#00008B',  # Pastel Blue with Dark Blue Text
+            '#D9BAFF': '#4B0082',  # Pastel Purple with Indigo Text
+            '#FFB3FF': '#8B008B',  # Pastel Pink with Dark Magenta Text
+            '#CFCFCF': '#696969',  # Light Gray with Dim Gray Text
+            '#B3FFFF': '#008B8B',  # Pastel Cyan with Dark Cyan Text
+            '#FFE4E1': '#CD5C5C',  # Light Coral with Indian Red Text
+            '#E6E6FA': '#4B0082',  # Lavender with Indigo Text
+            '#FFFACD': '#8B8000',  # Lemon Chiffon with Olive Text
+            '#FAFAD2': '#556B2F',  # Light Goldenrod with Dark Olive Green Text
+            
+            # Darker Pastel Colors
+            '#8E8D8A': '#333333',  # Warm Gray with Dark Gray Text
+            '#A59C94': '#333333',  # Pastel Brown with Dark Gray Text
+            '#7F8283': '#333333',  # Pastel Gray with Dark Gray Text
+            '#7A9E9F': '#2F4F4F',  # Pastel Teal with Dark Slate Gray Text
+            '#8DA399': '#2E8B57',  # Pastel Olive with Sea Green Text
+            '#B39DDB': '#4B0082',  # Soft Violet with Indigo Text
+            '#B0A8B9': '#4B0082',  # Pastel Purple-Gray with Indigo Text
+            '#CCB7AE': '#8B4513',  # Pastel Peach with Saddle Brown Text
+            '#B2AD8E': '#6B4226',  # Muted Olive with Dark Brown Text
+            '#8D8468': '#333333',  # Dark Pastel Tan with Dark Gray Text
+
+            # Default Dark Color
+            '#333333': '#FFFFFF',  # Dark Gray with White Text
         }
 
         def get_brightness(hex_color):
@@ -1091,30 +1120,6 @@ def clear_otp():
         print(f"An error occurred in /clear_otp: {e}")
         return jsonify(success=False, message="An unexpected error occurred.")
 
-@app.route('/get_logs', methods=['GET'])
-@login_required
-def get_logs():
-    log_filename = 'MV.log'
-    filter_out = request.args.get('filter_out', 'false').lower() == 'true'
-
-    try:
-        with open(log_filename, 'r') as f:
-            lines = f.readlines()
-        if filter_out:
-            lines = [line for line in lines if "Server started" not in line]
-        output = "".join(lines)
-    except IOError:
-        output = "Error: Unable to read log file."
-
-    return jsonify({"logs": output})
-
-@app.route('/view_logs')
-@login_required
-def view_logs():
-    with open("mv.log", "r") as f:
-        logs = f.read()
-    return render_template('logs.html', logs=logs)
-
 @app.errorhandler(404)
 def page_not_found(e):
     return render_template('404.html'), 404
@@ -1378,6 +1383,24 @@ if __name__ == '__main__':
     config = configparser.ConfigParser()
     config.read('config.ini')
     port = config.getint('server', 'port')
+
+    print(f"""
+ ██████╗ ████████╗██████╗                                     
+██╔═══██╗╚══██╔══╝██╔══██╗                                    
+██║   ██║   ██║   ██████╔╝                                    
+██║   ██║   ██║   ██╔═══╝                                     
+╚██████╔╝   ██║   ██║                                         
+ ╚═════╝    ╚═╝   ╚═╝                                         
+                                                              
+███╗   ███╗ █████╗ ███╗   ██╗ █████╗  ██████╗ ███████╗██████╗ 
+████╗ ████║██╔══██╗████╗  ██║██╔══██╗██╔════╝ ██╔════╝██╔══██╗
+██╔████╔██║███████║██╔██╗ ██║███████║██║  ███╗█████╗  ██████╔╝
+██║╚██╔╝██║██╔══██║██║╚██╗██║██╔══██║██║   ██║██╔══╝  ██╔══██╗
+██║ ╚═╝ ██║██║  ██║██║ ╚████║██║  ██║╚██████╔╝███████╗██║  ██║
+╚═╝     ╚═╝╚═╝  ╚═╝╚═╝  ╚═══╝╚═╝  ╚═╝ ╚═════╝ ╚══════╝╚═╝  ╚═╝
+                                                                                   
+    ----------- Running on port {port} -----------
+    """)
 
     logging.basicConfig(level=logging.INFO)
     logging.info(f"Server starting on port {port}...")

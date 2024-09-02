@@ -1,5 +1,5 @@
 body {
-    background-color: #222;
+    background-color: #181818;
     color: #fff;
     font-family: 'Poppins', 'Roboto', sans-serif; 
 }
@@ -111,6 +111,7 @@ body {
     text-align: center;
     margin-bottom: 20;
     color: #ffffff;
+    border: 1px solid #868e9694;
 }
 
 .card-text {

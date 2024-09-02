@@ -1,5 +1,5 @@
 body {
-    background-color: #222;
+    background-color: #181818;
     color: #fff;
     font-family: 'Poppins', 'Roboto', sans-serif; 
 }
@@ -45,7 +45,6 @@ body {
 .user-card {
     background: #333;
     color: #f8f9fa;
-    border: 1px solid #6c757d;
     border-radius: 10px;
     padding: 20px;
     text-align: center;
@@ -70,7 +69,7 @@ body {
     font-size: 20px;
     font-weight: bold;
     font-size: clamp(1rem, 2.5vw, 1.25rem);
-    border: 1px solid #868e96;
+    border: 1px solid #868e9694;
     padding: 5px; 
     border-radius: 5px; 
 }

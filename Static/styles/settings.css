@@ -1,6 +1,6 @@
 body {
     font-family: 'Poppins', 'Roboto', sans-serif; 
-    background-color: #222222;
+    background-color: #181818;
     color: #FFF;
     margin: 0;
     padding: 0;
@@ -36,9 +36,9 @@ body {
 .settings-container {
     padding: 15px;
     margin: auto;
-    width: 50%; /* Default width */
-    max-width: 600px; /* Max width limit for large screens */
-    background-color: #333333;
+    width: 50%; 
+    max-width: 600px; 
+    background-color: #222222;
     border-radius: 20px;
     animation: scaleFadeIn 0.8s ease-in-out;
     max-height: calc(150vh - 60px - 20px); 
@@ -149,7 +149,7 @@ input[type="checkbox"]:not(:checked) + .slider:before {
     width: 24px;  
     height: 24px; 
     margin: 2px;  
-    border: 2px solid transparent;  
+    border: 1px solid #e0e0e0;  
     cursor: pointer;
     border-radius: 20%;  
     transition: border-color 0.3s, transform 0.3s;  
