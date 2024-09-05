@@ -26,7 +26,7 @@ document.addEventListener("DOMContentLoaded", function() {
         const name = label.id.split('-').pop();
         const createdAt = localStorage.getItem(`otp_created_at_${name}`);
         const now = Date.now();
-        const oneHour = 3600 * 1000; // One hour in milliseconds
+        const oneHour = 5 * 60 * 1000;
 
         console.log(`Checking OTP: ${name}`);
         console.log(`Created at: ${createdAt}, Now: ${now}`);
@@ -310,9 +310,14 @@ document.getElementById('searchInput').addEventListener('input', function() {
     
     var otpDivs = rowDiv.querySelectorAll('.col-md-4');
     var displayed = 0;
+    
     otpDivs.forEach(function(div) {
-        var name = div.querySelector('.alert').textContent;
-        if (name.toUpperCase().indexOf(filter) > -1) {
+        var name = div.querySelector('.alert span').textContent || '';  // Get the name or default to empty string
+        var email = div.querySelector('.email-tooltip span') ? div.querySelector('.email-tooltip span').textContent || '' : ''; // Get email if available
+        var company = div.getAttribute('data-company') || ''; // Get company from data-company attribute
+
+        // Check if the name, email, or company contains the filter
+        if (name.toUpperCase().indexOf(filter) > -1 || email.toUpperCase().indexOf(filter) > -1 || company.toUpperCase().indexOf(filter) > -1) {
             div.style.display = 'block';
             displayed++;
         } else {
@@ -325,6 +330,7 @@ document.getElementById('searchInput').addEventListener('input', function() {
         var nextSibling = companyGroup.nextElementSibling;
         var atLeastOneVisible = false;
         
+        // Iterate through all next siblings until the next company group
         while (nextSibling && !nextSibling.matches('.col-md-12.mt-4')) {
             if (nextSibling.style.display !== 'none') {
                 atLeastOneVisible = true;
@@ -333,6 +339,7 @@ document.getElementById('searchInput').addEventListener('input', function() {
             nextSibling = nextSibling.nextElementSibling;
         }
         
+        // Show or hide the company group based on whether any OTP is visible under it
         if (atLeastOneVisible) {
             companyGroup.style.display = 'block';
         } else {
@@ -340,6 +347,7 @@ document.getElementById('searchInput').addEventListener('input', function() {
         }
     });
 
+    // Show a "no secrets found" message if no OTPs are visible
     if (displayed === 0) {
         document.getElementById('noSecretsFound').style.display = 'block';
         updateNoSecretsMessage();
