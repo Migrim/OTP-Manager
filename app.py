@@ -183,7 +183,7 @@ def load_from_db(secret_id=None):
     with sqlite3.connect(db_path) as db:
         cursor = db.cursor()
         if secret_id:
-            print(f"Looking up OTP secret with ID: {secret_id}")  # Debug statement
+            print(f"Looking up OTP secret with ID: {secret_id}")  
             cursor.execute("""
                 SELECT 
                     otp_secrets.name, 
@@ -199,7 +199,7 @@ def load_from_db(secret_id=None):
             """, (secret_id,))
             row = cursor.fetchone()
             if row:
-                print(f"OTP secret found: {row}")  # Debug statement
+                print(f"OTP secret found: {row}") 
                 return {
                     'name': row[0], 
                     'email': row[1],  
@@ -210,7 +210,7 @@ def load_from_db(secret_id=None):
                     'company': row[6] if row[6] else 'Unbekannt'
                 }
             else:
-                print("No OTP secret found with the given ID.")  # Debug statement
+                print("No OTP secret found with the given ID.")  
         else:
             cursor.execute("""
                 SELECT 
@@ -378,7 +378,7 @@ def check_server_capacity(f):
 @app.route('/get_flash_messages')
 def get_flash_messages():
     messages = session.get('_flashes', [])
-    session.pop('_flashes', None)  # Clear flashes after they're retrieved
+    session.pop('_flashes', None)  
     categorized_messages = [{'category': category, 'message': message} for category, message in messages]
     return jsonify(categorized_messages)
 
@@ -1104,6 +1104,12 @@ def get_otp():
         
         with open('otp_log.json', 'a') as log_file:
             log_file.write(json.dumps(log_event) + '\n')
+        
+        with open('otp_code.json', 'w') as json_file:
+            json.dump({}, json_file)
+        
+        with open('otp_log.json', 'w') as log_file:
+            log_file.write('')  
         
         return jsonify(otp_data)
     except FileNotFoundError:
