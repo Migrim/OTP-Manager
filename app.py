@@ -112,7 +112,7 @@ else:
 @app.login_manager.user_loader
 def load_user(user_id):
     db_path = app.config['DATABASE']
-    with sqlite3.connect(db_path) as conn:
+    with sqlite3.connect(db_path, timeout=30.0) as conn:
         cursor = conn.cursor()
         cursor.execute("SELECT * FROM users WHERE id = ?", (user_id,))
         user_row = cursor.fetchone()
@@ -134,7 +134,7 @@ def load_user(user_id):
 
 def save_to_db(otp_secrets):
     db_path = app.config['DATABASE']
-    conn = sqlite3.connect(db_path)
+    conn = sqlite3.connect(db_path, timeout=30.0)
     cursor = conn.cursor()
     
     cursor.execute("DELETE FROM otp_secrets")
@@ -154,7 +154,7 @@ def save_to_db(otp_secrets):
 
 def save_companies_to_db(companies):
     db_path = app.config['DATABASE']
-    conn = sqlite3.connect(db_path)
+    conn = sqlite3.connect(db_path, timeout=30.0)
     cursor = conn.cursor()
 
     for company in companies:
@@ -180,7 +180,7 @@ def save_companies_to_db(companies):
 
 def load_from_db(secret_id=None):
     db_path = app.config['DATABASE'] 
-    with sqlite3.connect(db_path) as db:
+    with sqlite3.connect(db_path, timeout=30.0) as db:
         cursor = db.cursor()
         if secret_id:
             print(f"Looking up OTP secret with ID: {secret_id}")  
@@ -239,7 +239,7 @@ def load_from_db(secret_id=None):
 
 def load_companies_from_db():
     db_path = app.config['DATABASE']  
-    with sqlite3.connect(db_path) as db:
+    with sqlite3.connect(db_path, timeout=30.0) as db:
         cursor = db.cursor()
         cursor.execute("SELECT company_id, name, kundennummer FROM companies ORDER BY company_id")
         return [{'company_id': row[0], 'name': row[1], 'kundennummer': row[2]} for row in cursor.fetchall()]
@@ -250,7 +250,7 @@ def get_current_user():
         return None  
 
     db_path = app.config['DATABASE']  
-    with sqlite3.connect(db_path) as db:
+    with sqlite3.connect(db_path, timeout=30.0) as db:
         db.row_factory = sqlite3.Row 
         cursor = db.cursor()
         cursor.execute("SELECT * FROM users WHERE id = ?", (user_id,))
@@ -461,7 +461,7 @@ def logout():
 
     try:
         db_path = app.config['DATABASE']  
-        with sqlite3.connect(db_path) as db:
+        with sqlite3.connect(db_path, timeout=30.0) as db:
             cursor = db.cursor()
             cursor.execute("UPDATE users SET session_token = NULL WHERE id = ?", (user_id,))
             db.commit()
@@ -484,7 +484,7 @@ def login_required(f):
             return redirect(url_for('login'))
         
         db_path = app.config['DATABASE']  
-        with sqlite3.connect(db_path) as db:
+        with sqlite3.connect(db_path, timeout=30.0) as db:
             cursor = db.cursor()
             cursor.execute("SELECT session_token FROM users WHERE id = ?", (user_id,))
             db_session_token = cursor.fetchone()
@@ -648,7 +648,7 @@ def reset_password(user_id):
         
         try:
             db_path = app.config['DATABASE']  
-            with sqlite3.connect(db_path) as db:
+            with sqlite3.connect(db_path, timeout=30.0) as db:
                 cursor = db.cursor()
                 cursor.execute("UPDATE users SET password = ? WHERE id = ?", (hashed_password, user_id))
                 db.commit()
@@ -670,7 +670,7 @@ def get_last_login_time_from_db():
     user_id = session.get('user_id')
     if user_id:
         db_path = app.config['DATABASE']  
-        with sqlite3.connect(db_path) as db:
+        with sqlite3.connect(db_path, timeout=30.0) as db:
             cursor = db.cursor()
             cursor.execute("SELECT last_login_time FROM users WHERE id = ?", (user_id,))
             last_login_time = cursor.fetchone()
@@ -697,7 +697,7 @@ def login():
 
         try:
             db_path = app.config['DATABASE']
-            with sqlite3.connect(db_path) as db:
+            with sqlite3.connect(db_path, timeout=30.0) as db:
                 cursor = db.cursor()
                 cursor.execute("SELECT * FROM users WHERE username = ?", (username,))
                 user_record = cursor.fetchone()
@@ -709,7 +709,7 @@ def login():
 
                 if is_cleartext(stored_password):
                     hashed_password = bcrypt.generate_password_hash(stored_password).decode('utf-8')
-                    with sqlite3.connect(db_path) as db:
+                    with sqlite3.connect(db_path, timeout=30.0) as db:
                         cursor = db.cursor()
                         cursor.execute("UPDATE users SET password = ? WHERE id = ?", (hashed_password, user_id))
                         db.commit()
@@ -725,7 +725,7 @@ def login():
                     session['user_id'] = user_id
                     session['session_token'] = session_token
 
-                    with sqlite3.connect(db_path) as db:
+                    with sqlite3.connect(db_path, timeout=30.0) as db:
                         cursor = db.cursor()
                         cursor.execute("UPDATE statistics SET logins_today = logins_today + 1")
                         cursor.execute("UPDATE users SET session_token = ? WHERE id = ?", (session_token, user_id))
@@ -1218,7 +1218,7 @@ def delete_secret(name):
     username = current_user.username 
     
     try:
-        with sqlite3.connect(db_path) as conn:
+        with sqlite3.connect(db_path, timeout=30.0) as conn:
             cursor = conn.cursor()
             cursor.execute("DELETE FROM otp_secrets WHERE name = ?", (name,))
             conn.commit()
@@ -1255,7 +1255,7 @@ def delete_user(user_id):
 
     try:
         db_path = app.config['DATABASE']
-        with sqlite3.connect(db_path) as db:
+        with sqlite3.connect(db_path, timeout=30.0) as db:
             cursor = db.cursor()
             cursor.execute("DELETE FROM users WHERE id = ?", (user_id,))
             db.commit()
