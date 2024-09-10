@@ -378,7 +378,7 @@ def check_server_capacity(f):
 @app.route('/get_flash_messages')
 def get_flash_messages():
     messages = session.get('_flashes', [])
-    session.pop('_flashes', None)  
+    session.pop('_flashes', None)  # Clear flashes after they're retrieved
     categorized_messages = [{'category': category, 'message': message} for category, message in messages]
     return jsonify(categorized_messages)
 
@@ -481,7 +481,6 @@ def login_required(f):
         session_token = session.get('session_token')
 
         if not user_id or not session_token:
-            app.logger.info("Redirecting to login: No user_id or session_token")
             return redirect(url_for('login'))
         
         db_path = app.config['DATABASE']  
@@ -502,11 +501,9 @@ def login_required(f):
 @login_required
 def settings():
     user_id = session.get('user_id')
-    print("User ID:", user_id)
 
     if request.method == 'POST':
         data = request.get_json()
-        print("Received POST data:", data)
 
         show_timer = 1 if data.get('show_timer') == 'on' else 0
         show_otp_type = 1 if data.get('show_otp_type') == 'on' else 0
@@ -555,8 +552,6 @@ def settings():
         brightness = get_brightness(alert_color)
         text_color = color_map.get(alert_color, '#FFFFFF' if brightness < 120 else '#000000')
 
-        print("Determined text color:", text_color)
-
         try:
             db_path = app.config['DATABASE']
             with sqlite3.connect(db_path) as db:
@@ -573,7 +568,6 @@ def settings():
             print("Error updating database:", str(e))
             flash('An error occurred while updating settings.', 'danger')
 
-    print("Loading settings from database.")
     db_path = app.config['DATABASE']
     with sqlite3.connect(db_path) as db:
         cursor = db.cursor()
@@ -582,7 +576,6 @@ def settings():
             (user_id,)
         )
         settings = cursor.fetchone()
-        print("Settings loaded:", settings)
         if settings:
             current_user.show_timer, current_user.show_otp_type, current_user.show_content_titles, current_user.alert_color, current_user.text_color, current_user.show_emails, current_user.show_company = settings
             flash('Personal settings loaded', 'info')
@@ -1102,11 +1095,19 @@ def get_otp():
     try:
         with open('otp_code.json', 'r') as json_file:
             otp_data = json.load(json_file)
-        print("OTP data fetched successfully.")
+        
+        log_event = {
+            'username': current_user.username,
+            'otp': otp_data,
+            'timestamp': datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+        }
+        
+        with open('otp_log.json', 'a') as log_file:
+            log_file.write(json.dumps(log_event) + '\n')
+        
         return jsonify(otp_data)
     except FileNotFoundError:
         flash("OTP not found. Please generate an OTP first.", "error")
-        print("Attempted to fetch OTP data, but file not found.")
         return jsonify({'message': 'OTP not found'}), 404
 
 @app.route('/clear_otp', methods=['POST'])

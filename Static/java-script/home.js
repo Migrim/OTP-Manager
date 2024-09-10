@@ -28,22 +28,11 @@ document.addEventListener("DOMContentLoaded", function() {
         const now = Date.now();
         const oneHour = 5 * 60 * 1000;
 
-        console.log(`Checking OTP: ${name}`);
-        console.log(`Created at: ${createdAt}, Now: ${now}`);
-
-        if (createdAt) {
-            console.log(`Time since created: ${now - createdAt} ms`);
-        }
-
         if (createdAt && (now - createdAt) < oneHour) {
-            console.log(`Showing 'New' label for OTP: ${name}`);
             label.style.display = 'block';
             setTimeout(() => {
-                console.log(`Hiding 'New' label for OTP: ${name}`);
                 label.style.display = 'none';
             }, oneHour - (now - createdAt));
-        } else {
-            console.log(`'New' label not shown for OTP: ${name}`);
         }
     });
 });
@@ -51,7 +40,6 @@ document.addEventListener("DOMContentLoaded", function() {
 function markNewOTP(name) {
     const now = Date.now();
     localStorage.setItem(`otp_created_at_${name}`, now);
-    console.log(`Marked new OTP: ${name}, Timestamp: ${now}`);
 }
 
 async function updateOtpCodes(otpCodes) {
