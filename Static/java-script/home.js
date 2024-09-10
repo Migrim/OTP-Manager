@@ -43,7 +43,7 @@ function markNewOTP(name) {
 }
 
 async function updateOtpCodes(otpCodes) {
-    otpCodes.forEach(async (otp) => {
+    otpCodes.forEach((otp) => {
         let currentOtpCodeElement = document.getElementById(`current_otp_code_${otp.name}`);
         if (currentOtpCodeElement && isElementVisible(currentOtpCodeElement) && otp.current_otp) {
             const newDigits = otp.current_otp.split('');
@@ -51,14 +51,23 @@ async function updateOtpCodes(otpCodes) {
             for (let index = 0; index < newDigits.length; index++) {
                 let digitElement = currentOtpCodeElement.querySelectorAll('.digit')[index];
                 if (newDigits[index] !== lastDigits[index]) {
-                    await simulateRolling(digitElement, newDigits[index]);
-                } else {
-                    digitElement.textContent = newDigits[index];
+                    fadeOutAndIn(digitElement, newDigits[index]);
                 }
             }
             lastOtpCodes.set(otp.name, otp.current_otp);
         }
     });
+}
+
+function fadeOutAndIn(element, newValue) {
+    element.style.transition = 'opacity 0.2s ease-out';
+    element.style.opacity = 0;
+
+    setTimeout(() => {
+        element.textContent = newValue;
+        element.style.transition = 'opacity 0.2s ease-in';
+        element.style.opacity = 1;
+    }, 200);
 }
 
 document.addEventListener('scroll', function() {
@@ -79,6 +88,7 @@ async function refreshOtpCodes() {
     }
 }
 
+/*             old rolling effect
 async function simulateRolling(digitElement, finalDigit) {
     return new Promise((resolve) => {
         const sequence = [...Array(10).keys()];
@@ -102,6 +112,7 @@ async function simulateRolling(digitElement, finalDigit) {
         requestAnimationFrame(animate);
     });
 }
+*/
 
 async function manuallyRefreshOtps() {
     try {
