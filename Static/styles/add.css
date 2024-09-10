@@ -22,7 +22,6 @@ body {
     width: 100%;
     padding: 30px;
     border-radius: 10px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.4);
     background: #222;
     animation: fadeInScale 0.8s ease-in-out;
 }
@@ -53,9 +52,9 @@ body {
     margin-right: auto;
     display: block;
     width: fit-content;
-    background-color: #555; /* Default background color */
-    color: #ddd; /* Default text color */
-    border: 1px solid #666; /* Default border color */
+    background-color: #555; 
+    color: #ddd; 
+    border: 1px solid #666; 
     padding: 10px 15px;
     border-radius: 5px;
     transition: background-color 0.3s, color 0.3s, border-color 0.3s;
@@ -99,7 +98,7 @@ body {
     }
     100% {
         transform: scale(1.02);
-        border-color: #f8bbd0; /* Soft pink */
+        border-color: #f8bbd0; 
     }
 }
 

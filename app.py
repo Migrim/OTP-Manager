@@ -268,7 +268,7 @@ def get_current_user():
 
 def get_all_users():
     db_path = app.config['DATABASE']  
-    with sqlite3.connect(db_path) as db:
+    with sqlite3.connect(db_path, timeout=30.0) as db:
         cursor = db.cursor()
         cursor.execute("SELECT id, username FROM users")
         users = cursor.fetchall()
@@ -385,7 +385,7 @@ def get_flash_messages():
 def update_statistics(logins=0, refreshed=0):
     today = datetime.now().strftime('%Y-%m-%d')
     db_path = app.config['DATABASE']  
-    with sqlite3.connect(db_path) as db:
+    with sqlite3.connect(db_path, timeout=30.0) as db:
         cursor = db.cursor()
         cursor.execute("SELECT * FROM statistics WHERE date = ?", (today,))
         stats = cursor.fetchone()
@@ -400,7 +400,7 @@ def update_statistics(logins=0, refreshed=0):
 def get_statistics():
     today = datetime.now().strftime('%Y-%m-%d')
     db_path = app.config['DATABASE']  
-    with sqlite3.connect(db_path) as db:
+    with sqlite3.connect(db_path, timeout=30.0) as db:
         cursor = db.cursor()
         cursor.execute("SELECT * FROM statistics WHERE date = ?", (today,))
         stats = cursor.fetchone()
@@ -411,7 +411,7 @@ def get_statistics():
 
 def get_older_statistics(limit=20):
     db_path = app.config['DATABASE']  
-    with sqlite3.connect(db_path) as db:
+    with sqlite3.connect(db_path, timeout=30.0) as db:
         cursor = db.cursor()
         cursor.execute("SELECT * FROM statistics ORDER BY date DESC LIMIT ?", (limit,))
         return cursor.fetchall()
@@ -554,7 +554,7 @@ def settings():
 
         try:
             db_path = app.config['DATABASE']
-            with sqlite3.connect(db_path) as db:
+            with sqlite3.connect(db_path, timeout=30.0) as db:
                 cursor = db.cursor()
                 print("Database connection established.")
                 cursor.execute(
@@ -569,7 +569,7 @@ def settings():
             flash('An error occurred while updating settings.', 'danger')
 
     db_path = app.config['DATABASE']
-    with sqlite3.connect(db_path) as db:
+    with sqlite3.connect(db_path, timeout=30.0) as db:
         cursor = db.cursor()
         cursor.execute(
             "SELECT show_timer, show_otp_type, show_content_titles, alert_color, text_color, show_emails, show_company FROM users WHERE id = ?",
@@ -773,7 +773,7 @@ def perform_login_actions(user, keep_logged_in):
 
     last_login_time = datetime.now()
     db_path = app.config['DATABASE'] 
-    with sqlite3.connect(db_path) as db:
+    with sqlite3.connect(db_path, timeout=30.0) as db:
         cursor = db.cursor()
         cursor.execute("UPDATE users SET last_login_time = ? WHERE id = ?", (last_login_time, user[0]))
         db.commit()
@@ -900,7 +900,7 @@ def get_otp_v2(name):
 
 def get_user_colors(user_id):
     db_path = app.config['DATABASE']  
-    with sqlite3.connect(db_path) as db:
+    with sqlite3.connect(db_path, timeout=30.0) as db:
         cursor = db.cursor()
         cursor.execute("SELECT alert_color, text_color FROM users WHERE id = ?", (user_id,))
         result = cursor.fetchone()
@@ -911,7 +911,7 @@ def get_user_colors(user_id):
 
 def get_user_alert_color(user_id):
     db_path = app.config['DATABASE']  
-    with sqlite3.connect(db_path) as db:
+    with sqlite3.connect(db_path, timeout=30.0) as db:
         cursor = db.cursor()
         cursor.execute("SELECT alert_color FROM users WHERE id = ?", (user_id,))
         result = cursor.fetchone()
@@ -941,7 +941,7 @@ def inject_user_text_color():
 def get_user_text_color(user_id):
     db_path = app.config['DATABASE']  
     try:
-        with sqlite3.connect(db_path) as conn:
+        with sqlite3.connect(db_path, timeout=30.0) as conn:
             cursor = conn.cursor()
             cursor.execute("SELECT text_color FROM users WHERE id = ?", (user_id,))
             result = cursor.fetchone()
