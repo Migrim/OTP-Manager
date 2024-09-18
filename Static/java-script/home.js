@@ -273,9 +273,18 @@ window.onload = function() {
         let originalText = spoilerElements[i].innerText;
         let maskedText = '●'.repeat(originalText.length);
 
-        spoilerElements[i].innerHTML = `
-            <span class="masked-text">${maskedText}</span>
-            <span class="original-text" style="opacity: 0;">${originalText}</span>`;
+        let maskedSpan = document.createElement('span');
+        maskedSpan.classList.add('masked-text');
+        maskedSpan.textContent = maskedText;
+
+        let originalSpan = document.createElement('span');
+        originalSpan.classList.add('original-text');
+        originalSpan.style.opacity = 0;
+        originalSpan.textContent = originalText;
+
+        spoilerElements[i].innerHTML = '';
+        spoilerElements[i].appendChild(maskedSpan);
+        spoilerElements[i].appendChild(originalSpan);
 
         spoilerElements[i].onmouseover = function() {
             this.querySelector('.original-text').style.opacity = 1;
@@ -311,11 +320,10 @@ document.getElementById('searchInput').addEventListener('input', function() {
     var displayed = 0;
     
     otpDivs.forEach(function(div) {
-        var name = div.querySelector('.alert span').textContent || '';  // Get the name or default to empty string
-        var email = div.querySelector('.email-tooltip span') ? div.querySelector('.email-tooltip span').textContent || '' : ''; // Get email if available
-        var company = div.getAttribute('data-company') || ''; // Get company from data-company attribute
+        var name = div.querySelector('.alert span').textContent || '';  
+        var email = div.querySelector('.email-tooltip span') ? div.querySelector('.email-tooltip span').textContent || '' : ''; 
+        var company = div.getAttribute('data-company') || ''; 
 
-        // Check if the name, email, or company contains the filter
         if (name.toUpperCase().indexOf(filter) > -1 || email.toUpperCase().indexOf(filter) > -1 || company.toUpperCase().indexOf(filter) > -1) {
             div.style.display = 'block';
             displayed++;
@@ -329,7 +337,6 @@ document.getElementById('searchInput').addEventListener('input', function() {
         var nextSibling = companyGroup.nextElementSibling;
         var atLeastOneVisible = false;
         
-        // Iterate through all next siblings until the next company group
         while (nextSibling && !nextSibling.matches('.col-md-12.mt-4')) {
             if (nextSibling.style.display !== 'none') {
                 atLeastOneVisible = true;
@@ -338,7 +345,6 @@ document.getElementById('searchInput').addEventListener('input', function() {
             nextSibling = nextSibling.nextElementSibling;
         }
         
-        // Show or hide the company group based on whether any OTP is visible under it
         if (atLeastOneVisible) {
             companyGroup.style.display = 'block';
         } else {
@@ -346,7 +352,6 @@ document.getElementById('searchInput').addEventListener('input', function() {
         }
     });
 
-    // Show a "no secrets found" message if no OTPs are visible
     if (displayed === 0) {
         document.getElementById('noSecretsFound').style.display = 'block';
         updateNoSecretsMessage();
