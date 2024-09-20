@@ -37,7 +37,11 @@ OTP-Manager is a secure, easy-to-use tool designed to manage one-time passwords 
     [server]
     port = 5002
     secret_key = your-secret-key
-
+    
+    [restart]
+    time = The time of day (in HH:MM format) when the application will restart automatically.
+    interval_days = The number of days between each restart.
+    
     [database]
     path = instance/otp.db
     ```
@@ -65,17 +69,3 @@ OTP-Manager is a secure, easy-to-use tool designed to manage one-time passwords 
     - Click "Save".
 6. To view the OTP for a service, navigate to the service entry and the OTP will be displayed.
 
-## Screenshots
-
-### Dashboard
-
-![Dashboard](https://github.com/Migrim/OTP-Manager/blob/main/Static/images/Dashboard.png?raw=true)
-
-### Customizability
-
-![Custom 1](https://github.com/Migrim/OTP-Manager/blob/main/Static/images/Custom%20%231.png?raw=true)
-![Custom 2](https://github.com/Migrim/OTP-Manager/blob/main/Static/images/Custom%20%232.png?raw=true)
-
-### Statistics
-
-![Stats](https://github.com/Migrim/OTP-Manager/blob/main/Static/images/Stats.png?raw=true)
