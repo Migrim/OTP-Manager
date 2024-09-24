@@ -105,7 +105,7 @@ def find_database_py():
 
 database_path = find_database_py()
 if database_path:
-    subprocess.Popen(["python", database_path])
+    subprocess.Popen(["python3", database_path])
 else:
     print("Database.py not found.")
 
