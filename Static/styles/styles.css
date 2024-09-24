@@ -568,3 +568,53 @@ body {
         opacity: 1;
     }
 }
+#searchInput {
+    padding-left: 36px; 
+    background-image: url('data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 96 960 960" width="24" fill="%23999999"%3E%3Cpath d="M796 960 547 711q-37 29-82.5 44t-93.5 15q-126 0-213-87T67 469q0-126 87-213t213-87q126 0 213 87t87 213q0 46-15 91t-45 83l250 249q9 9 9 22t-9 22q-9 9-22 9t-22-9ZM372 712q99 0 166.5-67.5T606 478q0-99-67.5-166.5T372 244q-99 0-166.5 67.5T138 478q0 99 67.5 166.5T372 712Z"/%3E%3C/svg%3E');
+    background-repeat: no-repeat;
+    background-position: 12px center;
+    background-size: 16px; 
+    color: #f1f1f1; 
+}
+.back-to-top {
+    position: fixed;
+    bottom: 40px;
+    right: 40px;
+    background-color: #333;
+    color: #fff;
+    padding: 10px 15px;
+    border-radius: 12px;
+    cursor: pointer;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s, transform 0.3s;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.back-to-top:hover {
+    background-color: #555;
+}
+
+.material-icons-outlined {
+    font-size: 20px;
+    transition: transform 0.3s ease; 
+}
+
+.back-to-top:hover .material-icons-outlined {
+    transform: translateY(-2px);
+}
+.copied-effect {
+    animation: highlightEffect 0.8s ease;
+}
+
+@keyframes highlightEffect {
+    0% {
+        color: #99cc9a; 
+    }
+    100% {
+        background-color: transparent;
+        color: inherit;
+    }
+}

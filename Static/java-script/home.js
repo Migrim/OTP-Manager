@@ -553,39 +553,132 @@ document.getElementById('searchInput').addEventListener('input', function() {
     });
 
     document.addEventListener("DOMContentLoaded", function() {
-        function getGreeting() {
-            let now = new Date();
-            let hour = now.getHours();
-            if (hour < 4) {
-                return "🌜 It's getting late";
-            } else if (hour < 12) {
-                return "☕ Good morning";
-            } else if (hour < 18) {
-                return "🌞 Good afternoon";
-            } else {
-                return "🌒 Good evening";
+        const isMac = navigator.platform.toUpperCase().indexOf('MAC') >= 0;
+        const hotkeyCombination = isMac ? '⌥ + Q' : 'ALT + Q';
+        
+        document.addEventListener("keydown", function(event) {
+            if ((isMac && event.altKey && event.key.toLowerCase() === 'q') || 
+                (!isMac && event.altKey && event.key.toLowerCase() === 'q')) {
+                event.preventDefault();
+                document.getElementById('searchInput').focus();
             }
-        }
-    
-        let greeting = getGreeting();
-        let searchPrompt = "Type here to search for OTPs";
-        let placeholderText = `${greeting} ${username}! ${searchPrompt}`;
+        });
+        
+        let searchPrompt = "Search for entries in the database.";
         let input = document.getElementById("searchInput");
-        input.setAttribute("placeholder", placeholderText);
+        input.setAttribute("placeholder", searchPrompt);
+        
+        let container = document.createElement('div');
+        container.style.position = 'relative';
+        container.style.display = 'inline-block';
+        container.style.width = input.clientWidth + 'px';
+        container.style.height = input.clientHeight + 'px';
+        
+        container.style.border = input.style.border;
+        container.style.padding = input.style.padding;
+        container.style.background = input.style.background;
+        container.style.borderRadius = input.style.borderRadius;
+        
+        input.style.paddingRight = '70px'; 
+        input.style.width = '100%'; 
+
+        input.parentNode.insertBefore(container, input);
+        container.appendChild(input);
+        
+        let hotkeyText = document.createElement('span');
+        hotkeyText.textContent = hotkeyCombination;
+        hotkeyText.style.position = 'absolute';
+        hotkeyText.style.right = '10px'; 
+        hotkeyText.style.top = '50%';
+        hotkeyText.style.transform = 'translateY(-50%)';
+        hotkeyText.style.fontSize = '0.9em';
+        hotkeyText.style.color = '#888';
+        hotkeyText.style.pointerEvents = 'none';
+        hotkeyText.style.zIndex = '2';
+        hotkeyText.style.padding = '2px 4px'; 
+        hotkeyText.style.border = '1px solid #888'; 
+        hotkeyText.style.borderRadius = '6px'; 
+        hotkeyText.style.backgroundColor = 'rgba(255, 255, 255, 0.1)'; 
+        
+        container.appendChild(hotkeyText);
+        
+        input.addEventListener('input', function() {
+            hotkeyText.style.display = input.value.length > 0 ? 'none' : 'inline';
+        });
+        
+        window.addEventListener('resize', function() {
+            container.style.width = input.clientWidth + 'px';
+        });
+    });    
+
+    document.addEventListener("DOMContentLoaded", function () {
+        const backToTopButton = document.getElementById("backToTop");
     
-        function updateClock() {
-            let currentTime = getCurrentTime(); 
-            input.setAttribute("placeholder", `${placeholderText} - ${currentTime}`);
-            setTimeout(updateClock, 1000);
-        }
+        window.addEventListener("scroll", function () {
+            if (window.scrollY > 300) {
+                backToTopButton.style.display = "block";
+            } else {
+                backToTopButton.style.display = "none";
+            }
+        });
     
-        function getCurrentTime() {
-            let now = new Date();
-            let hours = now.getHours().toString().padStart(2, '0');
-            let minutes = now.getMinutes().toString().padStart(2, '0');
-            let seconds = now.getSeconds().toString().padStart(2, '0');
-            return `${hours}:${minutes}:${seconds}`;
-        }
-    
-        updateClock(); 
+        backToTopButton.addEventListener("click", function () {
+            window.scrollTo({
+                top: 0,
+                behavior: "smooth",
+            });
+        });
     });
+    
+    document.addEventListener("DOMContentLoaded", function() {
+        const otpCodes = document.querySelectorAll('.otp-code');
+        
+        otpCodes.forEach(code => {
+            code.addEventListener('click', function() {
+                const digits = code.querySelectorAll('.digit');
+                let otpString = "";
+        
+                digits.forEach(digit => {
+                    otpString += digit.textContent;
+                });
+        
+                if (navigator.clipboard) {
+                    navigator.clipboard.writeText(otpString)
+                        .then(() => {
+                            console.log('OTP copied to clipboard:', otpString);
+                            showCopyEffect(code); // Show visual feedback
+                        })
+                        .catch(err => {
+                            console.error('Failed to copy OTP:', err);
+                        });
+                } else {
+                    const textArea = document.createElement("textarea");
+                    textArea.value = otpString;
+                    document.body.appendChild(textArea);
+                    textArea.focus();
+                    textArea.select();
+                    try {
+                        document.execCommand('copy');
+                        console.log('OTP copied to clipboard (fallback):', otpString);
+                        showCopyEffect(code); // Show visual feedback
+                    } catch (err) {
+                        console.error('Fallback: Oops, unable to copy', err);
+                    }
+                    document.body.removeChild(textArea);
+                }
+            });
+        });
+    
+        function showCopyEffect(element) {
+            // Apply a temporary class to trigger the animation
+            element.classList.add('copied-effect');
+            
+            // Remove the class after the animation ends
+            setTimeout(() => {
+                element.classList.remove('copied-effect');
+            }, 600); // Adjust the duration to match your animation timing
+        }
+    });
+    
+    
+    
