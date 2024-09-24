@@ -554,10 +554,10 @@ document.getElementById('searchInput').addEventListener('input', function() {
 
     document.addEventListener("DOMContentLoaded", function() {
         const isMac = navigator.platform.toUpperCase().indexOf('MAC') >= 0;
-        const hotkeyCombination = isMac ? '⌥ + Q' : 'ALT + Q';
+        const hotkeyCombination = isMac ? '⌃ + Q / ⌘ + E' : 'ALT + Q';
         
         document.addEventListener("keydown", function(event) {
-            if ((isMac && event.altKey && event.key.toLowerCase() === 'q') || 
+            if ((isMac && ((event.ctrlKey && event.key.toLowerCase() === 'q') || (event.metaKey && event.key.toLowerCase() === 'e'))) ||
                 (!isMac && event.altKey && event.key.toLowerCase() === 'q')) {
                 event.preventDefault();
                 document.getElementById('searchInput').focus();
@@ -581,7 +581,7 @@ document.getElementById('searchInput').addEventListener('input', function() {
         
         input.style.paddingRight = '70px'; 
         input.style.width = '100%'; 
-
+    
         input.parentNode.insertBefore(container, input);
         container.appendChild(input);
         
@@ -610,7 +610,7 @@ document.getElementById('searchInput').addEventListener('input', function() {
             container.style.width = input.clientWidth + 'px';
         });
     });    
-
+    
     document.addEventListener("DOMContentLoaded", function () {
         const backToTopButton = document.getElementById("backToTop");
     
@@ -646,7 +646,7 @@ document.getElementById('searchInput').addEventListener('input', function() {
                     navigator.clipboard.writeText(otpString)
                         .then(() => {
                             console.log('OTP copied to clipboard:', otpString);
-                            showCopyEffect(code); // Show visual feedback
+                            showCopyEffect(code); 
                         })
                         .catch(err => {
                             console.error('Failed to copy OTP:', err);
@@ -660,7 +660,7 @@ document.getElementById('searchInput').addEventListener('input', function() {
                     try {
                         document.execCommand('copy');
                         console.log('OTP copied to clipboard (fallback):', otpString);
-                        showCopyEffect(code); // Show visual feedback
+                        showCopyEffect(code); 
                     } catch (err) {
                         console.error('Fallback: Oops, unable to copy', err);
                     }
@@ -670,13 +670,11 @@ document.getElementById('searchInput').addEventListener('input', function() {
         });
     
         function showCopyEffect(element) {
-            // Apply a temporary class to trigger the animation
             element.classList.add('copied-effect');
             
-            // Remove the class after the animation ends
             setTimeout(() => {
                 element.classList.remove('copied-effect');
-            }, 600); // Adjust the duration to match your animation timing
+            }, 600); 
         }
     });
     
