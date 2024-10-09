@@ -124,39 +124,40 @@ body {
 }
 
 .btn-primary {
-    background-color: #275cd5;
+    background: linear-gradient(45deg, #275cd5, #44ABED); 
     color: #fff;
     border: none;
     border-radius: 5px;
-    transition: background-color 0.3s;
+    transition: background 0.3s;
 }
 
 .btn-primary:hover {
-    background-color: #44ABED;
+    background: linear-gradient(45deg, #44ABED, #6ec1f5); 
     color: #333;
 }
 
 .btn-danger {
-    background-color: #FF5252; 
-    border: none; 
-    transition: background-color 0.3s; 
+    background: linear-gradient(45deg, #FF5252, #ff7451); 
+    border: none;
+    transition: background 0.3s;
 }
 
 .btn-danger:hover {
-    background-color: #ff7451; 
+    background: linear-gradient(45deg, #ff7451, #ff8a71);
     color: #333;
 }
 
+
 .btn-light {
-    background-color: #6b6b6b;
+    background: linear-gradient(45deg, #9b79b4, #bba0c9);
     color: #ffffff;
     border: none;
     border-radius: 5px;
-    transition: background-color 0.3s;
+    transition: background 0.3s;
 }
 
 .btn-light:hover {
-    background-color: #e9ecef;
+    background: linear-gradient(45deg, #ad8abf, #d1b9e1); 
     color: #333;
 }
 
@@ -617,4 +618,7 @@ body {
         background-color: transparent;
         color: inherit;
     }
+}
+.btn-primary, .btn-light, .btn-danger {
+    transform: scale(0.9); 
 }

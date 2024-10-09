@@ -3,8 +3,8 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    box-shadow: 0 8px 16px 0 rgba(29, 29, 29, 0.4);
-    background: rgba(29, 29, 29, 0.8);
+    box-shadow: 0 8px 16px 0 rgba(34, 34, 34, 0.4);
+    background: rgba(34, 34, 34, 0.8);
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
     height: 55px;
@@ -44,17 +44,17 @@
     justify-content: center;
     padding: 4px 12px;
     font-size: 1.4rem;
-    background-color: #ff5252;
-    color: #fff; 
+    background: linear-gradient(45deg, #FF5252, #ff7451); 
+    color: #fff;
     text-decoration: none;
     border-radius: 10px;
-    transition: background-color 0.3s;
+    transition: background 0.3s;
     width: 100px;
     height: 40px;
 }
 
 #logoutBtn a:hover {
-    background-color: #ff5d51;
+    background: linear-gradient(45deg, #ff7451, #ff8a71); 
     color: #333;
 }
 
@@ -253,9 +253,9 @@
     visibility: hidden; 
     opacity: 0;
     position: absolute;
-    background: rgba(29, 29, 29, 0.8);
+    background: rgba(34, 34, 34, 0.8);
     min-width: 160px;
-    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    box-shadow: 0px 8px 16px 0px rgba(34,34,34,0.2);
     z-index: 20; 
     border-radius: 0 0 10px 10px;
     top: 50px; 
