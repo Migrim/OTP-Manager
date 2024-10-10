@@ -150,28 +150,33 @@
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         var userCards = document.querySelectorAll('.company-card');
+        var baseDelay = 0.1;
+        var increment = 0.02;
+
         userCards.forEach(function(card, index) {
-            var delay = (index + 1) * 0.06;
+
+            var delay = baseDelay + (index * increment);
+
             card.style.animationDelay = delay + 's';
         });
-    
+
         var deleteCompanyButtons = document.querySelectorAll('.delete-company-btn');
         var confirmDeleteButton = document.getElementById('ns-confirmDeleteButton');
         var companyIdToDelete = null;
-    
+
         deleteCompanyButtons.forEach(function(button) {
             button.addEventListener('click', function() {
                 companyIdToDelete = button.getAttribute('data-company-id'); 
                 $('#ns-confirmDeleteCompanyModal').modal('show');
             });
         });
-    
+
         confirmDeleteButton.addEventListener('click', function() {
             if (!companyIdToDelete) {
                 console.error('No company ID set for deletion.');
                 return;
             }
-    
+
             fetch('/admin/delete_company/' + companyIdToDelete, {
                 method: 'POST',
                 headers: {
@@ -186,7 +191,7 @@
                 }
             });
         });
-    
+
         var editButtons = document.querySelectorAll('.edit-company-btn');
         editButtons.forEach(function(button) {
             button.addEventListener('click', function() {
@@ -200,7 +205,7 @@
                         document.querySelector('#editCompanyForm [name="name"]').value = data.name;
                         document.querySelector('#editCompanyForm [name="kundennummer"]').value = data.kundennummer;
                         document.getElementById('editCompanyId').value = companyId;
-                        document.getElementById('currentPassword').textContent = data.password_status; // Display password status
+                        document.getElementById('currentPassword').textContent = data.password_status;
                         $('#editCompanyModal').modal('show');
                     } else {
                         alert(data.message);
@@ -211,12 +216,12 @@
                 });
             });
         });
-    
+
         document.getElementById('editCompanyForm').addEventListener('submit', function(e) {
             e.preventDefault(); 
             var formData = new FormData(this);
             var companyId = document.getElementById('editCompanyId').value; 
-    
+
             fetch('/admin/edit_company/' + companyId, {
                 method: 'POST',
                 body: formData,
@@ -238,6 +243,7 @@
             });
         });
     });
+
     </script>
     
 {% endblock %}

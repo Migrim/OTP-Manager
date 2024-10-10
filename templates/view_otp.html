@@ -17,7 +17,6 @@
     <div class="title">OTP Code</div>
     <div class="otp-info">
         <p id="otp-code" class="clickable-otp">Current OTP Code: <span class="otp-number">Loading...</span></p>
-        <p class="otp-type">OTP Type: {{ secret.otp_type }}</p>
     </div>
     <div class="progress">
         <div class="progress-bar" id="progress-bar" role="progressbar" style="width: 100%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="30">
@@ -25,10 +24,17 @@
         </div>
     </div>
     <div class="button-container">
-        <a href="{{ url_for('home') }}" class="btn">Home</a>
-        <a href="{{ url_for('add') }}" class="btn">Add another Secret</a>
-    </div>
+        <a href="{{ url_for('home') }}" class="btn btn-primary">Home</a>
+        <a href="{{ url_for('add') }}" class="btn btn-secondary">Add another Secret</a>
+    </div>    
 </div>
+
+<div class="flash-message-container" id="flash-message-container"></div>
+<div class="copy-hint" id="copy-hint">
+    <i class="material-icons-outlined info-icon">info</i>
+    Press Ctrl + C (⌘ + C on Mac) to copy the code!
+</div>
+
 {% endblock %}
 
 {% block scripts %}
@@ -40,24 +46,50 @@
         const otpCodeText = this.querySelector('.otp-number').innerText;  
         try {
             await navigator.clipboard.writeText(otpCodeText);
-            console.log('OTP Copied to clipboard');
-            if (!flashTriggered) {
-                triggerFlashMessage();
-                flashTriggered = true; 
-            }
+                if (!flashTriggered) {
+                    triggerFlashMessage();
+                    flashTriggered = true;
+                }
         } catch (err) {
             console.error('Clipboard API failed, using fallback:', err);
             copyTextToClipboard(otpCodeText);
         }
     });
 
+    document.addEventListener('keydown', async function(event) {
+        if ((event.ctrlKey || event.metaKey) && event.key === 'c') {
+            event.preventDefault();
+            const otpCodeText = document.querySelector('#otp-code .otp-number').innerText;
+            try {
+                await navigator.clipboard.writeText(otpCodeText);
+                if (!flashTriggered) {
+                    triggerFlashMessage();
+                    flashTriggered = true;
+                }
+            } catch (err) {
+                console.error('Clipboard API failed, using fallback:', err);
+                copyTextToClipboard(otpCodeText);
+            }
+        }
+    });
+
     function triggerFlashMessage() {
+        const flashContainer = document.getElementById('flash-message-container');
+        const flashMessage = document.createElement('div');
+        flashMessage.classList.add('flash-message');
+        flashContainer.appendChild(flashMessage);
+        flashContainer.style.display = 'block';
+
+        setTimeout(() => {
+            flashMessage.remove();
+            if (flashContainer.children.length === 0) {
+                flashContainer.style.display = 'none';
+            }
+            flashTriggered = false; 
+        }, 3000);
+        
         fetch('/copy_otp_flash').then(response => {
             console.log('Flash message triggered');
-        }).finally(() => {
-            setTimeout(() => {
-                flashTriggered = false;
-            }, 30000); 
         });
     }
 

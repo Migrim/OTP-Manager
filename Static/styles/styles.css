@@ -160,16 +160,34 @@ body {
     background: linear-gradient(45deg, #ad8abf, #d1b9e1); 
     color: #333;
 }
+.btn-primary:active {
+    background: linear-gradient(45deg, #1e4aa8, #3a8fcc);
+    color: #fff;
+}
 
+.btn-danger:active {
+    background: linear-gradient(45deg, #d64545, #e36347);
+    color: #fff;
+}
+
+.btn-light:active {
+    background: linear-gradient(45deg, #8a6ba0, #a68fb8);
+    color: #fff;
+}
 .btn-secondary {
-    background-color: #555;
-    color: #fff; 
-    border: none; 
-    transition: background-color 0.3s; 
+    background: linear-gradient(45deg, #555, #777);
+    color: #fff;
+    border: none;
+    transition: background 0.3s;
 }
 
 .btn-secondary:hover {
-    background-color: #777;
+    background: linear-gradient(45deg, #666, #888);
+}
+
+.btn-secondary:active {
+    background: linear-gradient(45deg, #444, #666);
+    color: #fff;
 }
 
 .icon-small {
@@ -219,12 +237,21 @@ body {
 }
 
 .modal-title {
-    color: #ff5252;
+    background: linear-gradient(45deg, #FF5252, #ff7451);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
     font-size: 1.2em; 
     margin-left: 10px;
 }
+
 .icon-report {
-    color: #ff5252; 
+    background: linear-gradient(45deg, #FF5252, #ff7451);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
     font-size: 24px; 
 }
 
@@ -456,7 +483,11 @@ body {
 }
 
 .reminder-text {
-    color: #ff5252;
+    background: linear-gradient(45deg, #FF5252, #ff7451);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
     margin-top: 8px;
     text-align: center; 
     display: flex; 
@@ -464,9 +495,6 @@ body {
     align-items: center; 
     padding: 5px; 
     border-radius: 5px;
-    background: -webkit-linear-gradient(45deg, #EA8D8D, #A890FE); 
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
     position: relative; 
 }
 
@@ -481,19 +509,6 @@ body {
     background: linear-gradient(45deg, #EA8D8D, #A890FE);
     border-radius: 5px; 
     pointer-events: none; 
-}
-
-
-.reminder-text .material-icons-outlined {
-    vertical-align: middle;
-    font-size: 18px;
-    animation: blink 2s infinite; 
-    margin-right: 5px;
-    margin-left: 5px;
-    background: -webkit-linear-gradient(45deg, #EA8D8D, #A890FE); 
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    display: inline-block; 
 }
 
 @keyframes blink {
@@ -594,6 +609,14 @@ body {
     justify-content: center;
 }
 
+.back-to-top i {
+    background: linear-gradient(45deg, #275cd5, #44ABED);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+}
+
 .back-to-top:hover {
     background-color: #555;
 }
@@ -619,6 +642,6 @@ body {
         color: inherit;
     }
 }
-.btn-primary, .btn-light, .btn-danger {
-    transform: scale(0.9); 
+.btn-primary, .btn-light, .btn-danger, .btn-secondary {
+    transform: scale(0.9);
 }

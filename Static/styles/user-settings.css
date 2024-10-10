@@ -5,7 +5,7 @@ body {
 }
 
 .btn {
-    margin-top: 20px; 
+    margin-top: 10px; 
     padding: 5px 15px;
     background-color: #555;
     border: none;
@@ -105,27 +105,33 @@ body {
 }
 
 .btn-danger {
-    background-color: #ff5252;
-    border-color: #ff5252;
+    background: linear-gradient(45deg, #FF5252, #FF7451);
+    color: #fff;
 }
 
 .btn-danger:hover {
-    background-color: #ff5d51;
-    border-color: #ff5d51;
-    color: #333;
+    background: linear-gradient(45deg, #FF7451, #FF8A71);
+    color: #fff;
+}
+
+.btn-danger:active {
+    background: linear-gradient(45deg, #E04848, #FF6A62);
+    color: #fff;
 }
 
 .btn-secondary {
-    background-color: #355bcd;
-    border-color: #355bcd;
-    color: #f8f9fa;
+    background: linear-gradient(45deg, #275CD5, #44ABED);
+    color: #fff;
 }
 
 .btn-success:hover, .btn-secondary:hover {
-    background-color: #44abed;
-    border-color: #44abed;
+    background: linear-gradient(45deg, #44ABED, #6EC1F5);
+    color:#fff
 }
-
+.btn-secondary:active {
+    background: linear-gradient(45deg, #1E4BAA, #3A8DDC);
+    color: #f8f9fa;
+}
 .modal-dialog {
     max-width: 500px;
     margin: auto;
@@ -184,6 +190,7 @@ body {
 .btn .material-icons-outlined {
     vertical-align: middle;
     margin-right: 5px;
+    transform: scale(0.8);
 }
 
 #deleteConfirmationInput {
@@ -195,30 +202,25 @@ body {
     font-size: 1.2rem;
 }
 
-.btn-primary {
-    background-color: #444444;
-    border-color: #6c757d;
-    color: #f8f9fa;
-}
-
-.btn-primary:hover {
-    background-color: #5a6268;
-    border-color: #5a6268;
-}
-
 .btn-warning {
-    background-color: #F39C12;
+    background: linear-gradient(45deg, #F39C12, #ffc942);
     border-color: #F39C12;
     color: #f8f9fa;
 }
 
 .btn-warning:hover {
-    background-color: #ffc942;
+    background: linear-gradient(45deg, #ffc942, #F39C12);
     border-color: #ffc942;
     color: #333;
 }
-
+.btn-warning:active {
+    background: linear-gradient(45deg, #e08e0b, #ffb731);
+    border-color: #e08e0b;
+    color: #f8f9fa;
+}
 .btn-add {
+    padding: 10px 20px; 
+    font-size: 1.4rem;
     background-color: #355bcd;
     border-color: #355bcd;
     color: #f8f9fa;
@@ -319,13 +321,21 @@ body {
     margin-bottom: .5rem; 
 }
 
-a.btn-warning[style*="not-allowed"], a.btn-warning:disabled {
-    cursor: not-allowed; !important;
-    background-color: #6c757d !important;
-    border-color: #6c757d !important; 
-    color: #ffffff !important; 
+a.btn-warning[style*="not-allowed"], 
+a.btn-warning:disabled {
+    cursor: not-allowed !important;
+    background: linear-gradient(45deg, #6c757d, #444444) !important;
+    border-color: #6c757d !important;
+    color: #ffffff !important;
+    opacity: 0.65;
 }
-
+a.btn-warning[style*="not-allowed"]:active, 
+a.btn-warning:disabled:active {
+    background: linear-gradient(45deg, #6c757d, #444444) !important;
+    border-color: #6c757d !important;
+    color: #ffffff !important;
+    opacity: 0.65;
+}
 .unique-modal-dialog {
     margin-top: 10vh;
 }
@@ -336,7 +346,6 @@ a.btn-warning[style*="not-allowed"], a.btn-warning:disabled {
 
 .unique-modal-header {
     background-color: #333;
-    border-bottom: 1px solid #dee2e6;
     position: relative;
 }
 
@@ -346,7 +355,7 @@ a.btn-warning[style*="not-allowed"], a.btn-warning:disabled {
     top: 40%;
     transform: translateY(-50%);
     font-size: 24px;
-    color: #ffeb3b; 
+    color: #FF5252; 
 }
 
 .unique-modal-header .modal-title {
@@ -356,40 +365,41 @@ a.btn-warning[style*="not-allowed"], a.btn-warning:disabled {
 }
 
 .unique-modal-body {
-    font-size: 16px;
-}
-
-.unique-modal-footer {
-    border-top: 1px solid #dee2e6;
+    font-size: 15px;
 }
 
 .unique-btn-secondary, .unique-btn-danger {
-    font-weight: bold;
     margin-right: 5px;
 }
 
 .unique-btn-secondary {
     color: #ffffff;
-    background-color: #285fd6;
-    border-color: #285fd6;
+    background: linear-gradient(45deg, #275cd5, #44ABED);
 }
 
 .unique-btn-secondary:hover {
-    background-color: #44abed;
-    border-color: #44abed;
-    color: #333;
+    background: linear-gradient(45deg, #44ABED, #6ec1f5);
+    color: #fff;
+}
+
+.unique-btn-secondary:active {
+    background: linear-gradient(45deg, #1f4db1, #3b94d6);
+    color: #ffffff;
 }
 
 .unique-btn-danger {
     color: #fff;
-    background-color: #FF5252;
-    border-color: #FF5252;
+    background: linear-gradient(45deg, #FF5252, #ff7451);
 }
 
 .unique-btn-danger:hover {
-    color: #333;
-    background-color: #ff5d51;
-    border-color: #ff5d51;
+    color: #fff;
+    background: linear-gradient(45deg, #ff7451, #ff8a71);
+}
+
+.unique-btn-danger:active {
+    background: linear-gradient(45deg, #e04444, #ff5e42);
+    color: #ffffff;
 }
 
 .unique-password-reset-dialog {
@@ -422,15 +432,44 @@ a.btn-warning[style*="not-allowed"], a.btn-warning:disabled {
 }
 
 .unique-password-reset-btn {
-    background-color: #285fd6; 
-    color: white; 
+    background: linear-gradient(45deg, #285fd6, #44abed);
+    color: white;
     border-color: #285fd6;
-    padding: 10px 15px; 
+    padding: 10px 15px;
     margin-top: 15px;
 }
 
 .unique-password-reset-btn:hover {
-    background-color: #44abed;
+    background: linear-gradient(45deg, #44ABED, #6ec1f5); 
     border-color: #44abed;
-    color: #333;
+    color: #fff;
+}
+
+.unique-password-reset-btn:active {
+    background: linear-gradient(45deg, #1e4aa8, #3a8fcc);
+    border-color: #1d4b9f;
+    color: white;
+}
+
+.material-symbols-outlined {
+    transform: scale(0.8);
+    display: inline-block;
+    vertical-align: middle;
+}
+.btn-primary {
+    background: linear-gradient(45deg, #275cd5, #44ABED); 
+    color: #f8f9fa;
+}
+
+.btn-primary:hover {
+    background: linear-gradient(45deg, #44ABED, #6ec1f5); 
+    color: #f8f9fa;
+}
+
+.btn-primary:disabled {
+    background: linear-gradient(45deg, #6c757d, #444444);
+    border-color: #6c757d;
+    color: #ced4da;
+    cursor: not-allowed;
+    opacity: 0.65;
 }
