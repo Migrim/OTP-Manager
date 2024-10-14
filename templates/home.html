@@ -93,7 +93,7 @@
                                 {% endif %}
                             
                                 <form style="display: inline-block;">
-                                    <button type="button" style="margin-right:5px" class="btn btn-primary" title="Edit this secret" data-toggle="modal" data-target="#editModal" onclick="openEditModal('{{ otp.name }}', '{{ otp.secret }}', '{{ otp.company }}', '{{ otp.otp_type }}')">
+                                    <button type="button" style="margin-right:5px" class="btn btn-primary" title="Edit this Secret" data-toggle="modal" data-target="#editModal" onclick="openEditModal('{{ otp.name }}', '{{ otp.secret }}', '{{ otp.company }}', '{{ otp.otp_type }}')">
                                         <i class="icon-center material-icons-outlined icon-small">edit</i>
                                     </button>
                                     <button type="button" class="btn btn-light" title="Copy OTP to Clipboard" onclick="saveAndCopyOTP('{{ otp.name }}')">
