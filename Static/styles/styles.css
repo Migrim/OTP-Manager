@@ -621,11 +621,6 @@ body {
     background-color: #555;
 }
 
-.material-icons-outlined {
-    font-size: 20px;
-    transition: transform 0.3s ease; 
-}
-
 .back-to-top:hover .material-icons-outlined {
     transform: translateY(-2px);
 }
@@ -643,5 +638,5 @@ body {
     }
 }
 .btn-primary, .btn-light, .btn-danger, .btn-secondary {
-    transform: scale(0.9);
+    transform: scale(1);
 }

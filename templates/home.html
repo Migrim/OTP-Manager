@@ -93,7 +93,7 @@
                                 {% endif %}
                             
                                 <form style="display: inline-block;">
-                                    <button type="button" style="margin-right:5px" class="btn btn-primary" title="Edit OTP" data-toggle="modal" data-target="#editModal" onclick="openEditModal('{{ otp.name }}', '{{ otp.secret }}', '{{ otp.company }}', '{{ otp.otp_type }}')">
+                                    <button type="button" style="margin-right:5px" class="btn btn-primary" title="Edit this secret" data-toggle="modal" data-target="#editModal" onclick="openEditModal('{{ otp.name }}', '{{ otp.secret }}', '{{ otp.company }}', '{{ otp.otp_type }}')">
                                         <i class="icon-center material-icons-outlined icon-small">edit</i>
                                     </button>
                                     <button type="button" class="btn btn-light" title="Copy OTP to Clipboard" onclick="saveAndCopyOTP('{{ otp.name }}')">
@@ -161,7 +161,7 @@
                                     {% endif %}
                                 
                                     <form style="display: inline-block;">
-                                        <button type="button" style="margin-right:5px" class="btn btn-primary" title="Edit OTP" data-toggle="modal" data-target="#editModal" onclick="openEditModal('{{ otp.name }}', '{{ otp.secret }}', '{{ otp.company }}', '{{ otp.otp_type }}')">
+                                        <button type="button" style="margin-right:5px" class="btn btn-primary" title="Edit this Secret" data-toggle="modal" data-target="#editModal" onclick="openEditModal('{{ otp.name }}', '{{ otp.secret }}', '{{ otp.company }}', '{{ otp.otp_type }}')">
                                             <i class="icon-center material-icons-outlined icon-small">edit</i>
                                         </button>
                                         <button type="button" class="btn btn-light" title="Copy OTP to Clipboard" onclick="saveAndCopyOTP('{{ otp.name }}')">
@@ -202,7 +202,7 @@
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="editModalLabel" style="color: white;">Edit OTP</h5>
+                        <h5 class="modal-title" id="editModalLabel" style="color: white;">Edit Secret</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
