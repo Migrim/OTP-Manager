@@ -402,16 +402,19 @@ document.getElementById('searchInput').addEventListener('input', function() {
                 console.error('Clipboard API not available, using fallback.');
                 copyTextToClipboard(data.otpCode); // Using fallback method
             }
+    
             const clearResponse = await fetch('/clear_otp', { method: 'POST' });
             const clearResult = await clearResponse.json();
             if (!clearResponse.ok || !clearResult.success) {
                 throw new Error(clearResult.message || 'Failed to clear OTP');
             }
+    
+            // Trigger the flash message after successfully copying the OTP
+            await fetch('/copy_otp_flash', { method: 'POST' });
         } catch (error) {
             console.error('Error copying OTP:', error);
         }
-    }
-    
+    }    
     
     async function saveAndCopyOTP(otpName) {
         try {
