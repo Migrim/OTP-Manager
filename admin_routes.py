@@ -346,7 +346,7 @@ def delete_user(user_id):
                 flash("User not found.", "error")
                 return jsonify(success=False, message="User not found."), 404
             logger.info(f"User ID {user_id} deleted successfully by admin '{current_user.username}'.")
-            flash(f"User with ID {user_id} deleted successfully.")
+            flash(f"User with ID {user_id} deleted successfully.", "info")
             return jsonify(success=True), 200
     except sqlite3.Error as e:
         logger.error(f"Error deleting user ID {user_id} by admin '{current_user.username}': {e}")
