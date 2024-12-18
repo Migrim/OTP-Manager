@@ -1359,28 +1359,6 @@ def copy_otp_flash():
     flash('OTP Copied to Clipboard!', 'info')
     return jsonify(success=True)
 
-def graceful_exit():
-    logging.info("Gracefully shutting down the server...")
-    os.kill(os.getpid(), signal.SIGTERM)
-
-
-import subprocess
-
-def restart_server():
-    logging.info("Server restarting...")
-    try:
-        subprocess.Popen([sys.executable] + sys.argv)
-        sys.exit(0)
-    except Exception as e:
-        logging.error(f"Failed to restart the server: {e}")
-        sys.exit(1)
-
-def schedule_restart(config):
-    restart_time = config.get('restart', 'time')
-    restart_interval_days = config.getint('restart', 'interval_days')
-
-    schedule.every(restart_interval_days).days.at(restart_time).do(restart_server)
-
 def run_schedule():
     while True:
         schedule.run_pending()
@@ -1411,8 +1389,6 @@ if __name__ == '__main__':
 
     logging.basicConfig(level=logging.INFO)
     logging.info(f"Server starting on port {port}...")
-
-    schedule_restart(config)
 
     scheduler_thread = Thread(target=run_schedule)
     scheduler_thread.daemon = True
