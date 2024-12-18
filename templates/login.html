@@ -18,6 +18,8 @@
         c.style.left = "0";
         c.style.top = "0";
 
+        var animationInterval;
+
         function resizeCanvas() {
             c.height = window.innerHeight;
             c.width = window.innerWidth;
@@ -43,9 +45,9 @@
         var effectType = Math.random();
         var isRainbow = effectType < 0.1;
         var isPurpleBlue = effectType >= 0.1 && effectType < 0.2;
-        var isElectricBlue = effectType >= 0.2 && effectType < 0.5;
-        var isGreenYellow = effectType >= 0.5 && effectType < 0.8; 
-        var isPinkOrange = effectType >= 0.8; 
+        var isElectricBlue = effectType >= 0.2 && effectType < 0.5; // 30% chance for Electric Blue
+        var isGreenYellow = effectType >= 0.5 && effectType < 0.8; // 30% chance for Green to Yellow
+        var isPinkOrange = effectType >= 0.8; // 20% chance for Pink to Orange
 
         function drawMatrix() {
             ctx.fillStyle = "rgba(0, 0, 0, 0.04)";
@@ -63,16 +65,16 @@
                     gradient.addColorStop("1.0", "blue");
                     ctx.fillStyle = gradient;
                 } else if (isElectricBlue) {
-                    ctx.fillStyle = "#7DF9FF"; 
+                    ctx.fillStyle = "#7DF9FF";
                 } else if (isGreenYellow) {
                     var gradient = ctx.createLinearGradient(0, 0, c.width, 0);
-                    gradient.addColorStop("0", "green");
-                    gradient.addColorStop("1.0", "yellow");
+                    gradient.addColorStop("0", "#ff5252");
+                    gradient.addColorStop("1.0", "#ff1744");
                     ctx.fillStyle = gradient;
                 } else if (isPinkOrange) {
                     var gradient = ctx.createLinearGradient(0, 0, c.width, 0);
-                    gradient.addColorStop("0", "#ba7bcc");
-                    gradient.addColorStop("1.0", "#ba7bcc");
+                    gradient.addColorStop("0", "green");
+                    gradient.addColorStop("1.0", "yellow");
                     ctx.fillStyle = gradient;
                 } else {
                     var gradient = ctx.createLinearGradient(0, 0, c.width, 0);
@@ -97,7 +99,39 @@
             resizeCanvas();
         });
 
-        setInterval(drawMatrix, 33);
+        var animationEnabled = localStorage.getItem("matrixAnimationEnabled");
+        if (animationEnabled === null) {
+            animationEnabled = "true";
+            localStorage.setItem("matrixAnimationEnabled", animationEnabled);
+        }
+
+        if (animationEnabled === "true") {
+            animationInterval = setInterval(drawMatrix, 33);
+        }
+
+        var toggleButton = document.createElement("span");
+        toggleButton.innerHTML = "&#x25A0;"; 
+        toggleButton.style.position = "fixed";
+        toggleButton.style.top = "10px";
+        toggleButton.style.left = "10px";
+        toggleButton.style.zIndex = "1000";
+        toggleButton.style.fontSize = "24px";
+        toggleButton.style.cursor = "pointer";
+        toggleButton.style.color = "#ff5252";
+
+        toggleButton.addEventListener("click", function () {
+            if (animationEnabled === "true") {
+                clearInterval(animationInterval);
+                ctx.clearRect(0, 0, c.width, c.height);
+                animationEnabled = "false";
+            } else {
+                animationInterval = setInterval(drawMatrix, 33);
+                animationEnabled = "true";
+            }
+            localStorage.setItem("matrixAnimationEnabled", animationEnabled);
+        });
+
+        document.body.appendChild(toggleButton);
     }
 
     function togglePasswordVisibility() {
