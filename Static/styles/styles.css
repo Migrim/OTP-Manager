@@ -600,9 +600,10 @@ body {
     color: #fff;
     padding: 10px 15px;
     border-radius: 12px;
+    border: 1px solid #444; 
     cursor: pointer;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    transition: background-color 0.3s, transform 0.3s;
+    transition: background-color 0.3s, transform 0.3s, border-color 0.3s;
     z-index: 1000;
     display: flex;
     align-items: center;
@@ -615,10 +616,12 @@ body {
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     color: transparent;
+    transition: transform 0.3s; 
 }
 
 .back-to-top:hover {
     background-color: #555;
+    border-color: #666; 
 }
 
 .back-to-top:hover .material-icons-outlined {

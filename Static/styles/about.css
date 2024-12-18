@@ -166,4 +166,11 @@ body {
     background-color: var(--link-color);
     color: #fff;
 }
-
+.settings-container {
+    max-height: 280px;
+}
+#statsChart {
+    height: 200px; /* Set desired height */
+    width: 100%; /* Ensure full-width responsiveness */
+    max-width: 600px; /* Optional: Limit maximum width for better appearance */
+}

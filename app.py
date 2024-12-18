@@ -409,7 +409,7 @@ def get_statistics():
         else:
             return {'logins_today': 0, 'times_refreshed': 0}
 
-def get_older_statistics(limit=20):
+def get_older_statistics(limit=15):
     db_path = app.config['DATABASE']  
     with sqlite3.connect(db_path, timeout=30.0) as db:
         cursor = db.cursor()
@@ -438,7 +438,7 @@ def get_db_path():
 
 @app.route('/get_older_statistics')
 def older_statistics():
-    stats = get_older_statistics(20)  
+    stats = get_older_statistics(15)  
     result = [{
         'logins_today': stat[1],
         'times_refreshed': stat[2],

@@ -36,7 +36,7 @@
         </div>        
             <div class="col-md-6">
                 <section class="settings-container">
-                    <h2 class="text-center">Recent Stats:</h2>
+                    <p>Recent stats [last two weeks "14 days]</p>
                     <ul class="older-stats">
                         <div class="col-md-12">
                             <canvas id="statsChart" width="400" height="200"></canvas>
@@ -103,7 +103,6 @@
                     type: 'line',
                     data: {
                         datasets: [{
-                            label: 'Times Refreshed',
                             borderColor: Utils.CHART_COLORS.blue,
                             backgroundColor: gradientBlue,
                             borderWidth: 2,
@@ -116,7 +115,7 @@
                     },
                     options: {
                         responsive: true,
-                        maintainAspectRatio: false,
+                        maintainAspectRatio: true, // Disable aspect ratio to use CSS-defined height
                         animation: {
                             duration: 2000,
                             easing: 'easeInOutBack',
@@ -129,13 +128,7 @@
                         },
                         plugins: {
                             legend: {
-                                display: true,
-                                labels: {
-                                    color: 'rgb(255, 255, 255)',
-                                    font: {
-                                        size: 14
-                                    }
-                                }
+                                display: false // Disable legend display entirely
                             },
                             tooltip: {
                                 mode: 'index',
@@ -172,6 +165,7 @@
                 console.error('Failed to fetch data: ', error);
             });
         }
+
 
         function createBackup() {
             fetch('/create_backup')
