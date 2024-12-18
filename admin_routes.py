@@ -331,7 +331,7 @@ def add_search_terms(company_id):
 def delete_user(user_id):
     if current_user.username != "admin":
         logger.warning(f"Unauthorized attempt to delete user ID {user_id} by '{current_user.username}'.")
-        flash("Only the admin can delete users.")
+        flash("Only the user 'admin' can delete other users.", "error")
         return jsonify(success=False, message="Only the admin can delete users."), 403
 
     try:

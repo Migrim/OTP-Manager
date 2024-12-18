@@ -246,17 +246,15 @@
                         if (userCard) {
                             userCard.remove();
                         }
-                    } else {
-                        alert(data.message);
                     }
                     $('#uniqueConfirmDeleteModal').modal('hide'); 
                 })
                 .catch(error => {
-                    alert('Error: ' + error.message);
+                    console.error('Error:', error.message);
                     $('#uniqueConfirmDeleteModal').modal('hide'); 
                 });
             } else {
-                alert('No user ID found for deletion.');
+                console.error('No user ID found for deletion.');
                 $('#uniqueConfirmDeleteModal').modal('hide'); 
             }
         });
