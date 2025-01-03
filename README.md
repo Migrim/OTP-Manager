@@ -38,10 +38,6 @@ OTP-Manager is a secure, easy-to-use tool designed to manage one-time passwords 
     port = 5002
     secret_key = your-secret-key
     
-    [restart]
-    time = The time of day (in HH:MM format) when the application will restart automatically.
-    interval_days = The number of days between each restart.
-    
     [database]
     path = instance/otp.db
     ```
