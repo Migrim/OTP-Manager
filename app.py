@@ -179,11 +179,10 @@ def save_companies_to_db(companies):
     conn.close()
 
 def load_from_db(secret_id=None):
-    db_path = app.config['DATABASE'] 
+    db_path = app.config['DATABASE']
     with sqlite3.connect(db_path, timeout=30.0) as db:
         cursor = db.cursor()
         if secret_id:
-            print(f"Looking up OTP secret with ID: {secret_id}")  
             cursor.execute("""
                 SELECT 
                     otp_secrets.name, 
@@ -198,19 +197,15 @@ def load_from_db(secret_id=None):
                 WHERE otp_secrets.name = ?
             """, (secret_id,))
             row = cursor.fetchone()
-            if row:
-                print(f"OTP secret found: {row}") 
-                return {
-                    'name': row[0], 
-                    'email': row[1],  
-                    'secret': row[2], 
-                    'otp_type': row[3], 
-                    'refresh_time': row[4], 
-                    'company_id': row[5], 
-                    'company': row[6] if row[6] else 'Unbekannt'
-                }
-            else:
-                print("No OTP secret found with the given ID.")  
+            return {
+                'name': row[0], 
+                'email': row[1],  
+                'secret': row[2], 
+                'otp_type': row[3], 
+                'refresh_time': row[4], 
+                'company_id': row[5], 
+                'company': row[6] if row[6] else 'Unbekannt'
+            } if row else None
         else:
             cursor.execute("""
                 SELECT 
@@ -224,7 +219,7 @@ def load_from_db(secret_id=None):
                 FROM otp_secrets
                 LEFT JOIN companies ON otp_secrets.company_id = companies.company_id
             """)
-            return [
+            secrets = [
                 {
                     'name': row[0], 
                     'email': row[1],  
@@ -236,6 +231,11 @@ def load_from_db(secret_id=None):
                 } 
                 for row in cursor.fetchall()
             ]
+
+            # **Sorting by company first, then prioritizing "admin" secrets**
+            sorted_secrets = sorted(secrets, key=lambda x: (x['company'], not "admin" in x['name'].lower(), x['name'].lower()))
+
+            return sorted_secrets
 
 def load_companies_from_db():
     db_path = app.config['DATABASE']  
