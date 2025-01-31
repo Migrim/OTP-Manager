@@ -71,18 +71,19 @@ def search_otp():
     selected_company = request.args.get('company', 'All Companies')
 
     otp_secrets = load_from_db()
+    companies = load_companies_from_db()  # Load companies here!
 
     matched_secrets = []
+    display_query = query if query else selected_company if selected_company != 'All Companies' else ''
 
     for otp_secret in otp_secrets:
         stored_name = otp_secret.get('name', 'Unnamed').lower()
         stored_kundennummer = str(otp_secret.get('company_kundennummer', '')).lower()
         stored_company = otp_secret.get('company', 'Unbekannt').lower()
         stored_email = otp_secret.get('email', '').lower()  
-        display_query = query if query else selected_company if selected_company != 'All Companies' else ''
 
         if (selected_company.lower() == 'All Companies'.lower() or selected_company.lower() == stored_company.lower()):
-            if query in stored_name or query in stored_kundennummer or query in stored_company or query in stored_email:  # Check against email
+            if query in stored_name or query in stored_kundennummer or query in stored_company or query in stored_email:
                 if otp_secret['otp_type'] == 'totp':
                     if not is_base32(otp_secret['secret']):
                         return 'Invalid base32 secret', 400
@@ -93,10 +94,7 @@ def search_otp():
                     otp_secret['otp_code'] = hotp_maker.at(0)
                 matched_secrets.append(otp_secret)
 
-    if matched_secrets:
-        return render_template('otp.html', matched_secrets=matched_secrets, search_query=display_query, total_results=len(matched_secrets), selected_company=selected_company)
-    else:
-        return render_template('no_secrets.html')
+    return render_template('otp.html', matched_secrets=matched_secrets, search_query=display_query, total_results=len(matched_secrets), selected_company=selected_company, companies=companies)
 
 if __name__ == '__main__':
     app.run(debug=True)

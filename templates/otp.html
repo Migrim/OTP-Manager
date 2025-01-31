@@ -281,9 +281,19 @@
         <div class="search-bar-container">
             <form method="get" action="{{ url_for('search_blueprint.search_otp') }}" class="search-bar">
                 <input type="hidden" name="page" value="{{ page|default(1) }}" />
-                <input type="text" id="searchInput" name="name" placeholder="Search for entries in the database." class="search-input" />
+                <input type="text" id="searchInput" name="name" placeholder="Search stuff." class="search-input" />
+                
+                <select name="company" id="companyDropdown" class="form-select custom-dropdown" title="Filter by Company" onchange="this.form.submit()">
+                    <option value="All Companies" {% if request.args.get('company') == "All Companies" %}selected{% endif %}>All Companies</option>
+                    <option value="Pegasoft" {% if request.args.get('company') == "Pegasoft" %}selected{% endif %}>Pegasoft</option>
+                    {% for company in companies %}
+                        {% if company.name != "Pegasoft" %}
+                            <option value="{{ company.name }}" {% if request.args.get('company') == company.name %}selected{% endif %}>{{ company.name }}</option>
+                        {% endif %}
+                    {% endfor %}
+                </select>  
             </form>
-        </div>
+        </div>        
     </div>
 
     <div id="toast" class="toast" style="display:none;">Copied to clipboard!</div>
