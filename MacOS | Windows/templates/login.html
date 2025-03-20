@@ -114,21 +114,6 @@
         }
     }
 
-    function showWhatsNewModal() {
-        document.getElementById('whatsNewModal').style.display = 'block';
-    }
-
-    function closeWhatsNewModal() {
-        document.getElementById('whatsNewModal').style.display = 'none';
-    }
-
-    window.onclick = function(event) {
-        var modal = document.getElementById('whatsNewModal');
-        if (event.target == modal) {
-            closeWhatsNewModal();
-        }
-    }
-
     document.addEventListener("DOMContentLoaded", function() {
         startMatrixAnimation();
         fetchFlashMessages();
@@ -221,31 +206,6 @@
         <div class="loader"></div>
     </div>
     <p class="instruction-text">Please login with your Credentials to gain Access to the OTP-List.</p>
-</div>
-
-<div id="whatsNewIcon" class="material-icons-outlined" onclick="showWhatsNewModal()">help_outline</div>
-
-<div id="whatsNewModal" class="modal">
-    <!-- Modal content -->
-    <div class="modal-content">
-        <span class="close" onclick="closeWhatsNewModal()">&times;</span>
-        <h2>What's New</h2>
-        <p>Here are the latest changes to the OTP-Manager:</p>
-        <ul>
-            <li><strong>Aug 21, 2024:</strong> User passwords can now be resetted in the user Management</li>
-            <li><strong>May 14, 2024:</strong> The Company Identification Number now won't get cleared when saving a secret.</li>
-            <li><strong>May 10, 2024:</strong> Added support for 32-character long secrets and improved error handling.</li>
-            <li><strong>May 8, 2024:</strong> Changes to the Graph.</li>
-            <li><strong>May 7, 2024:</strong> The About Windows now scales correctly.</li>
-            <li><strong>May 7, 2024:</strong> Added a new graph to visualize old stats.</li>
-            <li><strong>May 6, 2024:</strong> Changes to the main code; fixed the problem with the code hanging itself.</li>
-            <li><strong>May 3, 2024:</strong> Changed the font and fixed the settings.</li>
-            <li><strong>May 1, 2024:</strong> Added more color options; companies now get sorted alphabetically.</li>
-            <li><strong>April 29, 2024:</strong> The database file now gets located correctly; database gets loaded from the right folder.</li>
-            <li><strong>April 22, 2024:</strong> Design changes to the OTP view; the OTP code can now be copied in the OTP-view.</li>
-            <li><strong>April 21, 2024:</strong> Added an "Add + View" button to the adding page; added a dedicated view for the added secret (WIP); added more validation to the database.</li>
-        </ul>
-    </div>
 </div>
 
 {% endif %}
