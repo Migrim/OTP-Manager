@@ -1,0 +1,252 @@
+{% extends 'bootstrap/base.html' %}
+
+{% block title %} Login at OTP-Manager {% endblock %}
+
+{% block content %}
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
+<link rel="stylesheet" href=".{{ url_for('static', filename='styles/login.css') }}">
+<link rel="icon" href=".{{ url_for('static', filename='favicon.ico') }}">
+
+<script>
+    function startMatrixAnimation() {
+        var c = document.createElement("canvas");
+        document.getElementById('matrixEffect').appendChild(c);
+        var ctx = c.getContext("2d");
+
+        c.style.position = "fixed";
+        c.style.left = "0";
+        c.style.top = "0";
+
+        var animationInterval;
+
+        function resizeCanvas() {
+            c.height = window.innerHeight;
+            c.width = window.innerWidth;
+
+            columns = c.width / font_size;
+            drops = [];
+            for (var x = 0; x < columns; x++) {
+                drops[x] = Math.floor(Math.random() * -20);
+            }
+        }
+
+        var matrixChars = "ஞabcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ123456789@#$%^&*()*&^%ஞ";
+        matrixChars = matrixChars.split("");
+
+        var font_size = 10;
+        var columns = c.width / font_size;
+        var drops = [];
+
+        for (var x = 0; x < columns; x++) {
+            drops[x] = Math.floor(Math.random() * -20);
+        }
+
+        function drawMatrix() {
+            ctx.fillStyle = "rgba(0, 0, 0, 0.04)";
+            ctx.fillRect(0, 0, c.width, c.height);
+
+            for (var i = 0; i < drops.length; i++) {
+                var text = matrixChars[Math.floor(Math.random() * matrixChars.length)];
+
+                ctx.fillStyle = "pink";
+
+                ctx.font = font_size + "px arial";
+                ctx.fillText(text, i * font_size, drops[i] * font_size);
+
+                if (drops[i] * font_size > c.height && Math.random() > 0.975) {
+                    drops[i] = Math.floor(Math.random() * -20);
+                }
+
+                drops[i]++;
+            }
+        }
+
+        resizeCanvas();
+        window.addEventListener('resize', function () {
+            resizeCanvas();
+        });
+
+        var animationEnabled = localStorage.getItem("matrixAnimationEnabled");
+        if (animationEnabled === null) {
+            animationEnabled = "true";
+            localStorage.setItem("matrixAnimationEnabled", animationEnabled);
+        }
+
+        if (animationEnabled === "true") {
+            animationInterval = setInterval(drawMatrix, 33);
+        }
+
+        var toggleButton = document.createElement("span");
+        toggleButton.innerHTML = "&#x25A0;"; 
+        toggleButton.style.position = "fixed";
+        toggleButton.style.top = "10px";
+        toggleButton.style.left = "10px";
+        toggleButton.style.zIndex = "1000";
+        toggleButton.style.fontSize = "24px";
+        toggleButton.style.cursor = "pointer";
+        toggleButton.style.color = "#ff5252";
+
+        toggleButton.addEventListener("click", function () {
+            if (animationEnabled === "true") {
+                clearInterval(animationInterval);
+                ctx.clearRect(0, 0, c.width, c.height);
+                animationEnabled = "false";
+            } else {
+                animationInterval = setInterval(drawMatrix, 33);
+                animationEnabled = "true";
+            }
+            localStorage.setItem("matrixAnimationEnabled", animationEnabled);
+        });
+
+        document.body.appendChild(toggleButton);
+    }
+
+    function togglePasswordVisibility() {
+        var passwordInput = document.getElementById('passwordInput');
+        var togglePasswordIcon = document.querySelector('.toggle-password');
+        if (passwordInput.type === 'password') {
+            passwordInput.type = 'text';
+            togglePasswordIcon.textContent = 'visibility';
+        } else {
+            passwordInput.type = 'password';
+            togglePasswordIcon.textContent = 'visibility_off';
+        }
+    }
+
+    function showWhatsNewModal() {
+        document.getElementById('whatsNewModal').style.display = 'block';
+    }
+
+    function closeWhatsNewModal() {
+        document.getElementById('whatsNewModal').style.display = 'none';
+    }
+
+    window.onclick = function(event) {
+        var modal = document.getElementById('whatsNewModal');
+        if (event.target == modal) {
+            closeWhatsNewModal();
+        }
+    }
+
+    document.addEventListener("DOMContentLoaded", function() {
+        startMatrixAnimation();
+        fetchFlashMessages();
+
+        setTimeout(function() {
+            var flashContainer = document.getElementById('flash-messages-container');
+            if (flashContainer) {
+                flashContainer.style.transition = "opacity 1s ease";  
+                flashContainer.style.opacity = "0";  
+
+                setTimeout(function() {
+                    flashContainer.style.display = 'none';
+                }, 1000);  
+            }
+        }, 7000);
+
+        var form = document.querySelector('form');
+        form.addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            var formData = new FormData(form);
+            fetch("{{ url_for('login') }}", {
+                method: 'POST',
+                body: formData,
+            })
+            .then(response => {
+                if (response.redirected) {
+                    window.location.href = response.url;
+                } else {
+                    return response.json();
+                }
+            })
+            .then(data => {
+                if (data && data.message) {
+                    alert(data.message);
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('An error occurred. Please try again later.');
+            });
+        });
+
+        function fetchFlashMessages() {
+            // This function should be defined as per your logic to handle flash messages
+        }
+    });
+</script>
+
+<div id="matrixEffect"></div>
+
+{% if login_successful %}
+        <script>
+            setTimeout(function() {
+                window.location.href = "{{ url_for('home') }}"; 
+            }, 0);
+        </script>
+{% else %}
+
+<div class="flash-messages-container" id="flash-messages-container">
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div class="flash-message flash-{{ category }}">
+                    <span class="material-icons-outlined flash-icon">{{ category|category_icon }}</span>
+                    {{ message }}
+                    <span class="flash-close-btn" onclick="this.parentElement.style.display='none';">&times;</span>
+                </div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+</div>
+
+<div class="center-content">
+    <div class="form-container">
+        <h1 class="form-title">OTP-Tool</h1>
+        <form method="post">
+            <div class="wave-group">
+                <input class="input" required="" type="text" name="username" placeholder="Username" value="{{ username or '' }}" autocomplete="username">
+                <label class="label"></label>
+            </div>
+            <div class="wave-group password-container">
+                <input class="input" required="" type="password" name="password" placeholder="Password" autocomplete="current-password" id="passwordInput">
+                <span class="material-icons-outlined toggle-password" onclick="togglePasswordVisibility()">visibility_off</span>
+            </div>                        
+            <div class="button-wrapper">
+                <input type="submit" value="Login" class="btn btn-primary form-submit">
+            </div>
+        </form>
+        <div class="loader"></div>
+    </div>
+    <p class="instruction-text">Please login with your Credentials to gain Access to the OTP-List.</p>
+</div>
+
+<div id="whatsNewIcon" class="material-icons-outlined" onclick="showWhatsNewModal()">help_outline</div>
+
+<div id="whatsNewModal" class="modal">
+    <!-- Modal content -->
+    <div class="modal-content">
+        <span class="close" onclick="closeWhatsNewModal()">&times;</span>
+        <h2>What's New</h2>
+        <p>Here are the latest changes to the OTP-Manager:</p>
+        <ul>
+            <li><strong>Aug 21, 2024:</strong> User passwords can now be resetted in the user Management</li>
+            <li><strong>May 14, 2024:</strong> The Company Identification Number now won't get cleared when saving a secret.</li>
+            <li><strong>May 10, 2024:</strong> Added support for 32-character long secrets and improved error handling.</li>
+            <li><strong>May 8, 2024:</strong> Changes to the Graph.</li>
+            <li><strong>May 7, 2024:</strong> The About Windows now scales correctly.</li>
+            <li><strong>May 7, 2024:</strong> Added a new graph to visualize old stats.</li>
+            <li><strong>May 6, 2024:</strong> Changes to the main code; fixed the problem with the code hanging itself.</li>
+            <li><strong>May 3, 2024:</strong> Changed the font and fixed the settings.</li>
+            <li><strong>May 1, 2024:</strong> Added more color options; companies now get sorted alphabetically.</li>
+            <li><strong>April 29, 2024:</strong> The database file now gets located correctly; database gets loaded from the right folder.</li>
+            <li><strong>April 22, 2024:</strong> Design changes to the OTP view; the OTP code can now be copied in the OTP-view.</li>
+            <li><strong>April 21, 2024:</strong> Added an "Add + View" button to the adding page; added a dedicated view for the added secret (WIP); added more validation to the database.</li>
+        </ul>
+    </div>
+</div>
+
+{% endif %}
+{% endblock %}

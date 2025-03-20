@@ -1,0 +1,217 @@
+body {
+    font-family: 'Poppins', 'Roboto', sans-serif; 
+    background-color: #222222;
+    color: #FFF;
+    margin: 0;
+    padding: 0;
+}
+
+.logs-section {
+    padding-top: 10px;
+    padding-left: 50px;
+    padding-right: 50px; 
+    padding-bottom: 30px;
+    opacity: 1;
+    transition: opacity 0.5s ease-in-out;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+@keyframes fallDown {
+    0% {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.logs-box {
+    display: none; /* Assuming you have some JavaScript to toggle display */
+    border: 1px solid #ffffff;
+    border-radius: 10px;
+    overflow: hidden;
+    padding: 10px;
+    margin: 0 80px;
+    opacity: 0; /* Initially invisible */
+    transform: translateY(-20px); /* Initially positioned above */
+    animation: fallDown 0.8s ease-in-out forwards; /* Animation with forwards to maintain the final state */
+}
+
+#logs tr:nth-child(odd) {
+    background-color: #3c3c3c; 
+}
+
+#logs tr:nth-child(even) {
+    background-color: #323232;
+}
+
+#logs-table {
+    width: 100%;
+    table-layout: auto;
+}
+
+#logs-table th {
+    white-space: nowrap;
+}
+
+#logs-table th:nth-child(1), 
+#logs-table th:nth-child(2) { 
+    width: 1%; 
+}
+
+#logs-table th:nth-child(3) { 
+    width: 3%;
+}
+
+.logs-box div {
+    margin: 0;
+    font-size: 0.875em;
+    color: #fff;
+    padding: 15px;
+    white-space: pre-wrap;
+}
+
+.scroll-to-end-button {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    display: inline-block;
+    background-color: #CD5C5C;
+    color: #ffffff;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 5px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+    z-index: 1000;
+}
+
+.scroll-to-end-button:hover {
+    background-color: #cd5c5c9f;
+}
+
+@keyframes floatUpFromBottom {
+    from {
+        opacity: 0;
+        transform: translateY(50px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.error-log {
+    color: #FF5555;
+    position: relative;
+    padding-left: 20px;
+}
+.info-log {
+    color: #55AAFF;
+}
+.warning-log {
+    color: #FFAA00;
+}
+.washed-purple-log {
+    color: #b19cd9; 
+}
+
+.loading-animation {
+    color: #FFF;
+    font-size: 1.5rem;
+    text-align: center;
+    padding: 20px;
+}
+
+.loading-dots {
+    display: inline-block;
+    position: relative;
+    font-size: 1.5rem;
+}
+
+.loading-dots::after {
+    content: '...'; 
+    position: absolute;
+    left: 0;
+    animation: dots 1.5s steps(5, end) infinite;
+}
+
+@keyframes dots {
+    0%, 20% {
+        color: rgba(0,0,0,0);
+        text-shadow:
+            .25em 0 0 rgba(0,0,0,0),
+            .5em 0 0 rgba(0,0,0,0);
+    }
+    40% {
+        color: white;
+        text-shadow:
+            .25em 0 0 rgba(0,0,0,0),
+            .5em 0 0 rgba(0,0,0,0);
+    }
+    60% {
+        text-shadow:
+            .25em 0 0 white,
+            .5em 0 0 rgba(0,0,0,0);
+    }
+    80%, 100% {
+        text-shadow:
+            .25em 0 0 white,
+            .5em 0 0 white;
+    }
+}
+
+  .error-log::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    right: 5px; 
+    transform: translateY(-50%);
+    width: 10px;
+    height: 10px;
+    background-color: red;
+    border-radius: 50%;
+    animation: pulse-error 1s infinite;
+}
+
+@keyframes pulse-error {
+    0% {
+        box-shadow: 0 0 0 0 rgba(255, 85, 85, 0.7);
+    }
+    70% {
+        box-shadow: 0 0 0 10px rgba(255, 85, 85, 0); 
+    }
+    100% {
+        box-shadow: 0 0 0 0 rgba(255, 85, 85, 0);
+    }
+}
+
+button {
+    width: fit-content;
+    min-width: 100px;
+    height: 45px;
+    padding: 8px;
+    border-radius: 5px;
+    border: 2.5px solid #E0E1E4;
+    box-shadow: 0px 0px 20px -20px;
+    cursor: pointer;
+    background-color: #333;
+    color: white; 
+    transition: all 0.2s ease-in-out 0ms;
+    user-select: none;
+    font-size: small;
+    font-family: 'Roboto', sans-serif;
+}
+
+button:hover {
+    background-color: #555;
+    box-shadow: 0px 0px 20px -18px;
+}
+
+button:active {
+    transform: scale(0.95);
+    background-color: #4CAF50;
+}

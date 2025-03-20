@@ -1,0 +1,65 @@
+body {
+    background-color: #121212; 
+    color: #e0e0e0;          
+    font-family: Arial, sans-serif; 
+}
+
+a {
+    color: #bb86fc;          
+}
+
+form {
+    margin-top: 20px; 
+}
+
+@keyframes blink-cursor {
+    50% {
+        border-color: transparent;
+    }
+}
+
+input[type="text"] {
+    background-color: #2c2c2c; 
+    color: #e0e0e0;            
+    border: 1px solid #444;  
+    padding: 10px;            
+    width: 100%;              
+    font-family: monospace; 
+    border-right: 2px solid #00ff00;
+    animation: blink-cursor 0.75s steps(5, start) infinite;
+}
+
+input[type="submit"] {
+    background-color: #bb86fc; 
+    color: #121212;            
+    padding: 10px 15px;      
+    border: none;              
+    cursor: pointer;          
+}
+
+input[type="submit"]:hover {
+    background-color: #9a67ea;
+}
+
+pre {
+    background-color: #1f1f1f; /* Dark background like a terminal */
+    color: #00ff00; /* Green text, commonly used in terminals */
+    padding: 15px;
+    border-radius: 5px;
+    font-family: 'Courier New', Courier, monospace; /* Font similar to CMD */
+    overflow-x: auto; /* Allows scrolling horizontally if content is too wide */
+    white-space: pre-wrap; /* Ensures that lines break if they are too long */
+    word-break: break-all; /* Ensures that lines break at any character */
+    margin-top: 20px; /* Gives some space above the terminal window */
+}
+
+.terminal {
+    background-color: #1f1f1f; /* Dark background like a terminal */
+    color: #00ff00; /* Green text, commonly used in terminals */
+    padding: 15px;
+    border-radius: 5px;
+    font-family: 'Courier New', Courier, monospace; /* Font similar to CMD */
+    overflow-x: auto; /* Allows scrolling horizontally if content is too wide */
+    white-space: pre-wrap; /* Ensures that lines break if they are too long */
+    word-break: break-all; /* Ensures that lines break at any character */
+}

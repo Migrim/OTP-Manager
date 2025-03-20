@@ -1,0 +1,249 @@
+{% extends 'bootstrap/base.html' %}
+{% block title %}Company Management{% endblock %}
+
+{% block styles %}
+{{ super() }}
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="{{ url_for('static', filename='styles/company-settings.css') }}">  
+<link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet">
+<link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}">
+{% endblock %}
+
+{% block content %}
+{% include 'navbar.html' %}
+<div class="flash-messages">
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% for category, message in messages %}
+            <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+                {{ message }}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        {% endfor %}
+    {% endwith %}
+</div>
+
+<div class="modal fade" id="addCompanyModal" tabindex="-1" role="dialog" aria-labelledby="addCompanyModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addCompanyModalLabel">Add New Company</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form method="post">
+                    {{ company_form.hidden_tag() }}
+                    <div class="form-group">
+                        {{ company_form.name.label }}
+                        {{ company_form.name(class="form-control", placeholder="Enter company name") }}
+                    </div>
+                    <div class="form-group">
+                        {{ company_form.kundennummer.label }}
+                        {{ company_form.kundennummer(class="form-control", placeholder="Enter the Company Identification Number") }}
+                    </div>
+                    <div class="form-group">
+                        {{ company_form.password.label }}
+                        {{ company_form.password(class="form-control", placeholder="Enter a secure Web-Password") }}
+                    </div>
+                    <div class="form-group">
+                        {{ company_form.submit_company(class="btn btn-primary") }}
+                    </div>
+                </form>
+            </div>            
+        </div>
+    </div>
+</div>
+
+<div class="modal fade ns-confirmDeleteCompanyModal" id="ns-confirmDeleteCompanyModal" tabindex="-1" role="dialog" aria-labelledby="ns-confirmDeleteCompanyModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="ns-confirmDeleteCompanyModalLabel">Confirm Deletion</h5>
+            </div>
+            <div class="modal-body">
+                <p>Are you sure you want to delete this company?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-close-custom" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-delete-custom" id="ns-confirmDeleteButton" data-company-id="{{ company_id }}">Delete</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="editCompanyModal" tabindex="-1" role="dialog" aria-labelledby="editCompanyModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editCompanyModalLabel">Edit Company</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form method="post" action="{{ url_for('admin.edit_company', company_id=0) }}" id="editCompanyForm">
+                    {{ company_form.hidden_tag() }}
+                    <div class="form-group">
+                        {{ company_form.name.label }}
+                        {{ company_form.name(class="form-control", placeholder="Enter company name") }}
+                    </div>
+                    <div class="form-group">
+                        {{ company_form.kundennummer.label }}
+                        {{ company_form.kundennummer(class="form-control", placeholder="Enter Kundennummer") }}
+                    </div>
+                    <div class="form-group">
+                        {{ company_form.password.label }}
+                        {{ company_form.password(class="form-control", placeholder="Enter a new password (leave blank to keep current password)") }}
+                        <small id="currentPassword" class="form-text text-muted"></small> <!-- Placeholder for current password status -->
+                    </div>
+                    <input type="hidden" name="company_id" id="editCompanyId">
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary">Save Changes</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="company-list container">
+    <div class="row justify-content-between align-items-center mb-3">
+        <div class="col-md-8 col-lg-9">
+            <h2>Existing Companies</h2>
+        </div>
+        <div class="col-md-4 col-lg-3 text-right">
+            <button type="button" class="btn btn-add large-button float-right" data-toggle="modal" data-target="#addCompanyModal">
+                Add a new company
+            </button>
+        </div>
+    </div>
+    <div class="company-grid">
+        {% for company in companies %}
+        <div class="company-card">
+            <div class="company-info" title="{{ company.name }}">
+                {{ company.name }}
+            </div>
+            <div class="company-actions">
+                {% if is_admin %}
+                <button class="btn btn-danger delete-company-btn" data-company-id="{{ company.company_id }}">
+                    <span class="material-symbols-outlined">delete_forever</span>
+                </button>
+                {% endif %}
+                <button class="btn btn-secondary edit-company-btn" 
+                        data-company-id="{{ company.company_id }}"
+                        data-name="{{ company.name }}"
+                        data-kundennummer="{{ company.kundennummer }}">
+                    <span class="material-symbols-outlined">edit</span>
+                </button>                    
+            </div>
+        </div>
+        {% endfor %}        
+        </div>
+    </div>
+
+</div>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var userCards = document.querySelectorAll('.company-card');
+        var baseDelay = 0.1;
+        var increment = 0.02;
+
+        userCards.forEach(function(card, index) {
+
+            var delay = baseDelay + (index * increment);
+
+            card.style.animationDelay = delay + 's';
+        });
+
+        var deleteCompanyButtons = document.querySelectorAll('.delete-company-btn');
+        var confirmDeleteButton = document.getElementById('ns-confirmDeleteButton');
+        var companyIdToDelete = null;
+
+        deleteCompanyButtons.forEach(function(button) {
+            button.addEventListener('click', function() {
+                companyIdToDelete = button.getAttribute('data-company-id'); 
+                $('#ns-confirmDeleteCompanyModal').modal('show');
+            });
+        });
+
+        confirmDeleteButton.addEventListener('click', function() {
+            if (!companyIdToDelete) {
+                console.error('No company ID set for deletion.');
+                return;
+            }
+
+            fetch('/admin/delete_company/' + companyIdToDelete, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({}) 
+            }).then(response => {
+                if (response.ok) {
+                    window.location.href = '/admin/company_management'; 
+                } else {
+                    alert('Failed to delete the company.');
+                }
+            });
+        });
+
+        var editButtons = document.querySelectorAll('.edit-company-btn');
+        editButtons.forEach(function(button) {
+            button.addEventListener('click', function() {
+                var companyId = button.getAttribute('data-company-id');
+                fetch('/admin/edit_company/' + companyId, {
+                    method: 'GET',
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        document.querySelector('#editCompanyForm [name="name"]').value = data.name;
+                        document.querySelector('#editCompanyForm [name="kundennummer"]').value = data.kundennummer;
+                        document.getElementById('editCompanyId').value = companyId;
+                        document.getElementById('currentPassword').textContent = data.password_status;
+                        $('#editCompanyModal').modal('show');
+                    } else {
+                        alert(data.message);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error fetching company details:', error);
+                });
+            });
+        });
+
+        document.getElementById('editCompanyForm').addEventListener('submit', function(e) {
+            e.preventDefault(); 
+            var formData = new FormData(this);
+            var companyId = document.getElementById('editCompanyId').value; 
+
+            fetch('/admin/edit_company/' + companyId, {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest',
+                },
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    $('#editCompanyModal').modal('hide');
+                    location.reload();
+                } else {
+                    alert(data.message);
+                }
+            })
+            .catch(error => {
+                console.error('Error updating company details:', error);
+            });
+        });
+    });
+
+    </script>
+    
+{% endblock %}

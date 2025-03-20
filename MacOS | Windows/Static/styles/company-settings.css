@@ -1,0 +1,483 @@
+body {
+    background-color: #181818;
+    color: #fff;
+    font-family: 'Poppins', 'Roboto', sans-serif; 
+}
+
+.btn {
+    margin-top: 20px; 
+    padding: 5px 15px;
+    background-color: #555;
+    border: none;
+    color: #fff;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.btn[title]:hover::before {
+    content: '';
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    border-width: 5px;
+    border-style: solid;
+    border-color: transparent transparent #333 transparent;
+    transform: translateX(-50%);
+    z-index: 1;
+}
+
+.btn[title]:hover::after {
+    content: attr(title);
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #333;
+    color: #fff;
+    padding: 5px 10px;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    z-index: 1;
+    white-space: nowrap;
+}
+
+.company-card {
+    background: #333;
+    color: #f8f9fa;
+    border-radius: 10px;
+    padding: 10px;
+    text-align: center;
+    animation: fadeInUp 0.5s ease-out forwards;
+    opacity: 0;
+    animation-delay: calc(0.1s * var(--card-index) * var(--card-index));
+}
+.company-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+    justify-content: center; 
+    grid-gap: 20px;
+    padding: 20px 60px;
+}
+
+.company-list {
+    padding: 20px 20px; 
+}
+
+.company-info {
+    margin-bottom: 15px;
+    font-size: 20px;
+    font-weight: bold;
+    font-size: clamp(1rem, 2.5vw, 1.25rem);
+    padding: 5px; 
+    border-radius: 5px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    max-width: 100%;
+    border: 1px solid #868e9694;
+}
+
+.company-actions .btn {
+    margin: 0 5px;
+}
+
+.company-actions {
+    display: flex;
+    justify-content: center; 
+    gap: 10px; 
+}
+
+.action-form {
+    margin: 0;
+}
+
+.form-control {
+    background-color: #444444;
+    color: #f8f9fa;
+    border: 1px solid #444444;
+    max-width: 300px;
+    margin: auto;
+}
+
+.form-control:focus {
+    border-color: #adb5bd;
+    box-shadow: 0 0 0 0.2rem rgba(255, 255, 255, 0.25);
+}
+.btn-danger {
+    font-size: 0.8rem;
+    padding: 3px 10px;
+    background: linear-gradient(45deg, #FF5252, #FF7451);
+    border: none;
+    color: #fff;
+    transform: scale(1);
+}
+
+.btn-danger:hover {
+    background: linear-gradient(45deg, #FF7451, #FF8A71);
+    color: #fff;
+}
+
+.btn-danger:active {
+    background: linear-gradient(45deg, #E04848, #FF6A62);
+    color: #fff;
+}
+
+.btn-secondary {
+    padding: 3px 10px;
+    font-size: 0.8rem;
+    background: linear-gradient(45deg, #275CD5, #44ABED);
+    border: none;
+    color: #f8f9fa;
+    transform: scale(1);
+}
+
+.btn-secondary:hover {
+    background: linear-gradient(45deg, #44ABED, #6EC1F5);
+    color: #f8f9fa;
+}
+
+.btn-secondary:active {
+    background: linear-gradient(45deg, #1E4BAA, #3A8DDC);
+    color: #f8f9fa;
+}
+
+.btn-add {
+    background: linear-gradient(45deg, #275CD5, #44ABED);
+    border: none;
+    color: #f8f9fa;
+}
+
+.btn-add:hover {
+    background: linear-gradient(45deg, #44ABED, #6EC1F5);
+}
+
+.btn-add:active {
+    background: linear-gradient(45deg, #1E4BAA, #3A8DDC);
+    color: #f8f9fa;
+}
+
+.btn-close-custom {
+    background: linear-gradient(45deg, #275CD5, #44ABED);
+    color: #fff;
+    border: none;
+}
+
+.btn-close-custom:hover {
+    background: linear-gradient(45deg, #44ABED, #6EC1F5);
+}
+
+.btn-close-custom:active {
+    background: linear-gradient(45deg, #1E4BAA, #3A8DDC);
+    color: #fff;
+}
+
+.btn-delete-custom {
+    background: linear-gradient(45deg, #FF5252, #FF7451);
+    color: #fff;
+    border: none;
+}
+
+.btn-delete-custom:hover {
+    background: linear-gradient(45deg, #FF7451, #FF8A71);
+}
+
+.btn-delete-custom:active {
+    background: linear-gradient(45deg, #E04848, #FF6A62);
+    color: #fff;
+}
+
+.modal-dialog {
+    max-width: 400px;
+    margin: 1.75rem auto;
+}
+
+.modal-content {
+    background-color: #333;
+    color: #f8f9fa;
+    border-radius: 15px;
+}
+
+.modal-header {
+    display: flex; 
+    align-items: center; 
+    justify-content: space-between; 
+    padding: 10px 15px; 
+    border-bottom: none;
+}
+
+.modal-title {
+    margin-bottom: 0;
+    font-size: 18px;
+    line-height: 1.5; 
+    font-weight: bold;
+    flex-grow: 1; 
+}
+
+.close {
+    color: #fff;
+    opacity: 1;
+    padding: 0; 
+    margin: 0; 
+    border: 0; 
+    background: none; 
+    cursor: pointer;
+}
+
+.close:hover {
+    color: #ccc;
+}
+
+.modal-body {
+    padding-top: 20px;
+    padding: 20px;
+    text-align: center; 
+    font-size: 1.5rem; 
+}
+
+.close:hover {
+    color: #ccc;
+}
+
+.form-control {
+    background-color: #444444;
+    color: #fff;
+    border: none;
+    box-shadow: none;
+}
+
+.form-control:focus {
+    background-color: #444444;
+    color: #fff;
+}
+
+.btn-primary {
+    background: linear-gradient(45deg, #275CD5, #44ABED);
+    border: none;
+    color: #f8f9fa;
+}
+
+.btn-primary:hover {
+    background: linear-gradient(45deg, #44ABED, #6EC1F5);
+    color: #333;
+}
+
+.btn-primary:active {
+    background: linear-gradient(45deg, #1E4BAA, #3A8DDC);
+    color: #f8f9fa;
+}
+
+.close {
+    color: #fff;
+    opacity: 1;
+}
+
+.close:hover {
+    color: #ccc;
+}
+
+.modal-footer {
+    padding: 10px 15px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end; 
+    background: transparent; 
+    border-top: none;
+}
+
+.modal-footer .btn {
+    padding: 5px 15px;
+    border: none;
+    color: #fff;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.add-company-button {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+@media (max-width: 1200px) {
+    .company-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .company-grid {
+        grid-template-columns: 1fr;
+    }
+    .navbar-nav {
+        flex-direction: column;
+    }
+    .navbar-expand-lg .navbar-nav .nav-link {
+        padding-right: 0;
+        padding-left: 0;
+    }
+}
+
+@media (max-width: 768px) {
+    .company-grid {
+        grid-template-columns: 1fr; 
+    }
+}
+
+.alert {
+    background-color: #333;
+    color: #fff;
+    border: 1px solid #6c757d;
+    border-radius: 4px;
+    padding: 15px;
+    margin-bottom: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.alert-dismissible .close {
+    color: #fff;
+    text-shadow: none;
+    opacity: 1;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.large-button {
+    padding: 10px 20px; 
+    font-size: 1.4rem;
+}
+
+.form-label, label {
+    font-size: 1.5rem; 
+    color: #f8f9fa; 
+    margin-bottom: .5rem; 
+}
+.row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.float-right {
+    float: right;
+}
+
+@media (max-width: 991px) {
+    .float-right {
+        float: none;
+    }
+}
+
+.ns-confirmDeleteCompanyModal .modal-dialog {
+    max-width: 380px;
+    margin: auto;
+    margin-top: 50px;
+}
+
+.ns-confirmDeleteCompanyModal .modal-content {
+    background-color: #2b2b2b;
+    color: #f8f9fa;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+}
+
+.ns-confirmDeleteCompanyModal .modal-header {
+    background: #2b2b2b;
+    color: #fff;
+    padding: 5px 20px;
+    border-bottom: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.ns-confirmDeleteCompanyModal .modal-title {
+    font-size: 18px;
+    font-weight: 600;
+    margin: 0;
+}
+
+.ns-confirmDeleteCompanyModal .modal-body {
+    padding: 5px 20px;
+    font-size: 14px;
+    margin-top: 25px;
+    text-align: center;
+}
+
+.ns-confirmDeleteCompanyModal .modal-footer {
+    padding: 10px 10px;
+    border-top: none;
+    display: flex;
+    justify-content: center;
+    gap: 3px;
+}
+
+.ns-confirmDeleteCompanyModal .btn-close-custom, 
+.ns-confirmDeleteCompanyModal .btn-delete-custom {
+    position: relative;
+    padding: 8px 16px;
+    border-radius: 8px;
+    border: none;
+    font-size: 14px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.ns-confirmDeleteCompanyModal .btn-close-custom {
+    background: linear-gradient(45deg, #275cd5, #44abed);
+    color: #fff;
+}
+
+.ns-confirmDeleteCompanyModal .btn-delete-custom {
+    background: linear-gradient(45deg, #ff5252, #ff7451);
+    color: #fff;
+}
+
+.ns-confirmDeleteCompanyModal .btn-close-custom:hover {
+    background: linear-gradient(45deg, #3a8ddc, #6ec1f5);
+    color: #fff;
+}
+
+.ns-confirmDeleteCompanyModal .btn-delete-custom:hover {
+    background: linear-gradient(45deg, #ff6a62, #ff8a71);
+    color: #fff;
+}
+
+.ns-confirmDeleteCompanyModal .btn-close-custom::before, 
+.ns-confirmDeleteCompanyModal .btn-delete-custom::before {
+    font-family: 'Material Icons Outlined';
+    display: inline-block;
+    font-size: 18px;
+    line-height: 1;
+    vertical-align: middle;
+    margin-right: 6px;
+    transition: transform 0.3s ease;
+}
+
+.ns-confirmDeleteCompanyModal .btn-close-custom::before {
+    content: 'close';
+}
+
+.ns-confirmDeleteCompanyModal .btn-delete-custom::before {
+    content: 'check';
+}
+
+.ns-confirmDeleteCompanyModal .btn-close-custom:focus,
+.ns-confirmDeleteCompanyModal .btn-delete-custom:focus {
+    outline: none;
+}
+
+.material-symbols-outlined {
+    transform: scale(0.8);
+    display: inline-block;
+    vertical-align: middle;
+}

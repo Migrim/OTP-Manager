@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="icon" href=".{{ url_for('static', filename='favicon.ico') }}">
+    <meta charset="UTF-8">
+    <title>Currently Restarting...</title>
+    <style>
+        body {
+            text-align: center;
+            padding: 50px;
+            font-family: "Arial", sans-serif;
+            background-color: #121212; 
+            color: #fff; 
+        }
+        h1 {
+            color: #4caf50; 
+        }
+        p {
+            color: #bbb; 
+        }
+        a {
+            color: #4caf50; 
+        }
+        #statusIndicator {
+            margin-top: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .spinner {
+            border: 4px solid #f3f3f3; 
+            border-top: 4px solid #4caf50; 
+            border-radius: 50%;
+            width: 10px;
+            height: 10px;
+            animation: spin 2s linear infinite;
+            margin-right: 10px;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        img {
+            margin-top: 20px;
+            max-width: 100%;
+            height: auto;
+        }
+
+        #refreshTimer {
+            position: fixed;
+            bottom: 10px;
+            right: 10px;
+            color: #bbb;
+            background-color: rgba(0, 0, 0, 0.5);
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 0.9em;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+        }
+    </style>
+    <script>
+        let lastRefreshTime = 0;
+
+        function checkServerStatus() {
+            lastRefreshTime = 0;
+            fetch('/status')
+                .then(response => {
+                    console.log('Status Code:', response.status);
+                    return response.json(); 
+                })
+                .then(data => {
+                    console.log('Response:', data); 
+                    if (data.status === 'ok') {
+                        window.location.href = "{{ url_for('home') }}";
+                    } else {
+                        document.getElementById('statusIndicatorText').innerText = 'Server is still restarting...';
+                    }
+                })
+                .catch(error => {
+                    console.error('Error checking server status:', error);
+                    document.getElementById('statusIndicatorText').innerText = 'Server is still restarting...';
+                });
+        }
+
+        function updateRefreshTime() {
+            lastRefreshTime++;
+            document.getElementById('refreshTimer').innerText = `Refreshed ${lastRefreshTime} sec ago`;
+        }
+
+        function animateTitle() {
+            let title = 'Currently Restarting';
+            let count = 0;
+            
+            setInterval(() => {
+                document.title = title + '.'.repeat(count % 4);
+                count++;
+            }, 500);
+        }
+
+        animateTitle();
+        setInterval(checkServerStatus, 1000);
+        setInterval(updateRefreshTime, 1000);
+    </script>
+</head>
+<body>
+    <h1>The server is restarting...</h1>
+    <p>Please stay on this page. You will be automatically redirected to the homepage once the server is back online.</p>
+    <p>If you prefer, you can manually return to the homepage, but please note that the server might still be restarting.</p>
+    <a href="{{ url_for('home') }}">Return to OTP-List</a>    
+    <div id="statusIndicator">
+        <div class="spinner"></div>
+        <p id="statusIndicatorText">Checking server status...</p>
+    </div>
+
+    <img src="https://media.tenor.com/2l4-h42qnmcAAAAi/toothless-dancing-toothless.gif" alt="Dancing Toothless">
+    <div id="refreshTimer">Refreshed 0 sec ago</div>
+</body>
+</html>

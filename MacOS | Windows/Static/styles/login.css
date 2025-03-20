@@ -1,0 +1,546 @@
+body {
+    background: #333; 
+    color: #ffffff; 
+    font-family: 'Poppins', 'Roboto', sans-serif; 
+    position: relative;
+    height: 100vh;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+@keyframes slideIn {
+    from {
+        top: -50px;
+        opacity: 0;
+    }
+    to {
+        top: 20px;
+        opacity: 1;
+    }
+}
+
+body.loaded {
+    transition: background 1s ease-in-out;
+}
+
+a {
+    color: #0d6efd;
+}
+
+a:hover {
+    color: #0056b3;
+}
+
+.center-content {
+    display: flex;
+    flex-direction: column; 
+    align-items: center; 
+    justify-content: center; 
+    height: 100vh; 
+}
+
+.form-container {
+    max-width: 350px; 
+    width: 100%;
+    padding: 20px; 
+    margin-bottom: 20px;
+    border-radius: 30px; 
+    box-shadow: 0 4px 8px rgba(20, 20, 20, 0.5); 
+    background: rgba(43, 43, 43, 0.5);  
+    backdrop-filter: blur(10px); 
+    -webkit-backdrop-filter: blur(10px); 
+    border: 1px solid rgba(32, 32, 32, 0.3); 
+    opacity: 0;
+    transition: opacity 0.6s ease-out, transform 0.3s ease;
+    opacity: 1;
+}
+
+.form-container.fade-out {
+    opacity: 0; 
+    transition: opacity 0.6s ease-out; 
+}
+
+.instruction-text {
+    font-size: 14px; 
+    text-align: center; 
+    font-style: italic;
+    width: 80%;
+    line-height: 1.4; 
+}
+
+.form-title {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.form-control {
+    border-radius: 5px;
+    background: #3a3a3a;
+    color: #ffffff;
+}
+
+.form-submit {
+    border-radius: 8px;
+    margin-top: 20px;
+    background-color: #CD5C5C; 
+    border: none;
+    transition: background-color 0.3s ease;
+}
+
+.form-submit:hover {
+    background-color: #B94A4A;
+}
+
+.loader {
+    border: 5px solid #f3f3f3; 
+    border-top: 5px solid #555; 
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    animation: spin 1s linear infinite;
+    display: none;
+}
+
+@keyframes glowEffect {
+    0%, 100% {
+        background: radial-gradient(circle at center, #110e0e 0%, transparent 80%);
+        transform: scale(1);
+        opacity: 0.6;
+    }
+    50% {
+        background: radial-gradient(circle at center, #3d3737 0%, transparent 80%);
+        transform: scale(1.2);
+        opacity: 1;
+    }
+}
+
+.idle-animation {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out;
+    pointer-events: none;
+    z-index: 2;
+}
+
+.idle-animation.active { 
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.idle-animation-text {
+    color: #ffffff;
+    font-size: 24px;
+    text-align: center;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.wave-group {
+    position: relative;
+    width: calc(100% - 20px); 
+    max-width: 220px; 
+    margin: auto;
+    margin-bottom: 10px; 
+}
+
+.password-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.toggle-password {
+    position: absolute;
+    right: 10px; 
+    top: 50%; 
+    transform: translateY(-50%); 
+    color: rgba(255, 255, 255, 0.7);
+    cursor: pointer;
+}
+
+.input {
+    width: 100%;
+    max-width: 220px;
+    height: 45px;
+    padding: 16px;
+    border-radius: 15px;
+    border: 1px solid rgba(32, 32, 32, 0.3); 
+    outline: none;
+    transition: all 0.3s cubic-bezier(0.19, 1, 0.22, 1);
+    box-shadow: 0px 0px 20px -18px rgba(0, 0, 0, 0.3); 
+    background: rgba(48, 48, 48, 0.5);
+    backdrop-filter: blur(10px); 
+    -webkit-backdrop-filter: blur(10px);
+    color: #ffffff;
+    padding-right: 40px;
+}
+
+.input:hover {
+    border: 2px solid #f8bbd0;
+    box-shadow: 0px 0px 20px -17px;
+}
+
+.input:focus {
+    border-color: rgba(97, 73, 28, 0.2);  
+    box-shadow: 0 0 0 0.2rem rgba(138, 43, 226, 0.2); 
+    animation: subtleScale 0.5s ease-out forwards;
+    transition: box-shadow 0.3s ease; 
+}
+
+@keyframes subtleScale {
+    0% {
+        transform: scale(1);
+    }
+    100% {
+        transform: scale(1.02);
+        border-color: #f8bbd0; 
+    }
+}
+
+@keyframes fadeInPassword {
+    from { opacity: 0.5; }
+    to { opacity: 1; }
+}
+
+.input.visible {
+    animation: fadeInPassword 0.5s ease forwards;
+    animation: subtleScale 0.5s ease-out forwards;
+}
+
+.form-check {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 15px;
+    margin-bottom: 15px;
+    width: 100%; 
+}
+
+.cl-checkbox {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.cl-checkbox input[type="checkbox"] {
+    display: none; 
+}
+
+.cl-checkbox label {
+    position: relative;
+    padding-left: 25px;
+    cursor: pointer;
+    display: inline-block;
+    color: #ffffff;
+}
+
+.cl-checkbox label::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 20px; 
+    height: 20px; 
+    background: #3a3a3a;
+    border-radius: 5px; 
+    transition: background 0.3s, border 0.3s;
+}
+
+.cl-checkbox label::after {
+    content: '';
+    position: absolute;
+    left: 7px; 
+    top: 4px; 
+    width: 6px; 
+    height: 9px; 
+    border: solid #f8bbd0; 
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+    display: none;
+}
+
+.cl-checkbox input[type="checkbox"]:checked + label::after {
+    animation: fadeInCheckmark 0.5s ease-in-out forwards;
+    display: block;
+}
+
+@keyframes fadeInCheckmark {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+.cl-checkbox label:hover::before {
+    background: #4d4d4d; 
+    border: 1px solid #f8bbd0; 
+}
+
+#matrixEffect {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: #1d1d1d;
+    z-index: -1; 
+    font-family: 'Courier New', Courier, monospace;
+    overflow: hidden;
+    display: block; 
+}
+
+.welcome-message {
+    color: #ffffff;
+    font-size: 36px; 
+    text-align: center;
+    margin-top: 20px;
+}
+
+#whatsNewIcon {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    font-size: 24px; 
+    cursor: pointer;
+    animation: glowEffect 2s infinite;
+    z-index: 1001; 
+    border: none;
+    background: transparent; 
+    transition: opacity 0.5s ease;
+}
+
+.modal {
+    display: none; 
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0,0,0,0.8); 
+}
+
+.modal-content {
+    background-color: #333; 
+    margin: 5% auto; 
+    padding: 15px; 
+    border: 1px solid #555; 
+    width: 50%; 
+    color: #ddd; 
+    border-radius: 10px; 
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); 
+}
+
+ul {
+    padding: 0;
+    margin: 0; 
+    list-style-type: none; 
+}
+
+ul li {
+    margin-bottom: 10px; 
+    color: #ddd; 
+    font-size: 14px; 
+}
+
+.close {
+    color: #bbb; 
+    float: right;
+    font-size: 24px; 
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.close:hover,
+.close:focus {
+    color: #fff;
+    text-decoration: none;
+}
+.btn-primary {
+    display: inline-block;
+    padding: 8px 30px;
+    font-size: 16px;
+    font-weight: normal;
+    text-align: center;
+    text-decoration: none;
+    color: #fff;
+    background-color: #ff5252;
+    border: none;
+    border-radius: 12px;
+    transition: background-color 0.3s ease;
+    margin-top: -6px;
+    white-space: nowrap;
+}
+
+.btn-primary:hover {
+    background-color: #ff5d51;
+    color: #333;
+}
+
+.button-wrapper {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+.flash-message {
+    font-family: 'Poppins', sans-serif; 
+    display: inline-block; 
+    padding: 10px 20px;
+    margin-bottom: 10px;
+    border: 1px solid transparent;
+    border-radius: 10px;
+    color: #fff;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.3s ease-in-out;
+    animation: fadeInSlideUp 0.5s ease forwards;
+    white-space: nowrap;
+    position: relative;
+    z-index: 1050;
+}
+
+.flash-messages-container {
+    position: fixed;
+    top: 30px;
+    right: 20px;
+    z-index: 1060;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    pointer-events: none;
+}
+
+.flash-message {
+    animation: fadeInSlideUp 0.5s ease forwards;
+}
+
+@keyframes fadeInSlideUp {
+    0% {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeOutSlideDown {
+    0% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    100% {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+}
+
+.flash-info {
+    background-color: #007bff;
+    border-color: #007bff;
+}
+
+.flash-success {
+    background-color: #59b259;
+    border-color: #59b259;
+}
+
+.flash-warning {
+    background-color: #f39c12;
+    border-color: #f39c12;
+}
+
+.flash-auth {
+    background-color: #4CAF50; 
+    border-color: #4CAF50;
+}
+
+.flash-error {
+    background-color: #ff5252;
+    border-color: #ff5252;
+}
+
+.flash-message .flash-icon {
+    vertical-align: middle;
+    margin-right: 10px;
+}
+
+.flash-close-btn {
+    margin-left: 10px;
+    cursor: pointer;
+    background: none;
+    border: none;
+    color: #ffffff;
+    font-size: 20px;
+    font-weight: bold;
+    transition: color 0.2s;
+    outline: none;
+}
+
+.flash-close-btn:hover {
+    color: #333;
+}
+.toggle-switch-container {
+    position: fixed;
+    top: 10px;
+    left: 10px;
+    z-index: 1000;
+}
+
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 34px;
+    height: 14px;
+}
+
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    transition: 0.4s;
+    border-radius: 10px;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 10px;
+    width: 10px;
+    left: 2px;
+    bottom: 2px;
+    background-color: white;
+    transition: 0.4s;
+    border-radius: 50%;
+}
+
+input:checked + .slider {
+    background-color: #2196F3;
+}
+
+input:checked + .slider:before {
+    transform: translateX(20px);
+}
