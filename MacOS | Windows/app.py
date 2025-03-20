@@ -68,7 +68,8 @@ start_time = datetime.now()
 app.config['SECRET_KEY'] = config.get('server', 'secret_key', fallback='your-secret-key')
 app.config['SESSION_TYPE'] = 'filesystem'
 app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(days=31)
-app.config['DATABASE'] = config.get('database', 'path', fallback='instance/otp.db')
+base_dir = os.path.dirname(os.path.abspath(__file__))
+app.config['DATABASE'] = os.path.join(base_dir, 'instance', 'otp.db')
 Session(app)
 Bootstrap(app)
 

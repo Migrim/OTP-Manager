@@ -8,7 +8,8 @@ from logging_config import db_logger
 
 def init_db():
     try:
-        instance_folder = "instance"
+        base_dir = os.path.dirname(os.path.abspath(__file__))
+        instance_folder = os.path.join(base_dir, "instance")
         db_filename = "otp.db"
         db_path = os.path.join(instance_folder, db_filename)
         is_new_database = not os.path.exists(db_path)
@@ -17,7 +18,7 @@ def init_db():
             os.makedirs(instance_folder)
 
         db_logger.info(">>> [CHECK] Checking for database backup...")
-        backup_folder = "backup"
+        backup_folder = os.path.join(base_dir, "backup")
         current_date = datetime.now().strftime("%Y-%m-%d")
         backup_filename = f"otp_{current_date}.db"
         backup_path = os.path.join(backup_folder, backup_filename)

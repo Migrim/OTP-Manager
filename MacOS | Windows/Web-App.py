@@ -2,8 +2,10 @@ from flask import Flask
 import webview
 import threading
 import app
+import Database
 
 def start_flask():
+    Database.init_db()
     app.app.run(host="127.0.0.1", port=5000, debug=False, use_reloader=False)
 
 if __name__ == "__main__":
