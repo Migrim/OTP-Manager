@@ -59,17 +59,16 @@ from logging_config import my_logger
 
 config = configparser.ConfigParser()
 config.read('config.ini')
-offline_mode = config.getboolean('server', 'offline_mode', fallback=False)
 
 app = Flask(__name__)
 bcrypt = Bcrypt(app)
 CORS(app)
 start_time = datetime.now()
 app.config['SECRET_KEY'] = config.get('server', 'secret_key', fallback='your-secret-key')
+base_dir = os.path.dirname(os.path.abspath(__file__))
+app.config['DATABASE'] = os.path.join(base_dir, config.get('database', 'path', fallback='instance/otp.db'))
 app.config['SESSION_TYPE'] = 'filesystem'
 app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(days=31)
-base_dir = os.path.dirname(os.path.abspath(__file__))
-app.config['DATABASE'] = os.path.join(base_dir, 'instance', 'otp.db')
 Session(app)
 Bootstrap(app)
 
@@ -279,102 +278,6 @@ def get_all_users():
 def show_endpoints():
     import pprint
     return pprint.pformat(app.url_map)
-
-@app.route('/status')
-def server_status():
-    return jsonify({'status': 'ok'}), 200
-
-def is_internet_available():
-    if offline_mode:
-        return True
-
-    try:
-        response = requests.get('http://www.google.com', timeout=5)
-        return response.status_code == 200
-    except requests.ConnectionError as e:
-        logging.error(f"Connection error: {e}")
-        return False
-    except requests.Timeout as e:
-        logging.error(f"Timeout error: {e}")
-        return False
-    except Exception as e:
-        logging.error(f"Unexpected error when checking internet connectivity: {e}")
-        return False
-
-def check_ntp_sync():
-    if offline_mode:
-        return True, None
-
-    if not is_internet_available():
-        logging.warning("Internet is not available.")
-        flash("Internet is not available. Check your connection.", "error")
-        return False, None
-
-    try:
-        ntp_client = ntplib.NTPClient()
-        response = ntp_client.request('pool.ntp.org', timeout=5)
-        ntp_time = response.tx_time
-        local_time = time.time()
-        offset = local_time - ntp_time
-
-        allowable_offset = 1
-
-        if abs(offset) > allowable_offset:
-            logging.warning("Time is not synchronized. Offset: %s seconds", offset)
-            flash(f"Warning: Time is not synchronized. Offset: {offset} seconds", "warning")
-            return False, ntp_time
-        return True, ntp_time
-    except ntplib.NTPException as e:
-        logging.error("NTP request failed: %s", e)
-        flash(f"Error: NTP request failed due to {e}.", "error")
-        return False, None
-    except Exception as e:
-        logging.error("Failed to synchronize time: %s", e)
-        flash(f"Error: Failed to synchronize time due to {e}.", "error")
-        return False, None
-
-@app.route('/ntp_status')
-def ntp_status():
-    is_ntp_synced, ntp_time = check_ntp_sync()
-    if is_ntp_synced:
-        return jsonify({"status": "connected", "message": "NTP time is synchronized."})
-    else:
-        return jsonify({"status": "disconnected", "message": "NTP time is not synchronized. Check the warnings/errors."})
-
-@app.route('/internet_status')
-def internet_status():
-    if is_internet_available():
-        return jsonify({"status": "connected"})
-    else:
-        return jsonify({"status": "disconnected"})
-
-def check_server_capacity(f):
-    @wraps(f)
-    def decorated_function(*args, **kwargs):
-        global slow_requests_counter
-
-        if not is_internet_available():
-            flash("Internet connection is not available.", "error")
-            return f(*args, **kwargs)
-
-        start_time = time.time()
-        response = f(*args, **kwargs)
-        end_time = time.time()
-        response_time = end_time - start_time
-
-        initial_threshold = 1.0
-        adjusted_threshold = initial_threshold + 0.1 * slow_requests_counter
-
-        if response_time > adjusted_threshold:
-            slow_requests_counter += 1
-            flash("The server is currently experiencing high load and may be slow.", "warning")
-            logging.warning(f"Slow response detected for {f.__name__}: {response_time:.2f}s")
-        else:
-            slow_requests_counter = max(0, slow_requests_counter - 1)
-
-        return response
-
-    return decorated_function
 
 @app.route('/get_flash_messages')
 def get_flash_messages():
@@ -680,7 +583,6 @@ def get_last_login_time_from_db():
     return None
 
 @app.route('/login', methods=['GET', 'POST'])
-@check_server_capacity
 def login():
     flash("Please log in to gain access", "warning")
 
