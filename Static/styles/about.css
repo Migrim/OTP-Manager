@@ -1,8 +1,14 @@
+@import url('https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@400;700&display=swap');
+
 body {
     background-color: #fff;
     color: #333;
     font-family: 'Poppins', 'Roboto', sans-serif; 
     line-height: 1.6; 
+}
+
+h1, .header {
+    font-family: 'Bricolage Grotesque', 'Poppins', 'Roboto', sans-serif;
 }
 
 .center-content {
