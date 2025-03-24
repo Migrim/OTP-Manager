@@ -1,7 +1,9 @@
+@import url('https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@400;700&display=swap');
+
 body {
     font-family: 'Poppins', 'Roboto', sans-serif; 
-    background-color: #222;
-    color: #fff;
+    background-color: #fff;
+    color: #333;
 }
 
 .container {
@@ -14,21 +16,6 @@ body {
     height: 100%; 
 }
 
-.navbar {
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.1);
-}
-
-.navbar-dark .navbar-brand {
-    color: #f1f1f1;
-    font-size: 1.5rem;
-    margin-right: 20px;
-    transition: color 0.3s;
-}
-
-.navbar-dark .navbar-brand:hover {
-    color: #CD5C5C;
-}
-
 table {
     width: 100%;
     border-collapse: separate; 
@@ -39,21 +26,20 @@ table {
 }
 
 th, td {
-    border: 1px solid #444;
+    border: 1px solid #ccc;
     padding: 8px;
     text-align: left;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     transition: box-shadow 0.3s;
 }
 
 th:first-child {
     border-top-left-radius: 10px;
-    border-left: 1px solid #444;
+    border-left: 1px solid #ccc;
 }
 
 th:last-child {
     border-top-right-radius: 10px;
-    border-right: 1px solid #444;
+    border-right: 1px solid #ccc;
 }
 
 tbody tr:last-child td:first-child {
@@ -64,27 +50,24 @@ tbody tr:last-child td:last-child {
     border-bottom-right-radius: 10px;
 }
 
-th:hover, td:hover {
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-}
-
 th {
-    background-color: #222;
-    color: #fff;
+    background-color: #fcfbfb;
+    color: #333;
 }
 
 tr:nth-child(even) {
-    background-color: #333;
+    background-color: #fcfbfb;
 }
 
 tr:nth-child(odd) {
-    background-color: #272727;
+    background-color: #fcfbfb;
 }
 
 h1 {
     text-align: center;
     margin-top: 20px;
-    color: #fff;
+    color: #333;
+    font-family: 'Bricolage Grotesque', sans-serif;
 }
 
 .countdown-timer {
@@ -214,7 +197,7 @@ table td:nth-child(5) {
 .warning-time::before {
     content: 'warning';
     font-family: 'Material Icons Outlined';
-    color: #ff5252;
+    color: #ff3b6b;
     animation: flash-warning 1s steps(1, start) infinite; 
     font-size: 20px;
     position: absolute;
@@ -264,26 +247,25 @@ table td:nth-child(5) {
 .search-bar input[type="text"] {
     padding: 6px;
     font-size: 17px;
-    border: 1px solid #757575;
+    border: 1px solid #ccc;
     border-radius: 12px;
     width: 50%;
     background: rgba(255, 255, 255, 0.1);
-    color: #f1f1f1;
+    color: #333;
     transition: background 0.3s, border 0.3s;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
 }
 
 .search-bar input[type="text"]:focus {
     background: rgba(255, 255, 255, 0.2);
-    border-color: #f1f1f1;
+    border: 1px solid #ccc;
 }
 
 .search-input {
     padding: 10px;
     border-radius: 12px;
-    border: 1px solid #757575;
-    background-color: #393939;
-    color: #fff;
+    border: 1px solid #ccc;
+    background-color: #fcfbfb;
+    color: #333;
     font-size: 1rem;
     transition: all 0.3s;
 }
@@ -296,16 +278,15 @@ table td:nth-child(5) {
     margin-left: 20px;
     padding: 6px;
     font-size: 17px;
-    border: 1px solid #757575;
+    border: 1px solid #ccc;
     width: 100%; 
     max-width: 200px;
     padding-right: 30px; 
     background: rgba(255, 255, 255, 0.1) url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0Ij48cGF0aCBmaWxsPSIjRkZGIiBkPSJNOC40MSA3Ljg0TDEyIDExLjQyTDE1LjU5IDcuODRMMTcgOWwtNSA1bC01LTVMOC40MSA3Ljg0Wk0xMiAxM1oiLz48L3N2Zz4=') no-repeat;
     background-position: right 10px center;
     background-size: 20px;
-    color: #f1f1f1;
+    color: #333;
     border-radius: 12px;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5); 
     appearance: none; 
     -webkit-appearance: none; 
     -moz-appearance: none;
@@ -317,9 +298,9 @@ table td:nth-child(5) {
 }
 
 .custom-dropdown option {
-    background-color: #313133; 
+    background-color: #fff; 
     border-radius: 12px;
-    color: #fff;
+    color: #333;
 }
 
 .custom-dropdown::-ms-expand {
@@ -327,11 +308,78 @@ table td:nth-child(5) {
 }
 
 .custom-dropdown:hover {
-    background: rgba(50, 50, 50, 0.8) url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0Ij48cGF0aCBmaWxsPSIjRkZGIiBkPSJNOC40MSA3Ljg0TDEyIDExLjQyTDE1LjU5IDcuODRMMTcgOWwtNSA1bC01LTVMOC40MSA3Ljg0Wk0xMiAxM1oiLz48L3N2Zz4=') no-repeat;
+    border: 1px solid rgba(100, 150, 200, 0.3);
+    box-shadow: 0 0 3px rgba(100, 150, 200, 0.3);    
+    background: rgba(255, 255, 255, 0.9) url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0Ij48cGF0aCBmaWxsPSIjRkZGIiBkPSJNOC40MSA3Ljg0TDEyIDExLjQyTDE1LjU5IDcuODRMMTcgOWwtNSA1bC01LTVMOC40MSA3Ljg0Wk0xMiAxM1oiLz48L3N2Zz4=') no-repeat;
     background-position: right 10px center;
     background-size: 20px;
 }
 
 .custom-dropdown:focus {
     outline: none; 
+}
+body.dark-mode {
+    background-color: #181818;
+    color: #fff;
+}
+.dark-mode .search-input {
+    border: 1px solid #444;
+}
+.dark-mode .search-bar input[type="text"] {
+    border: 1px solid #444;
+    background: #333;
+    color: #fff;
+}
+
+.dark-mode .search-bar input[type="text"]:focus {
+    background: #333;
+    border-color: #444;
+}
+.dark-mode #searchInput {
+    color: #fff; 
+}
+.dark-mode .custom-dropdown {
+    border: 1px solid #444;
+    color: #fff;
+}
+
+.dark-mode .custom-dropdown option {
+    background-color: #313133; 
+    border-radius: 12px;
+    color: #fff;
+}
+
+.dark-mode .custom-dropdown::-ms-expand {
+    display: none;
+}
+
+.dark-mode .custom-dropdown:hover {
+    background: rgba(50, 50, 50, 0.8) url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0Ij48cGF0aCBmaWxsPSIjRkZGIiBkPSJNOC40MSA3Ljg0TDEyIDExLjQyTDE1LjU5IDcuODRMMTcgOWwtNSA1bC01LTVMOC40MSA3Ljg0Wk0xMiAxM1oiLz48L3N2Zz4=') no-repeat;
+    background-position: right 10px center;
+    background-size: 20px;
+}
+.dark-mode th, td {
+    border: 1px solid #444;
+}
+.dark-mode th:first-child {
+    border-left: 1px solid #444;
+}
+
+.dark-mode th:last-child {
+    border-right: 1px solid #444;
+}
+.dark-mode th {
+    background-color: #333;
+    color: #fff;
+}
+
+.dark-mode tr:nth-child(even) {
+    background-color: #333;
+}
+
+.dark-mode tr:nth-child(odd) {
+    background-color: #333;
+}
+.dark-mode h1 {
+    color: #fff;
 }
