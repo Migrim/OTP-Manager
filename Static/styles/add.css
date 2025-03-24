@@ -1,12 +1,12 @@
 body {
-    background-color: #181818;
-    color: #fff;
-    font-family: 'Poppins', 'Roboto', sans-serif; 
-    margin: 0; 
+    background-color: #fff;
+    color: #333;
+    font-family: 'Poppins', 'Roboto', sans-serif;
+    margin: 0;
     overflow: hidden;
     justify-content: center;
-    align-items: center; 
-    min-height: 100vh; 
+    align-items: center;
+    min-height: 100vh;
 }
 
 .center-content {
@@ -22,7 +22,8 @@ body {
     width: 100%;
     padding: 30px;
     border-radius: 10px;
-    background: #333;
+    background: #fcfbfb;
+    border: 1px solid #ccc;
     animation: fadeInScale 0.8s ease-in-out;
     margin-top: 20px;
 }
@@ -30,20 +31,20 @@ body {
 .form-title {
     text-align: center;
     margin-bottom: 30px;
-    color: #fff;
+    color: #333;
 }
 
 .form-control {
     border-radius: 5px;
-    background: rgba(255, 255, 255, 0.1);
-    color: #f1f1f1;
-    border: 1px solid #757575;
-    box-shadow: 0 0 0 0 rgba(138, 43, 226, 0); 
+    background: rgba(0, 0, 0, 0.05);
+    color: #333;
+    border: 1px solid #ccc;
+    box-shadow: 0 0 0 0 rgba(138, 43, 226, 0);
     transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
 .form-control::-webkit-select-placeholder {
-    color: #9B9B9B;
+    color: #666;
 }
 
 .form-submit {
@@ -53,9 +54,9 @@ body {
     margin-right: auto;
     display: block;
     width: fit-content;
-    background-color: #555; 
-    color: #ddd; 
-    border: 1px solid #666; 
+    background-color: #eee;
+    color: #333;
+    border: 1px solid #ccc;
     padding: 10px 15px;
     border-radius: 5px;
     transition: background-color 0.3s, color 0.3s, border-color 0.3s;
@@ -66,14 +67,14 @@ body {
 }
 
 .form-submit:hover, .form-submit:focus {
-    background-color: #666; 
-    color: #fff; 
-    border-color: #777; 
+    background-color: #ddd;
+    color: #333;
+    border-color: #bbb;
 }
 
 .form-submit:active {
-    background-color: #10d60f !important; 
-    color: #fff; 
+    background-color: #10d60f !important;
+    color: #fff;
     border-color: #10d60f !important;
 }
 
@@ -82,15 +83,15 @@ body {
 }
 
 .form-control:read-only {
-    background-color: #444444;
-    color: #F5F5F5;
+    background-color: #f5f5f5;
+    color: #333;
 }
 
 .form-control:focus {
-    border-color: rgba(97, 73, 28, 0.2);  
-    box-shadow: 0 0 0 0.2rem rgba(138, 43, 226, 0.2); 
+    border-color: rgba(0,123,255,0.2);
+    box-shadow: 0 0 0 0.2rem rgba(0,123,255,0.2);
     animation: subtleScale 0.5s ease-out forwards;
-    transition: box-shadow 0.3s ease; 
+    transition: box-shadow 0.3s ease;
 }
 
 @keyframes subtleScale {
@@ -99,7 +100,7 @@ body {
     }
     100% {
         transform: scale(1.02);
-        border-color: #f8bbd0; 
+        border-color: #cce5ff;
     }
 }
 
@@ -110,8 +111,8 @@ body {
 .form-control:read-only:hover::after {
     content: "Read Only";
     position: absolute;
-    background-color: #333;
-    color: #fff;
+    background-color: #fff;
+    color: #333;
     padding: 5px;
     border-radius: 5px;
     top: 100%;
@@ -122,47 +123,47 @@ body {
 .form-group-with-icon {
     display: flex;
     align-items: center;
-    flex-wrap: nowrap; 
+    flex-wrap: nowrap;
 }
 
 .form-group-with-icon label {
     flex: 0 0 auto;
-    width: 100px; 
+    width: 100px;
     margin-right: 20px;
 }
 
 .form-group-with-icon .form-control {
     flex: 1 0 auto;
     min-width: 200px;
-    max-width: calc(100% - 140px); 
+    max-width: calc(100% - 140px);
 }
 
 .validation-icon {
-    flex: 0 0 auto; 
+    flex: 0 0 auto;
     margin-left: 10px;
     display: none;
     color: #10d60f;
 }
 
 .is-invalid {
-    color: #ff5252; 
+    color: #ff5252;
 }
 
 select.form-control {
-    background-color: #555; 
-    color: #fff; 
+    background-color: #fff;
+    color: #333;
 }
 
 select.form-control option {
-    background-color: #444; 
-    color: #fff; 
+    background-color: #fff;
+    color: #333;
 }
 
 .error-messages {
     margin-top: 20px;
     max-height: 50px;
     overflow-y: auto;
-    width: 100%
+    width: 100%;
 }
 
 @keyframes fadeInScale {
@@ -176,19 +177,19 @@ select.form-control option {
 }
 
 .modal-content {
-    background-color: #333; 
-    color: #fff;
-    border-radius: 10px; 
-    padding: 15px; 
+    background-color: #fff;
+    color: #333;
+    border-radius: 10px;
+    padding: 15px;
     display: inline-block;
 }
 
 .modal-header {
-    border-bottom: none; 
-    padding-bottom: 0; 
-    display: flex; 
-    justify-content: space-between; 
-    align-items: center; 
+    border-bottom: none;
+    padding-bottom: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .modal-title {
@@ -196,44 +197,45 @@ select.form-control option {
 }
 
 .modal-header .close {
-    color: #aaa;
-    padding: 0; 
-    margin: 0 0 0 auto; 
+    color: #666;
+    padding: 0;
+    margin: 0 0 0 auto;
 }
 
 .modal-dialog {
     margin: 30vh auto;
-    max-width: none; 
+    max-width: none;
 }
 
 .modal-body {
-    padding: 10px; 
-    overflow-y: auto; 
+    padding: 10px;
+    overflow-y: auto;
 }
+
 .modal-content .modal-header .modal-title {
-    color: #fff; 
+    color: #333;
 }
 
 .button-container {
     display: flex;
     justify-content: space-between;
-    margin-top: 20px; 
+    margin-top: 20px;
 }
 
 .button-container button {
-    flex-grow: 1; 
-    margin: 0 10px; 
-    padding: 8px 16px; 
-    font-size: 14px; 
+    flex-grow: 1;
+    margin: 0 10px;
+    padding: 8px 16px;
+    font-size: 14px;
     border-radius: 5px;
-    border: none; 
-    cursor: pointer; 
+    border: none;
+    cursor: pointer;
     transition: background 0.3s, transform 0.3s;
 }
 
 .button-container .btn-primary {
     background: linear-gradient(45deg, #007bff, #66b3ff);
-    color: white; 
+    color: white;
 }
 
 .button-container .btn-primary:hover {
@@ -247,14 +249,258 @@ select.form-control option {
 
 .button-container .btn-secondary {
     background: linear-gradient(45deg, #9b79b4, #bba0c9);
-    color: white; 
+    color: white;
 }
 
 .button-container .btn-secondary:hover {
-    background: linear-gradient(45deg, #ad8abf, #d1b9e1); 
+    background: linear-gradient(45deg, #ad8abf, #d1b9e1);
 }
 
 .button-container .btn-secondary:active {
     background: linear-gradient(45deg, #8a6ba0, #a68fb8);
+    transform: scale(0.95);
+}
+body.dark-mode {
+    background-color: #181818;
+    color: #fff;
+    font-family: 'Poppins', 'Roboto', sans-serif;
+    margin: 0;
+    overflow: hidden;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+.dark-mode .center-content {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    min-height: 100vh;
+    padding-top: 10px;
+}
+
+.dark-mode .form-container {
+    max-width: 400px;
+    width: 100%;
+    padding: 30px;
+    border-radius: 10px;
+    background: #333;
+    border: 1px solid #444;
+    animation: fadeInScale 0.8s ease-in-out;
+    color: #fff;
+    margin-top: 20px;
+}
+
+.dark-mode .form-title {
+    text-align: center;
+    margin-bottom: 30px;
+    color: #fff;
+}
+
+.dark-mode .form-control {
+    border-radius: 5px;
+    background: #444;
+    color: #fff;
+    border: 1px solid #555;
+    box-shadow: 0 0 0 0 rgba(138, 43, 226, 0);
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.dark-mode .form-control::-webkit-select-placeholder {
+    color: #aaa;
+}
+
+.dark-mode .form-submit {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+    width: fit-content;
+    background-color: #555;
+    color: #fff;
+    border: 1px solid #666;
+    padding: 10px 15px;
+    border-radius: 5px;
+    transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+    font-weight: bold;
+    text-transform: uppercase;
+    cursor: pointer;
+    text-align: center;
+}
+
+.dark-mode .form-submit:hover,
+.dark-mode .form-submit:focus {
+    background-color: #666;
+    color: #fff;
+    border-color: #777;
+}
+
+.dark-mode .form-submit:active {
+    background-color: #10d60f !important;
+    color: #fff;
+    border-color: #10d60f !important;
+}
+
+.dark-mode .text-danger {
+    color: #ff6b6b;
+}
+
+.dark-mode .form-control:read-only {
+    background-color: #555;
+    color: #fff;
+}
+
+.dark-mode .form-control:focus {
+    border-color: rgba(255,255,255,0.2);
+    box-shadow: 0 0 0 0.2rem rgba(255,255,255,0.2);
+    animation: subtleScale 0.5s ease-out forwards;
+    transition: box-shadow 0.3s ease;
+}
+
+.dark-mode .clickable-icon {
+    cursor: pointer;
+}
+
+.dark-mode .form-control:read-only:hover::after {
+    content: "Read Only";
+    position: absolute;
+    background-color: #333;
+    color: #fff;
+    padding: 5px;
+    border-radius: 5px;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.dark-mode .form-group-with-icon {
+    display: flex;
+    align-items: center;
+    flex-wrap: nowrap;
+}
+
+.dark-mode .form-group-with-icon label {
+    flex: 0 0 auto;
+    width: 100px;
+    margin-right: 20px;
+}
+
+.dark-mode .form-group-with-icon .form-control {
+    flex: 1 0 auto;
+    min-width: 200px;
+    max-width: calc(100% - 140px);
+}
+
+.dark-mode .validation-icon {
+    flex: 0 0 auto;
+    margin-left: 10px;
+    display: none;
+    color: #10d60f;
+}
+
+.dark-mode .is-invalid {
+    color: #ff5252;
+}
+
+.dark-mode select.form-control {
+    background-color: #444;
+    color: #fff;
+}
+
+.dark-mode select.form-control option {
+    background-color: #444;
+    color: #fff;
+}
+
+.dark-mode .error-messages {
+    margin-top: 20px;
+    max-height: 50px;
+    overflow-y: auto;
+    width: 100%;
+}
+
+.dark-mode .modal-content {
+    background-color: #333;
+    color: #fff;
+    border-radius: 10px;
+    padding: 15px;
+    display: inline-block;
+}
+
+.dark-mode .modal-header {
+    border-bottom: none;
+    padding-bottom: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.dark-mode .modal-title {
+    margin-bottom: 0;
+}
+
+.dark-mode .modal-header .close {
+    color: #aaa;
+    padding: 0;
+    margin: 0 0 0 auto;
+}
+
+.dark-mode .modal-dialog {
+    margin: 30vh auto;
+    max-width: none;
+}
+
+.dark-mode .modal-body {
+    padding: 10px;
+    overflow-y: auto;
+}
+
+.dark-mode .modal-content .modal-header .modal-title {
+    color: #fff;
+}
+
+.dark-mode .button-container {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+.dark-mode .button-container button {
+    flex-grow: 1;
+    margin: 0 10px;
+    padding: 8px 16px;
+    font-size: 14px;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+    transition: background 0.3s, transform 0.3s;
+}
+
+.dark-mode .button-container .btn-primary {
+    background: linear-gradient(45deg, #0056b3, #3399ff);
+    color: white;
+}
+
+.dark-mode .button-container .btn-primary:hover {
+    background: linear-gradient(45deg, #004494, #2678cc);
+}
+
+.dark-mode .button-container .btn-primary:active {
+    background: linear-gradient(45deg, #003377, #2055a0);
+    transform: scale(0.95);
+}
+
+.dark-mode .button-container .btn-secondary {
+    background: linear-gradient(45deg, #8a6ba0, #a68fb8);
+    color: white;
+}
+
+.dark-mode .button-container .btn-secondary:hover {
+    background: linear-gradient(45deg, #7a5a8b, #9380a0);
+}
+
+.dark-mode .button-container .btn-secondary:active {
+    background: linear-gradient(45deg, #765a8a, #8e7ea0);
     transform: scale(0.95);
 }

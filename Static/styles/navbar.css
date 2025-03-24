@@ -1,34 +1,35 @@
 .navbar {
-    font-family: 'Poppins', 'Roboto', sans-serif;   
+    font-family: 'Poppins', 'Roboto', sans-serif;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    box-shadow: 0 8px 16px 0 rgba(34, 34, 34, 0.4);
-    background: rgba(34, 34, 34, 0.8);
+    box-shadow: none;
+    background: #fff;
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
     height: 55px;
     position: sticky;
     top: 0;
     z-index: 1000;
+    border-bottom: 1px solid #ccc;
 }
 
 .navbar-dark .navbar-brand {
-    color: #f1f1f1;
+    color: #333;
     font-size: 1.5rem;
     margin-right: 20px;
     transition: color 0.3s;
 }
 
 .navbar-dark .navbar-brand:hover {
-    color: #CD5C5C;
+    color: #007bff;
 }
 
 #logoutContainer {
     display: flex;
     align-items: center;
-    justify-content: flex-end; 
-    height: 100%; 
+    justify-content: flex-end;
+    height: 100%;
 }
 
 #logoutBtn {
@@ -44,8 +45,8 @@
     justify-content: center;
     padding: 4px 12px;
     font-size: 1.4rem;
-    background: linear-gradient(45deg, #FF5252, #ff7451); 
-    color: #fff;
+    background: linear-gradient(45deg, #e0e0e0, #f5f5f5);
+    color: #333;
     text-decoration: none;
     border-radius: 10px;
     transition: background 0.3s;
@@ -54,13 +55,13 @@
 }
 
 #logoutBtn a:hover {
-    background: linear-gradient(45deg, #ff7451, #ff8a71); 
+    background: linear-gradient(45deg, #f5f5f5, #ffffff);
     color: #333;
 }
 
 #logoutBtn a i.material-icons-outlined {
-    font-size: 18px; 
-    margin-left: 8px; 
+    font-size: 18px;
+    margin-left: 8px;
 }
 
 @keyframes spin {
@@ -98,17 +99,17 @@
     z-index: 1000;
     display: flex;
     flex-direction: column;
-    align-items: flex-end; 
+    align-items: flex-end;
 }
 
 .flash-message {
-    font-family: 'Poppins', sans-serif; 
-    display: inline-block; 
+    font-family: 'Poppins', sans-serif;
+    display: inline-block;
     padding: 10px 20px;
     margin-bottom: 10px;
     border: 1px solid transparent;
     border-radius: 10px;
-    color: #fff;
+    color: #333;
     opacity: 0;
     transform: translateY(20px);
     transition: all 0.3s ease-in-out;
@@ -120,7 +121,7 @@
 @keyframes fadeInSlideUp {
     0% {
         opacity: 0;
-        transform: translateY(20px); 
+        transform: translateY(20px);
     }
     100% {
         opacity: 1;
@@ -135,33 +136,33 @@
     }
     100% {
         opacity: 0;
-        transform: translateY(20px); 
+        transform: translateY(20px);
     }
 }
 
 .flash-info {
-    background-color: #007bff;
-    border-color: #007bff;
+    background-color: #e7f3fe;
+    border-color: #b3d4fc;
 }
 
 .flash-success {
-    background-color: #59b259;
-    border-color: #59b259;
+    background-color: #d4edda;
+    border-color: #c3e6cb;
 }
 
 .flash-warning {
-    background-color: #f39c12;
-    border-color: #f39c12;
+    background-color: #fff3cd;
+    border-color: #ffeeba;
 }
 
 .flash-auth {
-    background-color: #4CAF50; 
-    border-color: #4CAF50;
+    background-color: #d1ecf1;
+    border-color: #bee5eb;
 }
 
 .flash-error {
-    background-color: #ff5252; 
-    border-color: #ff5252;
+    background-color: #f8d7da;
+    border-color: #f5c6cb;
 }
 
 .flash-message .flash-icon {
@@ -170,11 +171,11 @@
 }
 
 .flash-close-btn {
-    margin-left: 10px; 
+    margin-left: 10px;
     cursor: pointer;
     background: none;
     border: none;
-    color: #ffffff;
+    color: #333;
     font-size: 20px;
     font-weight: bold;
     transition: color 0.2s;
@@ -182,31 +183,31 @@
 }
 
 .flash-close-btn:hover {
-    color: #333;
+    color: #007bff;
 }
 
 .right-align-items {
     display: flex;
     align-items: center;
-    justify-content: flex-end; 
+    justify-content: flex-end;
     flex-grow: 1;
 }
 
 #ntpStatusDot {
     height: 12px;
     width: 12px;
-    background-color: #ff5252; 
+    background-color: #dc3545;
     border-radius: 50%;
-    margin-right: 160px; 
+    margin-right: 160px;
 }
 
 .ntp-connected {
-    background-color: #4CAF50 !important; 
+    background-color: #28a745 !important;
 }
 
 .ntp-disconnected {
-    background-color: #ff5252 !important; 
-    animation: blink 1s steps(1, start) infinite; 
+    background-color: #dc3545 !important;
+    animation: blink 1s steps(1, start) infinite;
 }
 
 @keyframes blink {
@@ -215,9 +216,9 @@
 }
 
 .spinner {
-    border: 4px solid rgba(255, 255, 255, 0.3);
+    border: 4px solid rgba(0, 0, 0, 0.3);
     border-radius: 50%;
-    border-top-color: #fff;
+    border-top-color: #333;
     width: 12px;
     height: 12px;
     -webkit-animation: spin 1s ease-in-out infinite;
@@ -250,16 +251,16 @@
 }
 
 .dropdown-content {
-    visibility: hidden; 
+    visibility: hidden;
     opacity: 0;
     position: absolute;
-    background: rgba(34, 34, 34, 0.8);
+    background: #fff;
     min-width: 160px;
-    box-shadow: 0px 8px 16px 0px rgba(34,34,34,0.2);
-    z-index: 20; 
+    box-shadow: none;
+    z-index: 20;
     border-radius: 0 0 10px 10px;
-    top: 50px; 
-    transition: opacity 0.3s ease, visibility 0.3s ease; 
+    top: 50px;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
 }
@@ -269,7 +270,7 @@
     opacity: 1;
 }
 .dropdown-content a {
-    color: #f1f1f1; 
+    color: #333;
     padding: 12px 16px;
     text-decoration: none;
     display: block;
@@ -281,17 +282,17 @@
 }
 
 .dropdown:hover .dropbtn {
-    background-color: #3e8e41;
+    background-color: #e0e0e0;
 }
 
 .dropdown .navbar-brand {
-    display: flex; 
-    align-items: center; 
+    display: flex;
+    align-items: center;
 }
 
 .material-icons-outlined.expand-icon {
-    display: inline-flex; 
-    transition: transform 0.3s ease; 
+    display: inline-flex;
+    transition: transform 0.3s ease;
 }
 
 .rotate-icon {
@@ -301,23 +302,315 @@
 
 .tooltip {
     position: absolute;
-    background: rgba(0, 0, 0, 0.75);
-    color: white;
-    padding: 5px 10px; 
-    border-radius: 4px; 
-    font-size: 12px; 
+    background: #f5f5f5;
+    color: #333;
+    padding: 5px 10px;
+    border-radius: 4px;
+    font-size: 12px;
     display: none;
-    z-index: 1000; 
-    white-space: pre-line; 
+    z-index: 1000;
+    white-space: pre-line;
 }
 
 .tooltip::after {
     content: "";
     position: absolute;
-    bottom: 100%; 
-    left: 50%; 
-    margin-left: -5px; 
-    border-width: 5px; 
+    bottom: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
     border-style: solid;
-    border-color: transparent transparent rgba(0, 0, 0, 0.75) transparent; 
+    border-color: transparent transparent #f5f5f5 transparent;
+}
+.dark-mode-btn {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: #333;
+    transition: color 0.3s;
+}
+
+.dark-mode-btn:hover {
+    color: #007bff;
+}
+.dark-mode .navbar {
+    font-family: 'Poppins', 'Roboto', sans-serif;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #333;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    height: 55px;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    border-bottom: 1px solid #555;
+}
+
+.dark-mode .navbar-dark .navbar-brand {
+    color: #fff;
+    font-size: 1.5rem;
+    margin-right: 20px;
+    transition: color 0.3s;
+}
+
+.dark-mode .navbar-dark .navbar-brand:hover {
+    color: #66b2ff;
+}
+
+.dark-mode #logoutContainer {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    height: 100%;
+}
+
+.dark-mode #logoutBtn {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+}
+
+.dark-mode #logoutBtn a {
+    margin-top: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 4px 12px;
+    font-size: 1.4rem;
+    background: linear-gradient(45deg, #444, #555);
+    color: #fff;
+    text-decoration: none;
+    border-radius: 10px;
+    transition: background 0.3s;
+    width: 100px;
+    height: 40px;
+}
+
+.dark-mode #logoutBtn a:hover {
+    background: linear-gradient(45deg, #555, #666);
+    color: #fff;
+}
+
+.dark-mode #logoutBtn a i.material-icons-outlined {
+    font-size: 18px;
+    margin-left: 8px;
+}
+
+.dark-mode .spin-animation {
+    animation: spin 0.5s ease-in-out;
+}
+
+.dark-mode .icon-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.dark-mode .blink-animation {
+    animation: blink 1s linear infinite;
+}
+
+.dark-mode .blink {
+    animation: blink 1s linear infinite;
+}
+
+.dark-mode #flash-messages-container {
+    position: fixed;
+    top: 70px;
+    right: 20px;
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+.dark-mode .flash-message {
+    font-family: 'Poppins', sans-serif;
+    display: inline-block;
+    padding: 10px 20px;
+    margin-bottom: 10px;
+    border: 1px solid transparent;
+    border-radius: 10px;
+    color: #fff;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.3s ease-in-out;
+    animation: fadeInSlideUp 0.5s ease forwards;
+    white-space: nowrap;
+}
+
+.dark-mode .flash-info {
+    background-color: #003366;
+    border-color: #004488;
+    color: #fff;
+}
+
+.dark-mode .flash-success {
+    background-color: #1e4620;
+    border-color: #254d2d;
+    color: #fff;
+}
+
+.dark-mode .flash-warning {
+    background-color: #665500;
+    border-color: #7a6e00;
+    color: #fff;
+}
+
+.dark-mode .flash-auth {
+    background-color: #223344;
+    border-color: #2a3f4f;
+    color: #fff;
+}
+
+.dark-mode .flash-error {
+    background-color: #660000;
+    border-color: #770000;
+    color: #fff;
+}
+
+.dark-mode .flash-message .flash-icon {
+    vertical-align: middle;
+    margin-right: 10px;
+}
+
+.dark-mode .flash-close-btn {
+    margin-left: 10px;
+    cursor: pointer;
+    background: none;
+    border: none;
+    color: #fff;
+    font-size: 20px;
+    font-weight: bold;
+    transition: color 0.2s;
+    outline: none;
+}
+
+.dark-mode .flash-close-btn:hover {
+    color: #66b2ff;
+}
+
+.dark-mode .right-align-items {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    flex-grow: 1;
+}
+
+.dark-mode #ntpStatusDot {
+    height: 12px;
+    width: 12px;
+    background-color: #ff4d4d;
+    border-radius: 50%;
+    margin-right: 160px;
+}
+
+.dark-mode .ntp-connected {
+    background-color: #28a745 !important;
+}
+
+.dark-mode .ntp-disconnected {
+    background-color: #ff4d4d !important;
+    animation: blink 1s steps(1, start) infinite;
+}
+
+.dark-mode .spinner {
+    border: 4px solid rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    border-top-color: #fff;
+    width: 12px;
+    height: 12px;
+    -webkit-animation: spin 1s ease-in-out infinite;
+    animation: spin 1s ease-in-out infinite;
+}
+
+.dark-mode .dropdown {
+    position: relative;
+    display: inline-block;
+    z-index: 1000;
+}
+
+.dark-mode .dropdown-content {
+    visibility: hidden;
+    opacity: 0;
+    position: absolute;
+    background: #333;
+    min-width: 160px;
+    box-shadow: none;
+    z-index: 20;
+    border-radius: 0 0 10px 10px;
+    top: 50px;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+}
+
+.dark-mode .dropdown:hover .dropdown-content {
+    visibility: visible;
+    opacity: 1;
+}
+
+.dark-mode .dropdown-content a {
+    color: #fff;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+.dark-mode .dropdown:hover .dropbtn {
+    background-color: #444;
+}
+
+.dark-mode .dropdown .navbar-brand {
+    display: flex;
+    align-items: center;
+}
+
+.dark-mode .material-icons-outlined.expand-icon {
+    display: inline-flex;
+    transition: transform 0.3s ease;
+}
+
+.dark-mode .rotate-icon {
+    transform: rotate(180deg);
+    transition: transform 0.5s ease;
+}
+
+.dark-mode .tooltip {
+    position: absolute;
+    background: #222;
+    color: #fff;
+    padding: 5px 10px;
+    border-radius: 4px;
+    font-size: 12px;
+    display: none;
+    z-index: 1000;
+    white-space: pre-line;
+}
+
+.dark-mode .tooltip::after {
+    content: "";
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: transparent transparent #222 transparent;
+}
+
+.dark-mode .dark-mode-btn {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: #fff;
+    transition: color 0.3s;
+}
+
+.dark-mode .dark-mode-btn:hover {
+    color: #66b2ff;
 }
