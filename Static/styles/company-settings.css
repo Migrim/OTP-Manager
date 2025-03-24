@@ -1,6 +1,6 @@
 body {
-    background-color: #181818;
-    color: #fff;
+    background-color: #fff;
+    color: #333;
     font-family: 'Poppins', 'Roboto', sans-serif; 
 }
 
@@ -43,8 +43,9 @@ body {
 }
 
 .company-card {
-    background: #333;
-    color: #f8f9fa;
+    background: #fcfbfb;
+    color: #333;
+    border: 1px solid #ccc;
     border-radius: 10px;
     padding: 10px;
     text-align: center;
@@ -75,7 +76,6 @@ body {
     white-space: nowrap;
     overflow: hidden;
     max-width: 100%;
-    border: 1px solid #868e9694;
 }
 
 .company-actions .btn {
@@ -102,7 +102,6 @@ body {
 
 .form-control:focus {
     border-color: #adb5bd;
-    box-shadow: 0 0 0 0.2rem rgba(255, 255, 255, 0.25);
 }
 .btn-danger {
     font-size: 0.8rem;
@@ -193,8 +192,9 @@ body {
 }
 
 .modal-content {
-    background-color: #333;
-    color: #f8f9fa;
+    border: 1px solid #ccc;
+    background: #fcfbfb;
+    color: #333;
     border-radius: 15px;
 }
 
@@ -240,15 +240,15 @@ body {
 }
 
 .form-control {
-    background-color: #444444;
-    color: #fff;
-    border: none;
+    background-color: #ffffff;
+    color: #333;
+    border: 1px solid #ccc;
     box-shadow: none;
 }
 
 .form-control:focus {
-    background-color: #444444;
-    color: #fff;
+    background-color: #ffffff;
+    color: #333;
 }
 
 .btn-primary {
@@ -331,7 +331,6 @@ body {
     border-radius: 4px;
     padding: 15px;
     margin-bottom: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
 }
 
 .alert-dismissible .close {
@@ -357,9 +356,9 @@ body {
 }
 
 .form-label, label {
-    font-size: 1.5rem; 
-    color: #f8f9fa; 
-    margin-bottom: .5rem; 
+    font-size: 1.5rem;
+    color: #333;
+    margin-bottom: .5rem;
 }
 .row {
     display: flex;
@@ -384,20 +383,21 @@ body {
 }
 
 .ns-confirmDeleteCompanyModal .modal-content {
-    background-color: #2b2b2b;
-    color: #f8f9fa;
+    background: #fcfbfb;
+    color: #333;
+    border: 1px solid #ccc;
     border-radius: 12px;
     overflow: hidden;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
 }
 
 .ns-confirmDeleteCompanyModal .modal-header {
-    background: #2b2b2b;
-    color: #fff;
+    background: #fcfbfb;
+    color: #333;
     padding: 5px 20px;
     border-bottom: none;
     display: flex;
     justify-content: space-between;
+    border-bottom: 1px solid #ccc;
     align-items: center;
 }
 
@@ -480,4 +480,36 @@ body {
     transform: scale(0.8);
     display: inline-block;
     vertical-align: middle;
+}
+body.dark-mode {
+    background-color: #181818;
+    color: #fff;
+}
+.dark-mode .company-card {
+    background: #333;
+    color: #fff;
+    border: 1px solid #444;
+}
+.dark-mode .modal-content,
+.dark-mode .ns-confirmDeleteCompanyModal .modal-content,
+.dark-mode .ns-confirmDeleteCompanyModal .modal-header {
+    background: #1e1e1e;
+    color: #e0e0e0;
+    border-bottom: 1px solid #444;
+}
+.dark-mode .modal-content {
+    border: 1px solid #444;
+}
+.dark-mode .form-control {
+    background-color: #444444;
+    color: #f8f9fa;
+    border: 1px solid #444444;
+}
+.dark-mode .form-control:focus {
+    background-color: #444444;
+    color: #fff;
+}
+.dark-mode .form-label,
+.dark-mode label {
+    color: #f8f9fa;
 }

@@ -1,6 +1,6 @@
 body {
-    background-color: #181818;
-    color: #fff;
+    background-color: #fff;
+    color: #333;
     font-family: 'Poppins', 'Roboto', sans-serif; 
 }
 
@@ -43,8 +43,9 @@ body {
 }
 
 .user-card {
-    background: #333;
-    color: #f8f9fa;
+    background: #fcfbfb;
+    color: #333;
+    border: 1px solid #ccc;
     border-radius: 10px;
     padding: 20px;
     text-align: center;
@@ -92,16 +93,15 @@ body {
 }
 
 .form-control {
-    background-color: #444444;
-    color: #f8f9fa;
-    border: 1px solid #444444;
-    max-width: 300px;
-    margin: auto;
+    background-color: #ffffff;
+    color: #333;
+    border: 1px solid #ccc;
+    box-shadow: none;
 }
 
 .form-control:focus {
-    border-color: #adb5bd;
-    box-shadow: 0 0 0 0.2rem rgba(255, 255, 255, 0.25);
+    background-color: #ffffff;
+    color: #333;
 }
 
 .btn-danger {
@@ -139,8 +139,8 @@ body {
 }
 
 .modal-content {
-    background-color: #333;
-    color: #f8f9fa;
+    background-color: #fcfbfb;
+    color: #333;
     border-radius: 15px;
     padding: 20px;
     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2); 
@@ -160,10 +160,11 @@ body {
     line-height: 1.4; 
     font-weight: bold;
     flex-grow: 1; 
+    color: #333;
 }
 
 .close {
-    color: #fff;
+    color: #333;
     opacity: 1;
     padding: 0; 
     margin: 0; 
@@ -317,7 +318,7 @@ body {
 
 .form-label, label {
     font-size: 1.5rem; 
-    color: #f8f9fa;
+    color: #333;
     margin-bottom: .5rem; 
 }
 
@@ -345,7 +346,8 @@ a.btn-warning:disabled:active {
 }
 
 .unique-modal-header {
-    background-color: #333;
+    background-color: #fcfbfb;
+    color: #333;
     position: relative;
 }
 
@@ -359,7 +361,7 @@ a.btn-warning:disabled:active {
 }
 
 .unique-modal-header .modal-title {
-    color: #ffffff;
+    color: #333;
     margin-left: 40px; 
     margin-bottom: 10px;
 }
@@ -419,7 +421,7 @@ a.btn-warning:disabled:active {
 }
 
 .unique-password-reset-header .unique-password-reset-close {
-    color: white;
+    color: #333;
 }
 
 .unique-password-reset-input, .unique-password-reset-btn {
@@ -472,4 +474,49 @@ a.btn-warning:disabled:active {
     color: #ced4da;
     cursor: not-allowed;
     opacity: 0.65;
+}
+body.dark-mode {
+    background-color: #181818;
+    color: #fff;
+}
+.dark-mode .user-card {
+    background: #333;
+    color: #fff;
+    border: 1px solid #444;
+}
+.dark-mode .modal-title {
+    color: #fff;
+}
+.dark-mode .form-label,
+.dark-mode label {
+    color: #f8f9fa;
+}
+.dark-mode .form-control {
+    background-color: #444444;
+    color: #f8f9fa;
+    border: 1px solid #444444;
+}
+.dark-mode .form-control:focus {
+    background-color: #444444;
+    color: #fff;
+}
+.dark-mode .modal-content {
+    border: 1px solid #444;
+    background-color: #333;
+    color: #fff;
+}
+.dark-mode .modal-title {
+    color: #fff;
+}
+.dark-mode .unique-modal-header {
+    background-color: #333;
+    color: #fff;
+}
+.dark-mode .close {
+    color: #fff;
+}
+.dark-mode
+.unique-password-reset-header 
+.unique-password-reset-close {
+    color: white;
 }
