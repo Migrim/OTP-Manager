@@ -1,6 +1,6 @@
 body {
-    background-color: #181818;
-    color: #fff;
+    background-color: #fff;
+    color: #333;
     font-family: 'Poppins', 'Roboto', sans-serif; 
     line-height: 1.6; 
 }
@@ -18,8 +18,8 @@ body {
     width: 100%;
     padding: 30px;
     border-radius: 10px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.4);
-    background: #222;
+    border: 1px solid #ccc;
+    background: #fcfbfb;
     margin-bottom: 20px;
 }
 
@@ -35,10 +35,10 @@ body {
 .backup-container {
     margin-top: 20px;
     padding: 15px;
-    background-color: #222; 
-    color: #fff; 
+    color: #333; 
     border-radius: 20px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    border: 1px solid #ccc;
+    background: #fcfbfb;
     transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out, border 0.3s ease-in-out, opacity 0.3s ease-in-out, background-color 0.3s ease-in-out;
 }
 
@@ -53,7 +53,7 @@ body {
 .stats-container h2 {
     font-weight: 600;
     margin-bottom: 20px;
-    color: #EFEFEF; 
+    color: #333; 
 }
 
 .stats li {
@@ -63,6 +63,7 @@ body {
     padding-left: 0;
     display: flex;
     align-items: center;
+    color: #333;
 }
 
 .stats li:before {
@@ -73,7 +74,7 @@ body {
     display: inline-block;
     font-size: 20px;
     margin-right: 10px;
-    color: #ffffff;
+    color: #333;
 }
 
 .stats li span.label {
@@ -127,21 +128,6 @@ body {
     max-height: 24em; 
     overflow-y: auto;
 }
-
-.backup-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-}
-
-.backup-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-}
 :root {
     --link-color: #ff5252;
 }
@@ -166,4 +152,51 @@ body {
 }
 .settings-container {
     max-height: 280px;
+}
+body.dark-mode {
+    background-color: #181818;
+    color: #fff;
+}
+
+.dark-mode .form-container {
+    border: 1px solid #444;
+    background: #333;
+}
+
+.dark-mode .footer {
+    color: #aaa;
+}
+
+.dark-mode .stats-container,
+.dark-mode .settings-container,
+.dark-mode .license-container,
+.dark-mode .backup-container {
+    color: #e0e0e0;
+    border: 1px solid #444;
+    background: #333;
+}
+
+.dark-mode .stats-container h2 {
+    color: #e0e0e0;
+}
+
+.dark-mode .stats li {
+    color: #e0e0e0;
+}
+
+.dark-mode .stats li:before {
+    color: #e0e0e0;
+}
+
+.dark-mode .custom-link {
+    color: var(--link-color);
+}
+
+.dark-mode .custom-link:hover {
+    background-color: var(--link-color);
+    color: #fff;
+}
+
+.dark-mode h1 {
+    color: #ffffff;
 }
