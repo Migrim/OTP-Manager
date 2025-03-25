@@ -5,6 +5,34 @@
     {% block title %}OTP-List | {{ total_otp_count }} Secrets stored{% endblock %}
     {% block styles %}
         {{ super() }}
+        <script>
+            window.inputThemeStyleTag = document.createElement('style');
+            const darkMode = localStorage.getItem('darkMode') === 'enabled';
+        
+            function setInputThemeStyle(dark) {
+                if (dark) {
+                    window.inputThemeStyleTag.innerHTML = `
+                        input[type="text"] {
+                            background-color: #333 !important;
+                            color: #fff !important;
+                            border: 1px solid #757575 !important;
+                        }
+                    `;
+                } else {
+                    window.inputThemeStyleTag.innerHTML = `
+                        input[type="text"] {
+                            background-color: #fff !important;
+                            color: #000 !important;
+                            border: 1px solid #ccc !important;
+                        }
+                    `;
+                }
+            }
+        
+            setInputThemeStyle(darkMode);
+            document.head.appendChild(window.inputThemeStyleTag);
+        </script>        
+             
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
         <link rel="stylesheet" href=".{{ url_for('static', filename='styles/styles.css') }}">
         <link rel="icon" href=".{{ url_for('static', filename='favicon.ico') }}">

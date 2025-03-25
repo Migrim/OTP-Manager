@@ -1,9 +1,13 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Noto+Color+Emoji&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@400;700&display=swap');
+html.preload-dark-mode body {
+    background-color: #121212;
+    color: white;
+}
 
 body {
-    background-color: #fff;
+    background-color: transparent;
     color: #333;
     font-family: 'Poppins', 'Roboto', 'Noto Color Emoji', sans-serif; 
 }
@@ -378,15 +382,15 @@ h3, .header {
     display: inline-block; 
     margin-top: 20px; 
     font-size: 2rem; 
-    border: 1px solid #757575;
+    border: 1px solid #ccc;
     padding: 10px 20px;
     border-radius: 10px; 
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); 
     position: absolute;
     top: 50%; 
     left: 43%;
     transform: translate(-50%, -50%); 
-    background: #222; 
+    background: #fcfbfb; 
+    color: #333;
     animation: fadeInScale 1s ease-out forwards; 
 }
 
@@ -658,9 +662,14 @@ body.dark-mode {
     border: 1px solid #444;
 }
 .dark-mode .search-bar input[type="text"] {
+    padding: 10px;
+    font-size: 17px;
     border: 1px solid #757575;
+    border-radius: 12px;
+    width: 50%;
     background: #333;
     color: #fff;
+    transition: background 0.3s, border 0.3s;
 }
 
 .dark-mode .search-bar input[type="text"]:focus {
@@ -733,4 +742,20 @@ body.dark-mode {
     background-color: #333;
     color: #fff;
     border: 1px solid #757575; 
+}
+.dark-mode .no-secrets {
+    font-family: 'Segoe UI Emoji', 'Roboto', 'Noto Color Emoji', Arial, sans-serif;
+    display: inline-block; 
+    margin-top: 20px; 
+    font-size: 2rem; 
+    border: 1px solid #757575;
+    padding: 10px 20px;
+    border-radius: 10px; 
+    position: absolute;
+    top: 50%; 
+    left: 43%;
+    transform: translate(-50%, -50%); 
+    background: #333; 
+    color: #fff;
+    animation: fadeInScale 1s ease-out forwards; 
 }

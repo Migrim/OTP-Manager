@@ -1,3 +1,23 @@
+html.pre-dark .navbar {
+    background-color: #212529 !important;
+    color: white !important;
+}
+
+html.pre-light .navbar {
+    background-color: #f8f9fa !important;
+    color: black !important;
+}
+
+html.pre-dark .navbar .navbar-brand,
+html.pre-dark .navbar a {
+    color: white !important;
+}
+
+html.pre-light .navbar .navbar-brand,
+html.pre-light .navbar a {
+    color: black !important;
+}
+
 .navbar {
     font-family: 'Poppins', 'Roboto', sans-serif;
     display: flex;
@@ -45,18 +65,19 @@
     justify-content: center;
     padding: 4px 12px;
     font-size: 1.4rem;
-    background: linear-gradient(45deg, #e0e0e0, #f5f5f5);
-    color: #333;
+    background: linear-gradient(135deg, #a5b4fc, #c7d2fe);
+    color: #1e3a8a;
     text-decoration: none;
     border-radius: 10px;
-    transition: background 0.3s;
+    transition: background 0.3s, box-shadow 0.3s, border-color 0.3s;
     width: 100px;
     height: 40px;
 }
 
 #logoutBtn a:hover {
-    background: linear-gradient(45deg, #f5f5f5, #ffffff);
-    color: #333;
+    background: linear-gradient(135deg, #c7d2fe, #e0e7ff);
+    border-color: #c7d2fe;
+    color: #1e3a8a;
 }
 
 #logoutBtn a i.material-icons-outlined {
@@ -380,18 +401,19 @@
     justify-content: center;
     padding: 4px 12px;
     font-size: 1.4rem;
-    background: linear-gradient(45deg, #444, #555);
-    color: #fff;
+    background: linear-gradient(135deg, #5c6ac4, #8da2fb);
+    color: #f5f7ff;
     text-decoration: none;
     border-radius: 10px;
-    transition: background 0.3s;
+    transition: background 0.3s, border-color 0.3s;
     width: 100px;
     height: 40px;
 }
 
 .dark-mode #logoutBtn a:hover {
-    background: linear-gradient(45deg, #555, #666);
-    color: #fff;
+    background: linear-gradient(135deg, #8da2fb, #aebefc);
+    border-color: #aebefc;
+    color: #f5f7ff;
 }
 
 .dark-mode #logoutBtn a i.material-icons-outlined {

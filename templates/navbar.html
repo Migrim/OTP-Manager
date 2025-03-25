@@ -1,3 +1,18 @@
+<script>
+    (function () {
+        const darkMode = localStorage.getItem('darkMode');
+        if (darkMode === 'enabled') {
+            document.documentElement.style.backgroundColor = '#121212';
+            document.documentElement.style.colorScheme = 'dark';
+            document.documentElement.classList.add('pre-dark');
+        } else {
+            document.documentElement.style.backgroundColor = '#ffffff';
+            document.documentElement.style.colorScheme = 'light';
+            document.documentElement.classList.add('pre-light');
+        }
+    })();
+</script>
+
 <link rel="stylesheet" href="{{ url_for('static', filename='styles/navbar.css') }}">
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
@@ -183,12 +198,27 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     toggleBtn.addEventListener('click', () => {
-        document.body.classList.toggle('dark-mode');
-        if (document.body.classList.contains('dark-mode')) {
+        const isDark = document.body.classList.toggle('dark-mode');
+
+        if (isDark) {
             localStorage.setItem('darkMode', 'enabled');
+            document.documentElement.style.backgroundColor = '#121212';
+            document.documentElement.style.colorScheme = 'dark';
+            document.documentElement.classList.remove('pre-light');
+            document.documentElement.classList.add('pre-dark');
         } else {
             localStorage.setItem('darkMode', 'disabled');
+            document.documentElement.style.backgroundColor = '#ffffff';
+            document.documentElement.style.colorScheme = 'light';
+            document.documentElement.classList.remove('pre-dark');
+            document.documentElement.classList.add('pre-light');
         }
+
+        setInputThemeStyle(isDark);
+    });
+
+    window.addEventListener('load', () => {
+        document.documentElement.classList.remove('pre-dark', 'pre-light');
     });
 
     var flashMessages = document.querySelectorAll('.flash-message');
