@@ -50,7 +50,7 @@
         var isPinkOrange = effectType >= 0.8; // 20% chance for Pink to Orange
 
         function drawMatrix() {
-            ctx.fillStyle = "rgba(0, 0, 0, 0.04)";
+            ctx.fillStyle = "rgba(255, 255, 255, 0.04)";
             ctx.fillRect(0, 0, c.width, c.height);
 
             for (var i = 0; i < drops.length; i++) {
@@ -65,17 +65,15 @@
                     gradient.addColorStop("1.0", "blue");
                     ctx.fillStyle = gradient;
                 } else if (isElectricBlue) {
-                    ctx.fillStyle = "#7DF9FF";
+                    ctx.fillStyle = "#000";
                 } else if (isGreenYellow) {
                     var gradient = ctx.createLinearGradient(0, 0, c.width, 0);
                     gradient.addColorStop("0", "#ff5252");
                     gradient.addColorStop("1.0", "#ff1744");
                     ctx.fillStyle = gradient;
                 } else if (isPinkOrange) {
-                    var gradient = ctx.createLinearGradient(0, 0, c.width, 0);
-                    gradient.addColorStop("0", "green");
-                    gradient.addColorStop("1.0", "yellow");
-                    ctx.fillStyle = gradient;
+                    var hue = (i * font_size) % 360;
+                    ctx.fillStyle = "hsl(" + hue + ", 100%, 50%)";
                 } else {
                     var gradient = ctx.createLinearGradient(0, 0, c.width, 0);
                     gradient.addColorStop("0", "#ff5252");

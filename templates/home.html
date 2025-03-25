@@ -84,7 +84,7 @@
                             {% if current_user.show_otp_type %}
                             OTP type: {{ otp.otp_type }} <br>
                             {% endif %}
-                            OTP code: <span class="otp-code" id="current_otp_code_{{ otp.name }}" onclick="copyToClipboard(this)">
+                            OTP code: <span class="otp-code" id="current_otp_code_{{ otp.name }}" onclick="copyTextUnique(this)">
                                 <span class="digit">0</span>
                                 <span class="digit">0</span>
                                 <span class="digit">0</span>
@@ -124,7 +124,7 @@
                                     <button type="button" style="margin-right:5px" class="btn btn-primary" title="Edit this Secret" data-toggle="modal" data-target="#editModal" onclick="openEditModal('{{ otp.name }}', '{{ otp.secret }}', '{{ otp.company }}', '{{ otp.otp_type }}')">
                                         <i class="icon-center material-icons-outlined icon-small">edit</i>
                                     </button>
-                                    <button type="button" class="btn btn-light" title="Copy OTP to Clipboard" onclick="saveAndCopyOTP('{{ otp.name }}')">
+                                    <button type="button" class="btn btn-light" title="Copy OTP to Clipboard" onclick="copyTextUnique('{{ otp.name }}')">
                                         <i class="icon-center material-icons-outlined icon-small">content_copy</i>
                                     </button>                                                                                                                    
                                 </form>
@@ -152,7 +152,7 @@
                                 {% if current_user.show_otp_type %}
                                 OTP type: {{ otp.otp_type }} <br>
                                 {% endif %}
-                                OTP code: <span class="otp-code" id="current_otp_code_{{ otp.name }}" onclick="copyToClipboard(this)">
+                                OTP code: <span class="otp-code" id="current_otp_code_{{ otp.name }}" onclick="copyTextUnique(this)">
                                     <span class="digit">0</span>
                                     <span class="digit">0</span>
                                     <span class="digit">0</span>
@@ -192,7 +192,7 @@
                                         <button type="button" style="margin-right:5px" class="btn btn-primary" title="Edit this Secret" data-toggle="modal" data-target="#editModal" onclick="openEditModal('{{ otp.name }}', '{{ otp.secret }}', '{{ otp.company }}', '{{ otp.otp_type }}')">
                                             <i class="icon-center material-icons-outlined icon-small">edit</i>
                                         </button>
-                                        <button type="button" class="btn btn-light" title="Copy OTP to Clipboard" onclick="saveAndCopyOTP('{{ otp.name }}')">
+                                        <button type="button" class="btn btn-light" title="Copy OTP to Clipboard" onclick="copyTextUnique('{{ otp.name }}')">
                                             <i class="icon-center material-icons-outlined icon-small">content_copy</i>
                                         </button>                                                                                                                    
                                     </form>

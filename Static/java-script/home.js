@@ -36,12 +36,48 @@ document.addEventListener("DOMContentLoaded", function() {
         }
     });
 });
-
 function markNewOTP(name) {
     const now = Date.now();
     localStorage.setItem(`otp_created_at_${name}`, now);
 }
 
+function copyTextUnique(input) {
+    let textToCopy;
+    if (typeof input === 'string') {
+      var element = document.getElementById('current_otp_code_' + input);
+      if (!element) return;
+      textToCopy = element.innerText;
+    } else if (input instanceof HTMLElement) {
+      textToCopy = input.innerText;
+    } else {
+      return;
+    }
+    if (!textToCopy) return;
+    textToCopy = textToCopy.replace(/\s+/g, '');
+    navigator.clipboard.writeText(textToCopy).then(function() {
+      showFlashMessage("Copied to clipboard", 5000);
+    });
+  }
+  
+  function showFlashMessage(message, duration) {
+    var container = document.getElementById('flash-messages-container');
+    if (!container) {
+      container = document.createElement('div');
+      container.id = 'flash-messages-container';
+      document.body.appendChild(container);
+    }
+    var flashMessage = document.createElement('div');
+    flashMessage.className = 'flash-message flash-success';
+    flashMessage.innerHTML = '<span class="flash-icon" style="display:inline-flex; align-items:center; margin-right:10px;"><i class="material-icons-outlined" style="font-size:16px; vertical-align:middle;">content_copy</i></span>' + message;
+    container.appendChild(flashMessage);
+    setTimeout(function() {
+      flashMessage.style.animation = 'fadeOutSlideDown 0.5s ease forwards';
+      setTimeout(function() {
+        container.removeChild(flashMessage);
+      }, 500);
+    }, duration);
+  }
+  
 async function updateOtpCodes(otpCodes) {
     otpCodes.forEach((otp) => {
         let currentOtpCodeElement = document.getElementById(`current_otp_code_${otp.name}`);
