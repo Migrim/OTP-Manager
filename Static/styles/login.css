@@ -67,6 +67,12 @@ a:hover {
     font-style: italic;
     width: 80%;
     line-height: 1.4; 
+    color: #222;
+    border-radius: 12px;
+    background-color: #fcfbfb;
+    border: 1px solid #ccc; 
+    padding: 5px;
+    bottom: 10px;
 }
 
 .form-title {
@@ -252,7 +258,7 @@ a:hover {
     width: 20px; 
     height: 20px; 
     background: #ffffff;
-    border: 1px solid #f8bbd0;
+    border: 1px solid #ff5252;
     border-radius: 5px; 
     transition: background 0.3s, border 0.3s;
 }
@@ -264,7 +270,7 @@ a:hover {
     top: 4px; 
     width: 6px; 
     height: 9px; 
-    border: solid #f8bbd0; 
+    border: solid #ff5252; 
     border-width: 0 2px 2px 0;
     transform: rotate(45deg);
     display: none;
@@ -298,7 +304,7 @@ a:hover {
 }
 
 .welcome-message {
-    color: #ffffff;
+    color: #333;
     font-size: 36px; 
     text-align: center;
     margin-top: 20px;
