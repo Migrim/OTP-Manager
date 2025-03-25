@@ -54,9 +54,23 @@ function copyTextUnique(input) {
     }
     if (!textToCopy) return;
     textToCopy = textToCopy.replace(/\s+/g, '');
-    navigator.clipboard.writeText(textToCopy).then(function() {
-      showFlashMessage("Copied to clipboard", 5000);
-    });
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(textToCopy).then(function() {
+        showFlashMessage("Copied to clipboard", 5000);
+      });
+    } else {
+      var textArea = document.createElement("textarea");
+      textArea.value = textToCopy;
+      document.body.appendChild(textArea);
+      textArea.select();
+      try {
+        document.execCommand('copy');
+        showFlashMessage("Copied to clipboard", 5000);
+      } catch (err) {
+        console.error("Fallback: Unable to copy", err);
+      }
+      document.body.removeChild(textArea);
+    }
   }
   
   function showFlashMessage(message, duration) {
@@ -77,6 +91,8 @@ function copyTextUnique(input) {
       }, 500);
     }, duration);
   }
+  
+  document.addEventListener("DOMContentLoaded", function() {});
   
 async function updateOtpCodes(otpCodes) {
     otpCodes.forEach((otp) => {
