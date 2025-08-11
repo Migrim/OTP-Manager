@@ -1,3 +1,9 @@
+> **⚠️ This repository has been replaced**  
+> Please use the new repository instead: [https://github.com/Migrim/OTP-Manager-Refactored](https://github.com/Migrim/OTP-Manager-Refactored)
+
+
+
+
 # OTP-Manager
 
 OTP-Manager is a secure, easy-to-use tool designed to manage one-time passwords (OTP) for various applications. It supports TOTP (Time-based One-Time Password) and is built to integrate seamlessly with various authentication systems.
